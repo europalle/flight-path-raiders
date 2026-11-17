@@ -4,10 +4,18 @@ Decisions made by the Game Director. Newest first.
 
 | Date | Area | Decision |
 | --- | --- | --- |
+| 2026-11-18 | Bosses | Names are close puns on the originals: The Molten Bore (Magmadad, Baron Get-Down, Lucifrown, Majordomo Exhaustus, Ragnaroast), Onyxiety's Lair; dungeons The Deadlines, Gnomeregret, Scarlet Monotony |
+| 2026-11-18 | Loot | WoW-style items with seeded random stats: quality tiers, random suffixes, named epics, 3-piece tier sets, one legendary per raid with a quest chain |
+| 2026-11-18 | Attunements | Classic-style attunement chains gate Heroic and Mythic; the guild is attuned once, each character needs one catch-up run |
+| 2026-11-18 | Traits | Edgier traits approved (Parse Goblin, Alt-Tabbed, Partner Aggro, Rage Quitter and more); morale and quitting kept |
+| 2026-11-18 | Economy | Priced in hours of play at level 60 (about 550-650 gold per hour); legendary recruit 8,000 gold and 1% of tavern offers |
+| 2026-11-18 | Ground play | Allowed, with the Frequent Flyer bonus for activities started in the air |
+| 2026-11-18 | Easter egg | In a guild named LFR the always-pulling tank appears as Happy Aggroholic |
+| 2026-11-18 | Hall of shame | On for everyone, no opt-out |
 | 2026-11-18 | Expansions | The level cap rises only with expansions; each expansion ships with a pre-release event, like the real game; expansion classes arrive with expansions |
 | 2026-11-18 | Naming | The recruitable units are called "characters" (not raiders); daily tasks are called "quests" (not bounties) |
 | 2026-11-18 | Levels | Max level 60, Classic style; levelling 1-60 in about 20-25 flights; keystones need level 60, Raid Normal average character level 58; dungeons scale to group level; seasons never raise the cap |
-| 2026-11-18 | Licence | All rights reserved during development; final licence decided before beta (Production leans GPL-3.0 code, CC BY-NC-SA 4.0 art) - pending Director confirmation |
+| 2026-11-18 | Licence | Code GPL-3.0, art CC BY-NC-SA 4.0 (Production, on the Director's delegation). Purely AI-generated art may not be copyrightable in some countries; human edits strengthen the art licence |
 | 2026-11-17 | Workspace | Code, art and prototype live in this repository; design documents stay as Claude docs, linked from `design/README.md` |
 | 2026-11-17 | Libraries | Use community libraries only where unavoidable; bundle them in the addon folder for a one-folder install |
 | 2026-11-17 | Art | Direction: a battered raid-leader's notebook (sketched portraits, ink, coffee stains, tactical scribbles). Deliverables as SVG |
