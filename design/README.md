@@ -3,7 +3,7 @@
 | Document | Phase | Link |
 | --- | --- | --- |
 | Concept pitch | 1 | https://claude.ai/artifact/PdUMMCVtYKvdpijLmGMiZM |
-| Game design document | 2 | Not started |
+| Game design document | 2 | https://claude.ai/artifact/SALKe92QNhpz1sRA7YA2Dk |
 | Art direction | 2 | Not started |
 | Technical design | 2 | Not started |
 | Milestone plan | 2 | Not started |
