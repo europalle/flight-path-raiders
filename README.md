@@ -18,6 +18,7 @@ A World of Warcraft: Forever addon that turns flight paths into raid nights. Rec
 | `prototype/` | Browser prototype used to tune combat and balance before the Lua build |
 | `art/` | SVG sketches, card frames, board layouts, icons |
 | `design/` | Decision log and links to the design documents |
+| `ux/` | Screen flows, wireframes and accessibility standards |
 | `data/` | Balance data (all game numbers), read by both the prototype and the addon |
 
 ## Studio
@@ -28,8 +29,9 @@ A World of Warcraft: Forever addon that turns flight paths into raid nights. Rec
 | Production | Phase plan, scope, risks, sign-offs |
 | Game Design | Rules, systems and what each mechanic does |
 | Game Tuning & Balancing | Every number: combat, bosses, XP, loot, traits, economy |
+| UX/UI & Accessibility | Screen flows, wireframes, readability, onboarding, settings, accessibility standards; can block on readability |
 | Narrative & Writing | Jokes, flavour text, events, the game's voice |
-| Art | Art direction, sketches, cards, UI mockups |
+| Art | Art direction, sketches, cards, visual styling over approved wireframes |
 | Engineering | Addon architecture, combat engine, sync, prototype |
 | QA | Test plans, bug lists, in-game checks |
 
