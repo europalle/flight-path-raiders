@@ -4,6 +4,7 @@ Decisions made by the Game Director. Newest first.
 
 | Date | Area | Decision |
 | --- | --- | --- |
+| 2026-11-18 | UX | Board goes wide: 960 x 540 UI units (16:9) by default, about the size of the world map; scale slider 70-120%, movable, position saved per character. Extra width goes to the playback stage for Art |
 | 2026-11-18 | Loot | Armor types by class (plate, mail, leather, cloth); tier sets per class (nine per raid); drops not tailored to the roster, all types and sets equally likely; unusable items sell for gold; results pre-fill the best eligible recipient |
 | 2026-11-18 | Playback | Animated by default; speed, skip and summary-only live on a settings page |
 | 2026-11-18 | Phase 2 | Design document signed off by the Director; deliverable 2 starts with UX wireframes |
