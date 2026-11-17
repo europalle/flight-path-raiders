@@ -4,6 +4,7 @@ Decisions made by the Game Director. Newest first.
 
 | Date | Area | Decision |
 | --- | --- | --- |
+| 2026-11-18 | Phase 2 | Design document signed off by the Director; deliverable 2 starts with UX wireframes |
 | 2026-11-18 | Tuning audit | Appendix A approved and applied: ~40 gold per activity (~625/h in the air), Lockout Loot on Normal, keystone DKP capped at 50/week, repairs 1 gold per 5 gear levels per death (x1.5 wipe), Efficient Kill rounds bonus replaces the speed bonus, Ragnaroast every 4 rounds, raid-wide cauldrons, new gear ladder (gates 50/58/66), morale gains and drift, softer trait drains, bench XP 50% |
 | 2026-11-18 | Normal re-clears | XP plus 5 gold per boss (Tuning and Design) |
 | 2026-11-18 | Ranked morale | Morale power bonus off in Heroic and Mythic; ranked records carry trait snapshots (team decision, delegated) |

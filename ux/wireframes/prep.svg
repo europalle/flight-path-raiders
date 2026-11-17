@@ -1,0 +1,186 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 440" width="680" height="440" role="img" aria-label="Prep">
+<title>Prep</title>
+<rect width="680" height="440" fill="#ffffff"/>
+<rect x="0.5" y="0.5" width="679" height="439" rx="6" fill="#ffffff" stroke="#27303a" stroke-width="1.5"/>
+<rect x="0.5" y="0.5" width="679" height="30" rx="6" fill="#eef1f4" stroke="#27303a" stroke-width="1.5"/>
+<rect x="1.5" y="24" width="677" height="7" rx="0" fill="#eef1f4" stroke="none" stroke-width="1"/>
+<line x1="0.5" y1="31" x2="679.5" y2="31" stroke="#27303a" stroke-width="1.5"/>
+<text x="12" y="20" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#27303a" text-anchor="start">Flight Path Raiders</text>
+<text x="140" y="20" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#66707c" text-anchor="start">/ Prep: Ragnaroast (Heroic)</text>
+<rect x="654" y="8" width="16" height="16" rx="3" fill="#ffffff" stroke="#27303a" stroke-width="1"/>
+<text x="662" y="20" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#27303a" text-anchor="middle">x</text>
+<rect x="14" y="40" width="652" height="40" rx="6" fill="#eef1f4" stroke="#8a94a0" stroke-width="1"/>
+<text x="24" y="58" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#27303a" text-anchor="start">Throws the lowest-health melee into lava every 4 rounds. Adds from round 10.</text>
+<text x="24" y="73" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="400" fill="#66707c" text-anchor="start">Tip: fewer melee, or Fire Resistance potions.</text>
+<rect x="520" y="48" width="138" height="24" rx="12" fill="#ffffff" stroke="#27303a" stroke-width="1"/>
+<text x="589" y="64" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#27303a" text-anchor="middle">! 4 melee: risky</text>
+<circle cx="662" cy="44" r="9" fill="#2f6fd6"/>
+<text x="662" y="48" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+<text x="14" y="116" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#27303a" text-anchor="start">Front</text>
+<rect x="66" y="88" width="118" height="46" rx="4" fill="#eef1f4" stroke="#8a94a0" stroke-width="1"/>
+<rect x="71" y="93" width="26" height="26" rx="3" fill="#dfe4e9" stroke="#8a94a0" stroke-width="1"/>
+<line x1="71" y1="93" x2="97" y2="119" stroke="#8a94a0" stroke-width="1"/>
+<line x1="97" y1="93" x2="71" y2="119" stroke="#8a94a0" stroke-width="1"/>
+<text x="102" y="103" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="600" fill="#27303a" text-anchor="start">Brannoc</text>
+<text x="102" y="115" font-family="Inter, Arial, Helvetica, sans-serif" font-size="9" font-weight="400" fill="#66707c" text-anchor="start">Warrior tank</text>
+<circle cx="148" cy="99" r="2.4" fill="#27303a" stroke="#27303a" stroke-width="0.8"/>
+<circle cx="155" cy="99" r="2.4" fill="#27303a" stroke="#27303a" stroke-width="0.8"/>
+<circle cx="162" cy="99" r="2.4" fill="#27303a" stroke="#27303a" stroke-width="0.8"/>
+<circle cx="169" cy="99" r="2.4" fill="#ffffff" stroke="#27303a" stroke-width="0.8"/>
+<circle cx="176" cy="99" r="2.4" fill="#ffffff" stroke="#27303a" stroke-width="0.8"/>
+<text x="72" y="130" font-family="Inter, Arial, Helvetica, sans-serif" font-size="9" font-weight="500" fill="#27303a" text-anchor="start">GL 64  Pow 45  Mor 72</text>
+<rect x="190" y="88" width="118" height="46" rx="4" fill="#eef1f4" stroke="#8a94a0" stroke-width="1"/>
+<rect x="195" y="93" width="26" height="26" rx="3" fill="#dfe4e9" stroke="#8a94a0" stroke-width="1"/>
+<line x1="195" y1="93" x2="221" y2="119" stroke="#8a94a0" stroke-width="1"/>
+<line x1="221" y1="93" x2="195" y2="119" stroke="#8a94a0" stroke-width="1"/>
+<text x="226" y="103" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="600" fill="#27303a" text-anchor="start">Mira</text>
+<text x="226" y="115" font-family="Inter, Arial, Helvetica, sans-serif" font-size="9" font-weight="400" fill="#66707c" text-anchor="start">Paladin tank</text>
+<circle cx="272" cy="99" r="2.4" fill="#27303a" stroke="#27303a" stroke-width="0.8"/>
+<circle cx="279" cy="99" r="2.4" fill="#27303a" stroke="#27303a" stroke-width="0.8"/>
+<circle cx="286" cy="99" r="2.4" fill="#27303a" stroke="#27303a" stroke-width="0.8"/>
+<circle cx="293" cy="99" r="2.4" fill="#ffffff" stroke="#27303a" stroke-width="0.8"/>
+<circle cx="300" cy="99" r="2.4" fill="#ffffff" stroke="#27303a" stroke-width="0.8"/>
+<text x="196" y="130" font-family="Inter, Arial, Helvetica, sans-serif" font-size="9" font-weight="500" fill="#27303a" text-anchor="start">GL 63  Pow 43  Mor 80</text>
+<text x="14" y="170" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#27303a" text-anchor="start">Melee</text>
+<rect x="66" y="142" width="118" height="46" rx="4" fill="#eef1f4" stroke="#8a94a0" stroke-width="1"/>
+<rect x="71" y="147" width="26" height="26" rx="3" fill="#dfe4e9" stroke="#8a94a0" stroke-width="1"/>
+<line x1="71" y1="147" x2="97" y2="173" stroke="#8a94a0" stroke-width="1"/>
+<line x1="97" y1="147" x2="71" y2="173" stroke="#8a94a0" stroke-width="1"/>
+<text x="102" y="157" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="600" fill="#27303a" text-anchor="start">Kess</text>
+<text x="102" y="169" font-family="Inter, Arial, Helvetica, sans-serif" font-size="9" font-weight="400" fill="#66707c" text-anchor="start">Rogue</text>
+<circle cx="148" cy="153" r="2.4" fill="#27303a" stroke="#27303a" stroke-width="0.8"/>
+<circle cx="155" cy="153" r="2.4" fill="#27303a" stroke="#27303a" stroke-width="0.8"/>
+<circle cx="162" cy="153" r="2.4" fill="#27303a" stroke="#27303a" stroke-width="0.8"/>
+<circle cx="169" cy="153" r="2.4" fill="#ffffff" stroke="#27303a" stroke-width="0.8"/>
+<circle cx="176" cy="153" r="2.4" fill="#ffffff" stroke="#27303a" stroke-width="0.8"/>
+<text x="72" y="184" font-family="Inter, Arial, Helvetica, sans-serif" font-size="9" font-weight="500" fill="#27303a" text-anchor="start">GL 66  Pow 101  Mor 55</text>
+<rect x="190" y="142" width="118" height="46" rx="4" fill="#eef1f4" stroke="#8a94a0" stroke-width="1"/>
+<rect x="195" y="147" width="26" height="26" rx="3" fill="#dfe4e9" stroke="#8a94a0" stroke-width="1"/>
+<line x1="195" y1="147" x2="221" y2="173" stroke="#8a94a0" stroke-width="1"/>
+<line x1="221" y1="147" x2="195" y2="173" stroke="#8a94a0" stroke-width="1"/>
+<text x="226" y="157" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="600" fill="#27303a" text-anchor="start">Tor</text>
+<text x="226" y="169" font-family="Inter, Arial, Helvetica, sans-serif" font-size="9" font-weight="400" fill="#66707c" text-anchor="start">Warrior</text>
+<circle cx="272" cy="153" r="2.4" fill="#27303a" stroke="#27303a" stroke-width="0.8"/>
+<circle cx="279" cy="153" r="2.4" fill="#27303a" stroke="#27303a" stroke-width="0.8"/>
+<circle cx="286" cy="153" r="2.4" fill="#27303a" stroke="#27303a" stroke-width="0.8"/>
+<circle cx="293" cy="153" r="2.4" fill="#ffffff" stroke="#27303a" stroke-width="0.8"/>
+<circle cx="300" cy="153" r="2.4" fill="#ffffff" stroke="#27303a" stroke-width="0.8"/>
+<text x="196" y="184" font-family="Inter, Arial, Helvetica, sans-serif" font-size="9" font-weight="500" fill="#27303a" text-anchor="start">GL 62  Pow 97  Mor 61</text>
+<rect x="314" y="142" width="118" height="46" rx="4" fill="#eef1f4" stroke="#8a94a0" stroke-width="1"/>
+<rect x="319" y="147" width="26" height="26" rx="3" fill="#dfe4e9" stroke="#8a94a0" stroke-width="1"/>
+<line x1="319" y1="147" x2="345" y2="173" stroke="#8a94a0" stroke-width="1"/>
+<line x1="345" y1="147" x2="319" y2="173" stroke="#8a94a0" stroke-width="1"/>
+<text x="350" y="157" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="600" fill="#27303a" text-anchor="start">Ash</text>
+<text x="350" y="169" font-family="Inter, Arial, Helvetica, sans-serif" font-size="9" font-weight="400" fill="#66707c" text-anchor="start">Shaman</text>
+<circle cx="396" cy="153" r="2.4" fill="#27303a" stroke="#27303a" stroke-width="0.8"/>
+<circle cx="403" cy="153" r="2.4" fill="#27303a" stroke="#27303a" stroke-width="0.8"/>
+<circle cx="410" cy="153" r="2.4" fill="#27303a" stroke="#27303a" stroke-width="0.8"/>
+<circle cx="417" cy="153" r="2.4" fill="#ffffff" stroke="#27303a" stroke-width="0.8"/>
+<circle cx="424" cy="153" r="2.4" fill="#ffffff" stroke="#27303a" stroke-width="0.8"/>
+<text x="320" y="184" font-family="Inter, Arial, Helvetica, sans-serif" font-size="9" font-weight="500" fill="#27303a" text-anchor="start">GL 61  Pow 94  Mor 70</text>
+<rect x="438" y="142" width="118" height="46" rx="4" fill="#eef1f4" stroke="#8a94a0" stroke-width="1"/>
+<rect x="443" y="147" width="26" height="26" rx="3" fill="#dfe4e9" stroke="#8a94a0" stroke-width="1"/>
+<line x1="443" y1="147" x2="469" y2="173" stroke="#8a94a0" stroke-width="1"/>
+<line x1="469" y1="147" x2="443" y2="173" stroke="#8a94a0" stroke-width="1"/>
+<text x="474" y="157" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="600" fill="#27303a" text-anchor="start">Vey</text>
+<text x="474" y="169" font-family="Inter, Arial, Helvetica, sans-serif" font-size="9" font-weight="400" fill="#66707c" text-anchor="start">Druid</text>
+<circle cx="520" cy="153" r="2.4" fill="#27303a" stroke="#27303a" stroke-width="0.8"/>
+<circle cx="527" cy="153" r="2.4" fill="#27303a" stroke="#27303a" stroke-width="0.8"/>
+<circle cx="534" cy="153" r="2.4" fill="#27303a" stroke="#27303a" stroke-width="0.8"/>
+<circle cx="541" cy="153" r="2.4" fill="#ffffff" stroke="#27303a" stroke-width="0.8"/>
+<circle cx="548" cy="153" r="2.4" fill="#ffffff" stroke="#27303a" stroke-width="0.8"/>
+<text x="444" y="184" font-family="Inter, Arial, Helvetica, sans-serif" font-size="9" font-weight="500" fill="#27303a" text-anchor="start">GL 60  Pow 92  Mor 74</text>
+<text x="14" y="224" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#27303a" text-anchor="start">Ranged</text>
+<rect x="66" y="196" width="118" height="46" rx="4" fill="#eef1f4" stroke="#8a94a0" stroke-width="1"/>
+<rect x="71" y="201" width="26" height="26" rx="3" fill="#dfe4e9" stroke="#8a94a0" stroke-width="1"/>
+<line x1="71" y1="201" x2="97" y2="227" stroke="#8a94a0" stroke-width="1"/>
+<line x1="97" y1="201" x2="71" y2="227" stroke="#8a94a0" stroke-width="1"/>
+<text x="102" y="211" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="600" fill="#27303a" text-anchor="start">Lumi</text>
+<text x="102" y="223" font-family="Inter, Arial, Helvetica, sans-serif" font-size="9" font-weight="400" fill="#66707c" text-anchor="start">Mage</text>
+<circle cx="148" cy="207" r="2.4" fill="#27303a" stroke="#27303a" stroke-width="0.8"/>
+<circle cx="155" cy="207" r="2.4" fill="#27303a" stroke="#27303a" stroke-width="0.8"/>
+<circle cx="162" cy="207" r="2.4" fill="#27303a" stroke="#27303a" stroke-width="0.8"/>
+<circle cx="169" cy="207" r="2.4" fill="#ffffff" stroke="#27303a" stroke-width="0.8"/>
+<circle cx="176" cy="207" r="2.4" fill="#ffffff" stroke="#27303a" stroke-width="0.8"/>
+<text x="72" y="238" font-family="Inter, Arial, Helvetica, sans-serif" font-size="9" font-weight="500" fill="#27303a" text-anchor="start">GL 65  Pow 103  Mor 68</text>
+<rect x="190" y="196" width="118" height="46" rx="4" fill="#eef1f4" stroke="#8a94a0" stroke-width="1"/>
+<rect x="195" y="201" width="26" height="26" rx="3" fill="#dfe4e9" stroke="#8a94a0" stroke-width="1"/>
+<line x1="195" y1="201" x2="221" y2="227" stroke="#8a94a0" stroke-width="1"/>
+<line x1="221" y1="201" x2="195" y2="227" stroke="#8a94a0" stroke-width="1"/>
+<text x="226" y="211" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="600" fill="#27303a" text-anchor="start">Orrin</text>
+<text x="226" y="223" font-family="Inter, Arial, Helvetica, sans-serif" font-size="9" font-weight="400" fill="#66707c" text-anchor="start">Hunter</text>
+<circle cx="272" cy="207" r="2.4" fill="#27303a" stroke="#27303a" stroke-width="0.8"/>
+<circle cx="279" cy="207" r="2.4" fill="#27303a" stroke="#27303a" stroke-width="0.8"/>
+<circle cx="286" cy="207" r="2.4" fill="#27303a" stroke="#27303a" stroke-width="0.8"/>
+<circle cx="293" cy="207" r="2.4" fill="#ffffff" stroke="#27303a" stroke-width="0.8"/>
+<circle cx="300" cy="207" r="2.4" fill="#ffffff" stroke="#27303a" stroke-width="0.8"/>
+<text x="196" y="238" font-family="Inter, Arial, Helvetica, sans-serif" font-size="9" font-weight="500" fill="#27303a" text-anchor="start">GL 62  Pow 99  Mor 66</text>
+<text x="14" y="278" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#27303a" text-anchor="start">Back</text>
+<rect x="66" y="250" width="118" height="46" rx="4" fill="#eef1f4" stroke="#8a94a0" stroke-width="1"/>
+<rect x="71" y="255" width="26" height="26" rx="3" fill="#dfe4e9" stroke="#8a94a0" stroke-width="1"/>
+<line x1="71" y1="255" x2="97" y2="281" stroke="#8a94a0" stroke-width="1"/>
+<line x1="97" y1="255" x2="71" y2="281" stroke="#8a94a0" stroke-width="1"/>
+<text x="102" y="265" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="600" fill="#27303a" text-anchor="start">Sela</text>
+<text x="102" y="277" font-family="Inter, Arial, Helvetica, sans-serif" font-size="9" font-weight="400" fill="#66707c" text-anchor="start">Priest</text>
+<circle cx="148" cy="261" r="2.4" fill="#27303a" stroke="#27303a" stroke-width="0.8"/>
+<circle cx="155" cy="261" r="2.4" fill="#27303a" stroke="#27303a" stroke-width="0.8"/>
+<circle cx="162" cy="261" r="2.4" fill="#27303a" stroke="#27303a" stroke-width="0.8"/>
+<circle cx="169" cy="261" r="2.4" fill="#ffffff" stroke="#27303a" stroke-width="0.8"/>
+<circle cx="176" cy="261" r="2.4" fill="#ffffff" stroke="#27303a" stroke-width="0.8"/>
+<text x="72" y="292" font-family="Inter, Arial, Helvetica, sans-serif" font-size="9" font-weight="500" fill="#27303a" text-anchor="start">GL 63  Pow 120  Mor 71</text>
+<rect x="190" y="250" width="118" height="46" rx="4" fill="#eef1f4" stroke="#8a94a0" stroke-width="1"/>
+<rect x="195" y="255" width="26" height="26" rx="3" fill="#dfe4e9" stroke="#8a94a0" stroke-width="1"/>
+<line x1="195" y1="255" x2="221" y2="281" stroke="#8a94a0" stroke-width="1"/>
+<line x1="221" y1="255" x2="195" y2="281" stroke="#8a94a0" stroke-width="1"/>
+<text x="226" y="265" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="600" fill="#27303a" text-anchor="start">Bram</text>
+<text x="226" y="277" font-family="Inter, Arial, Helvetica, sans-serif" font-size="9" font-weight="400" fill="#66707c" text-anchor="start">Druid</text>
+<circle cx="272" cy="261" r="2.4" fill="#27303a" stroke="#27303a" stroke-width="0.8"/>
+<circle cx="279" cy="261" r="2.4" fill="#27303a" stroke="#27303a" stroke-width="0.8"/>
+<circle cx="286" cy="261" r="2.4" fill="#27303a" stroke="#27303a" stroke-width="0.8"/>
+<circle cx="293" cy="261" r="2.4" fill="#ffffff" stroke="#27303a" stroke-width="0.8"/>
+<circle cx="300" cy="261" r="2.4" fill="#ffffff" stroke="#27303a" stroke-width="0.8"/>
+<text x="196" y="292" font-family="Inter, Arial, Helvetica, sans-serif" font-size="9" font-weight="500" fill="#27303a" text-anchor="start">GL 61  Pow 116  Mor 77</text>
+<circle cx="64" cy="92" r="9" fill="#2f6fd6"/>
+<text x="64" y="96" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+<rect x="564" y="88" width="102" height="206" rx="6" fill="#ffffff" stroke="#8a94a0" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="574" y="104" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#27303a" text-anchor="start">Bench (3)</text>
+<rect x="572" y="112" width="86" height="24" rx="4" fill="#eef1f4" stroke="#8a94a0" stroke-width="1"/>
+<text x="578" y="128" font-family="Inter, Arial, Helvetica, sans-serif" font-size="9" font-weight="500" fill="#27303a" text-anchor="start">Dax · Hunter</text>
+<rect x="572" y="142" width="86" height="24" rx="4" fill="#eef1f4" stroke="#8a94a0" stroke-width="1"/>
+<text x="578" y="158" font-family="Inter, Arial, Helvetica, sans-serif" font-size="9" font-weight="500" fill="#27303a" text-anchor="start">Ilo · Priest</text>
+<rect x="572" y="172" width="86" height="24" rx="4" fill="#eef1f4" stroke="#8a94a0" stroke-width="1"/>
+<text x="578" y="188" font-family="Inter, Arial, Helvetica, sans-serif" font-size="9" font-weight="500" fill="#27303a" text-anchor="start">Fen · Rogue</text>
+<text x="574" y="220" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#27303a" text-anchor="start">Benched until reset</text>
+<rect x="572" y="228" width="86" height="24" rx="4" fill="#ffffff" stroke="#8a94a0" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="578" y="244" font-family="Inter, Arial, Helvetica, sans-serif" font-size="9" font-weight="500" fill="#66707c" text-anchor="start">Rook · Mage</text>
+<text x="574" y="270" font-family="Inter, Arial, Helvetica, sans-serif" font-size="9" font-weight="400" fill="#66707c" text-anchor="start">Drag to swap</text>
+<circle cx="662" cy="92" r="9" fill="#2f6fd6"/>
+<text x="662" y="96" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+<text x="14" y="316" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#27303a" text-anchor="start">Tactic</text>
+<rect x="66" y="300" width="92" height="40" rx="5" fill="#27303a" stroke="#27303a" stroke-width="1.5"/>
+<text x="112" y="317" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle">Spread</text>
+<text x="112" y="332" font-family="Inter, Arial, Helvetica, sans-serif" font-size="9" font-weight="400" fill="#ffffff" text-anchor="middle">AoE hits 1</text>
+<rect x="166" y="300" width="92" height="40" rx="5" fill="#ffffff" stroke="#27303a" stroke-width="1"/>
+<text x="212" y="317" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#27303a" text-anchor="middle">Stack</text>
+<text x="212" y="332" font-family="Inter, Arial, Helvetica, sans-serif" font-size="9" font-weight="400" fill="#66707c" text-anchor="middle">Heal +15%</text>
+<rect x="266" y="300" width="92" height="40" rx="5" fill="#ffffff" stroke="#27303a" stroke-width="1"/>
+<text x="312" y="317" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#27303a" text-anchor="middle">Burn</text>
+<text x="312" y="332" font-family="Inter, Arial, Helvetica, sans-serif" font-size="9" font-weight="400" fill="#66707c" text-anchor="middle">Dmg +15%</text>
+<rect x="366" y="300" width="92" height="40" rx="5" fill="#ffffff" stroke="#27303a" stroke-width="1"/>
+<text x="412" y="317" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#27303a" text-anchor="middle">Play Safe</text>
+<text x="412" y="332" font-family="Inter, Arial, Helvetica, sans-serif" font-size="9" font-weight="400" fill="#66707c" text-anchor="middle">Dmg taken -10%</text>
+<circle cx="470" cy="302" r="9" fill="#2f6fd6"/>
+<text x="470" y="306" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#ffffff" text-anchor="middle">4</text>
+<text x="14" y="364" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#27303a" text-anchor="start">Cauldrons</text>
+<text x="80" y="364" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="500" fill="#27303a" text-anchor="start">[x] Food (mage)</text>
+<text x="198" y="364" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="500" fill="#27303a" text-anchor="start">[x] Elixirs 30g</text>
+<text x="316" y="364" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="500" fill="#27303a" text-anchor="start">[ ] Flasks 75g</text>
+<text x="434" y="364" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="500" fill="#27303a" text-anchor="start">[ ] Fire Res x4  60g</text>
+<rect x="14" y="392" width="150" height="32" rx="4" fill="#ffffff" stroke="#27303a" stroke-width="1"/>
+<text x="89.0" y="412.0" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#27303a" text-anchor="middle">Same as last pull</text>
+<text x="176" y="412" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="500" fill="#66707c" text-anchor="start">Cost this pull: 30 gold</text>
+<rect x="516" y="388" width="150" height="40" rx="4" fill="#27303a" stroke="#27303a" stroke-width="1.5"/>
+<text x="591.0" y="412.0" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#ffffff" text-anchor="middle">Pull</text>
+<circle cx="512" cy="386" r="9" fill="#2f6fd6"/>
+<text x="512" y="390" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#ffffff" text-anchor="middle">5</text>
+</svg>
