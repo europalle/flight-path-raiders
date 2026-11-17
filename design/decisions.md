@@ -4,6 +4,7 @@ Decisions made by the Game Director. Newest first.
 
 | Date | Area | Decision |
 | --- | --- | --- |
+| 2026-11-18 | Levels | Max level 60, Classic style; levelling 1-60 in about 20-25 flights; keystones need level 60, Raid Normal average level 58; dungeons scale to group level; seasons never raise the cap |
 | 2026-11-18 | Licence | All rights reserved during development; final licence decided before beta (Production leans GPL-3.0 code, CC BY-NC-SA 4.0 art) - pending Director confirmation |
 | 2026-11-17 | Workspace | Code, art and prototype live in this repository; design documents stay as Claude docs, linked from `design/README.md` |
 | 2026-11-17 | Libraries | Use community libraries only where unavoidable; bundle them in the addon folder for a one-folder install |
