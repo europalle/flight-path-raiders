@@ -4,6 +4,7 @@ Decisions made by the Game Director. Newest first.
 
 | Date | Area | Decision |
 | --- | --- | --- |
+| 2026-11-18 | Studio | New department, Game Tuning & Balancing: owns every number; balance data lives in `data/` and is read by both prototype and addon |
 | 2026-11-18 | Bosses | Names are close puns on the originals: The Molten Bore (Magmadad, Baron Get-Down, Lucifrown, Majordomo Exhaustus, Ragnaroast), Onyxiety's Lair; dungeons The Deadlines, Gnomeregret, Scarlet Monotony |
 | 2026-11-18 | Loot | WoW-style items with seeded random stats: quality tiers, random suffixes, named epics, 3-piece tier sets, one legendary per raid with a quest chain |
 | 2026-11-18 | Attunements | Classic-style attunement chains gate Heroic and Mythic; the guild is attuned once, each character needs one catch-up run |
