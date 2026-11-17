@@ -4,6 +4,11 @@ Decisions made by the Game Director. Newest first.
 
 | Date | Area | Decision |
 | --- | --- | --- |
+| 2026-11-18 | Tuning audit | Appendix A approved and applied: ~40 gold per activity (~625/h in the air), Lockout Loot on Normal, keystone DKP capped at 50/week, repairs 1 gold per 5 gear levels per death (x1.5 wipe), Efficient Kill rounds bonus replaces the speed bonus, Ragnaroast every 4 rounds, raid-wide cauldrons, new gear ladder (gates 50/58/66), morale gains and drift, softer trait drains, bench XP 50% |
+| 2026-11-18 | Normal re-clears | XP plus 5 gold per boss (Tuning and Design) |
+| 2026-11-18 | Ranked morale | Morale power bonus off in Heroic and Mythic; ranked records carry trait snapshots (team decision, delegated) |
+| 2026-11-18 | Affixes | One base affix (Fortified Trash or Tyrannical Raid Leader) plus one weekly affix; affixes never depend on the characters brought |
+| 2026-11-18 | Legendary | Bad-luck protection kept small: 2% base, +0.5 points per miss, cap 10% |
 | 2026-11-18 | Studio | New department, UX/UI & Accessibility: owns flows, wireframes, readability and accessibility; wireframes come before art; can block on readability, Director breaks ties with Art |
 | 2026-11-18 | Studio | New department, Game Tuning & Balancing: owns every number; balance data lives in `data/` and is read by both prototype and addon |
 | 2026-11-18 | Bosses | Names are close puns on the originals: The Molten Bore (Magmadad, Baron Get-Down, Lucifrown, Majordomo Exhaustus, Ragnaroast), Onyxiety's Lair; dungeons The Deadlines, Gnomeregret, Scarlet Monotony |
