@@ -243,7 +243,7 @@ The look is World of Warcraft Classic (2004): a chunky, hand-painted high-fantas
 
 ## R. Races, Alliance only (Director, 2026-11-18)
 
-The guild is Alliance: human, dwarf, night elf and gnome, with Classic's class rules. Each class gets two looks: the human version (E prompts) plus one other race, or two non-human races where Classic allowed no humans (hunter, druid). Shamans wait for the Director's decision.
+The guild is Alliance: human, dwarf, night elf and gnome, with Classic's class rules. Each class gets two looks: the human version (E prompts) plus one other race, or two non-human looks where humans can't take the class (hunter, druid, shaman). Shamans are dwarves, as WoW: Forever allows, so they get two dwarf looks (R11, R12).
 
 **Attach to every R prompt:** the character study and your E0 template result.
 
@@ -327,6 +327,22 @@ Attach: the character study and your E0 template result.
 
 ```
 The look is World of Warcraft Classic (2004): a chunky, hand-painted high-fantasy style with warm saturated colours, exaggerated proportions (huge shoulder pads, big hands, big boots, oversized weapons), and interface frames made of gold-trimmed parchment and dark carved stone with rivets and knotwork ornaments. Draw it as a lovingly clumsy parody of that style, as if a raid leader sketched it in a paper notebook with a dip pen and watercolour. Wobbly confident ink outlines, light crosshatching on shadow sides. Original designs only: no Blizzard logos, no real WoW icons, no text. Match the drawing style of the first attached reference image. Exactly ONE full-body night elf druid character, a woman, tall and lean, about one and a quarter times the template's height, purple-blue skin and long pointed ears: leather and leaves, a crown of branches, long teal hair. Side view facing right, standing idle in the same pose as the attached mannequin template, hands empty because weapons are added separately, feet on an invisible flat line at the bottom of the image. Original character, not a known WoW character. The background must be one flat solid magenta (#FF00FF) colour edge to edge: no gradient, no glow, no floor shadow, nothing else in the image.
+```
+
+## R11. Dwarf shaman (man)
+
+Attach: the character study and your E0 template result.
+
+```
+The look is World of Warcraft Classic (2004): a chunky, hand-painted high-fantasy style with warm saturated colours, exaggerated proportions (huge shoulder pads, big hands, big boots, oversized weapons), and interface frames made of gold-trimmed parchment and dark carved stone with rivets and knotwork ornaments. Draw it as a lovingly clumsy parody of that style, as if a raid leader sketched it in a paper notebook with a dip pen and watercolour. Wobbly confident ink outlines, light crosshatching on shadow sides. Original designs only: no Blizzard logos, no real WoW icons, no text. Match the drawing style of the first attached reference image. Exactly ONE full-body dwarf shaman character, a man, short and very stocky, about three-quarters of the template's height, broad as a barrel: mail armour and furs, a braided beard with bone beads, runes painted on his arms. Side view facing right, standing idle in the same pose as the attached mannequin template, hands empty because weapons are added separately, feet on an invisible flat line at the bottom of the image. Original character, not a known WoW character. The background must be one flat solid magenta (#FF00FF) colour edge to edge: no gradient, no glow, no floor shadow, nothing else in the image.
+```
+
+## R12. Dwarf shaman (woman)
+
+Attach: the character study and your E0 template result.
+
+```
+The look is World of Warcraft Classic (2004): a chunky, hand-painted high-fantasy style with warm saturated colours, exaggerated proportions (huge shoulder pads, big hands, big boots, oversized weapons), and interface frames made of gold-trimmed parchment and dark carved stone with rivets and knotwork ornaments. Draw it as a lovingly clumsy parody of that style, as if a raid leader sketched it in a paper notebook with a dip pen and watercolour. Wobbly confident ink outlines, light crosshatching on shadow sides. Original designs only: no Blizzard logos, no real WoW icons, no text. Match the drawing style of the first attached reference image. Exactly ONE full-body dwarf shaman character, a woman, short and very stocky, about three-quarters of the template's height, broad as a barrel: mail armour and furs, thick braids with stone charms, runes painted on her arms. Side view facing right, standing idle in the same pose as the attached mannequin template, hands empty because weapons are added separately, feet on an invisible flat line at the bottom of the image. Original character, not a known WoW character. The background must be one flat solid magenta (#FF00FF) colour edge to edge: no gradient, no glow, no floor shadow, nothing else in the image.
 ```
 
 ## What Art builds from these
