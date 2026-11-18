@@ -4,6 +4,7 @@ Decisions made by the Game Director. Newest first.
 
 | Date | Area | Decision |
 | --- | --- | --- |
+| 2026-11-18 | Production | Task tracking in GitHub Issues (labels for department and status, milestones per phase); STATUS.md is the session handoff file |
 | 2026-11-18 | Design / Art | Shamans stay: dwarves can be shamans in WoW: Forever (Director). Two dwarf shaman looks, R11 and R12 |
 | 2026-11-18 | Design / Art | Alliance only: human, dwarf, night elf, gnome with Classic class rules (replaces the all-races entry). Two looks per class; 10 R prompts. Shaman open: Classic Alliance had none |
 | 2026-11-18 | Design / Art | Races with Classic's class restrictions, no factions, cosmetic for now; minotaur and undead as parody-safe names. Art covers 21 race and class looks (6 human + 15 new R prompts, men and women mixed). E3, E6, E9 retired (not Classic-legal) |

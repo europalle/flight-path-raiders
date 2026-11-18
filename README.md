@@ -4,6 +4,8 @@ A World of Warcraft: Forever addon that turns flight paths into raid nights. Rec
 
 > Status: **Phase 2, pre-production.** Nothing is playable yet.
 
+**Current status and next steps:** see [STATUS.md](STATUS.md). Tasks live in [Issues](https://github.com/europalle/flight-path-raiders/issues).
+
 ## Design pillars
 
 1. **Fits a flight.** One prep phase plus one pull fits a 2-8 minute flight. Landing never punishes you.
