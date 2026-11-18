@@ -6,7 +6,7 @@ local _, ns = ...
 ns = ns or FPR_ENGINE or {}
 FPR_ENGINE = ns
 
-ns.ENGINE_VERSION = 6  -- 6: the other four Molten Bore bosses (5: skill, familiarity, chemistry, moments)
+ns.ENGINE_VERSION = 7  -- 7: per-character gear level, playback frames (6: Molten Bore bosses; 5: skill, chemistry, moments)
 
 local floor = math.floor
 local function idiv(a, b) return floor(a / b) end
@@ -72,8 +72,10 @@ function ns.Simulate(inputs)
     local cls = D.CLASSES[c.class]
     local role = D.SPECS[c.class][c.spec]
     local base = D.ROLE_BASE[role]
-    local hp = pm(pm(base.hp, glmul), hp_mul)
-    local power = pm(pm(base.power, glmul), pow_mul)
+    local cgl = glmul  -- optional per-character gear level (the playtest's real gear)
+    if c.gl then cgl = 1000 + D.GL_STEP * (c.gl - 60) end
+    local hp = pm(pm(base.hp, cgl), hp_mul)
+    local power = pm(pm(base.power, cgl), pow_mul)
     local spec_power = D.SPEC_POWER[c.class .. ":" .. c.spec]
     if spec_power then power = pm(power, spec_power) end
     -- Fire resistance gear trades power for resistance (pass 3).
@@ -661,6 +663,13 @@ function ns.Simulate(inputs)
       end
     end
 
+    -- Optional playback frames (not part of the checksum): health after each round.
+    if inputs.frames then
+      local f = { boss = boss.hp < 0 and 0 or boss.hp, away = boss.submerged, adds = 0, hp = {} }
+      for a = 1, #adds do if adds[a].alive then f.adds = f.adds + 1 end end
+      for i = 1, #raid do f.hp[i] = raid[i].alive and raid[i].hp or 0 end
+      inputs.frames[#inputs.frames + 1] = f
+    end
     -- Magmadad's pups: dead pups get back up unless every pup died within the window.
     if boss_def.pups and not pups_done then
       local first, dead = nil, 0

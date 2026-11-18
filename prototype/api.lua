@@ -13,6 +13,19 @@ local function esc(s)
 end
 local function num(n) return string.format("%d", n) end
 
+-- Playback frames (inputs.frames = {}): boss health, away flag, adds alive and raid health per round.
+local function frames_json(frames)
+  if not frames then return "" end
+  local out = {}
+  for i = 1, #frames do
+    local f = frames[i]
+    local hp = {}
+    for j = 1, #f.hp do hp[j] = num(f.hp[j]) end
+    out[i] = '{"b":' .. num(f.boss) .. ',"w":' .. (f.away and 'true' or 'false') .. ',"a":' .. num(f.adds) .. ',"h":[' .. table.concat(hp, ',') .. ']}'
+  end
+  return ',"frames":[' .. table.concat(out, ',') .. ']'
+end
+
 function API.Run(input)
   local r = ns.Simulate(input)
   local ev = {}
@@ -24,11 +37,13 @@ function API.Run(input)
   for i = 1, #r.raid do
     local p = r.raid[i]
     raid[#raid + 1] = '{"name":' .. esc(p.name) .. ',"hp":' .. num(p.hp) .. ',"maxhp":' .. num(p.maxhp) ..
-      ',"alive":' .. (p.alive and 'true' or 'false') .. ',"role":' .. esc(p.role) .. ',"mana":' .. num(p.mana) .. '}'
+      ',"alive":' .. (p.alive and 'true' or 'false') .. ',"role":' .. esc(p.role) .. ',"mana":' .. num(p.mana) ..
+      ',"dealt":' .. num(p.dealt) .. ',"healed":' .. num(p.healed) .. '}'
   end
   return '{"result":' .. esc(r.result) .. ',"rounds":' .. num(r.rounds) .. ',"checksum":' .. num(r.checksum) ..
     ',"engine":' .. num(r.engine) .. ',"bossHp":' .. num(r.boss_hp) .. ',"bossMax":' .. num(r.boss_maxhp) ..
-    ',"survivors":' .. num(r.survivors) .. ',"events":[' .. table.concat(ev, ',') .. '],"raid":[' .. table.concat(raid, ',') .. ']}'
+    ',"survivors":' .. num(r.survivors) .. ',"events":[' .. table.concat(ev, ',') .. '],"raid":[' .. table.concat(raid, ',') .. ']' ..
+    frames_json(input.frames) .. '}'
 end
 
 -- Runs n fights of the same raid with seeds derived from base seed; returns a JSON summary.

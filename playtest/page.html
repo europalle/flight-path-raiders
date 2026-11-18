@@ -1,0 +1,492 @@
+<title>Flight Path Raiders Playtest</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+/* The raid leader's notebook: Field Journal in light mode, Midnight Grimoire in dark (art direction, 2026-11-18). */
+:root {
+  --paper: #f3ecdc; --panel: #fbf6ea; --ink: #2a2119; --muted: #6b5d4c; --rule: #d8ccb3; --sunk: #ebe2cd;
+  --lava: #c44a1a; --frost: #2f63c4; --good: #2e7d32; --warn: #a86a00; --bad: #b3261e; --epic: #7b3fb0; --rare: #2f63c4;
+  --lava-tint: rgba(196, 74, 26, .10); --good-tint: rgba(46, 125, 50, .10); --frost-tint: rgba(47, 99, 196, .10);
+  --hand: "Kalam", "Comic Sans MS", cursive; --body: "IBM Plex Sans", system-ui, sans-serif; --mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #1c1f26; --panel: #252a33; --ink: #e6e1d3; --muted: #a8a293; --rule: #3a404c; --sunk: #20242c;
+  --lava: #ff8a3d; --frost: #8cc8ff; --good: #7ccf83; --warn: #f0b44c; --bad: #ff7b6e; --epic: #c79bf2; --rare: #8cc8ff;
+  --lava-tint: rgba(255, 138, 61, .14); --good-tint: rgba(124, 207, 131, .12); --frost-tint: rgba(140, 200, 255, .12); color-scheme: dark } }
+:root[data-theme="dark"] {
+  --paper: #1c1f26; --panel: #252a33; --ink: #e6e1d3; --muted: #a8a293; --rule: #3a404c; --sunk: #20242c;
+  --lava: #ff8a3d; --frost: #8cc8ff; --good: #7ccf83; --warn: #f0b44c; --bad: #ff7b6e; --epic: #c79bf2; --rare: #8cc8ff;
+  --lava-tint: rgba(255, 138, 61, .14); --good-tint: rgba(124, 207, 131, .12); --frost-tint: rgba(140, 200, 255, .12); color-scheme: dark }
+[hidden] { display: none !important; }
+body { background: var(--paper); color: var(--ink); font: 15px/1.5 var(--body); }
+.wrap { max-width: 1180px; margin: 0 auto; padding-block: 18px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 20px; }
+h1 { font: 700 1.9rem/1.1 var(--hand); margin: 0; }
+h1 small { font: 600 .75rem/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-left: 8px; vertical-align: middle; }
+.purse { display: flex; flex-wrap: wrap; gap: 8px; }
+.pill { font: 600 .85rem/1 var(--mono); border: 1px solid var(--rule); border-radius: 999px; padding: 7px 11px; background: var(--panel); white-space: nowrap; }
+nav { display: flex; flex-wrap: wrap; gap: 6px; margin: 14px 0 18px; border-bottom: 1px solid var(--rule); }
+nav button { border: 0; border-bottom: 3px solid transparent; border-radius: 0; padding: 10px 12px; font: 700 1.1rem/1 var(--hand); background: none; color: var(--muted); }
+nav button[aria-current="page"] { color: var(--ink); border-bottom-color: var(--lava); }
+.panel { background: var(--panel); border: 1px solid var(--rule); border-radius: 12px; padding: 16px; min-width: 0; }
+.panel + .panel { margin-top: 16px; }
+h2 { font: 700 1.35rem/1.2 var(--hand); margin: 0 0 10px; text-wrap: balance; }
+h3 { font: 600 .74rem/1 var(--body); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 18px 0 8px; }
+.grid2 { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+@media (max-width: 860px) { .grid2 { grid-template-columns: minmax(0, 1fr); } }
+p { margin: 6px 0; } .muted { color: var(--muted); } .small { font-size: .85rem; }
+button { font: 600 .95rem/1 var(--body); border-radius: 8px; padding: 10px 14px; cursor: pointer; border: 1.5px solid var(--ink); background: transparent; color: var(--ink); }
+button.primary { background: var(--ink); color: var(--paper); font: 700 1.2rem/1 var(--hand); padding: 12px 24px; }
+button.small { font-size: .82rem; padding: 6px 10px; border-width: 1px; }
+button.link { border: 0; padding: 0; text-decoration: underline; font-weight: 500; }
+button:disabled { opacity: .45; cursor: not-allowed; }
+button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--frost); outline-offset: 2px; }
+select, input[type=text], textarea { font: inherit; font-size: .88rem; color: var(--ink); background: var(--paper); border: 1px solid var(--rule); border-radius: 6px; padding: 4px 6px; max-width: 100%; }
+.row { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; }
+.news { background: var(--sunk); border-radius: 10px; padding: 10px 14px; margin-bottom: 16px; font-size: .95rem; }
+/* Hub boss list */
+.bosses { display: grid; gap: 10px; }
+.boss { display: grid; grid-template-columns: 54px minmax(0, 1fr) auto; gap: 12px; align-items: center; border: 1px solid var(--rule); border-radius: 10px; padding: 10px 12px; background: var(--paper); }
+@media (max-width: 560px) { .boss { grid-template-columns: 44px minmax(0, 1fr); } .boss .acts { grid-column: 1 / -1; } }
+.sigil { width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; font: 700 1.3rem/1 var(--hand); background: var(--lava-tint); border: 1.5px solid var(--lava); color: var(--lava); overflow: hidden; }
+.sigil img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 15%; }
+.boss b { font: 700 1.15rem/1.2 var(--hand); }
+.boss .acts { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; }
+.st { font: 600 .72rem/1 var(--mono); letter-spacing: .04em; text-transform: uppercase; border-radius: 999px; padding: 4px 8px; border: 1px solid var(--rule); color: var(--muted); white-space: nowrap; }
+.st.done { color: var(--good); border-color: var(--good); }
+.st.lock { opacity: .7; }
+/* Roster cards */
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; }
+.rc { border: 1px solid var(--rule); border-radius: 10px; background: var(--paper); padding: 10px; display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 4px 10px; position: relative; }
+.rc.sel { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+.rc.bench { opacity: .6; }
+.face { width: 56px; height: 56px; border-radius: 8px; background: var(--sunk); overflow: hidden; border: 1px solid var(--rule); }
+.face img { width: 100%; height: 100%; display: block; }
+.rc .nm { font: 700 1.05rem/1.15 var(--hand); }
+.rc .meta { font-size: .78rem; color: var(--muted); line-height: 1.35; }
+.rc .wide { grid-column: 1 / -1; }
+.tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+.t { font: 600 .68rem/1 var(--mono); border: 1px solid var(--rule); border-radius: 4px; padding: 3px 5px; color: var(--muted); }
+.t.common { } .t.rare { color: var(--rare); border-color: var(--rare); } .t.epic { color: var(--epic); border-color: var(--epic); }
+.t.role-tank { color: var(--frost); } .t.role-healer { color: var(--good); } .t.role-damage { color: var(--lava); }
+.t.benched { color: var(--bad); border-color: var(--bad); }
+.pickbox { position: absolute; top: 8px; right: 8px; width: 20px; height: 20px; }
+/* Prep */
+.tcards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+@media (max-width: 600px) { .tcards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.tcard { border: 1px solid var(--rule); border-radius: 8px; padding: 8px 10px; cursor: pointer; background: var(--paper); }
+.tcard input { position: absolute; opacity: 0; }
+.tcard b { display: block; font: 700 1.05rem/1.2 var(--hand); }
+.tcard span { font-size: .76rem; color: var(--muted); }
+.tcard:has(input:checked) { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+.tcard:has(input:checked) b::before { content: "\2713  "; }
+.tcard:has(input:focus-visible), .chip:has(input:focus-visible) { outline: 2px solid var(--frost); outline-offset: 2px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--rule); border-radius: 8px; padding: 6px 10px; cursor: pointer; background: var(--paper); font-size: .9rem; }
+.chip:has(input:checked) { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+.chip small { color: var(--muted); }
+.lineup { width: 100%; border-collapse: collapse; font-size: .88rem; }
+.lineup td, .lineup th { padding: 5px 6px 5px 0; border-top: 1px solid var(--rule); text-align: left; vertical-align: middle; }
+.lineup th { font: 600 .7rem/1 var(--body); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); border-top: 0; }
+.lineup .mini { width: 30px; height: 30px; border-radius: 6px; overflow: hidden; display: inline-block; vertical-align: middle; margin-right: 6px; background: var(--sunk); }
+.lineup .mini img { width: 100%; height: 100%; }
+.tablebox { overflow-x: auto; }
+.warn { color: var(--warn); font-size: .85rem; margin: 3px 0; } .err { color: var(--bad); font-weight: 600; font-size: .9rem; margin: 3px 0; }
+.costline { display: flex; justify-content: space-between; gap: 8px; font-size: .88rem; border-top: 1px dashed var(--rule); padding: 4px 0; }
+.sticky { position: sticky; top: env(safe-area-inset-top, 0px); }
+/* Pull playback */
+.stage { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 14px; align-items: center; }
+@media (max-width: 560px) { .stage { grid-template-columns: 72px minmax(0, 1fr); } }
+.bossart { width: 100%; aspect-ratio: 1; max-width: 120px; border-radius: 12px; display: grid; place-items: center; background: var(--lava-tint); border: 1.5px solid var(--lava); overflow: hidden; font: 700 2.4rem/1 var(--hand); color: var(--lava); }
+.bossart img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 10%; }
+.bossart.away { opacity: .35; }
+.bar { height: 14px; border: 1px solid var(--rule); border-radius: 7px; overflow: hidden; background: var(--paper); }
+.bar i { display: block; height: 100%; background: var(--lava); transition: width .35s ease; }
+.raid10 { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; margin-top: 14px; }
+@media (max-width: 560px) { .raid10 { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; } }
+.ph { text-align: center; font-size: .72rem; min-width: 0; }
+.ph .face { width: 100%; max-width: 76px; height: auto; aspect-ratio: 1; margin: 0 auto 3px; }
+.ph .bar { height: 6px; } .ph .bar i { background: var(--good); }
+.ph.dead .face { filter: grayscale(1); opacity: .45; } .ph.dead { color: var(--bad); }
+.ph .n { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+ol.log { list-style: none; margin: 10px 0 0; padding: 0; max-height: 340px; overflow-y: auto; border-top: 1px solid var(--rule); }
+ol.log li { display: grid; grid-template-columns: 3em minmax(0, 1fr); gap: 8px; padding: 5px 2px; border-bottom: 1px solid var(--rule); font-size: .9rem; }
+ol.log .r { font: 600 .76rem/1.9 var(--mono); color: var(--muted); }
+ol.log li.death { color: var(--bad); font-weight: 600; } ol.log li.save { color: var(--good); } ol.log li.fire { color: var(--lava); }
+ol.log li.mech { color: var(--warn); font-weight: 600; } ol.log li.good, ol.log li.bad { font-weight: 600; border-left: 3px solid var(--good); padding-left: 6px; }
+ol.log li.bad { border-left-color: var(--bad); }
+.pullgrid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 16px; align-items: start; margin-top: 12px; }
+@media (max-width: 860px) { .pullgrid { grid-template-columns: minmax(0, 1fr); } }
+.pullgrid ol.log { margin-top: 0; }
+.banner { border-radius: 10px; padding: 14px 16px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; align-items: baseline; margin-bottom: 12px; }
+.banner.kill { background: var(--ink); color: var(--paper); } .banner.fail { background: var(--lava-tint); border: 1px solid var(--lava); }
+.banner .big { font: 700 1.7rem/1.1 var(--hand); }
+.recap { border-left: 4px solid var(--warn); background: var(--sunk); border-radius: 0 10px 10px 0; padding: 10px 14px; margin: 10px 0; }
+.recap .tier { font: 600 .7rem/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--warn); }
+.recap.answer { border-left-color: var(--good); } .recap.answer .tier { color: var(--good); }
+.recap p { font-size: 1rem; }
+.loot { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 10px; align-items: center; border: 1px solid var(--rule); border-radius: 8px; padding: 8px 10px; margin: 6px 0; background: var(--paper); }
+.loot .iname { font-weight: 700; } .loot .iname.epic { color: var(--epic); } .loot .iname.rare { color: var(--rare); }
+.controls { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.controls button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+.statgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; }
+.sg { border: 1px solid var(--rule); border-radius: 8px; padding: 8px 10px; background: var(--paper); }
+.sg .k { font: 600 .68rem/1 var(--body); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.sg .v { font: 700 1.4rem/1.25 var(--hand); }
+.jab { border-top: 1px solid var(--rule); padding: 8px 0; }
+.jab b { font-family: var(--hand); font-size: 1.05rem; }
+.unknown { color: var(--muted); font-style: italic; }
+.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); background: var(--ink); color: var(--paper); padding: 10px 16px; border-radius: 10px; font-size: .9rem; max-width: calc(100% - 32px); box-shadow: 0 6px 20px rgba(0,0,0,.25); z-index: 20; }
+.foot { color: var(--muted); font-size: .8rem; margin-top: 28px; max-width: 80ch; }
+@media (prefers-reduced-motion: reduce) { .bar i { transition: none; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Flight Path Raiders <small>Playtest build</small></h1>
+    <div class="purse" id="purse"></div>
+  </header>
+  <nav id="nav" aria-label="Board">
+    <button type="button" data-v="hub">Hub</button>
+    <button type="button" data-v="roster">Roster</button>
+    <button type="button" data-v="tavern">Tavern</button>
+    <button type="button" data-v="journal">Journal</button>
+    <button type="button" data-v="guild">Guild</button>
+  </nav>
+  <main id="view"><p class="muted">Loading the Lua engine...</p></main>
+  <p class="foot">Playtest build. Every fight runs on the real Lua combat engine the addon will use. Not in this build: levelling, traits, morale, events, keystones, Mythic, the guild hall and art beyond portraits. A week here is a whole real week of flights squeezed into a few clicks. Your save stays in this browser; Guild has copy and load for moving it.</p>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script src="https://cdn.jsdelivr.net/npm/fengari-web@0.1.4/dist/fengari-web.js"></script>
+<script>
+const LUA_SOURCES = /*__LUA__*/[];
+const PORTRAITS = /*__PORTRAITS__*/{};
+</script>
+<script>
+/*__GAME__*/
+</script>
+<script>
+"use strict";
+const G = window.FPR_GAME;
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const SAVE_KEY = "fpr-playtest-v1";
+let S = null;          // game state
+let view = "hub";
+let prep = null;       // prep being edited
+let lastOut = null;    // last pull result for the results screen
+let playing = null;    // playback timer
+let speed = 1;
+
+// ---------- engine bridge ----------
+function toLua(v) {
+  if (Array.isArray(v)) return "{" + v.map(toLua).join(",") + "}";
+  if (v && typeof v === "object") return "{" + Object.entries(v).map(([k, x]) => `[${JSON.stringify(k)}]=${toLua(x)}`).join(",") + "}";
+  if (typeof v === "string") return JSON.stringify(v).replace(/\\u[0-9a-fA-F]{4}/g, "?");
+  if (typeof v === "boolean") return v ? "true" : "false";
+  return String(Math.round(v));
+}
+function lua(code) { return fengari.load(code)(); }
+function engine(input) { return JSON.parse(lua(`return FPR_API.Run(${toLua(input)})`)); }
+
+// ---------- save ----------
+function save() { try { localStorage.setItem(SAVE_KEY, JSON.stringify(S)); } catch (e) { /* storage blocked: the game still runs */ } }
+function load() { try { const s = localStorage.getItem(SAVE_KEY); return s ? JSON.parse(s) : null; } catch (e) { return null; } }
+function toast(msg) { const t = $("toast"); t.textContent = msg; t.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(() => t.hidden = true, 3200); }
+
+// ---------- helpers ----------
+const roleOf = c => G.role(c.cls, c.spec);
+const face = c => { const p = PORTRAITS[c.cls] && PORTRAITS[c.cls][c.look]; return p ? `<img src="${p.img}" alt="">` : ""; };
+const bossSigil = id => id === "ragnaroast" && PORTRAITS._rag ? `<img src="${PORTRAITS._rag}" alt="">` : esc(G.BOSS[id].name[0]);
+const skill = c => Math.floor(c.skill10 / 10);
+const famOf = (c, b) => ((c.fam10[b] || 0) / 10);
+function tagsFor(c) {
+  return `<span class="t ${c.rarity}">${G.RARITY[c.rarity].label}</span><span class="t role-${roleOf(c)}">${roleOf(c)}</span><span class="t">GL ${G.gearLevel(c)}</span><span class="t">skill ${skill(c)}</span>` +
+    (c.fire ? `<span class="t">fire gear ${c.fire}</span>` : "") + (c.benched ? `<span class="t benched">benched</span>` : "");
+}
+function purse() {
+  $("purse").innerHTML = `<span class="pill">Week ${S.week}</span><span class="pill">${S.gold.toLocaleString()} gold</span><span class="pill">${S.dkp} DKP</span>`;
+}
+function go(v) { view = v; if (playing) { clearInterval(playing); playing = null; } render(); window.scrollTo(0, 0); }
+
+// ---------- views ----------
+function render() {
+  purse();
+  document.querySelectorAll("#nav button").forEach(b => b.setAttribute("aria-current", b.dataset.v === view ? "page" : "false"));
+  const fn = { hub: vHub, roster: vRoster, tavern: vTavern, journal: vJournal, guild: vGuild, prep: vPrep, pull: vPull }[view] || vHub;
+  $("view").innerHTML = fn();
+  wire[view] && wire[view]();
+  save();
+}
+const wire = {};
+
+function vHub() {
+  const news = S.news.length ? `<div class="news">${esc(S.news[S.news.length - 1])}</div>` : "";
+  const rows = G.BOSSES.map((b, i) => {
+    const p = S.progress[b.id];
+    const nOpen = G.unlocked(S, b.id, "normal"), hOpen = G.unlocked(S, b.id, "heroic");
+    const nState = !nOpen ? `<span class="st lock">locked</span>` : p.normalWeek ? `<span class="st done">Normal: killed this week</span>` : p.normalKills ? `<span class="st">Normal: loot available</span>` : `<span class="st">Normal: not yet killed</span>`;
+    const hState = !G.heroicOpen(S) ? "" : !hOpen ? `<span class="st lock">Heroic locked</span>` : p.heroicTried ? `<span class="st ${p.heroicKills && S.history.find(h => h.week === S.week && h.boss === b.id && h.mode === "heroic" && h.result === "kill") ? "done" : ""}">Heroic: used this week</span>` : `<span class="st">Heroic: 1 attempt</span>`;
+    return `<div class="boss"><div class="sigil">${bossSigil(b.id)}</div><div><b>${i + 1}. ${esc(b.name)}</b><div class="row" style="gap:6px;margin-top:4px">${nState}${hState}</div></div>
+      <div class="acts"><button type="button" class="small" data-prep="${b.id}:normal" ${nOpen ? "" : "disabled"}>Normal</button>${G.heroicOpen(S) ? `<button type="button" class="small" data-prep="${b.id}:heroic" ${hOpen && !p.heroicTried ? "" : "disabled"}>Heroic</button>` : ""}</div></div>`;
+  }).join("");
+  const pend = (S.pending || []).length;
+  const ids = S.roster.map(c => c.id);
+  return `${news}<div class="grid2"><div class="panel"><h2>The Molten Bore</h2>
+      <p class="muted small">Normal is free practice: pull as often as you like, loot on the first kill of each boss each week. Heroic opens once Ragnaroast is down on Normal: one attempt per boss per week, and anyone who dies sits out until reset.</p>
+      <div class="bosses" style="margin-top:10px">${rows}</div></div>
+    <div><div class="panel"><h2>This week</h2>
+      ${pend ? `<p><b>${pend} item${pend > 1 ? "s" : ""} waiting to be handed out.</b> <button type="button" class="small" id="goLoot">Hand out loot</button></p>` : ""}
+      <div class="row"><button type="button" id="dungeon" ${S.dungeonsLeft ? "" : "disabled"}>Run a dungeon</button><span class="muted small">${S.dungeonsLeft} left this week: 35-45 gold, sometimes gear (GL 50-56)</span></div>
+      <h3>Your guild</h3>
+      <div class="statgrid"><div class="sg"><div class="k">Raiders</div><div class="v">${S.roster.length}/15</div></div>
+        <div class="sg"><div class="k">Gear level</div><div class="v">${Math.round(S.roster.reduce((s, c) => s + G.gearLevel(c), 0) / S.roster.length)}</div></div>
+        <div class="sg"><div class="k">Skill</div><div class="v">${Math.round(S.roster.reduce((s, c) => s + skill(c), 0) / S.roster.length)}</div></div>
+        <div class="sg"><div class="k">Chemistry</div><div class="v">${G.cohesion(S, ids).toFixed(1)}</div></div></div>
+      <h3>End of week</h3>
+      <p class="small muted">Resets lockouts, brings benched raiders back, rolls new Tavern faces and pays the week's quests (+${G.ECON.weeklyQuests} gold).</p>
+      <div class="row"><button type="button" id="endWeek">End week ${S.week}</button><span id="endConfirm"></span></div></div>
+      ${lootPanel()}</div></div>`;
+}
+wire.hub = () => {
+  document.querySelectorAll("[data-prep]").forEach(b => b.onclick = () => { const [boss, mode] = b.dataset.prep.split(":"); prep = G.defaultPrep(S, boss, mode); go("prep"); });
+  $("dungeon").onclick = () => { const d = G.dungeon(S); if (d.error) return toast(d.error); toast(`Dungeon cleared: +${d.gold} gold` + (d.item ? `, and ${d.item.name} (GL ${d.item.lvl}) dropped.` : ".")); render(); };
+  $("endWeek").onclick = () => {
+    $("endConfirm").innerHTML = `<button type="button" class="small" id="endYes">Yes, end week ${S.week}</button> <button type="button" class="small link" id="endNo">Not yet</button>`;
+    $("endYes").onclick = () => { S.news.push(G.endWeek(S)); render(); }; $("endNo").onclick = () => $("endConfirm").innerHTML = "";
+  };
+  const gl = $("goLoot"); if (gl) gl.onclick = () => document.getElementById("lootPanel").scrollIntoView({ behavior: "smooth" });
+  wireLoot();
+};
+
+function lootPanel() {
+  const pend = S.pending || []; if (!pend.length) return "";
+  return `<div class="panel" id="lootPanel"><h2>Loot to hand out</h2>${pend.map((it, i) => {
+    const sug = G.suggestFor(S, it).to;
+    const opts = (it.eligible || []).map(id => G.byId(S, id)).filter(c => c && G.canWear(c, it)).map(c => {
+      const d = it.lvl - c.gear[it.slot].lvl;
+      return `<option value="${c.id}" ${sug === c.id ? "selected" : ""}>${esc(c.name)} (${d > 0 ? "+" + d : d === 0 ? "no change" : d})</option>`; }).join("");
+    return `<div class="loot"><div><div class="iname ${it.q}">${esc(it.name)}</div><div class="small muted">${it.slot}${it.type ? " (" + it.type + ")" : ""} · GL ${it.lvl} · ${esc(it.from)}</div></div>
+      <div class="row" style="gap:6px"><select data-li="${i}" aria-label="Give ${esc(it.name)} to">${opts}<option value="sell" ${sug === "sell" ? "selected" : ""}>Sell (${G.sellValue(it)} gold)</option></select><button type="button" class="small" data-give="${i}">Give</button></div></div>`;
+  }).join("")}</div>`;
+}
+function wireLoot() {
+  document.querySelectorAll("[data-give]").forEach(b => b.onclick = () => {
+    const i = Number(b.dataset.give); const to = document.querySelector(`select[data-li="${i}"]`).value;
+    toast(G.assignPending(S, i, to)); render();
+  });
+}
+
+function vRoster() {
+  return `<div class="panel"><h2>Roster</h2><p class="muted small">Gear, specs and Fire Whelp gear. Fire Whelp pieces give +60 fire resistance each (two at most) and cost 3% power while worn: they're for one boss in this raid, and you choose who wears them in prep.</p>
+    <div class="cards" style="margin-top:10px">${S.roster.map(c => `<div class="rc ${c.benched ? "bench" : ""}"><div class="face">${face(c)}</div>
+      <div><div class="nm">${esc(c.name)}</div><div class="meta">${esc(c.race)} ${G.CLASS_NAMES[c.cls]}, ${esc(G.specName(c.cls, c.spec))}</div><div class="tags">${tagsFor(c)}</div></div>
+      <div class="wide meta">${["weapon", "armor", "trinket"].map(s => `${s}: ${esc(c.gear[s].name)} (${c.gear[s].lvl})`).join("<br>")}</div>
+      <div class="wide row" style="gap:6px;margin-top:4px"><button type="button" class="small" data-fire="${c.id}" ${c.fire >= 2 ? "disabled" : ""}>Fire Whelp piece (${G.ECON.fireGear}g)</button>
+        <select data-respec="${c.id}" aria-label="Spec for ${esc(c.name)}">${G.SPECS[c.cls].map(s => `<option value="${s[0]}" ${s[0] === c.spec ? "selected" : ""}>${s[1]}</option>`).join("")}</select>
+        <button type="button" class="small link" data-dismiss="${c.id}">Dismiss</button><span data-dc="${c.id}"></span></div></div>`).join("")}</div></div>`;
+}
+wire.roster = () => {
+  document.querySelectorAll("[data-fire]").forEach(b => b.onclick = () => { toast(G.buyFire(S, Number(b.dataset.fire))); render(); });
+  document.querySelectorAll("[data-respec]").forEach(s => s.onchange = () => { toast(G.respec(S, Number(s.dataset.respec), s.value) + " (60 gold)"); render(); });
+  document.querySelectorAll("[data-dismiss]").forEach(b => b.onclick = () => {
+    const id = Number(b.dataset.dismiss); const slot = document.querySelector(`[data-dc="${id}"]`);
+    slot.innerHTML = `<button type="button" class="small" data-dyes="${id}">Yes, dismiss</button>`;
+    slot.querySelector("button").onclick = () => { toast(G.dismiss(S, id)); render(); };
+  });
+};
+
+function vTavern() {
+  const cost = G.ECON.reroll * Math.pow(2, S.rerolls);
+  return `<div class="panel"><h2>Tavern</h2><p class="muted small">New faces every week. Recruits start with skill by rarity (Common 20, Rare 40, Epic 55) and no history with anyone: chemistry starts at zero. Roster limit 15.</p>
+    <div class="cards" style="margin-top:10px">${S.tavern.map((c, i) => `<div class="rc"><div class="face">${face(c)}</div>
+      <div><div class="nm">${esc(c.name)}</div><div class="meta">${esc(c.race)} ${G.CLASS_NAMES[c.cls]}, ${esc(G.specName(c.cls, c.spec))}</div><div class="tags">${tagsFor(c)}</div></div>
+      <div class="wide row" style="justify-content:space-between;margin-top:6px"><span class="mono">${c.price} gold</span><button type="button" class="small" data-hire="${i}" ${S.gold >= c.price && S.roster.length < 15 ? "" : "disabled"}>Hire</button></div></div>`).join("") || `<p class="muted">Nobody left. New faces next week.</p>`}</div>
+    <div class="row" style="margin-top:12px"><button type="button" id="reroll" ${S.gold >= cost ? "" : "disabled"}>New faces (${cost} gold)</button><span class="muted small">Doubles each time this week.</span></div></div>`;
+}
+wire.tavern = () => {
+  document.querySelectorAll("[data-hire]").forEach(b => b.onclick = () => { toast(G.hire(S, Number(b.dataset.hire))); render(); });
+  $("reroll").onclick = () => { toast(G.reroll(S)); render(); };
+};
+
+function vJournal() {
+  return G.BOSSES.map(b => {
+    const j = S.journal[b.id] || {}; const p = S.progress[b.id];
+    const learned = Object.keys(S.lessons).filter(k => k.startsWith(b.id + ":") && S.lessons[k] >= 4).map(k => k.split(":")[1]);
+    const ans = (G.LESSONS[b.id] || []).filter(l => learned.includes(l.id)).map(l => `<p class="small">&#10003; ${esc(l.t[2])}</p>`).join("");
+    return `<div class="panel"><div class="row" style="gap:12px"><div class="sigil">${bossSigil(b.id)}</div><div><h2 style="margin:0">${esc(b.name)}</h2>
+      <div class="small muted">${p.pulls ? `${p.pulls} pull${p.pulls > 1 ? "s" : ""}, ${p.normalKills} Normal kill${p.normalKills === 1 ? "" : "s"}, ${p.heroicKills} Heroic` : "Not met yet"}</div></div></div>
+      ${b.abilities.map(a => j[a.id] ? `<div class="jab"><b>${esc(a.name)}</b><p class="small">${esc(a.text)}</p></div>` : `<div class="jab unknown">??? Not seen yet.</div>`).join("")}
+      ${ans ? `<h3>What the raid has worked out</h3>${ans}` : ""}</div>`;
+  }).join("");
+}
+
+function vGuild() {
+  const hist = S.history.slice(0, 20).map(h => `<li><span class="r">W${h.week}</span><span>${esc(G.BOSS[h.boss].name)} (${h.mode}), ${G.CARDS[h.tactic]}: <b>${h.result === "kill" ? "kill" : h.result}</b> in round ${h.rounds}</span></li>`).join("");
+  return `<div class="grid2"><div class="panel"><h2>Raid history</h2>${hist ? `<ol class="log">${hist}</ol>` : `<p class="muted">No pulls yet.</p>`}</div>
+    <div class="panel"><h2>Save</h2><p class="small muted">The game saves itself in this browser after every action. To move it, copy the save text and load it elsewhere.</p>
+      <div class="row"><button type="button" id="copySave">Copy save</button><button type="button" id="loadSave">Load save</button></div>
+      <textarea id="saveText" rows="4" style="width:100%;margin-top:8px" placeholder="Paste a save here, then press Load save"></textarea>
+      <h3>Start over</h3><div class="row"><button type="button" id="reset">New guild</button><span id="resetC"></span></div></div></div>`;
+}
+wire.guild = () => {
+  $("copySave").onclick = () => { const t = btoa(unescape(encodeURIComponent(JSON.stringify(S)))); $("saveText").value = t;
+    navigator.clipboard.writeText(t).then(() => toast("Save copied."), () => { $("saveText").select(); toast("Select the text and copy it."); }); };
+  $("loadSave").onclick = () => { try { const s = JSON.parse(decodeURIComponent(escape(atob($("saveText").value.trim())))); if (!s.roster) throw 0; S = s; toast("Save loaded."); go("hub"); } catch (e) { toast("That doesn't look like a save."); } };
+  $("reset").onclick = () => { $("resetC").innerHTML = `<button type="button" class="small" id="resetYes">Yes, delete this guild</button>`;
+    $("resetYes").onclick = () => { S = G.newGame(1 + Math.floor(Math.random() * 2147000000)); go("hub"); }; };
+};
+
+// ---------- prep ----------
+function vPrep() {
+  const b = G.BOSS[prep.boss]; const heroic = prep.mode === "heroic";
+  const avail = S.roster;
+  const pickCards = avail.map(c => {
+    const on = prep.ids.includes(c.id); const dis = heroic && c.benched;
+    return `<label class="rc ${on ? "sel" : ""} ${dis ? "bench" : ""}" style="cursor:${dis ? "not-allowed" : "pointer"}"><input type="checkbox" class="pickbox" data-pick="${c.id}" ${on ? "checked" : ""} ${dis ? "disabled" : ""} aria-label="Bring ${esc(c.name)}">
+      <div class="face">${face(c)}</div><div><div class="nm">${esc(c.name)}</div><div class="meta">${G.CLASS_NAMES[c.cls]}, ${esc(G.specName(c.cls, c.spec))}</div>
+      <div class="tags">${tagsFor(c)}${famOf(c, prep.boss) ? `<span class="t">knows boss ${famOf(c, prep.boss).toFixed(1)}</span>` : ""}</div></div></label>`;
+  }).join("");
+  const line = prep.ids.map(id => { const c = G.byId(S, id); return `<tr><td><span class="mini">${face(c)}</span>${esc(c.name)}</td>
+    <td><select data-zone="${id}" aria-label="Position for ${esc(c.name)}">${["front", "melee", "ranged", "back"].map(z => `<option value="${z}" ${prep.zones[id] === z ? "selected" : ""}>${z[0].toUpperCase() + z.slice(1)}</option>`).join("")}</select></td>
+    <td>${c.fire ? `<select data-fg="${id}" aria-label="Fire gear for ${esc(c.name)}">${[0, 1, 2].filter(n => n <= c.fire).map(n => `<option value="${n}" ${(prep.fireOn[id] || 0) === n ? "selected" : ""}>${n ? n + " worn" : "off"}</option>`).join("")}</select>` : `<span class="muted small">none</span>`}</td>
+    <td><input type="checkbox" data-pot="${id}" ${prep.potions[id] ? "checked" : ""} aria-label="Fire Protection Potion for ${esc(c.name)}"></td></tr>`; }).join("");
+  const cost = G.prepCost(S, prep); const probs = G.problems(S, prep); const warns = G.warnings(S, prep);
+  const known = Object.keys(S.journal[prep.boss] || {}).length;
+  return `<div class="row" style="justify-content:space-between;margin-bottom:12px"><div class="row"><div class="sigil">${bossSigil(prep.boss)}</div><div><h2 style="margin:0">${esc(b.name)} <span class="muted" style="font-size:1rem">${G.MODES[prep.mode].label}</span></h2>
+      <div class="small muted">${known ? `Journal: ${known} of ${b.abilities.length} abilities seen.` : "You haven't seen this boss yet. Pull and find out."} ${heroic ? "One attempt this week. Whoever dies is benched until reset." : "Normal: free to retry."}</div></div></div>
+      <button type="button" class="link" id="back">Back to the hub</button></div>
+    <div class="grid2"><div>
+      <div class="panel"><h2>Who comes (${prep.ids.length}/10)</h2><div class="cards">${pickCards}</div></div>
+      <div class="panel"><h2>Positions and fire</h2><div class="tablebox"><table class="lineup"><thead><tr><th>Raider</th><th>Position</th><th>Fire gear</th><th>Potion (15g)</th></tr></thead><tbody>${line}</tbody></table></div></div>
+    </div><div class="sticky"><div class="panel"><h2>Tactic card</h2>
+      <div class="tcards" role="radiogroup" aria-label="Tactic card">${Object.entries(G.CARDS).map(([k, n]) => `<label class="tcard"><input type="radio" name="card" value="${k}" ${prep.tactic === k ? "checked" : ""}><b>${n}</b><span>${G.CARD_TEXT[k]}</span></label>`).join("")}</div>
+      <h3>Cauldrons, this pull</h3><div class="chips">
+        <label class="chip"><input type="checkbox" data-cons="food" ${prep.cons.food ? "checked" : ""}> Food <small>${prep.ids.some(id => G.byId(S, id).cls === "mage") ? "free (mage)" : "10g"}</small></label>
+        <label class="chip"><input type="checkbox" data-cons="elixirs" ${prep.cons.elixirs ? "checked" : ""}> Elixirs <small>30g</small></label>
+        <label class="chip"><input type="checkbox" data-cons="flasks" ${prep.cons.flasks ? "checked" : ""}> Flasks <small>75g</small></label></div>
+      <h3>World buffs, until a wipe or reset</h3><div class="chips">${Object.entries(G.WB).map(([k, n]) => `<label class="chip"><input type="checkbox" data-wb="${k}" ${S.buffs[k] || prep.buffs[k] ? "checked" : ""} ${S.buffs[k] ? "disabled" : ""}> ${n} <small>${S.buffs[k] ? "active" : "250g"}</small></label>`).join("")}</div>
+      <h3>Cost</h3>${cost.items.map(([n, g]) => `<div class="costline"><span>${esc(n)}</span><span class="mono">${g}g</span></div>`).join("") || `<p class="small muted">Nothing. Bold.</p>`}
+      <div class="costline"><b>Total</b><b class="mono">${cost.gold}g of ${S.gold}g</b></div>
+      ${probs.map(p => `<p class="err">${esc(p)}</p>`).join("")}${warns.map(w => `<p class="warn">${esc(w)}</p>`).join("")}
+      <div class="row" style="margin-top:12px"><button type="button" class="primary" id="pullBtn" ${probs.length ? "disabled" : ""}>Pull</button></div></div></div></div>`;
+}
+wire.prep = () => {
+  $("back").onclick = () => go("hub");
+  document.querySelectorAll("[data-pick]").forEach(cb => cb.onchange = () => {
+    const id = Number(cb.dataset.pick);
+    if (cb.checked) { if (prep.ids.length >= 10) { cb.checked = false; return toast("Raids take 10. Take someone out first."); } prep.ids.push(id); prep.zones[id] = G.defaultZone(G.byId(S, id)); prep.fireOn[id] = 0; }
+    else prep.ids = prep.ids.filter(x => x !== id);
+    render();
+  });
+  document.querySelectorAll("[data-zone]").forEach(s => s.onchange = () => { prep.zones[Number(s.dataset.zone)] = s.value; render(); });
+  document.querySelectorAll("[data-fg]").forEach(s => s.onchange = () => { prep.fireOn[Number(s.dataset.fg)] = Number(s.value); render(); });
+  document.querySelectorAll("[data-pot]").forEach(s => s.onchange = () => { prep.potions[Number(s.dataset.pot)] = s.checked; render(); });
+  document.querySelectorAll('input[name="card"]').forEach(r => r.onchange = () => { prep.tactic = r.value; render(); });
+  document.querySelectorAll("[data-cons]").forEach(s => s.onchange = () => { prep.cons[s.dataset.cons] = s.checked; render(); });
+  document.querySelectorAll("[data-wb]").forEach(s => s.onchange = () => { prep.buffs[s.dataset.wb] = s.checked; render(); });
+  $("pullBtn").onclick = () => {
+    let out; try { out = G.pull(S, prep, engine); } catch (e) { return toast("The engine stopped: " + e.message); }
+    if (out.error) return toast(out.error);
+    lastOut = out; lastOut.whatif = null; go("pull");
+  };
+};
+
+// ---------- pull playback and results ----------
+const LOGCLS = { 31: "death", 30: "save", 34: "save", 32: "save", 35: "save", 22: "save", 23: "fire", 25: "fire", 62: "fire", 68: "fire", 28: "mech", 61: "mech", 64: "mech", 65: "mech", 66: "mech", 20: "mech",
+  40: "good", 41: "good", 42: "good", 43: "bad", 44: "bad", 45: "bad", 46: "bad" };
+function vPull() {
+  const o = lastOut; const b = G.BOSS[o.boss];
+  return `<div class="panel" id="stagePanel"><div class="row" style="justify-content:space-between"><h2 style="margin:0">${esc(b.name)} <span class="muted" style="font-size:1rem">${G.MODES[o.mode].label} · ${G.CARDS[o.input.tactic]}</span></h2>
+      <div class="controls" id="ctl"><span class="small muted">Speed</span>${[1, 2, 4].map(x => `<button type="button" class="small" data-speed="${x}" aria-pressed="${speed === x}">${x}x</button>`).join("")}<button type="button" class="small" id="skip">Skip</button></div></div>
+    <div class="pullgrid"><div><div class="stage"><div class="bossart" id="bossArt">${bossSigil(o.boss)}</div>
+      <div><div class="row" style="justify-content:space-between"><b id="roundLbl">Pull</b><span class="mono" id="bossNum"></span></div><div class="bar" style="margin-top:6px"><i id="bossBar" style="width:100%"></i></div>
+        <p class="small muted" id="stageNote">${esc(b.pull)}</p></div></div>
+    <div class="raid10" id="raid10">${o.input.raid.map((c, i) => { const ch = S.roster.find(x => x.name === c.name); return `<div class="ph" id="ph${i}"><div class="face">${ch ? face(ch) : ""}</div><div class="n">${esc(c.name)}</div><div class="bar"><i style="width:100%"></i></div></div>`; }).join("")}</div>
+    </div><ol class="log" id="pullLog" aria-live="polite"></ol></div></div>
+    <div id="results"></div>`;
+}
+wire.pull = () => {
+  const o = lastOut; const r = o.run; const frames = r.frames || [];
+  let round = 0; const maxR = r.rounds;
+  const evBy = {}; for (const e of r.events) (evBy[e.r] = evBy[e.r] || []).push(e);
+  const logEl = $("pullLog");
+  const addLines = rr => (evBy[rr] || []).forEach(e => { const li = document.createElement("li"); li.className = LOGCLS[e.c] || ""; li.innerHTML = `<span class="r">${rr ? "R" + rr : "Pull"}</span><span>${esc(e.t)}</span>`; logEl.appendChild(li); logEl.scrollTop = logEl.scrollHeight; });
+  const show = rr => {
+    const f = frames[rr - 1];
+    $("roundLbl").textContent = rr ? `Round ${rr} of 20` : "Pull";
+    if (f) {
+      $("bossBar").style.width = Math.max(0, 100 * f.b / r.bossMax) + "%"; $("bossNum").textContent = `${f.b.toLocaleString()} / ${r.bossMax.toLocaleString()}` + (f.a ? ` · ${f.a} add${f.a > 1 ? "s" : ""}` : "");
+      $("bossArt").classList.toggle("away", !!f.w);
+      f.h.forEach((hp, i) => { const el = $("ph" + i); const max = r.raid[i].maxhp; el.querySelector(".bar i").style.width = (100 * hp / max) + "%"; el.classList.toggle("dead", hp <= 0); });
+    } else $("bossNum").textContent = `${r.bossMax.toLocaleString()} / ${r.bossMax.toLocaleString()}`;
+  };
+  const finish = () => { if (playing) { clearInterval(playing); playing = null; } for (let k = round + 1; k <= maxR + 1; k++) addLines(k); round = maxR; show(maxR);
+    r.raid.forEach((p, i) => { $("ph" + i).classList.toggle("dead", !p.alive); $("ph" + i).querySelector(".bar i").style.width = (100 * p.hp / p.maxhp) + "%"; });
+    $("ctl").hidden = true; results(); };
+  addLines(0); show(0);
+  const tick = () => { round++; addLines(round); show(round); if (round >= maxR) finish(); };
+  const start = () => { if (playing) clearInterval(playing); playing = setInterval(tick, 1100 / speed); };
+  document.querySelectorAll("[data-speed]").forEach(bt => bt.onclick = () => { speed = Number(bt.dataset.speed); document.querySelectorAll("[data-speed]").forEach(x => x.setAttribute("aria-pressed", String(Number(x.dataset.speed) === speed))); if (playing) start(); });
+  $("skip").onclick = finish;
+  if (o.shown) finish(); else { o.shown = true; start(); }
+};
+
+function results() {
+  const o = lastOut; const r = o.run; const b = G.BOSS[o.boss]; const kill = r.result === "kill";
+  const head = kill ? `Kill in round ${r.rounds}` : r.result === "wipe" ? `Wipe in round ${r.rounds}` : "Enrage: out of time";
+  const why = kill ? `${r.survivors} of ${r.raid.length} standing` : r.result === "wipe" ? "Every tank and healer is down" : `${b.name} at ${Math.round(100 * r.bossHp / r.bossMax)}% after round 20`;
+  const tierName = ["What happened", "Raid leader", "The answer"];
+  const lesson = o.lesson || o.note;
+  const recap = lesson ? `<div class="recap ${lesson.tier === 2 ? "answer" : ""}"><div class="tier">${o.note ? "Could be cleaner · " : ""}${tierName[lesson.tier]}</div><p>${esc(lesson.text)}</p>${lesson.next ? `<p class="small muted">${esc(lesson.next)}</p>` : ""}</div>` : "";
+  const money = [];
+  if (o.spent) money.push(`Prep: -${o.spent} gold`);
+  if (o.gold) money.push(`${o.lockout ? "Lockout loot" : o.reclear ? "Re-clear" : "Kill"}: +${o.gold} gold` + (o.dkp ? `, +${o.dkp} DKP` : ""));
+  if (o.repair) money.push(`Repairs: -${o.repair} gold`);
+  if (o.repairWaived) money.push(`Repairs waived: first wipe on this boss this week (${o.repairWaived} gold)`);
+  if (o.buffsLost) money.push("World buffs lost in the wipe");
+  const g = o.growth;
+  const grow = g.counted ? `Skill +${g.skill.toFixed(1)} · knows ${b.name} +${g.fam.toFixed(1)} · chemistry +${g.chem.toFixed(2)}` : "No skill or familiarity this time: only the first 3 pulls on a boss each week teach anything.";
+  const ri = G.replayInfo(S);
+  const replayBox = !kill ? (ri.ok ? `<h3>Replay that pull</h3><p class="small muted">The exact same pull with a different card. Nothing is won or lost: it's for learning. Once per boss per week.</p>
+      <div class="row">${Object.entries(G.CARDS).filter(([k]) => k !== o.input.tactic).map(([k, n]) => `<button type="button" class="small" data-whatif="${k}">${n}</button>`).join("")}</div><div id="whatif"></div>`
+    : `<p class="small muted">${ri.used ? "You've used this week's replay on this boss." : `Replay unlocks when your raid knows ${b.name} a little (familiarity 1, now ${ri.fam.toFixed(1)}).`}</p>`) : "";
+  const again = o.mode === "normal" ? `<button type="button" class="primary" id="again">Pull again</button>` : "";
+  $("results").innerHTML = `<div class="panel" style="margin-top:16px"><div class="banner ${kill ? "kill" : "fail"}"><span class="big">${head}</span><span>${why}</span></div>
+    ${kill ? `<p><i>${esc(b.kill)}</i></p>` : `<p><i>${esc(o.joke || "")}</i></p>`}
+    ${recap}
+    ${o.found.length ? `<p><b>New in the journal:</b> ${o.found.map(esc).join(", ")}.</p>` : ""}
+    ${o.benched.length ? `<p class="err">Benched until reset: ${o.benched.map(esc).join(", ")}. "We need to talk about the fire."</p>` : ""}
+    <div class="grid2" style="margin-top:8px"><div><h3>Gold</h3>${money.map(m => `<p class="small">${esc(m)}</p>`).join("") || `<p class="small muted">Nothing changed hands.</p>`}<h3>Getting better</h3><p class="small">${esc(grow)}</p></div>
+      <div>${o.loot.length ? `<h3>Loot</h3><p class="small">${o.loot.map(it => esc(it.name) + " (GL " + it.lvl + ")").join(", ")}. Hand it out below.</p>` : ""}${replayBox}</div></div>
+    <div class="row" style="margin-top:14px">${again}<button type="button" id="toPrep">Change the plan</button><button type="button" id="toHub">Hub</button></div></div>${lootPanel()}`;
+  if ($("again")) $("again").onclick = () => { prep = JSON.parse(JSON.stringify(prep)); const out = G.pull(S, prep, engine); if (out.error) return toast(out.error); lastOut = out; go("pull"); };
+  $("toPrep").onclick = () => { if (o.mode === "heroic") prep = G.defaultPrep(S, o.boss, o.mode); go(o.mode === "heroic" ? "hub" : "prep"); };
+  $("toHub").onclick = () => go("hub");
+  document.querySelectorAll("[data-whatif]").forEach(bt => bt.onclick = () => {
+    const w = G.replay(S, bt.dataset.whatif, engine); if (w.error) return toast(w.error);
+    const rr = w.run; const res = rr.result === "kill" ? `a kill in round ${rr.rounds}` : rr.result === "wipe" ? `still a wipe, in round ${rr.rounds}` : `still out of time, boss at ${Math.round(100 * rr.bossHp / rr.bossMax)}%`;
+    $("whatif").innerHTML = `<div class="recap ${rr.result === "kill" ? "answer" : ""}"><div class="tier">What if</div><p>Same pull with <b>${G.CARDS[w.card]}</b>: ${res}.</p></div>`;
+    document.querySelectorAll("[data-whatif]").forEach(x => x.disabled = true); save();
+  });
+  wireLoot();
+  save(); purse();
+}
+
+// ---------- boot ----------
+document.querySelectorAll("#nav button").forEach(b => b.onclick = () => go(b.dataset.v));
+function boot() {
+  try {
+    for (const src of LUA_SOURCES) fengari.load(src)();
+    const rules = JSON.parse(lua(`local R = FPR_ENGINE.Progress.RULES local t = {} for k, v in pairs(R) do t[#t + 1] = string.format('"%s":%d', k, v) end return "{" .. table.concat(t, ",") .. "}"`));
+    G.setRules(rules);
+  } catch (e) { $("view").innerHTML = `<p class="err">The Lua engine could not start: ${esc(e.message)}</p>`; return; }
+  S = load();
+  if (!S || S.v !== 1) S = G.newGame(1 + Math.floor(Math.random() * 2147000000));
+  go("hub");
+}
+if (window.fengari) boot(); else window.addEventListener("load", () => window.fengari ? boot() : ($("view").innerHTML = `<p class="err">The Lua runtime could not be loaded. Check your connection and reload.</p>`));
+</script>

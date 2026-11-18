@@ -12,6 +12,7 @@ Last updated: 2026-11-18. Read this first at the start of every session.
 | UX wireframes and art direction | Mid-fi wireframes done (12 screens). Style chosen. Asset kit generated and cut out. First hi-fi stage test done. Art direction write-up and hi-fi hub to do |
 | Technical design | Done, signed off |
 | Browser prototype | Engine v6 published: https://claude.ai/artifact/YHGsBUgA2y1DGDVTaisGpy (all five Molten Bore bosses, preparation, raid experience, raid moments, 10-week season). QA suite passes; boss tuning done |
+| Playtest build | Published: https://claude.ai/artifact/NfN3hjmbfZ7Hvhf7pncJxM (`playtest/`, built by `playtest/build.py`). Script: `qa/playtest-1.md`. Rules QA `tools/playtest_qa.js`, bot `tools/playtest_bot.js` |
 | Milestone plan | Not started |
 | Gate review (separate agents) | After the above |
 
@@ -43,11 +44,12 @@ Last updated: 2026-11-18. Read this first at the start of every session.
 - 2026-11-18: Tuning pass 3: fire resistance and preparation-first targets (engine v4).
 - 2026-11-18: Skill, familiarity, chemistry and raid moments (engine v5, Tuning pass 4); design doc 4.6.
 - 2026-11-18: The other four Molten Bore bosses in the engine and prototype (engine v6); design doc 6.1.
+- 2026-11-18: Learning path approved (design doc 3.1); playtest build published (engine v7).
 
 ## Next
 
-1. Director plays the prototype (engine v6, all five bosses).
-2. QA's first solo playtest script (#15).
+1. Director plays the playtest build with `qa/playtest-1.md`; feedback goes to all departments.
+2. Tuning keeps the simulator for numbers; the playtest build is where the game is judged.
 3. Art direction write-up (#4), frame kit (#5) and the hi-fi hub (#7) alongside.
 4. Milestone plan (#16), then the Phase 2 gate review (#17).
 
