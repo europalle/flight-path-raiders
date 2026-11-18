@@ -403,7 +403,7 @@ frames.append(("bank-locked",gl_,["Locked state lists every requirement as a che
 
 def navrow(s,active,right="LFR  ·  Gold 2,340  ·  DKP 86"):
     x=20
-    for n in ["Hub","Roster","Tavern","Guild Hall","Bank"]:
+    for n in (["Hub","Roster","Tavern","Journal"] if active=="Journal" else ["Hub","Roster","Tavern","Guild Hall","Bank"]):
         w=len(n)*8+28; on=(n==active)
         s.rect(x,50,w,30,fill=INK if on else PAPER,stroke=INK,r=6)
         s.text(x+w/2,70,n,13,700 if on else 600,PAPER if on else INK,"middle"); x+=w+8
@@ -523,6 +523,79 @@ gh.text(20,524,"Bank Tab 2 is bought inside the bank with gold, not here.",11,40
 frames.append(("guild-hall",gh,[
  "One card per building: what it does, its level, and the price on the button. The only button you can afford right now is the dark one, and the card's border says so too.",
  "Locked buildings list their requirement in words. The Guild Bank costs DKP like every other building (Tuning: 150 DKP); only its second tab costs gold."]))
+
+# ---------- Journal (slice) ----------
+jo=S(W,H,"Journal")
+jo.frame("Journal"); navrow(jo,"Journal",right="Week 4  ·  Gold 312  ·  DKP 85")
+jo.text(20,110,"The Molten Bore",15,700)
+bl=[("Magmadad","N ✓  H ✓",3,3),("Baron Get-Down","N ✓  H ✓",2,2),("Lucifrown","N ✓  H 2 wipes",3,3),("Majordomo Exhaustus","N ✓",2,2),("Ragnaroast","N 4 wipes",2,3)]
+for i,(n,st_,seen,tot) in enumerate(bl):
+    y=122+i*58; sel=(i==4)
+    jo.rect(20,y,250,50,fill=FILL if sel else PAPER,stroke=INK if sel else LINE,r=6,sw=2 if sel else 1)
+    jo.img(28,y+7,36,36); jo.text(74,y+22,n,13,700); jo.text(74,y+40,st_,11,500,MUTED)
+    jo.text(262,y+40,f"{seen}/{tot} found",11,600,INK,"end")
+jo.note(1,20,118)
+jo.rect(286,92,654,432,fill=PAPER,stroke=LINE,r=8)
+jo.img(300,106,150,110)
+jo.text(466,128,"Ragnaroast",20,700); jo.text(466,150,"Boss 5 of 5  ·  pulled 6 times  ·  best: 31% left",12,400,MUTED)
+jo.text(466,176,"“Too soon... you have roasted me... too soon!”",12,400,MUTED,italic=True)
+jo.rect(466,188,250,26,fill=FILL,stroke=INK,r=13); jo.text(591,205,"Raid knows this fight: 4 / 10",11,600,INK,"middle")
+jo.text(300,244,"Abilities",15,700)
+ab=[("✓","Into the lava","Every 4 rounds the lowest-health melee goes in. Fire Protection Potions cancel one throw each.","week 3"),
+    ("✓","Magma Splash","Fire on one zone every 2nd round.","week 3"),
+    ("?","Not seen yet","Pull again: it shows up later in the fight.","")]
+for i,(m,n,d,w) in enumerate(ab):
+    y=254+i*56; unk=(m=="?")
+    jo.rect(300,y,626,48,fill=FILL2 if unk else PAPER,stroke=LINE,r=6,dash=unk)
+    jo.text(318,y+30,m,16,800,INK if not unk else MUTED,"middle")
+    jo.text(338,y+20,n,13,700,MUTED if unk else INK); jo.text(338,y+38,d,11,400,MUTED)
+    if w: jo.text(916,y+20,"found "+w,11,500,MUTED,"end")
+jo.note(2,300,252)
+jo.text(300,438,"Worked out",15,700)
+jo.rect(300,448,626,30,fill=FILL,stroke=INK,r=6)
+jo.text(312,468,"✓ Fire resistance: Fire Whelp gear and potions for the melee and tanks. Only here.",12,600)
+jo.rect(300,484,626,30,fill=PAPER,stroke=LINE,r=6,dash=True)
+jo.text(312,504,"Clue: “He sinks at round 10. We need him low before he does.”  (1 more wipe to be sure)",12,400,MUTED)
+jo.note(3,926,438)
+frames.append(("journal",jo,[
+ "Boss list on the left: kill marks per mode in words (N ✓, H 2 wipes) and how many abilities have been found. The raid sees bosses in order, so later ones only appear once reached.",
+ "Abilities fill in as the raid sees them, with the week they were found. Unseen ones are a dashed '?' row with a nudge, never a blank: the player knows there is more.",
+ "Worked out: answers the recap has fully revealed (tier 3) are solid rows; a clue the raid is close on (tier 2) is dashed, in the raid leader's words, with how far off it is. Never more than the recap has said."]))
+
+# ---------- Loot window (slice) ----------
+lw=S(W,H,"Loot window")
+lw.frame("Result"); 
+lw.rect(20,52,920,52,fill=INK,stroke=INK,r=8)
+lw.text(40,85,"KILL  ·  Ragnaroast (Heroic)  ·  round 16",20,800,PAPER)
+lw.text(920,85,"+60 gold  ·  +15 DKP  ·  +1,020 score",13,600,PAPER,"end")
+lw.rect(150,118,660,372,fill=PAPER,stroke=INK,r=10,sw=2)
+lw.img(166,132,44,44); lw.text(222,154,"Loot",18,700); lw.text(222,172,"2 items  ·  Bind on Pickup: only these 10 can have them",12,400,MUTED)
+lw.text(794,154,"2 left",12,600,INK,"end")
+lw.note(1,810,122)
+items=[("Roasting Spit of the Firelord","Epic  ·  Weapon  ·  item level 68","Kess",[("Kess","Rogue","+12",True),("Orrin","Hunter","+9",False),("Tor","Warrior","+4",False)],"Orrin has Needs on Everything: 15% he takes it anyway."),
+       ("Crispy Chainmail","Epic  ·  Mail armor  ·  item level 66","Ash",[("Ash","Shaman","+8",True),("Orrin","Hunter","+5",False)],"")]
+for i,(nm,meta,who,cands,warn) in enumerate(items):
+    y=184+i*126
+    lw.rect(166,y,628,116,fill=FILL,stroke=LINE,r=8)
+    lw.img(178,y+12,52,52); lw.text(242,y+30,nm,15,700); lw.text(242,y+48,meta,12,400,MUTED)
+    for k,(n,c,g,best) in enumerate(cands):
+        x=242+k*150
+        lw.rect(x,y+62,140,32,fill=INK if best else PAPER,stroke=INK,r=6,sw=1.5)
+        lw.text(x+10,y+83,n,12,700,PAPER if best else INK); lw.text(x+130,y+83,"GL "+g,12,700,PAPER if best else INK,"end")
+    lw.btn(706,y+62,76,32,"Sell 17 g",False,11)
+    if warn: lw.text(242,y+108,"⚠ "+warn,11,500)
+    else: lw.text(242,y+108,"Only mail wearers are offered mail.",11,400,MUTED)
+lw.note(2,166,182); lw.note(3,700,244); lw.note(4,166,292)
+lw.btn(166,474-0,0.1,0.1,"") if False else None
+lw.btn(574,440,220,38,"Hand out and continue",True,14); lw.btn(440,440,124,38,"Decide later",False,13)
+lw.text(166,464,"Loot drama can happen: 10% per item.",11,400,MUTED)
+lw.note(5,794,436)
+frames.append(("loot-window",lw,[
+ "Opens on its own after a kill that drops loot (Normal first kill of the week, every Heroic kill). The banner above stays visible, so the reward and the choices sit together.",
+ "One row per raider who can use the item, best upgrade first and already picked. The number is the gear level gain, so the choice is readable without opening tooltips.",
+ "Sell is always there, with the price, for items nobody wants.",
+ "Traits that can override the choice (Needs on Everything, Main Character) are written under the item before you click, never as a surprise after.",
+ "One button hands out everything as shown. Decide later keeps the items in the hub's loot pile; nothing is lost by closing."]))
 
 for slug,s,notes in frames:
     open(f"{OUT}/{slug}.svg","w").write(s.svg())

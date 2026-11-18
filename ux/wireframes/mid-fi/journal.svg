@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="960" height="540" role="img" aria-label="Journal">
+<title>Journal</title>
+<rect width="960" height="540" fill="#ffffff"/>
+<rect x="0.75" y="0.75" width="958.5" height="538.5" rx="8" fill="#ffffff" stroke="#222a33" stroke-width="1.5"/>
+<path d="M0.75 40 V8.75 a8 8 0 0 1 8 -8 H951.25 a8 8 0 0 1 8 8 V40 Z" fill="#eef1f4" stroke="#222a33" stroke-width="1.5"/>
+<text x="16" y="26" font-family="Inter, Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#222a33" text-anchor="start">Flight Path Raiders</text>
+<text x="178" y="26" font-family="Inter, Arial, Helvetica, sans-serif" font-size="15" font-weight="400" fill="#5d6773" text-anchor="start">/  Journal</text>
+<rect x="828" y="9" width="24" height="22" rx="4" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="840" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">-</text>
+<rect x="858" y="9" width="24" height="22" rx="4" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="870" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">+</text>
+<rect x="888" y="9" width="24" height="22" rx="4" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="900" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle"><tspan fill="#c0841a" font-weight="800">⚙</tspan></text>
+<rect x="918" y="9" width="24" height="22" rx="4" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="930" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle"><tspan fill="#c0841a" font-weight="800">✕</tspan></text>
+<text x="818" y="26" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="500" fill="#5d6773" text-anchor="end">100%</text>
+<rect x="20" y="50" width="52" height="30" rx="6" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="46.0" y="70" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">Hub</text>
+<rect x="80" y="50" width="76" height="30" rx="6" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="118.0" y="70" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">Roster</text>
+<rect x="164" y="50" width="76" height="30" rx="6" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="202.0" y="70" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">Tavern</text>
+<rect x="248" y="50" width="84" height="30" rx="6" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<text x="290.0" y="70" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">Journal</text>
+<text x="940" y="70" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="500" fill="#5d6773" text-anchor="end">Week 4  ·  Gold 312  ·  DKP 85</text>
+<text x="20" y="110" font-family="Inter, Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#222a33" text-anchor="start">The Molten Bore</text>
+<rect x="20" y="122" width="250" height="50" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="28" y="129" width="36" height="36" rx="4" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="28" y1="129" x2="64" y2="165" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="64" y1="129" x2="28" y2="165" stroke="#9aa3ad" stroke-width="1"/>
+<text x="74" y="144" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#222a33" text-anchor="start">Magmadad</text>
+<text x="74" y="162" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="500" fill="#5d6773" text-anchor="start">N <tspan fill="#c0841a" font-weight="800">✓</tspan>  H <tspan fill="#c0841a" font-weight="800">✓</tspan></text>
+<text x="262" y="162" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="end">3/3 found</text>
+<rect x="20" y="180" width="250" height="50" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="28" y="187" width="36" height="36" rx="4" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="28" y1="187" x2="64" y2="223" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="64" y1="187" x2="28" y2="223" stroke="#9aa3ad" stroke-width="1"/>
+<text x="74" y="202" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#222a33" text-anchor="start">Baron Get-Down</text>
+<text x="74" y="220" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="500" fill="#5d6773" text-anchor="start">N <tspan fill="#c0841a" font-weight="800">✓</tspan>  H <tspan fill="#c0841a" font-weight="800">✓</tspan></text>
+<text x="262" y="220" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="end">2/2 found</text>
+<rect x="20" y="238" width="250" height="50" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="28" y="245" width="36" height="36" rx="4" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="28" y1="245" x2="64" y2="281" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="64" y1="245" x2="28" y2="281" stroke="#9aa3ad" stroke-width="1"/>
+<text x="74" y="260" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#222a33" text-anchor="start">Lucifrown</text>
+<text x="74" y="278" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="500" fill="#5d6773" text-anchor="start">N <tspan fill="#c0841a" font-weight="800">✓</tspan>  H 2 wipes</text>
+<text x="262" y="278" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="end">3/3 found</text>
+<rect x="20" y="296" width="250" height="50" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="28" y="303" width="36" height="36" rx="4" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="28" y1="303" x2="64" y2="339" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="64" y1="303" x2="28" y2="339" stroke="#9aa3ad" stroke-width="1"/>
+<text x="74" y="318" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#222a33" text-anchor="start">Majordomo Exhaustus</text>
+<text x="74" y="336" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="500" fill="#5d6773" text-anchor="start">N <tspan fill="#c0841a" font-weight="800">✓</tspan></text>
+<text x="262" y="336" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="end">2/2 found</text>
+<rect x="20" y="354" width="250" height="50" rx="6" fill="#eef1f4" stroke="#222a33" stroke-width="2"/>
+<rect x="28" y="361" width="36" height="36" rx="4" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="28" y1="361" x2="64" y2="397" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="64" y1="361" x2="28" y2="397" stroke="#9aa3ad" stroke-width="1"/>
+<text x="74" y="376" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#222a33" text-anchor="start">Ragnaroast</text>
+<text x="74" y="394" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="500" fill="#5d6773" text-anchor="start">N 4 wipes</text>
+<text x="262" y="394" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="end">2/3 found</text>
+<circle cx="20" cy="118" r="11" fill="#2f6fd6"/>
+<text x="20" y="122.5" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+<rect x="286" y="92" width="654" height="432" rx="8" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="300" y="106" width="150" height="110" rx="4" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="300" y1="106" x2="450" y2="216" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="450" y1="106" x2="300" y2="216" stroke="#9aa3ad" stroke-width="1"/>
+<text x="466" y="128" font-family="Inter, Arial, Helvetica, sans-serif" font-size="20" font-weight="700" fill="#222a33" text-anchor="start">Ragnaroast</text>
+<text x="466" y="150" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="start">Boss 5 of 5  ·  pulled 6 times  ·  best: 31% left</text>
+<text x="466" y="176" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="start" font-style="italic">“Too soon... you have roasted me... too soon!”</text>
+<rect x="466" y="188" width="250" height="26" rx="13" fill="#eef1f4" stroke="#222a33" stroke-width="1"/>
+<text x="591" y="205" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="middle">Raid knows this fight: 4 / 10</text>
+<text x="300" y="244" font-family="Inter, Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#222a33" text-anchor="start">Abilities</text>
+<rect x="300" y="254" width="626" height="48" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<text x="318" y="284" font-family="Inter, Arial, Helvetica, sans-serif" font-size="16" font-weight="800" fill="#222a33" text-anchor="middle"><tspan fill="#c0841a" font-weight="800">✓</tspan></text>
+<text x="338" y="274" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#222a33" text-anchor="start">Into the lava</text>
+<text x="338" y="292" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#5d6773" text-anchor="start">Every 4 rounds the lowest-health melee goes in. Fire Protection Potions cancel one throw each.</text>
+<text x="916" y="274" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="500" fill="#5d6773" text-anchor="end">found week 3</text>
+<rect x="300" y="310" width="626" height="48" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<text x="318" y="340" font-family="Inter, Arial, Helvetica, sans-serif" font-size="16" font-weight="800" fill="#222a33" text-anchor="middle"><tspan fill="#c0841a" font-weight="800">✓</tspan></text>
+<text x="338" y="330" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#222a33" text-anchor="start">Magma Splash</text>
+<text x="338" y="348" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#5d6773" text-anchor="start">Fire on one zone every 2nd round.</text>
+<text x="916" y="330" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="500" fill="#5d6773" text-anchor="end">found week 3</text>
+<rect x="300" y="366" width="626" height="48" rx="6" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="318" y="396" font-family="Inter, Arial, Helvetica, sans-serif" font-size="16" font-weight="800" fill="#5d6773" text-anchor="middle">?</text>
+<text x="338" y="386" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#5d6773" text-anchor="start">Not seen yet</text>
+<text x="338" y="404" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#5d6773" text-anchor="start">Pull again: it shows up later in the fight.</text>
+<circle cx="300" cy="252" r="11" fill="#2f6fd6"/>
+<text x="300" y="256.5" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+<text x="300" y="438" font-family="Inter, Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#222a33" text-anchor="start">Worked out</text>
+<rect x="300" y="448" width="626" height="30" rx="6" fill="#eef1f4" stroke="#222a33" stroke-width="1"/>
+<text x="312" y="468" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="start"><tspan fill="#c0841a" font-weight="800">✓</tspan> Fire resistance: Fire Whelp gear and potions for the melee and tanks. Only here.</text>
+<rect x="300" y="484" width="626" height="30" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="312" y="504" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="start">Clue: “He sinks at round 10. We need him low before he does.”  (1 more wipe to be sure)</text>
+<circle cx="926" cy="438" r="11" fill="#2f6fd6"/>
+<text x="926" y="442.5" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+</svg>

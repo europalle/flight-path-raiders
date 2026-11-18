@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="960" height="540" role="img" aria-label="Loot window">
+<title>Loot window</title>
+<rect width="960" height="540" fill="#ffffff"/>
+<rect x="0.75" y="0.75" width="958.5" height="538.5" rx="8" fill="#ffffff" stroke="#222a33" stroke-width="1.5"/>
+<path d="M0.75 40 V8.75 a8 8 0 0 1 8 -8 H951.25 a8 8 0 0 1 8 8 V40 Z" fill="#eef1f4" stroke="#222a33" stroke-width="1.5"/>
+<text x="16" y="26" font-family="Inter, Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#222a33" text-anchor="start">Flight Path Raiders</text>
+<text x="178" y="26" font-family="Inter, Arial, Helvetica, sans-serif" font-size="15" font-weight="400" fill="#5d6773" text-anchor="start">/  Result</text>
+<rect x="828" y="9" width="24" height="22" rx="4" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="840" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">-</text>
+<rect x="858" y="9" width="24" height="22" rx="4" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="870" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">+</text>
+<rect x="888" y="9" width="24" height="22" rx="4" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="900" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle"><tspan fill="#c0841a" font-weight="800">⚙</tspan></text>
+<rect x="918" y="9" width="24" height="22" rx="4" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="930" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle"><tspan fill="#c0841a" font-weight="800">✕</tspan></text>
+<text x="818" y="26" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="500" fill="#5d6773" text-anchor="end">100%</text>
+<rect x="20" y="52" width="920" height="52" rx="8" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<text x="40" y="85" font-family="Inter, Arial, Helvetica, sans-serif" font-size="20" font-weight="800" fill="#ffffff" text-anchor="start">KILL  ·  Ragnaroast (Heroic)  ·  round 16</text>
+<text x="920" y="85" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#ffffff" text-anchor="end">+60 gold  ·  +15 DKP  ·  +1,020 score</text>
+<rect x="150" y="118" width="660" height="372" rx="10" fill="#ffffff" stroke="#222a33" stroke-width="2"/>
+<rect x="166" y="132" width="44" height="44" rx="4" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="166" y1="132" x2="210" y2="176" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="210" y1="132" x2="166" y2="176" stroke="#9aa3ad" stroke-width="1"/>
+<text x="222" y="154" font-family="Inter, Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="#222a33" text-anchor="start">Loot</text>
+<text x="222" y="172" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="start">2 items  ·  Bind on Pickup: only these 10 can have them</text>
+<text x="794" y="154" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="end">2 left</text>
+<circle cx="810" cy="122" r="11" fill="#2f6fd6"/>
+<text x="810" y="126.5" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+<rect x="166" y="184" width="628" height="116" rx="8" fill="#eef1f4" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="178" y="196" width="52" height="52" rx="4" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="178" y1="196" x2="230" y2="248" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="230" y1="196" x2="178" y2="248" stroke="#9aa3ad" stroke-width="1"/>
+<text x="242" y="214" font-family="Inter, Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#222a33" text-anchor="start">Roasting Spit of the Firelord</text>
+<text x="242" y="232" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="start">Epic  ·  Weapon  ·  item level 68</text>
+<rect x="242" y="246" width="140" height="32" rx="6" fill="#222a33" stroke="#222a33" stroke-width="1.5"/>
+<text x="252" y="267" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="start">Kess</text>
+<text x="372" y="267" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="end">GL +12</text>
+<rect x="392" y="246" width="140" height="32" rx="6" fill="#ffffff" stroke="#222a33" stroke-width="1.5"/>
+<text x="402" y="267" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="start">Orrin</text>
+<text x="522" y="267" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="end">GL +9</text>
+<rect x="542" y="246" width="140" height="32" rx="6" fill="#ffffff" stroke="#222a33" stroke-width="1.5"/>
+<text x="552" y="267" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="start">Tor</text>
+<text x="672" y="267" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="end">GL +4</text>
+<rect x="706" y="246" width="76" height="32" rx="5" fill="#ffffff" stroke="#222a33" stroke-width="1.5"/>
+<text x="744.0" y="265.96" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="middle">Sell 17 g</text>
+<text x="242" y="292" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="500" fill="#222a33" text-anchor="start"><tspan fill="#c0841a" font-weight="800">⚠</tspan> Orrin has Needs on Everything: 15% he takes it anyway.</text>
+<rect x="166" y="310" width="628" height="116" rx="8" fill="#eef1f4" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="178" y="322" width="52" height="52" rx="4" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="178" y1="322" x2="230" y2="374" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="230" y1="322" x2="178" y2="374" stroke="#9aa3ad" stroke-width="1"/>
+<text x="242" y="340" font-family="Inter, Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#222a33" text-anchor="start">Crispy Chainmail</text>
+<text x="242" y="358" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="start">Epic  ·  Mail armor  ·  item level 66</text>
+<rect x="242" y="372" width="140" height="32" rx="6" fill="#222a33" stroke="#222a33" stroke-width="1.5"/>
+<text x="252" y="393" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="start">Ash</text>
+<text x="372" y="393" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="end">GL +8</text>
+<rect x="392" y="372" width="140" height="32" rx="6" fill="#ffffff" stroke="#222a33" stroke-width="1.5"/>
+<text x="402" y="393" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="start">Orrin</text>
+<text x="522" y="393" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="end">GL +5</text>
+<rect x="706" y="372" width="76" height="32" rx="5" fill="#ffffff" stroke="#222a33" stroke-width="1.5"/>
+<text x="744.0" y="391.96" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="middle">Sell 17 g</text>
+<text x="242" y="418" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#5d6773" text-anchor="start">Only mail wearers are offered mail.</text>
+<circle cx="166" cy="182" r="11" fill="#2f6fd6"/>
+<text x="166" y="186.5" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+<circle cx="700" cy="244" r="11" fill="#2f6fd6"/>
+<text x="700" y="248.5" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+<circle cx="166" cy="292" r="11" fill="#2f6fd6"/>
+<text x="166" y="296.5" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">4</text>
+<rect x="574" y="440" width="220" height="38" rx="5" fill="#222a33" stroke="#222a33" stroke-width="1.5"/>
+<text x="684.0" y="464.04" font-family="Inter, Arial, Helvetica, sans-serif" font-size="14" font-weight="600" fill="#ffffff" text-anchor="middle">Hand out and continue</text>
+<rect x="440" y="440" width="124" height="38" rx="5" fill="#ffffff" stroke="#222a33" stroke-width="1.5"/>
+<text x="502.0" y="463.68" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">Decide later</text>
+<text x="166" y="464" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#5d6773" text-anchor="start">Loot drama can happen: 10% per item.</text>
+<circle cx="794" cy="436" r="11" fill="#2f6fd6"/>
+<text x="794" y="440.5" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">5</text>
+</svg>
