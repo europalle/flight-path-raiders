@@ -6,7 +6,7 @@ local _, ns = ...
 ns = ns or FPR_ENGINE or {}
 FPR_ENGINE = ns
 
-ns.ENGINE_VERSION = 1
+ns.ENGINE_VERSION = 2  -- 2: the boss keeps its target until the 110% threat margin is passed
 
 local floor = math.floor
 local function idiv(a, b) return floor(a / b) end
@@ -80,7 +80,7 @@ function ns.Simulate(inputs)
       caster = cls.caster, mana = D.MANA_START, threat = 0, alive = true,
       threatmul = (role == "tank") and D.TANK_THREAT or D.OTHER_THREAT,
       fireres = c.fireres and 1 or 0, crit = crit,
-      used = {}, stacks = 0, shield_wall = 0,
+      used = {}, stacks = 0, shield_wall = 0, dealt = 0, healed = 0, alive_rounds = 0,
     }
     local p = raid[i]
     if (p.zone == "ranged" and has["druid:balance"]) then p.crit = p.crit + 30 end
@@ -178,12 +178,26 @@ function ns.Simulate(inputs)
     return amount, false
   end
 
-  local function pick_tank()
-    -- Highest threat among living characters; ties to the lower roster slot.
+  local function pick_tank(current)
+    -- The boss keeps its target until someone's threat passes 110% of the target's (design doc 5).
+    -- With no living target, it takes the first living tank, else the highest threat.
     local best = nil
     for i = 1, #raid do
       local p = raid[i]
       if p.alive and (best == nil or p.threat > best.threat) then best = p end
+    end
+    if current and current.alive then
+      if best and best ~= current and best.threat * 1000 > current.threat * D.AGGRO_MARGIN then
+        if best.role ~= "tank" then log(28, best.slot, 0, best.name .. " pulls aggro!") end
+        return best
+      end
+      return current
+    end
+    for i = 1, #raid do
+      local p = raid[i]
+      if p.alive and p.role == "tank" and (best == nil or best.role ~= "tank" or p.threat >= best.threat) then
+        if best == nil or best.role ~= "tank" or p.threat > best.threat then best = p end
+      end
     end
     return best
   end
@@ -242,7 +256,8 @@ function ns.Simulate(inputs)
         end
       end
       -- Melee on the current target.
-      target = pick_tank()
+      target = pick_tank(target)
+      if inputs.trace and target then inputs.trace[#inputs.trace + 1] = target.slot end
       if target then
         local hit = pm(boss_def.melee, mode_dmg)
         if target.class == "paladin" and target.spec == "protection" then hit = pm(hit, 1100) end
@@ -302,22 +317,22 @@ function ns.Simulate(inputs)
               if big then amount = pm(amount, D.BIG_HEAL_MULT) end
               local crit_amt, did = roll(p, amount)
               if did and p.class == "paladin" then p.mana = p.mana + 6 end -- Illumination
-              heal(t, crit_amt)
+              p.healed = p.healed + heal(t, crit_amt)
               -- Spec extras.
               if p.class == "priest" and p.spec == "holy" then
                 local zl = alive_in(t.zone)
-                for i = 1, #zl do if zl[i] ~= t then heal(zl[i], pm(p.power, 400)) end end
+                for i = 1, #zl do if zl[i] ~= t then p.healed = p.healed + heal(zl[i], pm(p.power, 400)) end end
               elseif p.class == "shaman" and p.spec == "restoration" then
                 local second = most_injured(list)
-                if second then heal(second, pm(p.power, 600)) end
+                if second then p.healed = p.healed + heal(second, pm(p.power, 600)) end
               elseif p.class == "druid" and p.spec == "restoration" then
                 local second = most_injured(list)
-                if second then heal(second, pm(p.power, 500)) end
+                if second then p.healed = p.healed + heal(second, pm(p.power, 500)) end
               end
             end
           end
           if p.class == "priest" and p.spec == "discipline" and target and target.alive then
-            heal(target, 60) -- Power Word: Shield, simplified as 60 healing on the boss's target
+            p.healed = p.healed + heal(target, 60) -- Power Word: Shield, simplified as 60 healing on the boss's target
           end
           if p.class == "shaman" and p.spec == "restoration" and not p.used.manatide and p.mana < 40 then
             p.used.manatide = true
@@ -357,7 +372,7 @@ function ns.Simulate(inputs)
           end
           local cleave = (p.class == "shaman" and p.spec == "elemental") or (p.class == "rogue" and p.spec == "combat" and round % 6 <= 2)
           if hit_add then
-            hit_add.hp = hit_add.hp - dealt
+            hit_add.hp = hit_add.hp - dealt; p.dealt = p.dealt + dealt
             if hit_add.hp <= 0 then hit_add.alive = false; log(27, 0, 0, "A fire add dies.") end
             if cleave then
               for a = 1, #adds do
@@ -371,7 +386,7 @@ function ns.Simulate(inputs)
           elseif not boss.submerged then
             if p.class == "warrior" and p.spec == "arms" and boss.hp * 1000 < boss.maxhp * 200 then dealt = pm(dealt, 1300) end
             if p.class == "warlock" and p.spec == "destruction" and boss.hp * 1000 < boss.maxhp * 100 then dealt = pm(dealt, 2000) end
-            boss.hp = boss.hp - dealt
+            boss.hp = boss.hp - dealt; p.dealt = p.dealt + dealt
             p.threat = p.threat + pm(pm(dealt, p.threatmul), tac.threat)
             if p.class == "priest" and p.spec == "shadow" then
               local zl = alive_in(p.zone)
@@ -385,14 +400,9 @@ function ns.Simulate(inputs)
     -- 3. Threat check, mana, shield wall, battle res, end conditions.
     for i = 1, #raid do
       local p = raid[i]
+      if p.alive then p.alive_rounds = p.alive_rounds + 1 end
       if p.alive and p.caster then p.mana = p.mana + D.MANA_REGEN end
       if p.shield_wall > 0 then p.shield_wall = p.shield_wall - 1 end
-    end
-    local new_target = pick_tank()
-    if target and target.alive and new_target and new_target ~= target and new_target.role ~= "tank" then
-      if new_target.threat * 1000 > target.threat * D.AGGRO_MARGIN then
-        log(28, new_target.slot, 0, new_target.name .. " pulls aggro!")
-      end
     end
     -- Druid Battle Res: the first dead healer or tank, once per fight.
     for i = 1, #raid do
