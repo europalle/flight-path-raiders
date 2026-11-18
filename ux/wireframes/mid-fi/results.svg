@@ -25,12 +25,12 @@
 <line x1="30" y1="174" x2="68" y2="212" stroke="#9aa3ad" stroke-width="1"/>
 <line x1="68" y1="174" x2="30" y2="212" stroke="#9aa3ad" stroke-width="1"/>
 <text x="80" y="189" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#222a33" text-anchor="start">Roasting Spit of the Tryhard</text>
-<text x="80" y="208" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#5d6773" text-anchor="start">Epic · Weapon · Agility</text>
-<circle cx="260" cy="204" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
-<circle cx="269" cy="204" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
-<circle cx="278" cy="204" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
-<circle cx="287" cy="204" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
-<circle cx="296" cy="204" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="80" y="208" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#5d6773" text-anchor="start">Epic · Weapon · Agility · BoP</text>
+<circle cx="300" cy="185" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="309" cy="185" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="318" cy="185" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="327" cy="185" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="336" cy="185" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
 <rect x="356" y="178" width="172" height="30" rx="5" fill="#eef1f4" stroke="#222a33" stroke-width="1"/>
 <text x="368" y="198" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="start">Kess (+6 GL)</text>
 <text x="518" y="198" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="end">▾</text>
@@ -39,12 +39,12 @@
 <line x1="30" y1="236" x2="68" y2="274" stroke="#9aa3ad" stroke-width="1"/>
 <line x1="68" y1="236" x2="30" y2="274" stroke="#9aa3ad" stroke-width="1"/>
 <text x="80" y="251" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#222a33" text-anchor="start">Molten Bulwark Pauldrons</text>
-<text x="80" y="270" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#5d6773" text-anchor="start">Rare · Plate · Warrior set 1/3</text>
-<circle cx="260" cy="266" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
-<circle cx="269" cy="266" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
-<circle cx="278" cy="266" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
-<circle cx="287" cy="266" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
-<circle cx="296" cy="266" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="80" y="270" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#5d6773" text-anchor="start">Rare · Plate · Warrior set 1/3 · BoP</text>
+<circle cx="300" cy="247" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="309" cy="247" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="318" cy="247" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="327" cy="247" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="336" cy="247" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
 <rect x="356" y="240" width="172" height="30" rx="5" fill="#eef1f4" stroke="#222a33" stroke-width="1"/>
 <text x="368" y="260" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="start">Brannoc (+4 GL)</text>
 <text x="518" y="260" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="end">▾</text>
@@ -53,14 +53,14 @@
 <line x1="30" y1="298" x2="68" y2="336" stroke="#9aa3ad" stroke-width="1"/>
 <line x1="68" y1="298" x2="30" y2="336" stroke="#9aa3ad" stroke-width="1"/>
 <text x="80" y="313" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#222a33" text-anchor="start">Robe of Questionable Pulls</text>
-<text x="80" y="332" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#5d6773" text-anchor="start">Rare · Cloth · nobody can use</text>
-<circle cx="260" cy="328" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
-<circle cx="269" cy="328" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
-<circle cx="278" cy="328" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
-<circle cx="287" cy="328" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
-<circle cx="296" cy="328" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="80" y="332" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#5d6773" text-anchor="start">Rare · Cloth · BoE · no cloth user</text>
+<circle cx="300" cy="309" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="309" cy="309" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="318" cy="309" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="327" cy="309" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="336" cy="309" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
 <rect x="356" y="302" width="172" height="30" rx="5" fill="#eef1f4" stroke="#222a33" stroke-width="1"/>
-<text x="368" y="322" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="start">Sell  (9 g)</text>
+<text x="368" y="322" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="start">Bank  (26/28)</text>
 <text x="518" y="322" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="end">▾</text>
 <circle cx="536" cy="160" r="11" fill="#2f6fd6"/>
 <text x="536" y="164.5" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>

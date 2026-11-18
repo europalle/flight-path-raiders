@@ -4,6 +4,7 @@ Decisions made by the Game Director. Newest first.
 
 | Date | Area | Decision |
 | --- | --- | --- |
+| 2026-11-18 | Loot / Tuning | BoP boss drops, about 1 in 5 other drops BoE (one step below current raid BoP). Guild Bank: own roster only, no player trading; tabs of 28 slots, Tab 1 free, Tabs 2-4 at 3 / 8 / 20 hours of play at 60; quest items use no slots. Full bank: overflow mailbox, auto-sell after 7 days (Director chose A). New mid-fi Guild Bank screen |
 | 2026-11-18 | UX | Director's UI scale measured at 0.64 (about 1.2 px per UI unit at 1440p). 960 x 540 becomes the design grid; in-game default size is about 70% of screen width at 16:9, so it matches the approved map-sized frame on any UI scale. Mid-fi wireframes drawn, low-fi moved to ux/wireframes/low-fi |
 | 2026-11-18 | UX | Board goes wide: 960 x 540 UI units (16:9) by default, about the size of the world map; scale slider 70-120%, movable, position saved per character. Extra width goes to the playback stage for Art |
 | 2026-11-18 | Loot | Armor types by class (plate, mail, leather, cloth); tier sets per class (nine per raid); drops not tailored to the roster, all types and sets equally likely; unusable items sell for gold; results pre-fill the best eligible recipient |

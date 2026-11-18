@@ -1,0 +1,336 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="960" height="540" role="img" aria-label="Guild bank">
+<title>Guild bank</title>
+<rect width="960" height="540" fill="#ffffff"/>
+<rect x="0.75" y="0.75" width="958.5" height="538.5" rx="8" fill="#ffffff" stroke="#222a33" stroke-width="1.5"/>
+<path d="M0.75 40 V8.75 a8 8 0 0 1 8 -8 H951.25 a8 8 0 0 1 8 8 V40 Z" fill="#eef1f4" stroke="#222a33" stroke-width="1.5"/>
+<text x="16" y="26" font-family="Inter, Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#222a33" text-anchor="start">Flight Path Raiders</text>
+<text x="178" y="26" font-family="Inter, Arial, Helvetica, sans-serif" font-size="15" font-weight="400" fill="#5d6773" text-anchor="start">/  Guild Bank</text>
+<rect x="828" y="9" width="24" height="22" rx="4" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="840" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">-</text>
+<rect x="858" y="9" width="24" height="22" rx="4" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="870" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">+</text>
+<rect x="888" y="9" width="24" height="22" rx="4" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="900" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">⚙</text>
+<rect x="918" y="9" width="24" height="22" rx="4" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="930" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">✕</text>
+<text x="818" y="26" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="500" fill="#5d6773" text-anchor="end">100%</text>
+<text x="20" y="70" font-family="Inter, Arial, Helvetica, sans-serif" font-size="17" font-weight="700" fill="#222a33" text-anchor="start">The Guild Hoard</text>
+<text x="178" y="70" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="start">Gear only. Bound items stay on characters.</text>
+<rect x="640" y="50" width="300" height="30" rx="15" fill="#eef1f4" stroke="#222a33" stroke-width="1"/>
+<text x="656" y="70" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#222a33" text-anchor="start">✉ Mailbox 3</text>
+<text x="756" y="70" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="start">oldest auto-sells in 2 days</text>
+<circle cx="940" cy="48" r="11" fill="#2f6fd6"/>
+<text x="940" y="52.5" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+<rect x="20" y="90" width="142" height="44" rx="6" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<text x="32" y="108" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#ffffff" text-anchor="start">Tab 1</text>
+<text x="32" y="125" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="500" fill="#ffffff" text-anchor="start">26 / 28</text>
+<rect x="170" y="90" width="142" height="44" rx="6" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="182" y="108" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#222a33" text-anchor="start">Tab 2</text>
+<text x="182" y="125" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#5d6773" text-anchor="start">Buy: 3 h of play</text>
+<rect x="320" y="90" width="142" height="44" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="332" y="108" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#5d6773" text-anchor="start">🔒 Tab 3</text>
+<text x="332" y="125" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#5d6773" text-anchor="start">Unlocks after Tab 2</text>
+<rect x="470" y="90" width="142" height="44" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="482" y="108" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#5d6773" text-anchor="start">🔒 Tab 4</text>
+<text x="482" y="125" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#5d6773" text-anchor="start">Unlocks after Tab 3</text>
+<text x="624" y="108" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#5d6773" text-anchor="start">Slots</text>
+<rect x="624" y="116" width="170" height="12" rx="2" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="624" y="116" width="157.85714285714286" height="12" rx="2" fill="#222a33" stroke="none" stroke-width="1"/>
+<text x="804" y="127" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#222a33" text-anchor="start">26 / 28</text>
+<circle cx="612" cy="92" r="11" fill="#2f6fd6"/>
+<text x="612" y="96.5" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+<rect x="20" y="146" width="44" height="26" rx="13" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<text x="42.0" y="163" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#ffffff" text-anchor="middle">All</text>
+<rect x="70" y="146" width="70" height="26" rx="13" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="105.0" y="163" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="middle">Weapon</text>
+<rect x="146" y="146" width="56" height="26" rx="13" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="174.0" y="163" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="middle">Plate</text>
+<rect x="208" y="146" width="52" height="26" rx="13" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="234.0" y="163" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="middle">Mail</text>
+<rect x="266" y="146" width="72" height="26" rx="13" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="302.0" y="163" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="middle">Leather</text>
+<rect x="344" y="146" width="56" height="26" rx="13" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="372.0" y="163" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="middle">Cloth</text>
+<rect x="406" y="146" width="66" height="26" rx="13" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="439.0" y="163" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="middle">Trinket</text>
+<text x="590" y="163" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="end">Sort: gear level ▾</text>
+<rect x="20" y="182" width="76" height="64" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="26" y="188" width="30" height="30" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<text x="90" y="201" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#222a33" text-anchor="end">BoE</text>
+<text x="90" y="216" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="end">GL 58</text>
+<circle cx="28" cy="234" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="37" cy="234" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="46" cy="234" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="55" cy="234" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="64" cy="234" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<rect x="102" y="182" width="76" height="64" rx="6" fill="#ffffff" stroke="#222a33" stroke-width="2.5"/>
+<rect x="108" y="188" width="30" height="30" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<text x="172" y="201" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#222a33" text-anchor="end">BoE</text>
+<text x="172" y="216" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="end">GL 57</text>
+<circle cx="110" cy="234" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="119" cy="234" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="128" cy="234" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="137" cy="234" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="146" cy="234" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<rect x="184" y="182" width="76" height="64" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="190" y="188" width="30" height="30" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<text x="254" y="201" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#222a33" text-anchor="end">BoE</text>
+<text x="254" y="216" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="end">GL 57</text>
+<circle cx="192" cy="234" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="201" cy="234" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="210" cy="234" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="219" cy="234" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="228" cy="234" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<rect x="266" y="182" width="76" height="64" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="272" y="188" width="30" height="30" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<text x="336" y="201" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#222a33" text-anchor="end">BoE</text>
+<text x="336" y="216" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="end">GL 56</text>
+<circle cx="274" cy="234" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="283" cy="234" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="292" cy="234" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="301" cy="234" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="310" cy="234" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<rect x="348" y="182" width="76" height="64" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="354" y="188" width="30" height="30" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<text x="418" y="201" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#222a33" text-anchor="end">BoE</text>
+<text x="418" y="216" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="end">GL 56</text>
+<circle cx="356" cy="234" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="365" cy="234" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="374" cy="234" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="383" cy="234" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="392" cy="234" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<rect x="430" y="182" width="76" height="64" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="436" y="188" width="30" height="30" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<text x="500" y="201" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#222a33" text-anchor="end">BoE</text>
+<text x="500" y="216" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="end">GL 55</text>
+<circle cx="438" cy="234" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="447" cy="234" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="456" cy="234" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="465" cy="234" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="474" cy="234" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<rect x="512" y="182" width="76" height="64" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="518" y="188" width="30" height="30" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<text x="582" y="201" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#222a33" text-anchor="end">BoE</text>
+<text x="582" y="216" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="end">GL 55</text>
+<circle cx="520" cy="234" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="529" cy="234" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="538" cy="234" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="547" cy="234" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="556" cy="234" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<rect x="20" y="254" width="76" height="64" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="26" y="260" width="30" height="30" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<text x="90" y="273" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#222a33" text-anchor="end">BoE</text>
+<text x="90" y="288" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="end">GL 54</text>
+<circle cx="28" cy="306" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="37" cy="306" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="46" cy="306" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="55" cy="306" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="64" cy="306" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<rect x="102" y="254" width="76" height="64" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="108" y="260" width="30" height="30" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<text x="172" y="273" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#222a33" text-anchor="end">BoE</text>
+<text x="172" y="288" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="end">GL 54</text>
+<circle cx="110" cy="306" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="119" cy="306" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="128" cy="306" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="137" cy="306" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="146" cy="306" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<rect x="184" y="254" width="76" height="64" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="190" y="260" width="30" height="30" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<text x="254" y="273" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#222a33" text-anchor="end">BoE</text>
+<text x="254" y="288" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="end">GL 54</text>
+<circle cx="192" cy="306" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="201" cy="306" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="210" cy="306" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="219" cy="306" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="228" cy="306" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<rect x="266" y="254" width="76" height="64" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="272" y="260" width="30" height="30" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<text x="336" y="273" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#222a33" text-anchor="end">BoE</text>
+<text x="336" y="288" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="end">GL 53</text>
+<circle cx="274" cy="306" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="283" cy="306" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="292" cy="306" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="301" cy="306" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="310" cy="306" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<rect x="348" y="254" width="76" height="64" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="354" y="260" width="30" height="30" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<text x="418" y="273" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#222a33" text-anchor="end">BoE</text>
+<text x="418" y="288" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="end">GL 53</text>
+<circle cx="356" cy="306" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="365" cy="306" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="374" cy="306" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="383" cy="306" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="392" cy="306" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<rect x="430" y="254" width="76" height="64" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="436" y="260" width="30" height="30" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<text x="500" y="273" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#222a33" text-anchor="end">BoE</text>
+<text x="500" y="288" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="end">GL 52</text>
+<circle cx="438" cy="306" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="447" cy="306" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="456" cy="306" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="465" cy="306" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="474" cy="306" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<rect x="512" y="254" width="76" height="64" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="518" y="260" width="30" height="30" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<text x="582" y="273" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#222a33" text-anchor="end">BoE</text>
+<text x="582" y="288" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="end">GL 52</text>
+<circle cx="520" cy="306" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="529" cy="306" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="538" cy="306" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="547" cy="306" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="556" cy="306" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<rect x="20" y="326" width="76" height="64" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="26" y="332" width="30" height="30" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<text x="90" y="345" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#222a33" text-anchor="end">BoE</text>
+<text x="90" y="360" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="end">GL 51</text>
+<circle cx="28" cy="378" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="37" cy="378" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="46" cy="378" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="55" cy="378" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="64" cy="378" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<rect x="102" y="326" width="76" height="64" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="108" y="332" width="30" height="30" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<text x="172" y="345" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#222a33" text-anchor="end">BoE</text>
+<text x="172" y="360" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="end">GL 51</text>
+<circle cx="110" cy="378" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="119" cy="378" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="128" cy="378" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="137" cy="378" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="146" cy="378" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<rect x="184" y="326" width="76" height="64" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="190" y="332" width="30" height="30" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<text x="254" y="345" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#222a33" text-anchor="end">BoE</text>
+<text x="254" y="360" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="end">GL 50</text>
+<circle cx="192" cy="378" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="201" cy="378" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="210" cy="378" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="219" cy="378" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="228" cy="378" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<rect x="266" y="326" width="76" height="64" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="272" y="332" width="30" height="30" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<text x="336" y="345" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#222a33" text-anchor="end">BoE</text>
+<text x="336" y="360" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="end">GL 50</text>
+<circle cx="274" cy="378" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="283" cy="378" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="292" cy="378" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="301" cy="378" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="310" cy="378" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<rect x="348" y="326" width="76" height="64" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="354" y="332" width="30" height="30" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<text x="418" y="345" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#222a33" text-anchor="end">BoE</text>
+<text x="418" y="360" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="end">GL 49</text>
+<circle cx="356" cy="378" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="365" cy="378" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="374" cy="378" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="383" cy="378" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="392" cy="378" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<rect x="430" y="326" width="76" height="64" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="436" y="332" width="30" height="30" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<text x="500" y="345" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#222a33" text-anchor="end">BoE</text>
+<text x="500" y="360" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="end">GL 48</text>
+<circle cx="438" cy="378" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="447" cy="378" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="456" cy="378" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="465" cy="378" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="474" cy="378" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<rect x="512" y="326" width="76" height="64" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="518" y="332" width="30" height="30" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<text x="582" y="345" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#222a33" text-anchor="end">BoE</text>
+<text x="582" y="360" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="end">GL 48</text>
+<circle cx="520" cy="378" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="529" cy="378" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="538" cy="378" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="547" cy="378" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="556" cy="378" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<rect x="20" y="398" width="76" height="64" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="26" y="404" width="30" height="30" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<text x="90" y="417" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#222a33" text-anchor="end">BoE</text>
+<text x="90" y="432" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="end">GL 47</text>
+<circle cx="28" cy="450" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="37" cy="450" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="46" cy="450" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="55" cy="450" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="64" cy="450" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<rect x="102" y="398" width="76" height="64" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="108" y="404" width="30" height="30" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<text x="172" y="417" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#222a33" text-anchor="end">BoE</text>
+<text x="172" y="432" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="end">GL 46</text>
+<circle cx="110" cy="450" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="119" cy="450" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="128" cy="450" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="137" cy="450" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="146" cy="450" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<rect x="184" y="398" width="76" height="64" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="190" y="404" width="30" height="30" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<text x="254" y="417" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#222a33" text-anchor="end">BoE</text>
+<text x="254" y="432" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="end">GL 45</text>
+<circle cx="192" cy="450" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="201" cy="450" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="210" cy="450" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="219" cy="450" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="228" cy="450" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="254" y="454" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="600" fill="#5d6773" text-anchor="end">old</text>
+<rect x="266" y="398" width="76" height="64" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="272" y="404" width="30" height="30" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<text x="336" y="417" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#222a33" text-anchor="end">BoE</text>
+<text x="336" y="432" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="end">GL 44</text>
+<circle cx="274" cy="450" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="283" cy="450" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="292" cy="450" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="301" cy="450" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="310" cy="450" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="336" y="454" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="600" fill="#5d6773" text-anchor="end">old</text>
+<rect x="348" y="398" width="76" height="64" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="354" y="404" width="30" height="30" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<text x="418" y="417" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#222a33" text-anchor="end">BoE</text>
+<text x="418" y="432" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="end">GL 42</text>
+<circle cx="356" cy="450" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="365" cy="450" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="374" cy="450" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="383" cy="450" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="392" cy="450" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="418" y="454" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="600" fill="#5d6773" text-anchor="end">old</text>
+<rect x="430" y="398" width="76" height="64" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="468" y="435" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#5d6773" text-anchor="middle">empty</text>
+<rect x="512" y="398" width="76" height="64" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="550" y="435" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#5d6773" text-anchor="middle">empty</text>
+<circle cx="592" cy="180" r="11" fill="#2f6fd6"/>
+<text x="592" y="184.5" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+<rect x="608" y="146" width="332" height="330" rx="8" fill="#eef1f4" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="622" y="160" width="52" height="52" rx="4" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="622" y1="160" x2="674" y2="212" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="674" y1="160" x2="622" y2="212" stroke="#9aa3ad" stroke-width="1"/>
+<text x="686" y="178" font-family="Inter, Arial, Helvetica, sans-serif" font-size="14" font-weight="700" fill="#222a33" text-anchor="start">Chainmail of the Pug Leader</text>
+<text x="686" y="196" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="start">Rare · Mail · Armor · GL 57</text>
+<circle cx="686" cy="207" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="695" cy="207" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="704" cy="207" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<circle cx="713" cy="207" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="722" cy="207" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<rect x="622" y="222" width="140" height="24" rx="12" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="692" y="239" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="middle">◇ Bind on Equip</text>
+<text x="622" y="272" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="500" fill="#222a33" text-anchor="start">+14 Agility   +9 Stamina   of the Monkey</text>
+<text x="622" y="300" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="start">Fits: Orrin (Hunter), Ash (Shaman)</text>
+<text x="622" y="320" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="start">Best upgrade: Orrin, +3 GL</text>
+<rect x="622" y="334" width="200" height="36" rx="5" fill="#222a33" stroke="#222a33" stroke-width="1.5"/>
+<text x="722.0" y="356.68" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">Equip on Orrin</text>
+<rect x="830" y="334" width="96" height="36" rx="5" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="878" y="357" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="middle">Other ▾</text>
+<text x="622" y="392" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#222a33" text-anchor="start" font-style="italic">Equipping binds it to that character.</text>
+<rect x="622" y="408" width="140" height="34" rx="5" fill="#ffffff" stroke="#222a33" stroke-width="1.5"/>
+<text x="692.0" y="429.68" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">Sell  (11 g)</text>
+<text x="774" y="430" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#5d6773" text-anchor="start">Sells at 20% of value</text>
+<text x="622" y="464" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#5d6773" text-anchor="start" font-style="italic">Price check: worth more equipped than sold.</text>
+<circle cx="940" cy="150" r="11" fill="#2f6fd6"/>
+<text x="940" y="154.5" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">4</text>
+<rect x="20" y="482" width="580" height="46" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<text x="32" y="500" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="start">Quest items (no slot used)</text>
+<text x="32" y="518" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="start">Thunderflurry half: Magmadad  ·  Drakefire Amulet (attunement)</text>
+<rect x="608" y="486" width="160" height="38" rx="5" fill="#ffffff" stroke="#222a33" stroke-width="1.5"/>
+<text x="688.0" y="509.68" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">Sell all &#x27;old&#x27; (3)</text>
+<rect x="778" y="486" width="162" height="38" rx="5" fill="#ffffff" stroke="#222a33" stroke-width="1.5"/>
+<text x="859.0" y="509.68" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">Open mailbox (3)</text>
+<circle cx="600" cy="484" r="11" fill="#2f6fd6"/>
+<text x="600" y="488.5" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">5</text>
+</svg>

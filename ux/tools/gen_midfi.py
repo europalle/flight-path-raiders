@@ -220,13 +220,13 @@ r.text(40,84,"KILL  ·  Ragnaroast (Heroic)",22,800,PAPER)
 r.text(40,108,"Round 14  ·  Efficient Kill +30  ·  Score +1,030  ·  Guild rank 3rd → 2nd",14,500,PAPER)
 r.note(1,934,58)
 r.text(20,154,"Loot",15,700)
-items=[("Roasting Spit of the Tryhard","Epic · Weapon · Agility",4,"Kess (+6 GL)"),
-       ("Molten Bulwark Pauldrons","Rare · Plate · Warrior set 1/3",3,"Brannoc (+4 GL)"),
-       ("Robe of Questionable Pulls","Rare · Cloth · nobody can use",3,"Sell  (9 g)")]
+items=[("Roasting Spit of the Tryhard","Epic · Weapon · Agility · BoP",4,"Kess (+6 GL)"),
+       ("Molten Bulwark Pauldrons","Rare · Plate · Warrior set 1/3 · BoP",3,"Brannoc (+4 GL)"),
+       ("Robe of Questionable Pulls","Rare · Cloth · BoE · no cloth user",3,"Bank  (26/28)")]
 for i,(nm,meta,q,who) in enumerate(items):
     y=166+i*62
     r.rect(20,y,520,54,fill=PAPER,stroke=LINE,r=6)
-    r.img(30,y+8,38,38); r.text(80,y+23,nm,13,700); r.text(80,y+42,meta,11,400,MUTED); r.pips(260,y+38,q)
+    r.img(30,y+8,38,38); r.text(80,y+23,nm,13,700); r.text(80,y+42,meta,11,400,MUTED); r.pips(300,y+19,q)
     r.rect(356,y+12,172,30,fill=FILL,stroke=INK,r=5); r.text(368,y+32,who,12,600); r.text(518,y+32,"▾",12,600,INK,"end")
 r.note(2,536,160)
 r.text(560,154,"Raid changes",15,700)
@@ -243,7 +243,7 @@ r.note(4,934,366)
 r.btn(640,478,140,44,"Back to hub",False,14); r.btn(792,478,148,44,"Next boss",True,15)
 frames.append(("results",r,[
  "Outcome banner adds the guild rank change, since that is what people talk about in guild chat.",
- "Loot now shows armor type and set piece. Unusable drops pre-fill 'Sell' with the price; every row is a dropdown.",
+ "Loot shows armor type, set piece and binding (BoP or BoE). A BoE nobody can use pre-fills 'Bank' with free slots; a BoP nobody can use pre-fills 'Sell'. Every row is a dropdown.",
  "Raid changes include the quit warning, so it never comes as a surprise.",
  "Drama card unchanged in logic: two choices, costs written on the buttons."]))
 
@@ -304,6 +304,73 @@ l.bar(24,176,432,10,0.6,INK)
 l.text(24,214,"Finished pulls are always saved. Ground play earns no Frequent Flyer bonus.",11,400,MUTED)
 l.note(1,462,110)
 frames.append(("landing",l,["Same logic as low-fi at real sizes. Countdown defaults to Pause, so an alt-tabbed player never returns to a frozen screen."]))
+
+# ---------- Guild bank ----------
+g=S(W,H,"Guild bank")
+g.frame("Guild Bank")
+g.text(20,70,"The Guild Hoard",17,700)
+g.text(178,70,"Gear only. Bound items stay on characters.",12,400,MUTED)
+g.rect(640,50,300,30,fill=FILL,stroke=INK,r=15)
+g.text(656,70,"✉ Mailbox 3",13,700); g.text(756,70,"oldest auto-sells in 2 days",12,400,MUTED)
+g.note(1,940,48)
+tabs=[("Tab 1",  "26 / 28",True,False),("Tab 2","Buy: 3 h of play",False,False),("Tab 3","Unlocks after Tab 2",False,True),("Tab 4","Unlocks after Tab 3",False,True)]
+for i,(a,b_,sel,lock) in enumerate(tabs):
+    x=20+i*150
+    g.rect(x,90,142,44,fill=INK if sel else PAPER,stroke=INK if not lock else LINE,r=6,dash=lock)
+    g.text(x+12,108,("🔒 " if lock else "")+a,13,700,PAPER if sel else (MUTED if lock else INK))
+    g.text(x+12,125,b_,11,500 if sel else 400,PAPER if sel else MUTED)
+g.text(624,108,"Slots",12,600,MUTED); g.bar(624,116,170,12,26/28,INK); g.text(804,127,"26 / 28",13,700)
+g.note(2,612,92)
+# filters
+for i,f in enumerate(["All","Weapon","Plate","Mail","Leather","Cloth","Trinket"]):
+    w=[44,70,56,52,72,56,66][i]; x=20+sum([44,70,56,52,72,56,66][:i])+i*6
+    g.rect(x,146,w,26,fill=INK if i==0 else PAPER,stroke=INK,r=13)
+    g.text(x+w/2,163,f,11,600,PAPER if i==0 else INK,"middle")
+g.text(590,163,"Sort: gear level ▾",12,600,INK,"end")
+# grid 7x4
+types=["BoE"]*26
+gls=[58,57,57,56,56,55,55,54,54,54,53,53,52,52,51,51,50,50,49,48,48,47,46,45,44,42]
+for i in range(28):
+    c,rw=i%7,i//7; x=20+c*82; y=182+rw*72
+    sel=(i==1)
+    if i<26:
+        g.rect(x,y,76,64,fill=PAPER,stroke=INK if sel else LINE,r=6,sw=2.5 if sel else 1)
+        g.rect(x+6,y+6,30,30,fill=FILL2,stroke=LINE,r=3)
+        g.text(x+70,y+19,"BoE",10,700,INK,"end")
+        g.text(x+70,y+34,f"GL {gls[i]}",11,600,INK,"end")
+        g.pips(x+8,y+52,[4,3,3,3,2,3,2,2,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2][i])
+        if gls[i]<46: g.text(x+70,y+56,"old",10,600,MUTED,"end")
+    else:
+        g.rect(x,y,76,64,fill=PAPER,stroke=LINE,r=6,dash=True)
+        g.text(x+38,y+37,"empty",11,400,MUTED,"middle")
+g.note(3,592,180)
+# detail panel
+g.rect(608,146,332,330,fill=FILL,stroke=LINE,r=8)
+g.img(622,160,52,52)
+g.text(686,178,"Chainmail of the Pug Leader",14,700)
+g.text(686,196,"Rare · Mail · Armor · GL 57",12,400,MUTED); g.pips(686,207,3)
+g.rect(622,222,140,24,fill=PAPER,stroke=INK,r=12); g.text(692,239,"◇ Bind on Equip",12,700,INK,"middle")
+g.text(622,272,"+14 Agility   +9 Stamina   of the Monkey",12,500)
+g.text(622,300,"Fits: Orrin (Hunter), Ash (Shaman)",12,600)
+g.text(622,320,"Best upgrade: Orrin, +3 GL",12,400,MUTED)
+g.btn(622,334,200,36,"Equip on Orrin",True)
+g.rect(830,334,96,36,fill=PAPER,stroke=INK,r=5); g.text(878,357,"Other ▾",12,600,INK,"middle")
+g.text(622,392,"Equipping binds it to that character.",12,400,INK,italic=True)
+g.btn(622,408,140,34,"Sell  (11 g)"); g.text(774,430,"Sells at 20% of value",11,400,MUTED)
+g.text(622,464,"Price check: worth more equipped than sold.",11,400,MUTED,italic=True)
+g.note(4,940,150)
+# bottom strip
+g.rect(20,482,580,46,fill=PAPER,stroke=LINE,r=6)
+g.text(32,500,"Quest items (no slot used)",12,700)
+g.text(32,518,"Thunderflurry half: Magmadad  ·  Drakefire Amulet (attunement)",12,400,MUTED)
+g.btn(608,486,160,38,"Sell all 'old' (3)"); g.btn(778,486,162,38,"Open mailbox (3)")
+g.note(5,600,484)
+frames.append(("bank",g,[
+ "Overflow goes to the mailbox (Director, option A). The chip says how many items wait and when the oldest auto-sells, so nothing disappears silently.",
+ "Tuning: tabs of 28 slots. Tab 1 is free; Tabs 2-4 cost 3, 8 and 20 hours of play at level 60 (gold set against the economy table in the prototype). Capacity is always text, never just a bar.",
+ "7 by 4 grid, 76 x 64 slots. Every item shows BoE, gear level and quality pips; items two steps below the current tier are marked 'old'.",
+ "Detail panel answers 'who can use this?' first and offers one-click equip on the best upgrade. Binding is spelled out, plus a warning that equipping binds it.",
+ "Quest items (legendary halves, attunement pieces) never use slots, so a full bank can't block progress. 'Sell all old' clears space in one click."]))
 
 for slug,s,notes in frames:
     open(f"{OUT}/{slug}.svg","w").write(s.svg())
