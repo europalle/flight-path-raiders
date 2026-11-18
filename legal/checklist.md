@@ -33,8 +33,9 @@ Status key: **Done** (checked in the repo), **Before beta**, **Before launch**, 
 
 | Item | Licence | Duty | Status |
 |---|---|---|---|
-| Our code | MIT (LICENSE in the repo) | Keep the notice | Done |
-| Fengari (browser Lua, playtest page only) | MIT | Credit in the playtest page | Before beta: add credit line |
+| Our code | GPL-3.0 (LICENSE in the repo, decision 2026-11-18) | Ship the licence with the addon; source stays public | Before launch: add LICENSE to the addon folder |
+| Our art | CC BY-NC-SA 4.0 (decision 2026-11-18) | Credit line and licence note on the addon page; purely AI-made images may not be copyrightable in some countries, human edits strengthen it | Before launch |
+| Fengari (browser Lua, playtest page only) | MIT, compatible with GPL-3.0 | Credit in the playtest page | Before beta: add credit line |
 | Kalam, IBM Plex Sans (hi-fi mockups only; not in the addon) | SIL Open Font License 1.1 | If we ever ship them in the addon: include the OFL text | Done for now |
 | lupa, Pillow, numpy, Playwright (tools only, never shipped) | BSD/MIT/Apache-type | None for users | Done |
 | Any library added later (LibStub, Ace3, LibDBIcon) | Varies | Add to this table before adding the code | Ongoing |

@@ -2,7 +2,7 @@
 
 A World of Warcraft: Forever addon that turns flight paths into raid nights. Recruit a 10-player raid, gear up in dungeons, and clear parody bosses one flight at a time. Weekly lockouts, Normal, Heroic and Mythic modes, and a guild leaderboard synced entirely in-game.
 
-> Status: **Phase 3, vertical slice, is next.** A playable browser build of the raid runs on the real engine (see STATUS.md).
+> Status: **Phase 3, vertical slice, built.** The addon plays the Molten Bore end to end, tested headless; the in-game check waits for install (see STATUS.md).
 
 **Current status and next steps:** see [STATUS.md](STATUS.md). Tasks live in [Issues](https://github.com/europalle/flight-path-raiders/issues).
 
@@ -16,7 +16,10 @@ A World of Warcraft: Forever addon that turns flight paths into raid nights. Rec
 
 | Folder | Contents |
 | --- | --- |
-| `addon/FlightPathRaiders/` | The WoW addon: TOC, Lua, bundled libraries |
+| `engine/` | The game in Lua, shared by the addon, the browser builds and the tests: combat (sim, bosses), rules (game), records (replay) |
+| `addon/` | The WoW addon: `src/` Lua, built into `dist/FlightPathRaiders` by `tools/build_addon.py` |
+| `playtest/` | Browser playtest build running the same Lua rules |
+| `audio/`, `legal/`, `marketing/`, `qa/` | Department deliverables |
 | `prototype/` | Browser prototype used to tune combat and balance before the Lua build |
 | `art/` | SVG sketches, card frames, board layouts, icons |
 | `design/` | Decision log and links to the design documents |
@@ -49,7 +52,7 @@ At milestone gates, reviews run as separate agents that start fresh and read onl
 | --- | --- | --- |
 | 1 | Concept | Done (2026-11-17) |
 | 2 | Pre-production | Done (2026-11-18), gate passed with conditions |
-| 3 | Vertical slice | Next |
+| 3 | Vertical slice | Built; in-game check at install |
 | 4 | Production (alpha) | Not started |
 | 5 | Beta | Not started |
 | 6 | Launch and live | Not started |

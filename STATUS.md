@@ -1,22 +1,32 @@
 # Status
 
-Last updated: 2026-11-18. Read this first at the start of every session.
+Last updated: 2026-11-19. Read this first at the start of every session.
 
 ## Where we are
 
-**Phase 3, vertical slice, in progress.** Addon skeleton built; traits and morale in the engine and the playtest build.
+**Phase 3, vertical slice: built.** The addon plays the Molten Bore end to end (hub, prep, playback, results, loot window, roster, tavern, journal, settings), tested headless on every push. The Director installs it when the game is in production; everything that needs the real client is marked **verify at install** (`qa/test-plan-addon.md`).
 
 | Deliverable | Status |
 | --- | --- |
-| Design document | Done, signed off |
-| UX wireframes and art direction | Done: mid-fi wireframes (12 screens), art direction doc https://claude.ai/artifact/QmgH2PCEzUQ7htB5fSzQpZ, hi-fi hub in light and dark (`ux/hifi/`), kit cut into `art/kit/ui/` |
-| Technical design | Done, signed off |
-| Browser prototype | Engine 10 published: https://claude.ai/artifact/YHGsBUgA2y1DGDVTaisGpy (all five Molten Bore bosses, preparation, raid experience, raid moments, 10-week season). QA suite passes; boss tuning done |
-| Addon | `addon/src` (Core, SelfTest, Board); build with `python3 tools/build_addon.py` into `addon/dist/FlightPathRaiders`; `tests/addon_test.py` runs it headless |
-| Board preview | https://claude.ai/artifact/9QSA6W3cuxP2tgejH3FU6P (`ux/preview/`): the board on the Director's 1440p screen, clickable, scale and theme |
-| Playtest build | Published: https://claude.ai/artifact/NfN3hjmbfZ7Hvhf7pncJxM (`playtest/`, built by `playtest/build.py`). Script: `qa/playtest-1.md`. Rules QA `tools/playtest_qa.js`, bot `tools/playtest_bot.js` |
-| Milestone plan | Done: https://claude.ai/artifact/MiJAJ6iKh2Dkcn8aYSeBU9 |
-| Gate review (separate agents) | Passed with conditions; conditions fixed or filed as Phase 3 issues (#26-#35) |
+| Game rules | One source in Lua (`engine/game.lua`), used by the addon, the playtest page and the bots |
+| Engine | Engine 10; boss mechanics as hooks (`engine/bosses.lua`); replay records (`engine/replay.lua`) |
+| Addon | Every slice screen as real frames (`addon/src`), art exported at build (`tools/addon_media.py`), keyboard reach, sound cues. Build: `python3 tools/build_addon.py` into `addon/dist/FlightPathRaiders` |
+| Hi-fi | Every slice screen, both themes (`ux/hifi/`, sign-off list in its README); board preview https://claude.ai/artifact/9QSA6W3cuxP2tgejH3FU6P |
+| Playtest build | https://claude.ai/artifact/NfN3hjmbfZ7Hvhf7pncJxM (runs the Lua rules) |
+| Audio, Legal, Marketing, QA | `audio/cues.md`, `legal/checklist.md`, `marketing/positioning.md` and `marketing/clip-pull.mp4`, `qa/test-plan-addon.md` |
+| Phase 3 gate | See below |
+
+## Phase 3 gate (milestone plan)
+
+| Check | Result |
+| --- | --- |
+| 1. Fun, scored | Verify at install: the Director's survey after a full in-game week (#34) |
+| 2. Same fights everywhere | Pass in Lua 5.1, LuaJIT and Fengari, and `/fpr selftest` passes inside the built addon headless; in the client: verify at install (#27) |
+| 3. Stable and fast | Pass headless: 10 weeks through the addon with no Lua errors; slowest pull 5.9 ms; hub redraw 0.4 ms. Taint and first open: verify at install |
+| 4. Looks like the hi-fi | Pass headless: every addon screen, both themes, passes contrast (`tools/addon_shot.py`); scale is uniform so 70% and 120% keep the layout. In-client screenshots: verify at install |
+| 5. Keyboard reach | Pass: a whole pull and every tab with the keyboard alone (tests/addon_test.py) |
+| 6. Learning path | Pass: learner bot within 2 weeks of the smart bot in 72% of guilds (`tools/gate_learning.py`); no recap answer before two wipes on that lesson (QA) |
+| 7. Separate-agent gate review | See the latest commit and the Director's report |
 
 ## Where things live
 
@@ -36,25 +46,17 @@ Last updated: 2026-11-18. Read this first at the start of every session.
 
 ## Recent
 
-- 2026-11-18: Style set: A Field Journal is light mode, C Midnight Grimoire is dark mode, characters in Gemini's polished-but-janky WoW Classic look.
-- 2026-11-18: Alliance only (human, dwarf, night elf, gnome), Classic class rules; dwarves can be shamans (WoW: Forever). 18 characters cut out.
-- 2026-11-18: All Gemini prompts done; Ragnaroast and the Molten Bore stage in; first hi-fi stage test.
-- 2026-11-18: Task board set up as GitHub Issues.
-- 2026-11-18: Technical design signed off.
-- 2026-11-18: Browser prototype v1 and Tuning pass 1.
-- 2026-11-18: QA and Tuning sweeps; department meeting changed the lava throw, zones and two tactic cards (engine v3).
-- 2026-11-18: Tuning pass 3: fire resistance and preparation-first targets (engine v4).
-- 2026-11-18: Skill, familiarity, chemistry and raid moments (engine v5, Tuning pass 4); design doc 4.6.
-- 2026-11-18: The other four Molten Bore bosses in the engine and prototype (engine v6); design doc 6.1.
-- 2026-11-18: Learning path approved (design doc 3.1); playtest build published (engine v7).
-- 2026-11-18: Phase 3 started: addon skeleton (`addon/`, `tools/build_addon.py`, `/fpr selftest`), every trait and morale (engine 10).
-- 2026-11-18: Art direction, hi-fi hub and milestone plan. Phase 2 gate review: pass with conditions; engine v9 with input checks, CI, Normal retuned, softer card checks, Heroic keep-pulling rule.
+- 2026-11-19: Director: no install until production, so finish the slice without it.
+- 2026-11-19: Rules in Lua; boss hooks; replay records; every slice screen in hi-fi and in the addon; keyboard reach; sound cues; art in the addon (3-slice buttons, stage, rim light); Legal, Marketing and QA deliverables; Phase 3 gate checks measured.
+- 2026-11-18: Phase 3 started: addon skeleton, every trait and morale (engine 10).
+- 2026-11-18: Phase 2 gate passed with conditions; art direction, hi-fi hub, milestone plan.
+- 2026-11-18: Learning path approved; playtest build published.
 
 ## Next
 
-1. Director: copy `addon/dist/FlightPathRaiders` into the game and run `/fpr selftest` (first in-game check).
-2. Journal and loot window wireframes (#31), then hi-fi for the slice screens (#32); replay records (#28); Legal checklist (#14).
-3. Then the Phase 3 list in the milestone plan.
+1. Director, at install: follow `qa/test-plan-addon.md` (self-test, taint, screenshots, a week of play, the survey).
+2. Director, when convenient: Gemini prompts F3-F6 (the four bosses without art) and F1b (Ragnaroast in parts); Legal's two open decisions.
+3. Then Phase 4 (production), per the milestone plan.
 
 ## Working rules
 
