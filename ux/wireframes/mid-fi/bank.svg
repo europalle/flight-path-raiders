@@ -10,25 +10,25 @@
 <rect x="858" y="9" width="24" height="22" rx="4" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
 <text x="870" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">+</text>
 <rect x="888" y="9" width="24" height="22" rx="4" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
-<text x="900" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">⚙</text>
+<text x="900" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle"><tspan fill="#c0841a" font-weight="800">⚙</tspan></text>
 <rect x="918" y="9" width="24" height="22" rx="4" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
-<text x="930" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">✕</text>
+<text x="930" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle"><tspan fill="#c0841a" font-weight="800">✕</tspan></text>
 <text x="818" y="26" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="500" fill="#5d6773" text-anchor="end">100%</text>
 <text x="20" y="70" font-family="Inter, Arial, Helvetica, sans-serif" font-size="17" font-weight="700" fill="#222a33" text-anchor="start">The Guild Hoard</text>
-<text x="178" y="70" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="start">Unlocked at level 60. Gear and consumables share the slots.</text>
-<rect x="660" y="50" width="280" height="30" rx="15" fill="#eef1f4" stroke="#222a33" stroke-width="1"/>
-<text x="676" y="70" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#222a33" text-anchor="start">✉ Mailbox 2 / 5</text>
-<text x="800" y="70" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="start">oldest sells in 3 d</text>
+<text x="178" y="70" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="start">Gear and consumables share the slots.</text>
+<rect x="590" y="50" width="350" height="30" rx="15" fill="#eef1f4" stroke="#222a33" stroke-width="1"/>
+<text x="606" y="70" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#222a33" text-anchor="start"><tspan fill="#c0841a" font-weight="800">✉</tspan> Mailbox 2 / 5</text>
+<text x="924" y="70" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="end">next sells in 3 play-days</text>
 <circle cx="940" cy="48" r="11" fill="#2f6fd6"/>
 <text x="940" y="52.5" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
-<rect x="20" y="90" width="142" height="44" rx="6" fill="#222a33" stroke="#222a33" stroke-width="1"/>
-<text x="32" y="108" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#ffffff" text-anchor="start">Tab 1</text>
+<rect x="20" y="90" width="188" height="44" rx="6" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<text x="32" y="108" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#ffffff" text-anchor="start">Ross&#x27;s tank spares <tspan fill="#c0841a" font-weight="800">✎</tspan></text>
 <text x="32" y="125" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="500" fill="#ffffff" text-anchor="start">14 / 16</text>
-<rect x="170" y="90" width="142" height="44" rx="6" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
-<text x="182" y="108" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#222a33" text-anchor="start">Tab 2</text>
-<text x="182" y="125" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#5d6773" text-anchor="start">Buy: 6 h of play</text>
-<text x="330" y="108" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#5d6773" text-anchor="start">Max 2 tabs, 32 slots</text>
-<text x="330" y="125" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#5d6773" text-anchor="start">Poor-quality junk auto-sells, never uses a slot</text>
+<rect x="216" y="90" width="188" height="44" rx="6" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="228" y="108" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#222a33" text-anchor="start">Tab 2</text>
+<text x="228" y="125" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#5d6773" text-anchor="start">Buy: 6 h of play</text>
+<text x="412" y="108" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#5d6773" text-anchor="start">Max 2 tabs, 32 slots</text>
+<text x="412" y="125" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#5d6773" text-anchor="start">Poor junk auto-sells, never uses a slot</text>
 <circle cx="612" cy="92" r="11" fill="#2f6fd6"/>
 <text x="612" y="96.5" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
 <rect x="20" y="146" width="44" height="26" rx="13" fill="#222a33" stroke="#222a33" stroke-width="1"/>
@@ -37,12 +37,13 @@
 <text x="98.0" y="163" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="middle">Gear</text>
 <rect x="132" y="146" width="104" height="26" rx="13" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
 <text x="184.0" y="163" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="middle">Consumables</text>
-<text x="590" y="163" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="end">Sort: type, then gear level ▾</text>
+<text x="590" y="163" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="end">Sort: type, then gear level <tspan fill="#c0841a" font-weight="800">▾</tspan></text>
 <rect x="20" y="182" width="138" height="68" rx="6" fill="#ffffff" stroke="#222a33" stroke-width="2.5"/>
 <rect x="26" y="188" width="30" height="30" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
-<text x="152" y="202" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="end">GL 57</text>
+<text x="152" y="216" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="end">GL 57</text>
 <text x="28" y="232" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="start">Chainmail of the …</text>
 <text x="28" y="245" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="400" fill="#5d6773" text-anchor="start">BoE · Rare · Mail</text>
+<text x="62" y="202" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#222a33" text-anchor="start"><tspan fill="#c0841a" font-weight="800">▲</tspan> +3 Orrin</text>
 <circle cx="64" cy="214" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
 <circle cx="73" cy="214" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
 <circle cx="82" cy="214" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
@@ -50,9 +51,10 @@
 <circle cx="100" cy="214" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
 <rect x="164" y="182" width="138" height="68" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
 <rect x="170" y="188" width="30" height="30" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
-<text x="296" y="202" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="end">GL 55</text>
+<text x="296" y="216" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="end">GL 55</text>
 <text x="172" y="232" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="start">Bracers of Mild C…</text>
 <text x="172" y="245" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="400" fill="#5d6773" text-anchor="start">BoE · Uncommon · Plate</text>
+<text x="206" y="202" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#222a33" text-anchor="start"><tspan fill="#c0841a" font-weight="800">▲</tspan> +1 Mira</text>
 <circle cx="208" cy="214" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
 <circle cx="217" cy="214" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
 <circle cx="226" cy="214" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
@@ -60,9 +62,10 @@
 <circle cx="244" cy="214" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
 <rect x="308" y="182" width="138" height="68" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
 <rect x="314" y="188" width="30" height="30" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
-<text x="440" y="202" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="end">GL 54</text>
+<text x="440" y="216" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="end">GL 54</text>
 <text x="316" y="232" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="start">Wand of Last Reso…</text>
 <text x="316" y="245" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="400" fill="#5d6773" text-anchor="start">BoE · Uncommon · Wand</text>
+<text x="350" y="202" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#222a33" text-anchor="start"><tspan fill="#c0841a" font-weight="800">▲</tspan> +2 Lumi</text>
 <circle cx="352" cy="214" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
 <circle cx="361" cy="214" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
 <circle cx="370" cy="214" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
@@ -70,10 +73,10 @@
 <circle cx="388" cy="214" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
 <rect x="452" y="182" width="138" height="68" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
 <rect x="458" y="188" width="30" height="30" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
-<text x="584" y="202" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="end">GL 48</text>
+<text x="584" y="216" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="end">GL 48</text>
 <text x="460" y="232" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="start">Hand-me-down Haub…</text>
 <text x="460" y="245" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="400" fill="#5d6773" text-anchor="start">BoE · Common · Mail</text>
-<text x="494" y="202" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#5d6773" text-anchor="start">starter</text>
+<text x="494" y="202" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#222a33" text-anchor="start"><tspan fill="#c0841a" font-weight="800">▲</tspan> +2 Dax</text>
 <circle cx="496" cy="214" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
 <circle cx="505" cy="214" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
 <circle cx="514" cy="214" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
@@ -81,10 +84,10 @@
 <circle cx="532" cy="214" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
 <rect x="20" y="256" width="138" height="68" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
 <rect x="26" y="262" width="30" height="30" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
-<text x="152" y="276" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="end">GL 47</text>
+<text x="152" y="290" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="end">GL 47</text>
 <text x="28" y="306" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="start">Slightly Used Robe</text>
 <text x="28" y="319" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="400" fill="#5d6773" text-anchor="start">BoE · Common · Cloth</text>
-<text x="62" y="276" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#5d6773" text-anchor="start">starter</text>
+<text x="62" y="276" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#5d6773" text-anchor="start">no upgrade</text>
 <circle cx="64" cy="288" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
 <circle cx="73" cy="288" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
 <circle cx="82" cy="288" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
@@ -92,10 +95,10 @@
 <circle cx="100" cy="288" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
 <rect x="164" y="256" width="138" height="68" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
 <rect x="170" y="262" width="30" height="30" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
-<text x="296" y="276" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="end">GL 46</text>
+<text x="296" y="290" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="end">GL 46</text>
 <text x="172" y="306" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="start">Loaner Shield</text>
 <text x="172" y="319" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="400" fill="#5d6773" text-anchor="start">BoE · Common · Plate</text>
-<text x="206" y="276" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#5d6773" text-anchor="start">starter</text>
+<text x="206" y="276" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#5d6773" text-anchor="start">no upgrade</text>
 <circle cx="208" cy="288" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
 <circle cx="217" cy="288" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
 <circle cx="226" cy="288" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
@@ -103,45 +106,46 @@
 <circle cx="244" cy="288" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
 <rect x="308" y="256" width="138" height="68" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
 <rect x="314" y="262" width="30" height="30" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
-<text x="329" y="282" font-family="Inter, Arial, Helvetica, sans-serif" font-size="14" font-weight="600" fill="#5d6773" text-anchor="middle">⚗</text>
-<text x="440" y="276" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="end">× 5</text>
+<text x="329" y="282" font-family="Inter, Arial, Helvetica, sans-serif" font-size="14" font-weight="600" fill="#5d6773" text-anchor="middle"><tspan fill="#c0841a" font-weight="800">⚗</tspan></text>
+<text x="440" y="290" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="end">× 5</text>
 <text x="316" y="306" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="start">Fire Resistance P…</text>
 <text x="316" y="319" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="400" fill="#5d6773" text-anchor="start">Consumable</text>
 <rect x="452" y="256" width="138" height="68" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
 <rect x="458" y="262" width="30" height="30" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
-<text x="473" y="282" font-family="Inter, Arial, Helvetica, sans-serif" font-size="14" font-weight="600" fill="#5d6773" text-anchor="middle">⚗</text>
-<text x="584" y="276" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="end">× 3</text>
+<text x="473" y="282" font-family="Inter, Arial, Helvetica, sans-serif" font-size="14" font-weight="600" fill="#5d6773" text-anchor="middle"><tspan fill="#c0841a" font-weight="800">⚗</tspan></text>
+<text x="584" y="290" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="end">× 3</text>
 <text x="460" y="306" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="start">Fire Resistance P…</text>
 <text x="460" y="319" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="400" fill="#5d6773" text-anchor="start">Consumable</text>
 <rect x="20" y="330" width="138" height="68" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
 <rect x="26" y="336" width="30" height="30" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
-<text x="41" y="356" font-family="Inter, Arial, Helvetica, sans-serif" font-size="14" font-weight="600" fill="#5d6773" text-anchor="middle">⚗</text>
-<text x="152" y="350" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="end">× 2</text>
+<text x="41" y="356" font-family="Inter, Arial, Helvetica, sans-serif" font-size="14" font-weight="600" fill="#5d6773" text-anchor="middle"><tspan fill="#c0841a" font-weight="800">⚗</tspan></text>
+<text x="152" y="364" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="end">× 2</text>
 <text x="28" y="380" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="start">Flask of Big Numb…</text>
 <text x="28" y="393" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="400" fill="#5d6773" text-anchor="start">Consumable</text>
 <rect x="164" y="330" width="138" height="68" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
 <rect x="170" y="336" width="30" height="30" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
-<text x="185" y="356" font-family="Inter, Arial, Helvetica, sans-serif" font-size="14" font-weight="600" fill="#5d6773" text-anchor="middle">⚗</text>
-<text x="296" y="350" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="end">× 5</text>
+<text x="185" y="356" font-family="Inter, Arial, Helvetica, sans-serif" font-size="14" font-weight="600" fill="#5d6773" text-anchor="middle"><tspan fill="#c0841a" font-weight="800">⚗</tspan></text>
+<text x="296" y="364" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="end">× 5</text>
 <text x="172" y="380" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="start">Elixir of Not Sta…</text>
 <text x="172" y="393" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="400" fill="#5d6773" text-anchor="start">Consumable</text>
 <rect x="308" y="330" width="138" height="68" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
 <rect x="314" y="336" width="30" height="30" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
-<text x="329" y="356" font-family="Inter, Arial, Helvetica, sans-serif" font-size="14" font-weight="600" fill="#5d6773" text-anchor="middle">⚗</text>
-<text x="440" y="350" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="end">× 4</text>
+<text x="329" y="356" font-family="Inter, Arial, Helvetica, sans-serif" font-size="14" font-weight="600" fill="#5d6773" text-anchor="middle"><tspan fill="#c0841a" font-weight="800">⚗</tspan></text>
+<text x="440" y="364" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="end">× 4</text>
 <text x="316" y="380" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="start">Conjured Raid Sna…</text>
 <text x="316" y="393" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="400" fill="#5d6773" text-anchor="start">Consumable</text>
 <rect x="452" y="330" width="138" height="68" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
 <rect x="458" y="336" width="30" height="30" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
-<text x="473" y="356" font-family="Inter, Arial, Helvetica, sans-serif" font-size="14" font-weight="600" fill="#5d6773" text-anchor="middle">⚗</text>
-<text x="584" y="350" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="end">× 1</text>
+<text x="473" y="356" font-family="Inter, Arial, Helvetica, sans-serif" font-size="14" font-weight="600" fill="#5d6773" text-anchor="middle"><tspan fill="#c0841a" font-weight="800">⚗</tspan></text>
+<text x="584" y="364" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="end">× 1</text>
 <text x="460" y="380" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="start">Tome of Respec</text>
 <text x="460" y="393" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="400" fill="#5d6773" text-anchor="start">Consumable</text>
 <rect x="20" y="404" width="138" height="68" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
 <rect x="26" y="410" width="30" height="30" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
-<text x="152" y="424" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="end">GL 53</text>
+<text x="152" y="438" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="end">GL 53</text>
 <text x="28" y="454" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="start">Ring of the Bench</text>
 <text x="28" y="467" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="400" fill="#5d6773" text-anchor="start">BoE · Uncommon · Trinket</text>
+<text x="62" y="424" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#5d6773" text-anchor="start">no upgrade</text>
 <circle cx="64" cy="436" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
 <circle cx="73" cy="436" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
 <circle cx="82" cy="436" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
@@ -149,10 +153,10 @@
 <circle cx="100" cy="436" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
 <rect x="164" y="404" width="138" height="68" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
 <rect x="170" y="410" width="30" height="30" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
-<text x="296" y="424" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="end">GL 45</text>
+<text x="296" y="438" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="end">GL 45</text>
 <text x="172" y="454" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="start">Kilt of Questiona…</text>
 <text x="172" y="467" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="400" fill="#5d6773" text-anchor="start">BoE · Common · Leather</text>
-<text x="206" y="424" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#5d6773" text-anchor="start">starter</text>
+<text x="206" y="424" font-family="Inter, Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#5d6773" text-anchor="start">no upgrade</text>
 <circle cx="208" cy="436" r="3.2" fill="#222a33" stroke="#222a33" stroke-width="1"/>
 <circle cx="217" cy="436" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
 <circle cx="226" cy="436" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
@@ -176,14 +180,14 @@
 <circle cx="713" cy="207" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
 <circle cx="722" cy="207" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
 <rect x="622" y="222" width="140" height="24" rx="12" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
-<text x="692" y="239" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="middle">◇ Bind on Equip</text>
+<text x="692" y="239" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="middle"><tspan fill="#c0841a" font-weight="800">◇</tspan> Bind on Equip</text>
 <text x="622" y="272" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="500" fill="#222a33" text-anchor="start">+14 Agility   +9 Stamina   of the Monkey</text>
 <text x="622" y="300" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="start">Fits: Orrin (Hunter), Ash (Shaman)</text>
 <text x="622" y="320" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="start">Best upgrade: Orrin, +3 GL</text>
 <rect x="622" y="334" width="200" height="36" rx="5" fill="#222a33" stroke="#222a33" stroke-width="1.5"/>
 <text x="722.0" y="356.68" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">Equip on Orrin</text>
 <rect x="830" y="334" width="96" height="36" rx="5" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
-<text x="878" y="357" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="middle">Other ▾</text>
+<text x="878" y="357" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="middle">Other <tspan fill="#c0841a" font-weight="800">▾</tspan></text>
 <text x="622" y="392" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#222a33" text-anchor="start" font-style="italic">Equipping binds it to that character.</text>
 <rect x="622" y="408" width="140" height="34" rx="5" fill="#ffffff" stroke="#222a33" stroke-width="1.5"/>
 <text x="692.0" y="429.68" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">Sell  (11 g)</text>
@@ -194,7 +198,7 @@
 <text x="32" y="500" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="start">Quest items (no slot used)</text>
 <text x="32" y="518" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="start">Thunderflurry half: Magmadad  ·  Drakefire Amulet (attunement)</text>
 <rect x="608" y="486" width="160" height="38" rx="5" fill="#ffffff" stroke="#222a33" stroke-width="1.5"/>
-<text x="688.0" y="509.68" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">Sell all starter (4)</text>
+<text x="688.0" y="509.68" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">Sell no-upgrade (4)</text>
 <rect x="778" y="486" width="162" height="38" rx="5" fill="#ffffff" stroke="#222a33" stroke-width="1.5"/>
 <text x="859.0" y="509.68" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">Open mailbox (2)</text>
 <circle cx="600" cy="484" r="11" fill="#2f6fd6"/>

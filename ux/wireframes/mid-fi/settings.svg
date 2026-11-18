@@ -10,9 +10,9 @@
 <rect x="858" y="9" width="24" height="22" rx="4" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
 <text x="870" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">+</text>
 <rect x="888" y="9" width="24" height="22" rx="4" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
-<text x="900" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">⚙</text>
+<text x="900" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle"><tspan fill="#c0841a" font-weight="800">⚙</tspan></text>
 <rect x="918" y="9" width="24" height="22" rx="4" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
-<text x="930" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">✕</text>
+<text x="930" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle"><tspan fill="#c0841a" font-weight="800">✕</tspan></text>
 <text x="818" y="26" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="500" fill="#5d6773" text-anchor="end">100%</text>
 <rect x="20" y="52" width="180" height="468" rx="8" fill="#eef1f4" stroke="#9aa3ad" stroke-width="1"/>
 <rect x="30" y="64" width="160" height="36" rx="5" fill="#222a33" stroke="#222a33" stroke-width="1"/>

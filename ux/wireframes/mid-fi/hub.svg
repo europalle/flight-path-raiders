@@ -10,98 +10,108 @@
 <rect x="858" y="9" width="24" height="22" rx="4" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
 <text x="870" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">+</text>
 <rect x="888" y="9" width="24" height="22" rx="4" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
-<text x="900" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">⚙</text>
+<text x="900" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle"><tspan fill="#c0841a" font-weight="800">⚙</tspan></text>
 <rect x="918" y="9" width="24" height="22" rx="4" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
-<text x="930" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">✕</text>
+<text x="930" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle"><tspan fill="#c0841a" font-weight="800">✕</tspan></text>
 <text x="818" y="26" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="500" fill="#5d6773" text-anchor="end">100%</text>
-<text x="20" y="68" font-family="Inter, Arial, Helvetica, sans-serif" font-size="14" font-weight="700" fill="#222a33" text-anchor="start">LFR</text>
-<text x="60" y="68" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="400" fill="#5d6773" text-anchor="start">·  Gold 2,340  ·  DKP 86  ·  Raider rank 12th in guild</text>
-<rect x="560" y="50" width="384" height="28" rx="14" fill="#eef1f4" stroke="#9aa3ad" stroke-width="1"/>
-<text x="576" y="69" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="start">This week:</text>
-<text x="652" y="69" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="500" fill="#222a33" text-anchor="start">◆ Fortified Trash   +   ▲ Floor Is Lava</text>
-<circle cx="944" cy="48" r="11" fill="#2f6fd6"/>
-<text x="944" y="52.5" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
-<rect x="20" y="90" width="920" height="96" rx="8" fill="#eef1f4" stroke="#222a33" stroke-width="1.5"/>
-<rect x="32" y="102" width="72" height="72" rx="4" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
-<line x1="32" y1="102" x2="104" y2="174" stroke="#9aa3ad" stroke-width="1"/>
-<line x1="104" y1="102" x2="32" y2="174" stroke="#9aa3ad" stroke-width="1"/>
-<text x="122" y="124" font-family="Inter, Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="#222a33" text-anchor="start">Continue: Ragnaroast, The Molten Bore</text>
-<text x="122" y="146" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="400" fill="#5d6773" text-anchor="start">Heroic  ·  Boss 5 of 5  ·  8 ready, 2 benched until reset</text>
-<text x="122" y="168" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="400" fill="#222a33" text-anchor="start" font-style="italic">Last pull: wipe in round 18. Tip from the officers: fewer melee.</text>
-<rect x="780" y="116" width="144" height="44" rx="5" fill="#222a33" stroke="#222a33" stroke-width="1.5"/>
-<text x="852.0" y="143.4" font-family="Inter, Arial, Helvetica, sans-serif" font-size="15" font-weight="600" fill="#ffffff" text-anchor="middle">Prep pull</text>
-<circle cx="930" cy="94" r="11" fill="#2f6fd6"/>
-<text x="930" y="98.5" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
-<text x="20" y="214" font-family="Inter, Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#222a33" text-anchor="start">Raids</text>
-<rect x="20" y="226" width="296" height="56" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
-<text x="34" y="250" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="start">The Molten Bore</text>
-<text x="34" y="270" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="start">N 5/5   H 4/5   M 0/5</text>
-<rect x="20" y="290" width="296" height="56" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
-<text x="34" y="314" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="start">Onyxiety&#x27;s Lair</text>
-<text x="34" y="334" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="start">N 1/1   H 0/1   M locked</text>
-<rect x="20" y="354" width="296" height="56" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
-<text x="34" y="378" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="start">Attunement: Blackwing Lair</text>
-<text x="34" y="398" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="start">2 of 3 steps</text>
-<text x="332" y="214" font-family="Inter, Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#222a33" text-anchor="start">Dungeons &amp; keystone</text>
-<rect x="332" y="226" width="296" height="56" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
-<text x="346" y="250" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="start">Quick dungeon</text>
-<text x="346" y="270" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="start">fits one flight (~3 min)</text>
-<rect x="332" y="290" width="296" height="56" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
-<text x="346" y="314" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="start">Your key: Gnomeregret +7</text>
-<text x="346" y="334" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="start">Season best +9  ·  2nd in guild</text>
-<rect x="332" y="354" width="296" height="56" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
-<text x="346" y="378" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="start">Weekly chest</text>
-<text x="346" y="398" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="start">1 of 1 ready</text>
-<text x="644" y="214" font-family="Inter, Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#222a33" text-anchor="start">Daily quests</text>
-<rect x="644" y="226" width="296" height="56" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
-<text x="658" y="250" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="start">☐  Clear any dungeon</text>
-<text x="658" y="270" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="start">12 gold  ·  2 DKP</text>
-<rect x="644" y="290" width="296" height="56" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
-<text x="658" y="314" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="start">☑  Kill a raid boss</text>
-<text x="658" y="334" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="start">done</text>
-<rect x="644" y="354" width="296" height="56" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
-<text x="658" y="378" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="start">☐  Survive a Loot Council</text>
-<text x="658" y="398" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="start">12 gold  ·  2 DKP</text>
-<circle cx="96" cy="208" r="11" fill="#2f6fd6"/>
-<text x="96" y="212.5" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
-<rect x="20" y="428" width="920" height="92" rx="8" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
-<text x="36" y="452" font-family="Inter, Arial, Helvetica, sans-serif" font-size="14" font-weight="700" fill="#222a33" text-anchor="start">Roster 15 / 15</text>
-<text x="152" y="452" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="start">10 ready  ·  3 bench  ·  2 benched until reset</text>
-<rect x="36" y="464" width="40" height="40" rx="4" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
-<line x1="36" y1="464" x2="76" y2="504" stroke="#9aa3ad" stroke-width="1"/>
-<line x1="76" y1="464" x2="36" y2="504" stroke="#9aa3ad" stroke-width="1"/>
-<rect x="86" y="464" width="40" height="40" rx="4" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
-<line x1="86" y1="464" x2="126" y2="504" stroke="#9aa3ad" stroke-width="1"/>
-<line x1="126" y1="464" x2="86" y2="504" stroke="#9aa3ad" stroke-width="1"/>
-<rect x="136" y="464" width="40" height="40" rx="4" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
-<line x1="136" y1="464" x2="176" y2="504" stroke="#9aa3ad" stroke-width="1"/>
-<line x1="176" y1="464" x2="136" y2="504" stroke="#9aa3ad" stroke-width="1"/>
-<rect x="186" y="464" width="40" height="40" rx="4" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
-<line x1="186" y1="464" x2="226" y2="504" stroke="#9aa3ad" stroke-width="1"/>
-<line x1="226" y1="464" x2="186" y2="504" stroke="#9aa3ad" stroke-width="1"/>
-<rect x="236" y="464" width="40" height="40" rx="4" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
-<line x1="236" y1="464" x2="276" y2="504" stroke="#9aa3ad" stroke-width="1"/>
-<line x1="276" y1="464" x2="236" y2="504" stroke="#9aa3ad" stroke-width="1"/>
-<rect x="286" y="464" width="40" height="40" rx="4" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
-<line x1="286" y1="464" x2="326" y2="504" stroke="#9aa3ad" stroke-width="1"/>
-<line x1="326" y1="464" x2="286" y2="504" stroke="#9aa3ad" stroke-width="1"/>
-<rect x="336" y="464" width="40" height="40" rx="4" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
-<line x1="336" y1="464" x2="376" y2="504" stroke="#9aa3ad" stroke-width="1"/>
-<line x1="376" y1="464" x2="336" y2="504" stroke="#9aa3ad" stroke-width="1"/>
-<rect x="386" y="464" width="40" height="40" rx="4" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
-<line x1="386" y1="464" x2="426" y2="504" stroke="#9aa3ad" stroke-width="1"/>
-<line x1="426" y1="464" x2="386" y2="504" stroke="#9aa3ad" stroke-width="1"/>
-<rect x="436" y="464" width="40" height="40" rx="4" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
-<line x1="436" y1="464" x2="476" y2="504" stroke="#9aa3ad" stroke-width="1"/>
-<line x1="476" y1="464" x2="436" y2="504" stroke="#9aa3ad" stroke-width="1"/>
-<rect x="486" y="464" width="40" height="40" rx="4" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
-<line x1="486" y1="464" x2="526" y2="504" stroke="#9aa3ad" stroke-width="1"/>
-<line x1="526" y1="464" x2="486" y2="504" stroke="#9aa3ad" stroke-width="1"/>
-<rect x="560" y="462" width="230" height="42" rx="6" fill="#eef1f4" stroke="#222a33" stroke-width="1"/>
-<text x="574" y="480" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="start">⚠ 2 characters low morale</text>
-<text x="574" y="497" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="start">Rook 22, Fen 35: quit risk</text>
-<rect x="806" y="462" width="118" height="42" rx="5" fill="#ffffff" stroke="#222a33" stroke-width="1.5"/>
-<text x="865.0" y="487.68" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">Roster</text>
-<circle cx="792" cy="458" r="11" fill="#2f6fd6"/>
-<text x="792" y="462.5" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">4</text>
+<rect x="20" y="50" width="52" height="30" rx="6" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<text x="46.0" y="70" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">Hub</text>
+<rect x="80" y="50" width="76" height="30" rx="6" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="118.0" y="70" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">Roster</text>
+<rect x="164" y="50" width="76" height="30" rx="6" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="202.0" y="70" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">Tavern</text>
+<rect x="248" y="50" width="108" height="30" rx="6" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="302.0" y="70" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">Guild Hall</text>
+<rect x="364" y="50" width="60" height="30" rx="6" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="394.0" y="70" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">Bank</text>
+<text x="940" y="70" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="500" fill="#5d6773" text-anchor="end">LFR  ·  Gold 2,340  ·  DKP 86  ·  12th in guild</text>
+<circle cx="20" cy="46" r="11" fill="#2f6fd6"/>
+<text x="20" y="50.5" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+<rect x="20" y="90" width="920" height="152" rx="8" fill="#eef1f4" stroke="#222a33" stroke-width="1.5"/>
+<rect x="32" y="102" width="210" height="128" rx="4" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="32" y1="102" x2="242" y2="230" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="242" y1="102" x2="32" y2="230" stroke="#9aa3ad" stroke-width="1"/>
+<text x="137" y="226" font-family="Inter, Arial, Helvetica, sans-serif" font-size="1" font-weight="400" fill="#222a33" text-anchor="start"></text>
+<text x="258" y="126" font-family="Inter, Arial, Helvetica, sans-serif" font-size="19" font-weight="700" fill="#222a33" text-anchor="start">Continue: Ragnaroast, The Molten Bore</text>
+<text x="258" y="150" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="400" fill="#5d6773" text-anchor="start">Heroic  ·  Boss 5 of 5  ·  8 ready, 2 benched until reset</text>
+<text x="258" y="174" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="400" fill="#222a33" text-anchor="start" font-style="italic">Last pull: wipe in round 18. Officers&#x27; tip: fewer melee.</text>
+<rect x="258" y="194" width="410" height="30" rx="15" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<text x="272" y="214" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="start">This week:</text>
+<text x="346" y="214" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="500" fill="#222a33" text-anchor="start"><tspan fill="#c0841a" font-weight="800">◆</tspan> Fortified Trash   +   <tspan fill="#c0841a" font-weight="800">▲</tspan> Floor Is Lava</text>
+<rect x="780" y="150" width="144" height="48" rx="5" fill="#222a33" stroke="#222a33" stroke-width="1.5"/>
+<text x="852.0" y="179.4" font-family="Inter, Arial, Helvetica, sans-serif" font-size="15" font-weight="600" fill="#ffffff" text-anchor="middle">Prep pull</text>
+<circle cx="236" cy="96" r="11" fill="#2f6fd6"/>
+<text x="236" y="100.5" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+<text x="20" y="270" font-family="Inter, Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#222a33" text-anchor="start">Raids</text>
+<rect x="20" y="280" width="296" height="42" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<text x="32" y="306" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="start">The Molten Bore</text>
+<text x="304" y="306" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="end">N 5/5   H 4/5   M 0/5</text>
+<rect x="20" y="328" width="296" height="42" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<text x="32" y="354" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="start">Onyxiety&#x27;s Lair</text>
+<text x="304" y="354" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="end">N 1/1   H 0/1   M locked</text>
+<rect x="20" y="376" width="296" height="42" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<text x="32" y="402" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="start">Blackwing attunement</text>
+<text x="304" y="402" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="end">2 of 3 steps</text>
+<text x="332" y="270" font-family="Inter, Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#222a33" text-anchor="start">Dungeons &amp; keystone</text>
+<rect x="332" y="280" width="296" height="42" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<text x="344" y="306" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="start">Quick dungeon</text>
+<text x="616" y="306" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="end">fits one flight (~3 min)</text>
+<rect x="332" y="328" width="296" height="42" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<text x="344" y="354" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="start">Key: Gnomeregret +7</text>
+<text x="616" y="354" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="end">Best +9 · 2nd in guild</text>
+<rect x="332" y="376" width="296" height="42" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<text x="344" y="402" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="start">Weekly chest</text>
+<text x="616" y="402" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="end">1 of 1 ready</text>
+<text x="644" y="270" font-family="Inter, Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#222a33" text-anchor="start">Daily quests</text>
+<rect x="644" y="280" width="296" height="42" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<text x="656" y="306" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="start"><tspan fill="#c0841a" font-weight="800">☐</tspan> Clear any dungeon</text>
+<text x="928" y="306" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="end">12 g · 2 DKP</text>
+<rect x="644" y="328" width="296" height="42" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<text x="656" y="354" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="start"><tspan fill="#c0841a" font-weight="800">☑</tspan> Kill a raid boss</text>
+<text x="928" y="354" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="end">done</text>
+<rect x="644" y="376" width="296" height="42" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<text x="656" y="402" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="start"><tspan fill="#c0841a" font-weight="800">☐</tspan> Survive a Loot Council</text>
+<text x="928" y="402" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="end">12 g · 2 DKP</text>
+<circle cx="82" cy="264" r="11" fill="#2f6fd6"/>
+<text x="82" y="268.5" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+<rect x="20" y="432" width="920" height="88" rx="8" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<text x="36" y="456" font-family="Inter, Arial, Helvetica, sans-serif" font-size="14" font-weight="700" fill="#222a33" text-anchor="start">Roster 15 / 15</text>
+<text x="152" y="456" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="start">10 ready  ·  3 bench  ·  2 benched until reset</text>
+<rect x="36" y="466" width="40" height="40" rx="4" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="36" y1="466" x2="76" y2="506" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="76" y1="466" x2="36" y2="506" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="86" y="466" width="40" height="40" rx="4" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="86" y1="466" x2="126" y2="506" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="126" y1="466" x2="86" y2="506" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="136" y="466" width="40" height="40" rx="4" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="136" y1="466" x2="176" y2="506" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="176" y1="466" x2="136" y2="506" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="186" y="466" width="40" height="40" rx="4" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="186" y1="466" x2="226" y2="506" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="226" y1="466" x2="186" y2="506" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="236" y="466" width="40" height="40" rx="4" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="236" y1="466" x2="276" y2="506" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="276" y1="466" x2="236" y2="506" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="286" y="466" width="40" height="40" rx="4" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="286" y1="466" x2="326" y2="506" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="326" y1="466" x2="286" y2="506" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="336" y="466" width="40" height="40" rx="4" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="336" y1="466" x2="376" y2="506" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="376" y1="466" x2="336" y2="506" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="386" y="466" width="40" height="40" rx="4" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="386" y1="466" x2="426" y2="506" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="426" y1="466" x2="386" y2="506" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="436" y="466" width="40" height="40" rx="4" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="436" y1="466" x2="476" y2="506" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="476" y1="466" x2="436" y2="506" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="486" y="466" width="40" height="40" rx="4" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="486" y1="466" x2="526" y2="506" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="526" y1="466" x2="486" y2="506" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="560" y="464" width="230" height="42" rx="6" fill="#eef1f4" stroke="#222a33" stroke-width="1"/>
+<text x="574" y="482" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="start"><tspan fill="#c0841a" font-weight="800">⚠</tspan> 2 characters low morale</text>
+<text x="574" y="499" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="start">Rook 22, Fen 35: quit risk</text>
+<rect x="806" y="464" width="118" height="42" rx="5" fill="#ffffff" stroke="#222a33" stroke-width="1.5"/>
+<text x="865.0" y="489.68" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">Manage</text>
+<circle cx="792" cy="460" r="11" fill="#2f6fd6"/>
+<text x="792" y="464.5" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">4</text>
 </svg>

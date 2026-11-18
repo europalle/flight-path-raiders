@@ -47,6 +47,14 @@ The Director flagged that the mid-fi stage reads as floating characters. The sta
 
 Deliver a pencil sketch of the stage first, for the Director to check, before any painting.
 
+## Icons are textures, not characters
+
+WoW's in-game fonts can't draw symbols such as a lock, envelope, tick, checkbox, arrow or warning sign; they show up as empty boxes. In the wireframes every such symbol is drawn in ochre. Each one needs an icon texture, shown inline in text at the text's height. The set so far: affix shapes, warning, tick, checkbox (empty and ticked), envelope (mailbox), lock, potion (consumable), Bind on Equip mark, dropdown arrow, upgrade arrow, rename pencil, pause, settings, close, and the rank arrow on the results banner.
+
+## Hub boss illustration
+
+After the department review the hub's Continue card has a 210 x 128 unit boss illustration. It changes with the next boss, so it comes from the same drawings as the stage bosses (a cropped, framed version).
+
 ## Asset list (first pass)
 
 | Group | Count | Notes |

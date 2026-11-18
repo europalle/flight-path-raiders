@@ -10,13 +10,13 @@
 <rect x="858" y="9" width="24" height="22" rx="4" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
 <text x="870" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">+</text>
 <rect x="888" y="9" width="24" height="22" rx="4" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
-<text x="900" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">⚙</text>
+<text x="900" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle"><tspan fill="#c0841a" font-weight="800">⚙</tspan></text>
 <rect x="918" y="9" width="24" height="22" rx="4" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
-<text x="930" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">✕</text>
+<text x="930" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle"><tspan fill="#c0841a" font-weight="800">✕</tspan></text>
 <text x="818" y="26" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="500" fill="#5d6773" text-anchor="end">100%</text>
 <rect x="20" y="52" width="920" height="72" rx="8" fill="#222a33" stroke="#222a33" stroke-width="1"/>
 <text x="40" y="84" font-family="Inter, Arial, Helvetica, sans-serif" font-size="22" font-weight="800" fill="#ffffff" text-anchor="start">KILL  ·  Ragnaroast (Heroic)</text>
-<text x="40" y="108" font-family="Inter, Arial, Helvetica, sans-serif" font-size="14" font-weight="500" fill="#ffffff" text-anchor="start">Round 14  ·  Efficient Kill +30  ·  Score +1,030  ·  Guild rank 3rd → 2nd</text>
+<text x="40" y="108" font-family="Inter, Arial, Helvetica, sans-serif" font-size="14" font-weight="500" fill="#ffffff" text-anchor="start">Round 14  ·  Efficient Kill +30  ·  Score +1,030  ·  Guild rank 3rd <tspan fill="#c0841a" font-weight="800">→</tspan> 2nd</text>
 <circle cx="934" cy="58" r="11" fill="#2f6fd6"/>
 <text x="934" y="62.5" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
 <text x="20" y="154" font-family="Inter, Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#222a33" text-anchor="start">Loot</text>
@@ -33,7 +33,7 @@
 <circle cx="336" cy="185" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
 <rect x="356" y="178" width="172" height="30" rx="5" fill="#eef1f4" stroke="#222a33" stroke-width="1"/>
 <text x="368" y="198" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="start">Kess (+6 GL)</text>
-<text x="518" y="198" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="end">▾</text>
+<text x="518" y="198" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="end"><tspan fill="#c0841a" font-weight="800">▾</tspan></text>
 <rect x="20" y="228" width="520" height="54" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
 <rect x="30" y="236" width="38" height="38" rx="4" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
 <line x1="30" y1="236" x2="68" y2="274" stroke="#9aa3ad" stroke-width="1"/>
@@ -47,7 +47,7 @@
 <circle cx="336" cy="247" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
 <rect x="356" y="240" width="172" height="30" rx="5" fill="#eef1f4" stroke="#222a33" stroke-width="1"/>
 <text x="368" y="260" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="start">Brannoc (+4 GL)</text>
-<text x="518" y="260" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="end">▾</text>
+<text x="518" y="260" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="end"><tspan fill="#c0841a" font-weight="800">▾</tspan></text>
 <rect x="20" y="290" width="520" height="54" rx="6" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
 <rect x="30" y="298" width="38" height="38" rx="4" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
 <line x1="30" y1="298" x2="68" y2="336" stroke="#9aa3ad" stroke-width="1"/>
@@ -61,7 +61,7 @@
 <circle cx="336" cy="309" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
 <rect x="356" y="302" width="172" height="30" rx="5" fill="#eef1f4" stroke="#222a33" stroke-width="1"/>
 <text x="368" y="322" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="start">Bank  (14/16)</text>
-<text x="518" y="322" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="end">▾</text>
+<text x="518" y="322" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="end"><tspan fill="#c0841a" font-weight="800">▾</tspan></text>
 <circle cx="536" cy="160" r="11" fill="#2f6fd6"/>
 <text x="536" y="164.5" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
 <text x="560" y="154" font-family="Inter, Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#222a33" text-anchor="start">Raid changes</text>

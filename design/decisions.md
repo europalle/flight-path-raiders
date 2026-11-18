@@ -4,6 +4,8 @@ Decisions made by the Game Director. Newest first.
 
 | Date | Area | Decision |
 | --- | --- | --- |
+| 2026-11-18 | All departments | Pre-Art review: hub gets a navigation row (Hub, Roster, Tavern, Guild Hall, Bank); "starter" label dropped for upgrade markers; mailbox timers count play-days scaled by quality (Common 3, Uncommon 5, Rare 7, Epic 10; 30 calendar-day cap); bank tabs renamable (local only); hub boss illustration 210 x 128; all symbols become icon textures |
+| 2026-11-18 | Tuning | Ranked gear band replaces fixed scaling: Heroic 60-70, Mythic 68-80. Only base stat budget is clamped; set bonuses, stat allocation, suffixes, perks and legendary effects carry. Target gap: full set at cap beats fresh roster at floor by about 25-30% power |
 | 2026-11-18 | Art / UX | Mid-fi wireframes approved as the hi-fi base; Art handoff brief in ux/art-handoff (stage ground plane first) |
 | 2026-11-18 | Loot | Trash loot: Poor junk auto-sells; Common starter gear is BoE, about 10 GL below current content, labelled "starter" |
 | 2026-11-18 | Tuning | Guild Bank revised: end-game unlock (avg level 60 + first Normal raid kill, about 2 h of play); 16 + 16 slots, cap 32; consumables stack 5 per slot; BoE 1 in 8, never from raid bosses; required levels; 20% sell value, no buyback; mailbox max 5 |

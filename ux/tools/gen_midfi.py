@@ -4,6 +4,8 @@ os.makedirs(OUT, exist_ok=True)
 INK="#222a33"; MUTED="#5d6773"; LINE="#9aa3ad"; FILL="#eef1f4"; FILL2="#dde2e7"; PAPER="#ffffff"
 NOTE="#2f6fd6"; ACC="#3a4654"; STAGE="#e6e9ed"
 FONT="Inter, Arial, Helvetica, sans-serif"
+ICON="#c0841a"
+SYMS=set("◆▲⚠✓☐☑✉🔒⚗◇▾❚→✕⚙✎")
 
 class S:
     def __init__(s,w,h,title): s.w,s.h,s.title=w,h,title; s.p=[]
@@ -15,7 +17,8 @@ class S:
         s.p.append(f'<line x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}" stroke="{stroke}" stroke-width="{sw}"{d}/>')
     def text(s,x,y,t,size=13,weight=400,fill=INK,anchor="start",italic=False):
         it=' font-style="italic"' if italic else ''
-        s.p.append(f'<text x="{x}" y="{y}" font-family="{FONT}" font-size="{size}" font-weight="{weight}" fill="{fill}" text-anchor="{anchor}"{it}>{html.escape(t)}</text>')
+        body="".join(f'<tspan fill="{ICON}" font-weight="800">{html.escape(ch)}</tspan>' if ch in SYMS else html.escape(ch) for ch in t)
+        s.p.append(f'<text x="{x}" y="{y}" font-family="{FONT}" font-size="{size}" font-weight="{weight}" fill="{fill}" text-anchor="{anchor}"{it}>{body}</text>')
     def img(s,x,y,w,h,label=None):
         s.rect(x,y,w,h,fill=FILL2,stroke=LINE,r=4)
         s.line(x,y,x+w,y+h); s.line(x+w,y,x,y+h)
@@ -63,43 +66,50 @@ frames.append(("toast",t,["Same two actions as low-fi, now at real text sizes (1
 # ---------- Hub ----------
 h=S(W,H,"Hub")
 h.frame("Hub")
-h.text(20,68,"LFR",14,700); h.text(60,68,"·  Gold 2,340  ·  DKP 86  ·  Raider rank 12th in guild",13,400,MUTED)
-h.rect(560,50,384,28,fill=FILL,stroke=LINE,r=14)
-h.text(576,69,"This week:",12,700); h.text(652,69,"◆ Fortified Trash   +   ▲ Floor Is Lava",12,500)
-h.note(1,944,48)
-h.rect(20,90,920,96,fill=FILL,stroke=INK,r=8,sw=1.5)
-h.img(32,102,72,72)
-h.text(122,124,"Continue: Ragnaroast, The Molten Bore",18,700)
-h.text(122,146,"Heroic  ·  Boss 5 of 5  ·  8 ready, 2 benched until reset",13,400,MUTED)
-h.text(122,168,"Last pull: wipe in round 18. Tip from the officers: fewer melee.",13,400,INK,italic=True)
-h.btn(780,116,144,44,"Prep pull",True,15)
-h.note(2,930,94)
-cols=[("Raids",[("The Molten Bore","N 5/5   H 4/5   M 0/5"),("Onyxiety's Lair","N 1/1   H 0/1   M locked"),("Attunement: Blackwing Lair","2 of 3 steps")]),
-      ("Dungeons & keystone",[("Quick dungeon","fits one flight (~3 min)"),("Your key: Gnomeregret +7","Season best +9  ·  2nd in guild"),("Weekly chest","1 of 1 ready")]),
-      ("Daily quests",[("☐  Clear any dungeon","12 gold  ·  2 DKP"),("☑  Kill a raid boss","done"),("☐  Survive a Loot Council","12 gold  ·  2 DKP")])]
+nav=["Hub","Roster","Tavern","Guild Hall","Bank"]
+x=20
+for i,n in enumerate(nav):
+    w=len(n)*8+28
+    h.rect(x,50,w,30,fill=INK if i==0 else PAPER,stroke=INK,r=6)
+    h.text(x+w/2,70,n,13,700 if i==0 else 600,PAPER if i==0 else INK,"middle"); x+=w+8
+h.text(940,70,"LFR  ·  Gold 2,340  ·  DKP 86  ·  12th in guild",13,500,MUTED,"end")
+h.note(1,20,46)
+h.rect(20,90,920,152,fill=FILL,stroke=INK,r=8,sw=1.5)
+h.img(32,102,210,128)
+h.text(137,226+0,"",1)
+h.text(258,126,"Continue: Ragnaroast, The Molten Bore",19,700)
+h.text(258,150,"Heroic  ·  Boss 5 of 5  ·  8 ready, 2 benched until reset",13,400,MUTED)
+h.text(258,174,"Last pull: wipe in round 18. Officers' tip: fewer melee.",13,400,INK,italic=True)
+h.rect(258,194,410,30,fill=PAPER,stroke=LINE,r=15)
+h.text(272,214,"This week:",12,700); h.text(346,214,"◆ Fortified Trash   +   ▲ Floor Is Lava",12,500)
+h.btn(780,150,144,48,"Prep pull",True,15)
+h.note(2,236,96)
+cols=[("Raids",[("The Molten Bore","N 5/5   H 4/5   M 0/5"),("Onyxiety's Lair","N 1/1   H 0/1   M locked"),("Blackwing attunement","2 of 3 steps")]),
+      ("Dungeons & keystone",[("Quick dungeon","fits one flight (~3 min)"),("Key: Gnomeregret +7","Best +9 · 2nd in guild"),("Weekly chest","1 of 1 ready")]),
+      ("Daily quests",[("☐ Clear any dungeon","12 g · 2 DKP"),("☑ Kill a raid boss","done"),("☐ Survive a Loot Council","12 g · 2 DKP")])]
 x=20
 for title,items in cols:
-    h.text(x,214,title,15,700)
-    y=226
-    for a,b in items:
-        h.rect(x,y,296,56,fill=PAPER,stroke=LINE,r=6)
-        h.text(x+14,y+24,a,13,600); h.text(x+14,y+44,b,12,400,MUTED)
-        y+=64
+    h.text(x,270,title,15,700)
+    y=280
+    for a,b_ in items:
+        h.rect(x,y,296,42,fill=PAPER,stroke=LINE,r=6)
+        h.text(x+12,y+26,a,13,600); h.text(x+284,y+26,b_,12,400,MUTED,"end")
+        y+=48
     x+=312
-h.note(3,96,208)
-h.rect(20,428,920,92,fill=PAPER,stroke=LINE,r=8)
-h.text(36,452,"Roster 15 / 15",14,700); h.text(152,452,"10 ready  ·  3 bench  ·  2 benched until reset",12,400,MUTED)
+h.note(3,82,264)
+h.rect(20,432,920,88,fill=PAPER,stroke=LINE,r=8)
+h.text(36,456,"Roster 15 / 15",14,700); h.text(152,456,"10 ready  ·  3 bench  ·  2 benched until reset",12,400,MUTED)
 for i in range(10):
-    h.img(36+i*50,464,40,40)
-h.rect(560,462,230,42,fill=FILL,stroke=INK,r=6)
-h.text(574,480,"⚠ 2 characters low morale",12,700); h.text(574,497,"Rook 22, Fen 35: quit risk",12,400,MUTED)
-h.btn(806,462,118,42,"Roster")
-h.note(4,792,458)
+    h.img(36+i*50,466,40,40)
+h.rect(560,464,230,42,fill=FILL,stroke=INK,r=6)
+h.text(574,482,"⚠ 2 characters low morale",12,700); h.text(574,499,"Rook 22, Fen 35: quit risk",12,400,MUTED)
+h.btn(806,464,118,42,"Manage")
+h.note(4,792,460)
 frames.append(("hub",h,[
- "Affixes keep a shape icon plus the name, so they read in any colour mode.",
- "Primary action now carries context: last pull result and one officer tip, so a returning player knows what to change.",
- "Three columns of 296 units each; text is 13 / 12, the floor for body text at the smallest scale.",
- "Problems (low morale, quit risk) say who and why, not just a count."]))
+ "Fixed navigation row on every top-level screen: Hub, Roster, Tavern, Guild Hall, Bank. Settings stays on the gear icon in the title bar. The bank tab shows a lock until it's unlocked.",
+ "The Continue card grows to 152 units with a 210 x 128 boss illustration (Art's request). This week's affixes moved inside it, next to the fight they affect.",
+ "Columns become one-line rows (name left, status right) to make room. Progress stays as text.",
+ "Problems say who and why, not just a count."]))
 
 # ---------- Prep ----------
 p=S(W,H,"Prep")
@@ -309,46 +319,46 @@ frames.append(("landing",l,["Same logic as low-fi at real sizes. Countdown defau
 g=S(W,H,"Guild bank")
 g.frame("Guild Bank")
 g.text(20,70,"The Guild Hoard",17,700)
-g.text(178,70,"Unlocked at level 60. Gear and consumables share the slots.",12,400,MUTED)
-g.rect(660,50,280,30,fill=FILL,stroke=INK,r=15)
-g.text(676,70,"✉ Mailbox 2 / 5",13,700); g.text(800,70,"oldest sells in 3 d",12,400,MUTED)
+g.text(178,70,"Gear and consumables share the slots.",12,400,MUTED)
+g.rect(590,50,350,30,fill=FILL,stroke=INK,r=15)
+g.text(606,70,"✉ Mailbox 2 / 5",13,700); g.text(924,70,"next sells in 3 play-days",12,400,MUTED,"end")
 g.note(1,940,48)
-tabs=[("Tab 1","14 / 16",True,False),("Tab 2","Buy: 6 h of play",False,False)]
+tabs=[("Ross's tank spares ✎","14 / 16",True,False),("Tab 2","Buy: 6 h of play",False,False)]
 for i,(a,b_,sel,lock) in enumerate(tabs):
-    x=20+i*150
-    g.rect(x,90,142,44,fill=INK if sel else PAPER,stroke=INK,r=6)
+    x=20+i*196
+    g.rect(x,90,188,44,fill=INK if sel else PAPER,stroke=INK,r=6)
     g.text(x+12,108,a,13,700,PAPER if sel else INK); g.text(x+12,125,b_,11,500 if sel else 400,PAPER if sel else MUTED)
-g.text(330,108,"Max 2 tabs, 32 slots",12,600,MUTED); g.text(330,125,"Poor-quality junk auto-sells, never uses a slot",11,400,MUTED)
+g.text(412,108,"Max 2 tabs, 32 slots",12,600,MUTED); g.text(412,125,"Poor junk auto-sells, never uses a slot",11,400,MUTED)
 g.note(2,612,92)
 for i,(f,w) in enumerate([("All",44),("Gear",56),("Consumables",104)]):
     x=20+sum([44,56,104][:i])+i*6
     g.rect(x,146,w,26,fill=INK if i==0 else PAPER,stroke=INK,r=13); g.text(x+w/2,163,f,11,600,PAPER if i==0 else INK,"middle")
 g.text(590,163,"Sort: type, then gear level ▾",12,600,INK,"end")
-items=[("Chainmail of the Pug Leader","BoE · Rare · Mail","GL 57",3,"g"),
-       ("Bracers of Mild Concern","BoE · Uncommon · Plate","GL 55",2,"g"),
-       ("Wand of Last Resort","BoE · Uncommon · Wand","GL 54",2,"g"),
-       ("Hand-me-down Hauberk","BoE · Common · Mail","GL 48",1,"c"),
-       ("Slightly Used Robe","BoE · Common · Cloth","GL 47",1,"c"),
-       ("Loaner Shield","BoE · Common · Plate","GL 46",1,"c"),
+items=[("Chainmail of the Pug Leader","BoE · Rare · Mail","GL 57",3,"g","▲ +3 Orrin"),
+       ("Bracers of Mild Concern","BoE · Uncommon · Plate","GL 55",2,"g","▲ +1 Mira"),
+       ("Wand of Last Resort","BoE · Uncommon · Wand","GL 54",2,"g","▲ +2 Lumi"),
+       ("Hand-me-down Hauberk","BoE · Common · Mail","GL 48",1,"g","▲ +2 Dax"),
+       ("Slightly Used Robe","BoE · Common · Cloth","GL 47",1,"g","no upgrade"),
+       ("Loaner Shield","BoE · Common · Plate","GL 46",1,"g","no upgrade"),
        ("Fire Resistance Potion","Consumable","× 5",0,"k"),
        ("Fire Resistance Potion","Consumable","× 3",0,"k"),
        ("Flask of Big Numbers","Consumable","× 2",0,"k"),
        ("Elixir of Not Standing In It","Consumable","× 5",0,"k"),
        ("Conjured Raid Snacks","Consumable","× 4",0,"k"),
        ("Tome of Respec","Consumable","× 1",0,"k"),
-       ("Ring of the Bench","BoE · Uncommon · Trinket","GL 53",2,"g"),
-       ("Kilt of Questionable Taste","BoE · Common · Leather","GL 45",1,"c")]
+       ("Ring of the Bench","BoE · Uncommon · Trinket","GL 53",2,"g","no upgrade"),
+       ("Kilt of Questionable Taste","BoE · Common · Leather","GL 45",1,"g","no upgrade")]
 for i in range(16):
     c,rw=i%4,i//4; x=20+c*144; y=182+rw*74
     if i<len(items):
-        nm,meta,gl,q,k=items[i]; sel=(i==0)
+        nm,meta,gl,q,k=items[i][:5]; up=items[i][5] if len(items[i])>5 else ""; sel=(i==0)
         g.rect(x,y,138,68,fill=PAPER,stroke=INK if sel else LINE,r=6,sw=2.5 if sel else 1)
         g.rect(x+6,y+6,30,30,fill=FILL2,stroke=LINE,r=3)
         if k=="k": g.text(x+21,y+26,"⚗",14,600,MUTED,"middle")
-        g.text(x+132,y+20,gl,12,700,INK,"end")
+        g.text(x+132,y+34,gl,12,700,INK,"end")
         short=nm if len(nm)<=18 else nm[:17]+"…"
         g.text(x+8,y+50,short,11,600); g.text(x+8,y+63,meta,10,400,MUTED)
-        if k=="c": g.text(x+42,y+20,"starter",10,700,MUTED)
+        if up: g.text(x+42,y+20,up,10,700,INK if up[0]=="▲" else MUTED)
         if q: g.pips(x+44,y+32,q)
     else:
         g.rect(x,y,138,68,fill=PAPER,stroke=LINE,r=6,dash=True); g.text(x+69,y+39,"empty",11,400,MUTED,"middle")
@@ -369,14 +379,14 @@ g.note(4,940,150)
 g.rect(20,482,580,46,fill=PAPER,stroke=LINE,r=6)
 g.text(32,500,"Quest items (no slot used)",12,700)
 g.text(32,518,"Thunderflurry half: Magmadad  ·  Drakefire Amulet (attunement)",12,400,MUTED)
-g.btn(608,486,160,38,"Sell all starter (4)"); g.btn(778,486,162,38,"Open mailbox (2)")
+g.btn(608,486,160,38,"Sell no-upgrade (4)"); g.btn(778,486,162,38,"Open mailbox (2)")
 g.note(5,600,484)
 frames.append(("bank",g,[
- "Mailbox holds at most 5 overflow items and auto-sells each after 7 days; beyond 5, overflow sells at once. The chip shows count and the next sale.",
- "Tuning: the bank unlocks at roster average level 60 plus a first Normal raid kill, as a guild hall upgrade (about 2 h of play at 60). Tab 1 has 16 slots; Tab 2 adds 16 for about 6 h. 32 is the cap. Poor junk auto-sells.",
- "4 by 4 grid with names on every slot. Consumables stack 5 per slot and compete with gear. Common 'starter' gear is labelled as such so nobody mistakes it for an upgrade.",
- "Detail panel shows the required level (a fresh 55 can't wear 58 gear), who it fits, and one-click equip. Equipping binds it.",
- "Quest items never use slots. 'Sell all starter' clears Common gear in one click once the roster has outgrown it."]))
+ "Mailbox holds at most 5 overflow items. Timers count days you play, scaled by quality (Common 3, Uncommon 5, Rare 7, Epic 10), with a 30-calendar-day cap. Beyond 5, overflow sells at once.",
+ "Tabs can be renamed (local only). Tuning: unlock at roster average 60 plus a first Normal raid kill, about 2 h of play; Tab 2 adds 16 slots for about 6 h; 32 is the cap. Poor junk auto-sells.",
+ "Every gear slot shows an upgrade marker: who it helps and by how much, or 'no upgrade'. No special label for cheap gear; the names carry the joke. Consumables stack 5 per slot.",
+ "Detail panel shows required level, who it fits and one-click equip. Equipping binds it.",
+ "Quest items never use slots. 'Sell no-upgrade' clears everything nobody can use in one click."]))
 
 # ---------- Guild bank, locked ----------
 gl_=S(480,240,"Guild bank (locked)")
