@@ -69,7 +69,8 @@ end
 -- backgrounds (all BORDER, by sublevel), then art (ARTWORK) and text (OVERLAY). Button frames sit on top
 -- but are see-through, so anything drawn on a button (a portrait, an icon) shows.
 local Z = { scrim = { "BACKGROUND", -8 }, panel = { "BACKGROUND", 0 }, row = { "BORDER", -6 }, rule = { "BORDER", -2 },
-            rect = { "BORDER", 0 }, barbg = { "BORDER", 1 }, bar = { "BORDER", 2 }, button = { "BORDER", 4 } }
+            rect = { "BORDER", 0 }, barbg = { "BORDER", 1 }, bar = { "BORDER", 2 }, button = { "BORDER", 4 },
+            plate = { "ARTWORK", 6 } }  -- plate: a solid box over art (a name on the stage)
 function UI.rect(x, y, w, h, c, alpha, z)
   local t = acquire("rect", function() return cur:CreateTexture(nil, "BORDER") end)
   local zz = Z[z or "rect"]
@@ -91,11 +92,16 @@ end
 function UI.icon(x, y, size, name, opts) return UI.tex(x, y, size, size, "icon-" .. name, opts) end
 function UI.portrait(x, y, size, cls, look, dim) return UI.tex(x, y, size, size, "portrait-" .. cls .. "-" .. (look or 0) .. "-" .. UI.theme, { dim = dim }) end
 -- A panel: a fill with a 1-unit rule around it. The default panel is a page-level box; other fills are rows inside one.
-function UI.panel(x, y, w, h, fill, rule)
+function UI.panel(x, y, w, h, fill, rule, corners)
   UI.rect(x, y, w, h, fill or "panel", nil, (fill == nil or fill == "panel") and "panel" or "row")
   local r = rule or "rule"
   UI.rect(x, y, w, 1, r, nil, "rule"); UI.rect(x, y + h - 1, w, 1, r, nil, "rule")
   UI.rect(x, y, 1, h, r, nil, "rule"); UI.rect(x + w - 1, y, 1, h, r, nil, "rule")
+  if corners then  -- ornaments sit inside the panel, never across its edge
+    local s, i = 16, 2
+    UI.tex(x + i, y + i, s, s, "orn-1-" .. UI.theme); UI.tex(x + w - s - i, y + i, s, s, "orn-2-" .. UI.theme)
+    UI.tex(x + i, y + h - s - i, s, s, "orn-3-" .. UI.theme); UI.tex(x + w - s - i, y + h - s - i, s, s, "orn-4-" .. UI.theme)
+  end
 end
 function UI.bar(x, y, w, h, frac, c)
   UI.rect(x, y, w, h, "barbg", nil, "barbg")
@@ -109,11 +115,18 @@ function UI.button(x, y, w, h, label, onClick, opts)
   opts = opts or {}
   local kind = opts.kind or "normal"
   if kind ~= "row" then
-    local t = acquire("btnbg", function() return cur:CreateTexture(nil, "BORDER") end)
-    t:SetDrawLayer("BORDER", 4)
-    t:SetTexture(media("btn-" .. kind .. "-" .. UI.theme)); t:SetTexCoord(0, 1, 0, 1)
-    t:SetDesaturated(opts.disabled and true or false); t:SetVertexColor(1, 1, 1, opts.disabled and 0.7 or 1)
-    place(t, x, y, w, h)
+    -- 3-slice: end caps keep their shape (half the height wide), the middle stretches.
+    local cap = math.min(h / 2, w / 2)
+    local parts = { { "l", x, cap }, { "m", x + cap, w - 2 * cap }, { "r", x + w - cap, cap } }
+    for _, pt in ipairs(parts) do
+      if pt[3] > 0 then
+        local t = acquire("btnbg", function() return cur:CreateTexture(nil, "BORDER") end)
+        t:SetDrawLayer("BORDER", 4)
+        t:SetTexture(media("btn-" .. kind .. "-" .. UI.theme .. "-" .. pt[1])); t:SetTexCoord(0, 1, 0, 1)
+        t:SetDesaturated(opts.disabled and true or false); t:SetVertexColor(1, 1, 1, opts.disabled and 0.7 or 1)
+        place(t, pt[2], y, pt[3], h)
+      end
+    end
   end
   if label and label ~= "" then
     local size = opts.size or (kind == "primary" and 18 or 13)

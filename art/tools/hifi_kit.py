@@ -30,7 +30,7 @@ THEMES = {
                 gem=["#2a0606", "#7a1414", "#d84a3a", "#ffd0c0"],
                 rarity={"common": "#5d564c", "rare": "#1f5fae", "epic": "#7b2fa8", "legendary": "#b05a00"}),
   "dark": dict(name="Midnight Grimoire", tex="A2b.png", ink="#e6e1d3", muted="#b3ad9e", rule="#4a515e", panel="rgba(30,34,42,.86)", row="rgba(37,42,51,.92)",
-               accent="#ff8a3d", good="#7ccf83", warn="#f0b44c", bad="#ff7b6e", badtext="#1c1f26", bar="#c9a05a", barbg="#2a2f38", hp="#5fbf68",
+               accent="#ff8a3d", good="#7ccf83", warn="#f0b44c", bad="#ff8a7e", badtext="#1c1f26", bar="#c9a05a", barbg="#2a2f38", hp="#5fbf68",
                scrim="rgba(8,10,14,.74)",
                metal=["#0d0f13", "#3c424d", "#8b93a1", "#dfe4ec"], btn=["#0d0f13", "#5a616e", "#8b93a1", "#2a2f38"],
                sel=["#1a0a04", "#ff8a3d", "#c45a1c", "#3a1a0c"], seltext="#ffe9d6",
@@ -90,6 +90,15 @@ def font_css():
             css.append(f"@font-face{{font-family:'{fam}';font-weight:{w};font-style:{st};src:url(data:font/woff2;base64,{base64.b64encode(open(p, 'rb').read()).decode()}) format('woff2')}}")
     if not css: raise SystemExit("Fonts missing: npm install @fontsource/kalam @fontsource/ibm-plex-sans and set FPR_FONTS")
     return "".join(css)
+def rim(im, colour=(223, 228, 236), width=2, alpha=0.75):
+    """Dark-mode rim light (issue #10): a thin light outline behind a cut-out, so dark characters
+    (black leather rogues, shadow priests) don't disappear on slate."""
+    from PIL import ImageFilter
+    a = im.getchannel("A").point(lambda v: 255 if v > 40 else 0)
+    grown = a.filter(ImageFilter.MaxFilter(width * 2 + 1)).filter(ImageFilter.GaussianBlur(0.6))
+    halo = Image.new("RGBA", im.size, colour + (0,)); halo.putalpha(grown.point(lambda v: int(v * alpha)))
+    halo.alpha_composite(im)
+    return halo
 def portrait_img(cls, look):
     return Image.open(io.BytesIO(base64.b64decode(PORTRAITS[cls][look]["img"].split(",")[1]))).convert("RGBA")
 def esc(s): return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
@@ -189,12 +198,15 @@ class Board:
     def portrait(self, cls, look, x, y, s, dim=False, frame=True):
         if frame: self.img(gradmap(piece("B4-01.png", w=140), self.T["slot"]), x, y, s, s)
         im = portrait_img(cls, look)
+        if self.theme == "dark": im = rim(im)
         if dim: im = grey(im)
         p = s * 0.14
         self.img(im, x + p, y + p, s - 2 * p, s - 2 * p, 'opacity=".5"' if dim else "")
     def full_body(self, cls, race, x, y, h):
         im = Image.open(os.path.join(ROOT, "art/kit/characters", FULL_BODY[(cls, race)])).convert("RGBA")
-        im = im.crop(im.getbbox()); W, H = im.size; w = W * h / H
+        im = im.crop(im.getbbox())
+        if self.theme == "dark": im = rim(im, width=5)
+        W, H = im.size; w = W * h / H
         im = im.resize((int(w * 2), int(h * 2)), Image.LANCZOS)
         self.img(im, x - w / 2, y, w, h)
         return w

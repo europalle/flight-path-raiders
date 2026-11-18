@@ -128,7 +128,7 @@ function P.Roster(st, args)
   UI.text(24, 122 + #st.roster * 26 + 6, "Roster " .. #st.roster .. " / " .. g.ECON.rosterMax, { size = 12, col = "muted" })
   if not sel then return end
   local c = sel
-  UI.panel(560, 100, 376, 424)
+  UI.panel(560, 100, 376, 424, nil, nil, true)
   UI.portrait(578, 116, 72, c.cls, c.look, c.benched)
   UI.text(662, 120, c.name, { head = true, size = 20 })
   UI.text(662, 146, c.race .. " " .. UI.title(c.cls) .. " · " .. g.specName(c.cls, c.spec) .. " · " .. g.RARITY[c.rarity].label, { size = 12, col = "muted", w = 260 })
@@ -227,7 +227,7 @@ function P.Journal(st, args)
     UI.button(24, y, 250, 68, nil, function() B().Go("Journal", { boss = b.id }) end, { kind = "row", disabled = not seen, tip = seen and ("Read about " .. b.name) or "Not reached yet" })
   end
   local b = sel
-  UI.panel(288, 100, 648, 424)
+  UI.panel(288, 100, 648, 424, nil, nil, true)
   bossArt(306, 118, 170, 120, b)
   UI.text(492, 122, b.name, { head = true, size = 22 })
   local p = st.progress[b.id]
@@ -269,7 +269,7 @@ end
 function P.Settings(st)
   B().tabs = false
   local s = ns.db.settings
-  UI.panel(24, 70, 912, 454)
+  UI.panel(24, 70, 912, 454, nil, nil, true)
   local function seg(x, y, opts, cur, set, w)
     for i, o in ipairs(opts) do
       UI.button(x + (i - 1) * (w + 6), y, w, 32, o[2], function() set(o[1]); B().Render() end, { kind = o[1] == cur and "selected" or "normal", size = 12.5 })

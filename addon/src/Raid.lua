@@ -140,7 +140,13 @@ function P.Playback(st, args)
   local f = run.frames[r] or {}
   -- Stage: the boss on the right, the raid by zone on the left.
   UI.panel(24, 70, 610, 340)
-  P.bossArt(330, 150, 290, 145, b)
+  UI.tex(25, 71, 608, 338, "stage-" .. UI.theme)
+  if ns.MEDIA.bosses and ns.MEDIA.bosses[b.id] then UI.tex(360, 110, 270, 270, "bossart-" .. b.id)
+  else  -- no drawing yet (art prompts F3-F6): a name plate on the stage instead
+    UI.rect(410, 196, 210, 56, "row", 1, "plate")
+    UI.text(410, 206, b.name, { head = true, size = 22, w = 210, justify = "CENTER" })
+    UI.text(410, 234, "drawing to come", { size = 11, col = "muted", w = 210, justify = "CENTER" })
+  end
   local slots = { front = { 250, 120 }, melee = { 190, 120 }, ranged = { 110, 120 }, back = { 34, 120 } }
   local count = { front = 0, melee = 0, ranged = 0, back = 0 }
   for i, c in ipairs(input.raid) do
@@ -260,7 +266,7 @@ function P.Results(st, args)
   if #out.quit > 0 then UI.icon(24, y, 16, "warn"); UI.text(46, y + 1, table.concat(out.quit, " and ") .. " rage quit the guild.", { size = 12, col = "bad", w = 540 }) end
   -- Replay with another card (wipes only, once per boss a week).
   local ri = g.ReplayInfo(st)
-  UI.panel(600, 162, 336, 160)
+  UI.panel(600, 162, 336, 160, nil, nil, true)
   UI.text(618, 172, "Replay that pull", { head = true, size = 15 })
   if args.replay then
     local w = args.replay.run
@@ -301,7 +307,7 @@ function P.LootWindow()
   B().OpenModal(function(st)
     local g = G()
     if #st.pending == 0 then return false end
-    UI.panel(150, 92, 660, 412, "panel", "rule")
+    UI.panel(150, 92, 660, 412, "panel", "rule", true)
     UI.icon(170, 108, 40, "chest")
     UI.text(222, 106, "Loot", { head = true, size = 22 })
     UI.text(222, 134, #st.pending .. (#st.pending == 1 and " item" or " items") .. " · boss loot can only go to someone who was in the pull · numbers are gear level gained", { size = 11.5, col = "muted", w = 570 })

@@ -201,6 +201,14 @@ Attach: the character study (it shows Ragnaroast).
 The look is our own original fantasy style: a chunky, hand-painted high-fantasy style with warm saturated colours and exaggerated proportions. Draw it as a lovingly clumsy parody of that style, as if a raid leader sketched it in a paper notebook with a dip pen and watercolour: wobbly confident ink outlines, light crosshatching. Original design only: no Blizzard logos, no copies of any existing game's characters, armour sets or interface. Match the drawing style of the attached reference image. One large boss character, side view facing left, standing on an invisible flat line at the bottom, filling most of the image. Ragnaroast, an original parody boss: a giant lava chef made of cracked molten rock, his lower body rising out of a big iron stew pot. He has a clearly visible head on top of his body with a big face: glowing yellow eyes, a wide toothy grin and a flame moustache, and a tall white chef's hat on his head. Two big rocky arms with hands, the right arm raised as if about to strike. Separately, to the right of him with clear space in between, draw his weapon on its own: one long iron roasting spit, a straight rod with a three-pronged fork at one end, with nothing skewered on it. Match the Ragnaroast in the attached reference image. The background must be one flat solid magenta (#FF00FF) colour edge to edge: no gradient, no glow, no floor shadow, no frames, no text, nothing else in the image.
 ```
 
+## F1b. Ragnaroast in parts (for animation, issue #9)
+
+Attach: the character study and your F1 result.
+
+```
+The look is our own original fantasy style: a chunky, hand-painted high-fantasy style with warm saturated colours and exaggerated proportions, drawn as if a raid leader sketched it in a paper notebook with a dip pen and watercolour: wobbly confident ink outlines, light crosshatching. Original design only. Match the drawing style and the character in the attached Ragnaroast image exactly. Draw Ragnaroast taken apart into separate pieces, like a paper puppet, each piece on its own with clear space between them: 1) his head with the chef's hat and flame moustache, 2) his body rising out of the stew pot, without arms or head, 3) his left arm, 4) his right arm raised, 5) the iron stew pot on its own. Every piece drawn whole, including the parts that would normally be hidden where pieces overlap. The background must be one flat solid magenta (#FF00FF) colour edge to edge: no gradient, no glow, no shadow, no text, nothing else in the image.
+```
+
 ## F2. Boss: Onyxiety
 
 Attach: the character study.
