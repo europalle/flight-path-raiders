@@ -1,0 +1,352 @@
+<title>Ragnaroast Pull Simulator</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a raid leader's planning sheet. Left: the roster and choices. Right: the fight report. */
+:root {
+  --paper: #f3ecdc; --panel: #fbf6ea; --ink: #2a2119; --muted: #6b5d4c; --rule: #d8ccb3;
+  --lava: #c44a1a; --frost: #2f63c4; --good: #2e7d32; --warn: #a86a00; --bad: #b3261e;
+  --lava-tint: rgba(196, 74, 26, .10); --frost-tint: rgba(47, 99, 196, .10);
+  --hand: "Kalam", "Comic Sans MS", cursive; --body: "IBM Plex Sans", system-ui, sans-serif; --mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #1c1f26; --panel: #252a33; --ink: #e6e1d3; --muted: #a8a293; --rule: #3a404c;
+  --lava: #ff8a3d; --frost: #8cc8ff; --good: #7ccf83; --warn: #f0b44c; --bad: #ff7b6e;
+  --lava-tint: rgba(255, 138, 61, .14); --frost-tint: rgba(140, 200, 255, .12); color-scheme: dark } }
+:root[data-theme="dark"] {
+  --paper: #1c1f26; --panel: #252a33; --ink: #e6e1d3; --muted: #a8a293; --rule: #3a404c;
+  --lava: #ff8a3d; --frost: #8cc8ff; --good: #7ccf83; --warn: #f0b44c; --bad: #ff7b6e;
+  --lava-tint: rgba(255, 138, 61, .14); --frost-tint: rgba(140, 200, 255, .12); color-scheme: dark }
+body { background: var(--paper); color: var(--ink); font: 15px/1.5 var(--body); }
+.wrap { max-width: 1240px; margin: 0 auto; padding-block: 24px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 24px; margin-bottom: 20px; }
+h1 { font: 700 2.1rem/1.1 var(--hand); margin: 0; text-wrap: balance; }
+.sub { color: var(--muted); margin: 4px 0 0; max-width: 62ch; }
+.tag { font: 600 .72rem/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted);
+  border: 1px solid var(--rule); border-radius: 999px; padding: 6px 10px; white-space: nowrap; }
+.grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+@media (max-width: 900px) { .grid { grid-template-columns: minmax(0, 1fr); } }
+.panel { background: var(--panel); border: 1px solid var(--rule); border-radius: 12px; padding: 18px; min-width: 0; }
+.panel + .panel { margin-top: 20px; }
+h2 { font: 700 1.35rem/1.2 var(--hand); margin: 0 0 12px; }
+h3 { font: 600 .78rem/1 var(--body); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 18px 0 8px; }
+.roster { width: 100%; border-collapse: collapse; font-size: .9rem; }
+.roster th { text-align: left; font: 600 .72rem/1 var(--body); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); padding: 0 6px 8px 0; }
+.roster td { padding: 3px 6px 3px 0; border-top: 1px solid var(--rule); }
+.roster input[type=text] { width: 7.5em; }
+.tablebox { overflow-x: auto; }
+select { max-width: 100%; }
+select, input[type=text], input[type=number] { font: inherit; font-size: .9rem; color: var(--ink); background: var(--paper);
+  border: 1px solid var(--rule); border-radius: 6px; padding: 4px 6px; }
+input[type=number] { width: 7em; font-family: var(--mono); }
+.row { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--rule); border-radius: 8px; padding: 6px 10px; cursor: pointer; background: var(--paper); }
+.chip:has(input:checked) { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+.chip small { color: var(--muted); }
+.cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+@media (max-width: 560px) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.card { border: 1px solid var(--rule); border-radius: 8px; padding: 8px 10px; cursor: pointer; background: var(--paper); }
+.card input { position: absolute; opacity: 0; }
+.card b { display: block; font: 700 1.05rem/1.2 var(--hand); }
+.card span { font-size: .78rem; color: var(--muted); }
+.card:has(input:checked) { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+.card:has(input:checked) b::before { content: "\2713  "; }
+.card:has(input:focus-visible), .chip:has(input:focus-visible) { outline: 2px solid var(--frost); outline-offset: 2px; }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+button { font: 600 1rem/1 var(--body); border-radius: 8px; padding: 12px 18px; cursor: pointer; border: 1.5px solid var(--ink); background: transparent; color: var(--ink); }
+button.primary { background: var(--ink); color: var(--paper); font: 700 1.25rem/1 var(--hand); padding: 12px 28px; }
+button:focus-visible { outline: 2px solid var(--frost); outline-offset: 2px; }
+button:disabled { opacity: .5; cursor: progress; }
+.banner { border-radius: 10px; padding: 14px 16px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; align-items: baseline; }
+.banner.kill { background: var(--ink); color: var(--paper); }
+.banner.fail { background: var(--lava-tint); border: 1px solid var(--lava); }
+.banner .big { font: 700 1.7rem/1.1 var(--hand); }
+.mono { font-family: var(--mono); font-size: .82rem; font-variant-numeric: tabular-nums; }
+.bar { height: 12px; border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; background: var(--paper); }
+.bar i { display: block; height: 100%; background: var(--lava); }
+.bosshp { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 10px; align-items: center; margin: 14px 0 4px; }
+.raidstrip { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; margin: 10px 0 4px; }
+@media (max-width: 560px) { .raidstrip { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.pc { border: 1px solid var(--rule); border-radius: 6px; padding: 5px 7px; font-size: .8rem; }
+.pc.dead { border-style: dashed; color: var(--muted); }
+.pc .bar { height: 6px; margin-top: 4px; }
+.pc .bar i { background: var(--good); }
+.pc.dead b::after { content: "  DEAD"; font: 600 .7rem/1 var(--mono); color: var(--bad); }
+ol.log { list-style: none; margin: 8px 0 0; padding: 0; max-height: 420px; overflow-y: auto; border-top: 1px solid var(--rule); }
+ol.log li { display: grid; grid-template-columns: 3.2em minmax(0, 1fr); gap: 8px; padding: 6px 2px; border-bottom: 1px solid var(--rule); font-size: .92rem; }
+ol.log .r { font: 600 .78rem/1.9 var(--mono); color: var(--muted); }
+ol.log li.death { color: var(--bad); font-weight: 600; }
+ol.log li.save { color: var(--good); }
+ol.log li.throw { color: var(--lava); }
+ol.log li.aggro { color: var(--warn); font-weight: 600; }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+@media (max-width: 560px) { .stats { grid-template-columns: minmax(0, 1fr); } }
+.stat { border: 1px solid var(--rule); border-radius: 8px; padding: 10px 12px; }
+.stat .k { font: 600 .72rem/1 var(--body); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.stat .v { font: 700 1.8rem/1.2 var(--hand); font-variant-numeric: tabular-nums; }
+.stat .n { font-size: .8rem; color: var(--muted); }
+.cmp { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: .9rem; }
+.cmp td, .cmp th { padding: 6px 6px 6px 0; border-top: 1px solid var(--rule); text-align: left; }
+.cmp td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.cmp .bar { height: 8px; width: 100%; min-width: 60px; }
+.cmp .bar i { background: var(--frost); }
+.target { color: var(--muted); font-size: .85rem; margin-top: 8px; }
+.empty { color: var(--muted); padding: 18px 0; }
+.note { color: var(--muted); font-size: .85rem; margin-top: 24px; max-width: 80ch; }
+.note b { color: var(--ink); }
+.status { font-size: .85rem; color: var(--muted); min-height: 1.4em; }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Ragnaroast Pull Simulator</h1>
+      <p class="sub">Build a 10-character raid, make your choices and pull. The same Lua combat engine the addon will run decides every fight, so a seed always gives the same result.</p>
+    </div>
+    <span class="tag" id="engineTag">Engine loading</span>
+  </header>
+
+  <div class="grid">
+    <section>
+      <div class="panel">
+        <h2>Your raid</h2>
+        <div class="row" style="margin-bottom:10px">
+          <label for="preset">Start from</label>
+          <select id="preset">
+            <option value="balanced">Balanced: 2 tanks, 2 healers, 3 melee, 3 ranged</option>
+            <option value="melee">Melee heavy: 5 melee</option>
+            <option value="ranged">Ranged only: no melee for the lava</option>
+            <option value="threeheals">Three healers</option>
+          </select>
+        </div>
+        <div class="tablebox">
+          <table class="roster" id="roster">
+            <thead><tr><th>Name</th><th>Class</th><th>Spec</th><th>Zone</th><th title="Fire Resistance potion: saves from one lava throw (15 gold)">Fire Res</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Prep</h2>
+        <div class="row">
+          <label for="mode">Mode</label>
+          <select id="mode">
+            <option value="normal">Normal</option>
+            <option value="heroic">Heroic</option>
+            <option value="mythic">Mythic</option>
+          </select>
+          <label for="gl">Gear level</label>
+          <input type="number" id="gl" min="50" max="90" value="60">
+          <label for="seed">Seed</label>
+          <input type="number" id="seed" value="12345">
+          <button type="button" id="reroll" style="padding:6px 10px;font-size:.85rem">New seed</button>
+        </div>
+        <h3>Tactic card</h3>
+        <div class="cards" role="radiogroup" aria-label="Tactic card">
+          <label class="card"><input type="radio" name="tactic" value="spread" id="t-spread" checked><b>Spread</b><span>Splash hits one character; healing -10%</span></label>
+          <label class="card"><input type="radio" name="tactic" value="stack" id="t-stack"><b>Stack</b><span>Healing +15%; splash hits the zone</span></label>
+          <label class="card"><input type="radio" name="tactic" value="burn" id="t-burn"><b>Burn</b><span>Damage and threat +15%; heals cost 20% more</span></label>
+          <label class="card"><input type="radio" name="tactic" value="playsafe" id="t-playsafe"><b>Play Safe</b><span>Damage -10%; everyone takes 10% less</span></label>
+        </div>
+        <h3>Cauldrons</h3>
+        <div class="chips">
+          <label class="chip"><input type="checkbox" id="c-food" checked> Food <small>+5% health</small></label>
+          <label class="chip"><input type="checkbox" id="c-elixirs"> Elixirs <small>+5% power</small></label>
+          <label class="chip"><input type="checkbox" id="c-flasks"> Flasks <small>+10% health and power</small></label>
+        </div>
+        <h3>World buffs</h3>
+        <div class="chips">
+          <label class="chip"><input type="checkbox" id="b-dragonslayer"> Dragonslayer's Roar <small>+10% power</small></label>
+          <label class="chip"><input type="checkbox" id="b-songbloom"> Songbloom <small>+10% crit</small></label>
+          <label class="chip"><input type="checkbox" id="b-warchief"> Warchief's Rival <small>+15% health</small></label>
+        </div>
+        <div class="actions">
+          <button type="button" class="primary" id="pull" disabled>Pull</button>
+          <button type="button" id="sim" disabled>Simulate 1,000 pulls</button>
+          <button type="button" id="cmp" disabled>Compare tactic cards</button>
+        </div>
+        <div class="status" id="status" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="panel" id="fight">
+        <h2>The pull</h2>
+        <div id="fightBody"><p class="empty">Press Pull to run the fight. The report shows here: the result, Ragnaroast's health, your raid and what happened each round.</p></div>
+      </div>
+      <div class="panel" id="simPanel">
+        <h2>1,000 pulls</h2>
+        <div id="simBody"><p class="empty">Simulate 1,000 pulls runs this exact raid against 1,000 different seeds. Compare tactic cards runs 250 pulls per card.</p></div>
+        <p class="target">Tuning targets with a sensible raid: about 70% kills on Normal, 40-60% on Heroic with the right card, 15-30% on Mythic.</p>
+      </div>
+    </section>
+  </div>
+
+  <p class="note"><b>Prototype, engine version <span id="ev">1</span>.</b> Traits, morale, loot and the other bosses are not in yet. Values for food, elixirs, flasks, crit and Ragnaroast's damage are Tuning's first guesses, set in the engine's balance data. Each fight's checksum is identical in this browser and in Lua 5.1, the version WoW runs.</p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/fengari-web@0.1.4/dist/fengari-web.js"></script>
+<script>
+const LUA_SOURCES = ["-- Flight Path Raiders: seeded random number generator (Park-Miller).\n-- Plain arithmetic only, so Lua 5.1 (WoW), newer Luas and JavaScript give identical numbers.\nlocal _, ns = ...\nns = ns or FPR_ENGINE or {}\nFPR_ENGINE = ns\n\nlocal M = 2147483647\n-- The product 16807 * x needs up to 46 bits. Fengari (the browser's Lua) stores whole numbers\n-- as 32-bit integers, so the multiplication is done in floating point, which holds every\n-- value below 2^53 exactly in all runtimes. Results are floored back to whole numbers.\nlocal A = 16807.0\nlocal floor = math.floor\n\nlocal RNG = {}\nRNG.__index = RNG\n\nfunction ns.NewRNG(seed)\n  local s = floor(seed) % M\n  if s <= 0 then s = s + M - 1 end\n  return setmetatable({ x = s + 0.0 }, RNG)\nend\n\n-- Next raw value in 1 .. M-1.\nfunction RNG:next()\n  self.x = (A * self.x) % M\n  return floor(self.x)\nend\n\n-- Whole number from 1 to n.\nfunction RNG:int(n)\n  return floor(1 + self:next() % n)\nend\n\n-- True with a chance given in per-mille (0 to 1000).\nfunction RNG:chance(permille)\n  return self:int(1000) <= permille\nend\n\n-- Build a seed from a few whole numbers (week, boss, mode, attempt...).\nfunction ns.Seed(a, b, c, d)\n  local h = 1234567.0\n  local parts = { a or 0, b or 0, c or 0, d or 0 }\n  for i = 1, 4 do\n    h = (h * 31.0 + (parts[i] % M)) % M\n  end\n  return floor(h)\nend\n", "-- Flight Path Raiders: balance data for the prototype.\n-- Owned by Game Tuning & Balancing. Every percentage is per-mille (150 = 15.0%).\n-- Values marked \"TUNING ASSUMPTION\" are not in the design doc yet and are first guesses.\nlocal _, ns = ...\nns = ns or FPR_ENGINE or {}\nFPR_ENGINE = ns\n\nlocal D = {}\nns.Data = D\n\nD.ZONES = { \"front\", \"melee\", \"ranged\", \"back\" }\n\n-- Starting values at level 60 and gear level 60 (design doc 5, \"Starting values\").\nD.ROLE_BASE = {\n  tank   = { hp = 3000, power = 45 },\n  damage = { hp = 2000, power = 100 },\n  healer = { hp = 1800, power = 120 },  -- power = healing per heal\n}\n\n-- Gear level scaling: +20 per-mille (2%) per gear level above 60. TUNING ASSUMPTION.\nD.GL_STEP = 20\n\n-- Armour type reduction in per-mille, before role. TUNING ASSUMPTION. Cap 500 (design doc 4.2).\nD.ARMOR = { plate = 150, mail = 110, leather = 90, cloth = 50 }\nD.TANK_ARMOR_BONUS = 150\nD.ARMOR_CAP = 500\n\n-- Crit: 50 per-mille chance, crits deal 1500 per-mille. TUNING ASSUMPTION (crit is not a stat in 4.2).\nD.CRIT_CHANCE = 50\nD.CRIT_MULT = 1500\n\n-- Mana (design doc 4.2): 100 at start, +5 per round, heal 10, big heal 18.\nD.MANA_START, D.MANA_REGEN, D.HEAL_COST, D.BIG_HEAL_COST = 100, 5, 10, 18\nD.BIG_HEAL_BELOW = 500      -- big heal when the target is below 50% health. TUNING ASSUMPTION\nD.BIG_HEAL_MULT = 1800      -- a big heal heals 1.8x. TUNING ASSUMPTION\nD.CASTER_COST = 8           -- mana per caster attack; out of mana = half damage. TUNING ASSUMPTION\n\n-- Threat (design doc 4.2, 5): tanks generate 3x, pulling aggro above 110% of the tank's threat.\nD.TANK_THREAT, D.OTHER_THREAT, D.AGGRO_MARGIN = 3000, 1000, 1100\n\n-- Classes: armour type, speed, caster (uses mana to attack), and roles each spec gives.\nD.CLASSES = {\n  warrior = { armor = \"plate\",   speed = 10, caster = false },\n  paladin = { armor = \"plate\",   speed = 8,  caster = false },\n  hunter  = { armor = \"mail\",    speed = 11, caster = false },\n  rogue   = { armor = \"leather\", speed = 12, caster = false },\n  priest  = { armor = \"cloth\",   speed = 7,  caster = true },\n  shaman  = { armor = \"mail\",    speed = 9,  caster = true },\n  mage    = { armor = \"cloth\",   speed = 9,  caster = true },\n  warlock = { armor = \"cloth\",   speed = 8,  caster = true },\n  druid   = { armor = \"leather\", speed = 9,  caster = true },\n}\n\n-- Specs (design doc 4.3.1): role and passive id. Passives are simplified for the prototype.\nD.SPECS = {\n  warrior = { arms = \"damage\", fury = \"damage\", protection = \"tank\" },\n  paladin = { holy = \"healer\", protection = \"tank\", retribution = \"damage\" },\n  hunter  = { beastmastery = \"damage\", marksmanship = \"damage\", survival = \"damage\" },\n  rogue   = { assassination = \"damage\", combat = \"damage\", subtlety = \"damage\" },\n  priest  = { holy = \"healer\", discipline = \"healer\", shadow = \"damage\" },\n  shaman  = { elemental = \"damage\", enhancement = \"damage\", restoration = \"healer\" },\n  mage    = { arcane = \"damage\", fire = \"damage\", frost = \"damage\" },\n  warlock = { affliction = \"damage\", demonology = \"damage\", destruction = \"damage\" },\n  druid   = { balance = \"damage\", feral = \"tank\", restoration = \"healer\" },  -- feral as bear tank; cat = \"feralcat\"\n}\nD.SPECS.druid.feralcat = \"damage\"\n\n-- Tactic cards (design doc 5).\nD.TACTICS = {\n  spread   = { area_single = true,  heal = 900,  dmg = 1000, threat = 1000, mana = 1000, taken = 1000 },\n  stack    = { area_single = false, heal = 1150, dmg = 1000, threat = 1000, mana = 1000, taken = 1000 },\n  burn     = { area_single = false, heal = 1000, dmg = 1150, threat = 1150, mana = 1200, taken = 1000 },\n  playsafe = { area_single = false, heal = 1000, dmg = 900,  threat = 1000, mana = 1000, taken = 900 },\n}\n\n-- Consumables. Effects are TUNING ASSUMPTIONS (the design doc gives prices only).\nD.CONSUMABLES = {\n  food    = { hp = 50 },               -- +5% health\n  elixirs = { power = 50 },            -- +5% power\n  flasks  = { hp = 100, power = 100 }, -- +10% health and power\n}\n-- World buffs (design doc 8).\nD.WORLD_BUFFS = {\n  dragonslayer = { power = 100 },  -- +10% power\n  songbloom    = { crit = 100 },   -- +10% crit chance\n  warchief     = { hp = 150 },     -- +15% health\n}\n\n-- Modes: boss health and damage multipliers. The design doc's +40% / +90% assumed no gear\n-- scaling; with gear levels 65 and 74, Tuning pass 1 needs +62% / +150% to hit the targets.\nD.MODES = {\n  normal = { hp = 1000, dmg = 1000 },\n  heroic = { hp = 1620, dmg = 1300 },  -- Tuning pass 1 (2026-11-18): was 1400 / 1150\n  mythic = { hp = 2500, dmg = 1700 },  -- Tuning pass 1 (2026-11-18): was 1900 / 1300\n}\n\n-- Ragnaroast (design doc 6.1). Numbers are TUNING ASSUMPTIONS unless noted.\nD.BOSSES = {\n  ragnaroast = {\n    name = \"Ragnaroast\",\n    hp = 8400,                 -- Normal health. Tuning pass 1: was 9000 (design doc), 8400 hits ~70%\n    fire_immune = true,\n    melee = 600,               -- hit on the current target each round (Tuning pass 1: was 280)\n    splash = 450,              -- Magma Splash on one zone, every 2nd round (Tuning pass 1: was 200)\n    throw_every = 4,           -- every 4 rounds: lava throw on the lowest-health melee (design doc)\n    submerge_at = 10,          -- from round 10 he sinks and summons fire adds (design doc)\n    submerge_rounds = 3,\n    adds = 4, add_hp = 500, add_hit = 120,  -- Tuning pass 1: was 450 / 60\n  },\n}\n\nD.MAX_ROUNDS = 20  -- round 21 is the enrage (design doc 5)\n", "-- Flight Path Raiders: deterministic combat simulator.\n-- Rules for portability (technical design 3 and 11): whole numbers below 2^31 (Fengari's integers\n-- are 32-bit; products that can exceed that are done in floating point and floored), every division\n-- floored through idiv, arrays walked with numeric for loops, the seeded RNG as the only randomness.\nlocal _, ns = ...\nns = ns or FPR_ENGINE or {}\nFPR_ENGINE = ns\n\nns.ENGINE_VERSION = 1\n\nlocal floor = math.floor\nlocal function idiv(a, b) return floor(a / b) end\nlocal function pm(v, permille) return idiv(v * permille, 1000) end\n\nlocal HASH_M = 2147483647\n-- Hash products exceed 32 bits, so they are computed in floating point (see rng.lua).\nlocal function mix(h, v)\n  v = v % HASH_M\n  if v < 0 then v = v + HASH_M end\n  return (h * 31.0 + v) % HASH_M\nend\n\n-- Builds a fight from inputs; returns { result, rounds, events, checksum, raid }.\n-- inputs = { boss, mode, seed, tactic, gl, consumables = {food,elixirs,flasks}, buffs = {...},\n--            raid = { {name, class, spec, zone, fireres}, ... } }\nfunction ns.Simulate(inputs)\n  local D = ns.Data\n  local rng = ns.NewRNG(inputs.seed)\n  local boss_def = D.BOSSES[inputs.boss]\n  local mode = D.MODES[inputs.mode]\n  local tac = D.TACTICS[inputs.tactic]\n  local gl = inputs.gl or 60\n  local glmul = 1000 + D.GL_STEP * (gl - 60)\n  local cons = inputs.consumables or {}\n  local buffs = inputs.buffs or {}\n\n  local events, h = {}, 7\n  local round = 0\n  local function log(code, a, b, text)\n    events[#events + 1] = { round = round, code = code, a = a or 0, b = b or 0, text = text }\n    h = mix(h, round); h = mix(h, code); h = mix(h, a or 0); h = mix(h, b or 0)\n  end\n\n  -- Raid-wide multipliers from consumables and world buffs.\n  local hp_mul, pow_mul, crit = 1000, 1000, D.CRIT_CHANCE\n  if cons.food then hp_mul = hp_mul + D.CONSUMABLES.food.hp end\n  if cons.elixirs then pow_mul = pow_mul + D.CONSUMABLES.elixirs.power end\n  if cons.flasks then hp_mul = hp_mul + D.CONSUMABLES.flasks.hp; pow_mul = pow_mul + D.CONSUMABLES.flasks.power end\n  if buffs.dragonslayer then pow_mul = pow_mul + D.WORLD_BUFFS.dragonslayer.power end\n  if buffs.songbloom then crit = crit + D.WORLD_BUFFS.songbloom.crit end\n  if buffs.warchief then hp_mul = hp_mul + D.WORLD_BUFFS.warchief.hp end\n\n  -- Raid-wide spec auras.\n  local has = {}\n  for i = 1, #inputs.raid do\n    local c = inputs.raid[i]\n    has[c.class .. \":\" .. c.spec] = true\n    has[c.class] = true\n  end\n  if has[\"paladin:retribution\"] then hp_mul = hp_mul + 100; pow_mul = pow_mul + 100 end -- Blessing of Kings\n  if has[\"warlock:demonology\"] then hp_mul = hp_mul + 50 end                               -- Blood Pact\n\n  -- Characters.\n  local raid = {}\n  for i = 1, #inputs.raid do\n    local c = inputs.raid[i]\n    local cls = D.CLASSES[c.class]\n    local role = D.SPECS[c.class][c.spec]\n    local base = D.ROLE_BASE[role]\n    local hp = pm(pm(base.hp, glmul), hp_mul)\n    local power = pm(pm(base.power, glmul), pow_mul)\n    if c.class == \"paladin\" and c.spec == \"retribution\" then power = pm(power, 750) end\n    if c.class == \"shaman\" and c.spec == \"enhancement\" then power = pm(power, 850) end\n    if c.class == \"hunter\" and c.spec == \"beastmastery\" then power = pm(power, 1300) end -- pet\n    local armor = D.ARMOR[cls.armor] + ((role == \"tank\") and D.TANK_ARMOR_BONUS or 0)\n    if armor > D.ARMOR_CAP then armor = D.ARMOR_CAP end\n    raid[i] = {\n      slot = i, name = c.name, class = c.class, spec = c.spec, role = role, zone = c.zone,\n      maxhp = hp, hp = hp, power = power, armor = armor, speed = cls.speed,\n      caster = cls.caster, mana = D.MANA_START, threat = 0, alive = true,\n      threatmul = (role == \"tank\") and D.TANK_THREAT or D.OTHER_THREAT,\n      fireres = c.fireres and 1 or 0, crit = crit,\n      used = {}, stacks = 0, shield_wall = 0,\n    }\n    local p = raid[i]\n    if (p.zone == \"ranged\" and has[\"druid:balance\"]) then p.crit = p.crit + 30 end\n    if (p.zone == \"melee\" and (has[\"druid:feral\"] or has[\"druid:feralcat\"])) then p.crit = p.crit + 30 end\n  end\n\n  -- Action order: speed high to low, then roster slot (stable, explicit insertion sort).\n  local order = {}\n  for i = 1, #raid do order[i] = raid[i] end\n  for i = 2, #order do\n    local v, j = order[i], i - 1\n    while j >= 1 and (order[j].speed < v.speed or (order[j].speed == v.speed and order[j].slot > v.slot)) do\n      order[j + 1] = order[j]; j = j - 1\n    end\n    order[j + 1] = v\n  end\n\n  local boss = { name = boss_def.name, maxhp = pm(boss_def.hp, mode.hp), submerged = false }\n  boss.hp = boss.maxhp\n  local adds = {}\n  local target = nil  -- the boss's current target\n  local kick_ready_round = 1\n\n  local function alive_in(zone)\n    local list = {}\n    for i = 1, #raid do\n      local p = raid[i]\n      if p.alive and (zone == nil or p.zone == zone) then list[#list + 1] = p end\n    end\n    return list\n  end\n\n  local function count_alive_role(role)\n    local n = 0\n    for i = 1, #raid do if raid[i].alive and raid[i].role == role then n = n + 1 end end\n    return n\n  end\n\n  local function kill(p, cause)\n    -- Once-per-fight saves, in a fixed order.\n    if p.class == \"mage\" and p.spec == \"frost\" and not p.used.iceblock then\n      p.used.iceblock = true; p.hp = 1\n      log(30, p.slot, 1, p.name .. \" Ice Blocks and survives.\"); return\n    end\n    if p.class == \"paladin\" and not p.used.bubble then\n      p.used.bubble = true; p.hp = 1\n      log(30, p.slot, 2, p.name .. \" bubbles and survives.\"); return\n    end\n    p.alive = false; p.hp = 0\n    log(31, p.slot, cause, p.name .. \" dies.\")\n  end\n\n  local function damage(p, amount, cause, is_ground)\n    if not p.alive then return end\n    local dmg = pm(amount, 1000 - p.armor)\n    dmg = pm(dmg, tac.taken)\n    if p.class == \"warrior\" and p.spec == \"fury\" then dmg = pm(dmg, 1100) end\n    if p.shield_wall > 0 then dmg = pm(dmg, 250) end\n    if dmg < 1 then dmg = 1 end\n    p.hp = p.hp - dmg\n    if p.class == \"warrior\" and p.spec == \"fury\" and p.stacks < 3 then p.stacks = p.stacks + 1 end\n    if p.hp <= 0 then kill(p, cause)\n    elseif p.class == \"warrior\" and p.spec == \"protection\" and not p.used.shieldwall and p.hp * 1000 < p.maxhp * 200 then\n      p.used.shieldwall = true; p.shield_wall = 2\n      log(32, p.slot, 0, p.name .. \" raises Shield Wall.\")\n    end\n  end\n\n  local function heal(p, amount)\n    if not p.alive then return 0 end\n    local before = p.hp\n    p.hp = p.hp + amount\n    if p.hp > p.maxhp then p.hp = p.maxhp end\n    return p.hp - before\n  end\n\n  local function most_injured(list)\n    local best, bestv = nil, 1001\n    for i = 1, #list do\n      local p = list[i]\n      local v = idiv(p.hp * 1000, p.maxhp)\n      if v < bestv then best, bestv = p, v end\n    end\n    return best, bestv\n  end\n\n  local function roll(p, amount)\n    local mult = D.CRIT_MULT\n    if p.class == \"warlock\" and p.spec == \"destruction\" then mult = 2000 end\n    if rng:chance(p.crit) then\n      local extra = 0\n      if p.class == \"mage\" and p.spec == \"fire\" then extra = 500 end -- Ignite\n      return pm(amount, mult + extra), true\n    end\n    return amount, false\n  end\n\n  local function pick_tank()\n    -- Highest threat among living characters; ties to the lower roster slot.\n    local best = nil\n    for i = 1, #raid do\n      local p = raid[i]\n      if p.alive and (best == nil or p.threat > best.threat) then best = p end\n    end\n    return best\n  end\n\n  log(1, boss.maxhp, #raid, boss.name .. \" is pulled (\" .. inputs.mode .. \").\")\n\n  local result = \"enrage\"\n  while true do\n    round = round + 1\n    if round > D.MAX_ROUNDS then\n      log(90, 0, 0, boss.name .. \" enrages. The raid is wiped.\")\n      result = \"enrage\"; break\n    end\n    local mode_dmg = mode.dmg\n\n    -- 1. The boss acts.\n    if round == boss_def.submerge_at then\n      boss.submerged = true; boss.surface_at = round + boss_def.submerge_rounds\n      for a = 1, boss_def.adds do\n        adds[a] = { hp = pm(boss_def.add_hp, mode.hp), alive = true, frozen = 0, held = 0 }\n      end\n      if has[\"hunter:survival\"] then adds[1].frozen = 3 end\n      if has[\"warlock:demonology\"] and adds[2] then adds[2].held = 4 end\n      if has[\"hunter:beastmastery\"] and adds[3] then adds[3].held = 2 end\n      log(20, boss_def.adds, 0, boss.name .. \" sinks into the lava and summons \" .. boss_def.adds .. \" fire adds.\")\n    end\n    if boss.submerged and round >= boss.surface_at then\n      boss.submerged = false\n      log(21, 0, 0, boss.name .. \" rises again.\")\n    end\n\n    if not boss.submerged then\n      -- Lava throw every 4 rounds (Subtlety rogue's Kick can cancel one every 5 rounds).\n      if round % boss_def.throw_every == 0 then\n        local kicker = nil\n        for i = 1, #raid do\n          local p = raid[i]\n          if p.alive and p.class == \"rogue\" and p.spec == \"subtlety\" and kicker == nil then kicker = p end\n        end\n        if kicker and round >= kick_ready_round then\n          kick_ready_round = round + 5\n          log(22, kicker.slot, 0, kicker.name .. \" kicks the wind-up. No throw this time.\")\n        else\n          local victims = alive_in(\"melee\")\n          if #victims == 0 then victims = alive_in(\"front\") end\n          local v = most_injured(victims)\n          if v then\n            if v.fireres > 0 then\n              v.fireres = v.fireres - 1\n              log(23, v.slot, 1, boss.name .. \" throws \" .. v.name .. \" into the lava. Fire Resistance saves them.\")\n            else\n              log(23, v.slot, 0, boss.name .. \" throws \" .. v.name .. \" into the lava.\")\n              v.hp = 0; kill(v, 23)\n            end\n          end\n        end\n      end\n      -- Melee on the current target.\n      target = pick_tank()\n      if target then\n        local hit = pm(boss_def.melee, mode_dmg)\n        if target.class == \"paladin\" and target.spec == \"protection\" then hit = pm(hit, 1100) end\n        damage(target, hit, 24)\n      end\n      -- Magma Splash every 2nd round on a zone picked by the seed.\n      if round % 2 == 0 then\n        local zone = D.ZONES[rng:int(4)]\n        local list = alive_in(zone)\n        if #list > 0 then\n          if tac.area_single then\n            local v = list[rng:int(#list)]\n            log(25, v.slot, 1, \"Magma Splash hits \" .. v.name .. \".\")\n            damage(v, pm(boss_def.splash, mode_dmg), 25, true)\n          else\n            log(25, #list, 0, \"Magma Splash hits the \" .. zone .. \" zone.\")\n            for i = 1, #list do damage(list[i], pm(boss_def.splash, mode_dmg), 25, true) end\n          end\n        end\n      end\n    end\n    -- Fire adds attack.\n    local frost_slow = has[\"mage:frost\"]\n    for a = 1, #adds do\n      local ad = adds[a]\n      if ad.alive and ad.frozen == 0 and ad.held == 0 then\n        local hit = pm(boss_def.add_hit, mode_dmg)\n        if frost_slow then hit = pm(hit, 850) end\n        local holder = nil\n        for i = 1, #raid do\n          local p = raid[i]\n          if p.alive and p.class == \"paladin\" and p.spec == \"protection\" and holder == nil then holder = p end\n        end\n        local list = alive_in(nil)\n        if #list > 0 then damage(holder or list[rng:int(#list)], hit, 26) end\n      end\n      if ad.frozen > 0 then ad.frozen = ad.frozen - 1 end\n      if ad.held > 0 then ad.held = ad.held - 1 end\n    end\n\n    -- 2. Characters act in speed order.\n    local healmul = tac.heal\n    if tac.area_single then healmul = tac.heal end\n    for k = 1, #order do\n      local p = order[k]\n      if p.alive then\n        if p.role == \"healer\" then\n          local cost = pm(D.HEAL_COST, tac.mana)\n          local list = alive_in(nil)\n          local t, pct = most_injured(list)\n          if t and pct < 1000 then\n            local big = pct < D.BIG_HEAL_BELOW\n            if big then cost = pm(D.BIG_HEAL_COST, tac.mana) end\n            if p.mana >= cost then\n              p.mana = p.mana - cost\n              local amount = pm(p.power, healmul)\n              if big then amount = pm(amount, D.BIG_HEAL_MULT) end\n              local crit_amt, did = roll(p, amount)\n              if did and p.class == \"paladin\" then p.mana = p.mana + 6 end -- Illumination\n              heal(t, crit_amt)\n              -- Spec extras.\n              if p.class == \"priest\" and p.spec == \"holy\" then\n                local zl = alive_in(t.zone)\n                for i = 1, #zl do if zl[i] ~= t then heal(zl[i], pm(p.power, 400)) end end\n              elseif p.class == \"shaman\" and p.spec == \"restoration\" then\n                local second = most_injured(list)\n                if second then heal(second, pm(p.power, 600)) end\n              elseif p.class == \"druid\" and p.spec == \"restoration\" then\n                local second = most_injured(list)\n                if second then heal(second, pm(p.power, 500)) end\n              end\n            end\n          end\n          if p.class == \"priest\" and p.spec == \"discipline\" and target and target.alive then\n            heal(target, 60) -- Power Word: Shield, simplified as 60 healing on the boss's target\n          end\n          if p.class == \"shaman\" and p.spec == \"restoration\" and not p.used.manatide and p.mana < 40 then\n            p.used.manatide = true\n            for i = 1, #raid do if raid[i].role == \"healer\" then raid[i].mana = raid[i].mana + 30 end end\n            log(33, p.slot, 0, p.name .. \" drops Mana Tide.\")\n          end\n        else\n          -- Damage: adds first when any are alive and not held, else the boss if it is up.\n          local amount = p.power\n          if p.caster then\n            local cost = D.CASTER_COST\n            if p.class == \"mage\" and p.spec == \"arcane\" and round <= 3 then cost = cost * 2; amount = pm(amount, 1300) end\n            if p.mana >= cost then p.mana = p.mana - cost else amount = idiv(amount, 2) end\n          end\n          amount = pm(amount, tac.dmg)\n          if p.class == \"warrior\" and p.spec == \"fury\" then amount = pm(amount, 1000 + 50 * p.stacks) end\n          if p.class == \"rogue\" and p.spec == \"assassination\" then\n            if p.stacks < 5 then p.stacks = p.stacks + 1 end\n            amount = pm(amount, 1000 + 60 * p.stacks)\n          end\n          if p.class == \"warlock\" and p.spec == \"affliction\" then\n            local ramp = 30 * round; if ramp > 300 then ramp = 300 end\n            amount = pm(amount, 1000 + ramp)\n          end\n          if (p.zone == \"melee\" or p.zone == \"ranged\") and has[\"hunter:marksmanship\"] then amount = pm(amount, 1050) end\n          if p.zone == \"melee\" and has[\"shaman:enhancement\"] then amount = pm(amount, 1100) end\n          if p.zone == \"ranged\" and has[\"warlock:affliction\"] then amount = pm(amount, 1100) end\n          local dealt, did = roll(p, amount)\n          local fire_penalty = boss_def.fire_immune and p.class == \"mage\" and p.spec == \"fire\"\n          if fire_penalty then dealt = idiv(dealt, 2) end\n          -- Choose a target.\n          local hit_add = nil\n          if p.role ~= \"tank\" or boss.submerged then\n            for a = 1, #adds do\n              if adds[a].alive and hit_add == nil then hit_add = adds[a] end\n            end\n          end\n          local cleave = (p.class == \"shaman\" and p.spec == \"elemental\") or (p.class == \"rogue\" and p.spec == \"combat\" and round % 6 <= 2)\n          if hit_add then\n            hit_add.hp = hit_add.hp - dealt\n            if hit_add.hp <= 0 then hit_add.alive = false; log(27, 0, 0, \"A fire add dies.\") end\n            if cleave then\n              for a = 1, #adds do\n                if adds[a].alive and adds[a] ~= hit_add then\n                  adds[a].hp = adds[a].hp - idiv(dealt, 2)\n                  if adds[a].hp <= 0 then adds[a].alive = false; log(27, 0, 0, \"A fire add dies.\") end\n                  break\n                end\n              end\n            end\n          elseif not boss.submerged then\n            if p.class == \"warrior\" and p.spec == \"arms\" and boss.hp * 1000 < boss.maxhp * 200 then dealt = pm(dealt, 1300) end\n            if p.class == \"warlock\" and p.spec == \"destruction\" and boss.hp * 1000 < boss.maxhp * 100 then dealt = pm(dealt, 2000) end\n            boss.hp = boss.hp - dealt\n            p.threat = p.threat + pm(pm(dealt, p.threatmul), tac.threat)\n            if p.class == \"priest\" and p.spec == \"shadow\" then\n              local zl = alive_in(p.zone)\n              for i = 1, #zl do heal(zl[i], pm(dealt, 150)) end\n            end\n          end\n        end\n      end\n    end\n\n    -- 3. Threat check, mana, shield wall, battle res, end conditions.\n    for i = 1, #raid do\n      local p = raid[i]\n      if p.alive and p.caster then p.mana = p.mana + D.MANA_REGEN end\n      if p.shield_wall > 0 then p.shield_wall = p.shield_wall - 1 end\n    end\n    local new_target = pick_tank()\n    if target and target.alive and new_target and new_target ~= target and new_target.role ~= \"tank\" then\n      if new_target.threat * 1000 > target.threat * D.AGGRO_MARGIN then\n        log(28, new_target.slot, 0, new_target.name .. \" pulls aggro!\")\n      end\n    end\n    -- Druid Battle Res: the first dead healer or tank, once per fight.\n    for i = 1, #raid do\n      local d = raid[i]\n      if d.alive and d.class == \"druid\" and not d.used.bres then\n        for j = 1, #raid do\n          local x = raid[j]\n          if not x.alive and (x.role == \"healer\" or x.role == \"tank\") and not d.used.bres then\n            d.used.bres = true; x.alive = true; x.hp = pm(x.maxhp, 300)\n            log(34, x.slot, d.slot, d.name .. \" battle-resses \" .. x.name .. \".\")\n          end\n        end\n      end\n    end\n\n    if boss.hp <= 0 and not boss.submerged then\n      log(80, round, 0, boss.name .. \" dies in round \" .. round .. \".\")\n      result = \"kill\"; break\n    end\n    if count_alive_role(\"tank\") + count_alive_role(\"healer\") == 0 then\n      log(91, 0, 0, \"Every tank and healer is dead. Wipe.\")\n      result = \"wipe\"; break\n    end\n  end\n\n  local survivors = 0\n  for i = 1, #raid do if raid[i].alive then survivors = survivors + 1 end end\n  h = mix(h, survivors); h = mix(h, boss.hp < 0 and 0 or boss.hp)\n  return {\n    result = result, rounds = round > D.MAX_ROUNDS and D.MAX_ROUNDS or round,\n    events = events, checksum = floor(h), boss_hp = boss.hp < 0 and 0 or boss.hp,\n    boss_maxhp = boss.maxhp, raid = raid, survivors = survivors,\n    engine = ns.ENGINE_VERSION,\n  }\nend\n", "-- Prototype bridge: runs fights and returns JSON strings for the browser page.\nlocal _, ns = ...\nns = ns or FPR_ENGINE or {}\nFPR_ENGINE = ns\nlocal API = {}\nFPR_API = API\n\nlocal function esc(s)\n  s = string.gsub(s, '\\\\', '\\\\\\\\')\n  s = string.gsub(s, '\"', '\\\\\"')\n  s = string.gsub(s, '\\n', '\\\\n')\n  return '\"' .. s .. '\"'\nend\nlocal function num(n) return string.format(\"%d\", n) end\n\nfunction API.Run(input)\n  local r = ns.Simulate(input)\n  local ev = {}\n  for i = 1, #r.events do\n    local e = r.events[i]\n    ev[#ev + 1] = '{\"r\":' .. num(e.round) .. ',\"c\":' .. num(e.code) .. ',\"a\":' .. num(e.a) .. ',\"b\":' .. num(e.b) .. ',\"t\":' .. esc(e.text) .. '}'\n  end\n  local raid = {}\n  for i = 1, #r.raid do\n    local p = r.raid[i]\n    raid[#raid + 1] = '{\"name\":' .. esc(p.name) .. ',\"hp\":' .. num(p.hp) .. ',\"maxhp\":' .. num(p.maxhp) ..\n      ',\"alive\":' .. (p.alive and 'true' or 'false') .. ',\"role\":' .. esc(p.role) .. ',\"mana\":' .. num(p.mana) .. '}'\n  end\n  return '{\"result\":' .. esc(r.result) .. ',\"rounds\":' .. num(r.rounds) .. ',\"checksum\":' .. num(r.checksum) ..\n    ',\"engine\":' .. num(r.engine) .. ',\"bossHp\":' .. num(r.boss_hp) .. ',\"bossMax\":' .. num(r.boss_maxhp) ..\n    ',\"survivors\":' .. num(r.survivors) .. ',\"events\":[' .. table.concat(ev, ',') .. '],\"raid\":[' .. table.concat(raid, ',') .. ']}'\nend\n\n-- Runs n fights of the same raid with seeds derived from base seed; returns a JSON summary.\nfunction API.Batch(input, n, from)\n  local kills, wipes, enrages, krounds, deaths, survivors = 0, 0, 0, 0, 0, 0\n  local cause = { [23] = 0, [24] = 0, [25] = 0, [26] = 0 }\n  local base = input.seed\n  for i = from, from + n - 1 do\n    input.seed = ns.Seed(base, i)\n    local r = ns.Simulate(input)\n    if r.result == \"kill\" then kills = kills + 1; krounds = krounds + r.rounds\n    elseif r.result == \"wipe\" then wipes = wipes + 1 else enrages = enrages + 1 end\n    survivors = survivors + r.survivors\n    for k = 1, #r.events do\n      local e = r.events[k]\n      if e.code == 31 then\n        deaths = deaths + 1\n        if cause[e.b] then cause[e.b] = cause[e.b] + 1 end\n      end\n    end\n  end\n  input.seed = base\n  return '{\"n\":' .. num(n) .. ',\"kills\":' .. num(kills) .. ',\"wipes\":' .. num(wipes) .. ',\"enrages\":' .. num(enrages) ..\n    ',\"killRounds\":' .. num(krounds) .. ',\"deaths\":' .. num(deaths) .. ',\"survivors\":' .. num(survivors) ..\n    ',\"throw\":' .. num(cause[23]) .. ',\"melee\":' .. num(cause[24]) .. ',\"splash\":' .. num(cause[25]) .. ',\"adds\":' .. num(cause[26]) .. '}'\nend\n"];
+const SPECS = {
+  warrior: [["arms","Arms","damage"],["fury","Fury","damage"],["protection","Protection","tank"]],
+  paladin: [["holy","Holy","healer"],["protection","Protection","tank"],["retribution","Retribution","damage"]],
+  hunter: [["beastmastery","Beast Mastery","damage"],["marksmanship","Marksmanship","damage"],["survival","Survival","damage"]],
+  rogue: [["assassination","Assassination","damage"],["combat","Combat","damage"],["subtlety","Subtlety","damage"]],
+  priest: [["holy","Holy","healer"],["discipline","Discipline","healer"],["shadow","Shadow","damage"]],
+  shaman: [["elemental","Elemental","damage"],["enhancement","Enhancement","damage"],["restoration","Restoration","healer"]],
+  mage: [["arcane","Arcane","damage"],["fire","Fire","damage"],["frost","Frost","damage"]],
+  warlock: [["affliction","Affliction","damage"],["demonology","Demonology","damage"],["destruction","Destruction","damage"]],
+  druid: [["balance","Balance","damage"],["feral","Feral (bear)","tank"],["feralcat","Feral (cat)","damage"],["restoration","Restoration","healer"]],
+};
+const CLASS_NAMES = { warrior:"Warrior", paladin:"Paladin", hunter:"Hunter", rogue:"Rogue", priest:"Priest", shaman:"Shaman", mage:"Mage", warlock:"Warlock", druid:"Druid" };
+const ZONES = [["front","Front"],["melee","Melee"],["ranged","Ranged"],["back","Back"]];
+const PRESETS = {
+  balanced: [["Brannoc","warrior","protection","front",true],["Mira","paladin","protection","front",false],["Kess","rogue","combat","melee",true],
+    ["Tor","warrior","fury","melee",true],["Ash","shaman","enhancement","melee",false],["Lumi","mage","frost","ranged",false],
+    ["Orrin","hunter","marksmanship","ranged",false],["Mortis","warlock","affliction","ranged",false],["Sela","priest","holy","back",false],["Bram","druid","restoration","back",false]],
+  melee: [["Brannoc","warrior","protection","front",true],["Mira","paladin","protection","front",false],["Kess","rogue","combat","melee",true],
+    ["Tor","warrior","fury","melee",true],["Ash","shaman","enhancement","melee",true],["Fen","rogue","subtlety","melee",true],["Vey","druid","feralcat","melee",true],
+    ["Lumi","mage","frost","ranged",false],["Sela","priest","holy","back",false],["Bram","druid","restoration","back",false]],
+  ranged: [["Brannoc","warrior","protection","front",true],["Mira","paladin","protection","front",true],["Lumi","mage","frost","ranged",false],
+    ["Rook","mage","fire","ranged",false],["Orrin","hunter","marksmanship","ranged",false],["Dax","hunter","beastmastery","ranged",false],
+    ["Mortis","warlock","affliction","ranged",false],["Wynn","priest","shadow","ranged",false],["Sela","priest","holy","back",false],["Bram","druid","restoration","back",false]],
+  threeheals: [["Brannoc","warrior","protection","front",true],["Mira","paladin","protection","front",false],["Kess","rogue","combat","melee",true],
+    ["Tor","warrior","fury","melee",true],["Lumi","mage","frost","ranged",false],["Orrin","hunter","marksmanship","ranged",false],
+    ["Mortis","warlock","affliction","ranged",false],["Sela","priest","holy","back",false],["Bram","druid","restoration","back",false],["Ilo","paladin","holy","back",false]],
+};
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const GL_FOR = { normal: 60, heroic: 65, mythic: 74 };
+
+function opt(list, sel) { return list.map(([v, l]) => `<option value="${v}"${v === sel ? " selected" : ""}>${esc(l)}</option>`).join(""); }
+function rowHtml(i, [name, cls, spec, zone, fr]) {
+  return `<tr>
+    <td><input type="text" id="n${i}" value="${esc(name)}" aria-label="Name ${i + 1}"></td>
+    <td><select id="c${i}" aria-label="Class ${i + 1}">${opt(Object.entries(CLASS_NAMES), cls)}</select></td>
+    <td><select id="s${i}" aria-label="Spec ${i + 1}">${opt(SPECS[cls].map(s => [s[0], s[1]]), spec)}</select></td>
+    <td><select id="z${i}" aria-label="Zone ${i + 1}">${opt(ZONES, zone)}</select></td>
+    <td><input type="checkbox" id="f${i}" aria-label="Fire Resistance potion ${i + 1}"${fr ? " checked" : ""}></td></tr>`;
+}
+function loadPreset(name) {
+  $("roster").tBodies[0].innerHTML = PRESETS[name].map((r, i) => rowHtml(i, r)).join("");
+  for (let i = 0; i < 10; i++) {
+    $("c" + i).addEventListener("change", e => {
+      const cls = e.target.value; const s = $("s" + i);
+      s.innerHTML = opt(SPECS[cls].map(x => [x[0], x[1]]), SPECS[cls][0][0]);
+      setZone(i);
+    });
+    $("s" + i).addEventListener("change", () => setZone(i));
+  }
+}
+function setZone(i) {
+  const cls = $("c" + i).value, spec = $("s" + i).value;
+  const role = SPECS[cls].find(s => s[0] === spec)[2];
+  const z = $("z" + i);
+  if (role === "tank") z.value = "front"; else if (role === "healer") z.value = "back";
+  else if (z.value === "front" || z.value === "back") z.value = (["warrior","rogue","paladin"].includes(cls) || spec === "enhancement" || spec === "feralcat") ? "melee" : "ranged";
+}
+
+function readInput() {
+  const raid = [];
+  for (let i = 0; i < 10; i++) raid.push({ name: $("n" + i).value.trim() || ("Raider " + (i + 1)), class: $("c" + i).value, spec: $("s" + i).value, zone: $("z" + i).value, fireres: $("f" + i).checked });
+  const tactic = document.querySelector('input[name="tactic"]:checked').value;
+  const gl = Math.max(50, Math.min(90, Math.round(Number($("gl").value) || 60)));
+  const seed = Math.min(2147483646, Math.max(1, Math.round(Math.abs(Number($("seed").value))) || 1));
+  return { boss: "ragnaroast", mode: $("mode").value, seed, tactic, gl,
+    consumables: { food: $("c-food").checked, elixirs: $("c-elixirs").checked, flasks: $("c-flasks").checked },
+    buffs: { dragonslayer: $("b-dragonslayer").checked, songbloom: $("b-songbloom").checked, warchief: $("b-warchief").checked }, raid };
+}
+function toLua(v) {
+  if (Array.isArray(v)) return "{" + v.map(toLua).join(",") + "}";
+  if (v && typeof v === "object") return "{" + Object.entries(v).map(([k, x]) => `[${JSON.stringify(k)}]=${toLua(x)}`).join(",") + "}";
+  if (typeof v === "string") return JSON.stringify(v).replace(/\\u[0-9a-fA-F]{4}/g, "?");
+  if (typeof v === "boolean") return v ? "true" : "false";
+  return String(Math.round(v));
+}
+function lua(code) { return fengari.load(code)(); }
+
+function renderFight(r, inp) {
+  const kill = r.result === "kill";
+  const head = kill ? `KILL in round ${r.rounds}` : (r.result === "wipe" ? `WIPE in round ${r.rounds}` : "ENRAGE in round 21");
+  const why = kill ? `${r.survivors} of 10 standing` : (r.result === "wipe" ? "Every tank and healer died" : "The raid ran out of time");
+  const pct = Math.round(100 * r.bossHp / r.bossMax);
+  const cls = { 31: "death", 30: "save", 34: "save", 32: "save", 23: "throw", 28: "aggro", 22: "save" };
+  $("fightBody").innerHTML = `
+    <div class="banner ${kill ? "kill" : "fail"}"><span class="big">${head}</span><span>${why}</span></div>
+    <div class="bosshp"><b>Ragnaroast</b><div class="bar" role="img" aria-label="Boss health ${pct}%"><i style="width:${pct}%"></i></div><span class="mono">${r.bossHp.toLocaleString()} / ${r.bossMax.toLocaleString()}</span></div>
+    <div class="raidstrip">${r.raid.map(p => `<div class="pc${p.alive ? "" : " dead"}"><b>${esc(p.name)}</b><div class="bar"><i style="width:${Math.round(100 * p.hp / p.maxhp)}%"></i></div></div>`).join("")}</div>
+    <p class="mono" style="color:var(--muted);margin:8px 0 0">Seed ${inp.seed} · checksum ${r.checksum} · engine v${r.engine}</p>
+    <ol class="log">${r.events.map(e => `<li class="${cls[e.c] || ""}"><span class="r">${e.r ? "R" + e.r : "Pull"}</span><span>${esc(e.t)}</span></li>`).join("")}</ol>`;
+}
+
+function busy(on, msg) { ["pull", "sim", "cmp"].forEach(id => $(id).disabled = on); $("status").textContent = msg || ""; }
+
+async function batch(inp, total, onProgress) {
+  const chunk = 50; const sum = { n: 0, kills: 0, wipes: 0, enrages: 0, killRounds: 0, deaths: 0, survivors: 0, throw: 0, melee: 0, splash: 0, adds: 0 };
+  const lit = toLua(inp);
+  for (let from = 1; from <= total; from += chunk) {
+    const r = JSON.parse(lua(`return FPR_API.Batch(${lit}, ${Math.min(chunk, total - from + 1)}, ${from})`));
+    for (const k in sum) sum[k] += r[k];
+    onProgress && onProgress(sum.n, total);
+    await new Promise(res => setTimeout(res, 0));
+  }
+  return sum;
+}
+function pctTxt(a, b) { return b ? (100 * a / b).toFixed(1) + "%" : "0%"; }
+
+function wire() {
+  loadPreset("balanced");
+  $("preset").addEventListener("change", e => loadPreset(e.target.value));
+  $("mode").addEventListener("change", e => { $("gl").value = GL_FOR[e.target.value]; });
+  $("reroll").addEventListener("click", () => { $("seed").value = 1 + Math.floor(Math.random() * 2147483000); });
+  $("pull").addEventListener("click", () => {
+    const inp = readInput();
+    try { renderFight(JSON.parse(lua(`return FPR_API.Run(${toLua(inp)})`)), inp); $("status").textContent = ""; }
+    catch (e) { $("status").textContent = "The engine stopped with an error: " + e.message; }
+  });
+  $("sim").addEventListener("click", async () => {
+    const inp = readInput(); busy(true, "Simulating...");
+    const s = await batch(inp, 1000, (n, t) => { $("status").textContent = `Simulated ${n} of ${t} pulls`; });
+    const deathsPer = (s.deaths / s.n).toFixed(1);
+    $("simBody").innerHTML = `<div class="stats">
+      <div class="stat"><div class="k">Kill rate</div><div class="v">${pctTxt(s.kills, s.n)}</div><div class="n">${s.kills} kills, ${s.enrages} enrages, ${s.wipes} wipes</div></div>
+      <div class="stat"><div class="k">Average kill round</div><div class="v">${s.kills ? (s.killRounds / s.kills).toFixed(1) : "none"}</div><div class="n">Enrage at round 21</div></div>
+      <div class="stat"><div class="k">Deaths per pull</div><div class="v">${deathsPer}</div><div class="n">Lava ${(s.throw / s.n).toFixed(1)} · melee ${(s.melee / s.n).toFixed(1)} · splash ${(s.splash / s.n).toFixed(1)} · adds ${(s.adds / s.n).toFixed(1)}</div></div></div>`;
+    busy(false, "");
+  });
+  $("cmp").addEventListener("click", async () => {
+    const base = readInput(); busy(true, "Comparing cards...");
+    const names = { spread: "Spread", stack: "Stack", burn: "Burn", playsafe: "Play Safe" };
+    const rows = [];
+    for (const t of Object.keys(names)) {
+      const s = await batch({ ...base, tactic: t }, 250, (n) => { $("status").textContent = `${names[t]}: ${n} of 250`; });
+      rows.push([t, s]);
+    }
+    const best = Math.max(...rows.map(([, s]) => s.kills));
+    $("simBody").innerHTML = `<table class="cmp"><thead><tr><th>Card</th><th>Kill rate</th><th style="width:45%"></th><th>Deaths</th></tr></thead><tbody>${rows.map(([t, s]) =>
+      `<tr><td>${s.kills === best ? "<b>" + names[t] + "</b>" : names[t]}</td><td class="num">${pctTxt(s.kills, s.n)}</td><td><div class="bar"><i style="width:${100 * s.kills / s.n}%"></i></div></td><td class="num">${(s.deaths / s.n).toFixed(1)}</td></tr>`).join("")}</tbody></table>`;
+    busy(false, "");
+  });
+}
+
+function boot() {
+  wire();
+  try {
+    for (const src of LUA_SOURCES) fengari.load(src)();
+    const v = lua("return FPR_ENGINE.ENGINE_VERSION");
+    $("engineTag").textContent = "Lua engine v" + v + " ready"; $("ev").textContent = v;
+    busy(false, "");
+    $("pull").click();
+  } catch (e) {
+    $("engineTag").textContent = "Engine failed to load";
+    $("status").textContent = "The Lua engine could not start: " + e.message;
+  }
+}
+if (window.fengari) boot(); else window.addEventListener("load", () => window.fengari ? boot() : ($("status").textContent = "The Lua runtime could not be loaded. Check your connection and reload."));
+</script>

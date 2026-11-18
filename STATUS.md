@@ -11,7 +11,7 @@ Last updated: 2026-11-18. Read this first at the start of every session.
 | Design document | Done, signed off |
 | UX wireframes and art direction | Mid-fi wireframes done (12 screens). Style chosen. Asset kit generated and cut out. First hi-fi stage test done. Art direction write-up and hi-fi hub to do |
 | Technical design | Done, signed off |
-| Browser prototype | In progress |
+| Browser prototype | v1 published: https://claude.ai/artifact/YHGsBUgA2y1DGDVTaisGpy (Ragnaroast, Lua engine in the browser). Tuning pass 1 done |
 | Milestone plan | Not started |
 | Gate review (separate agents) | After the above |
 
@@ -21,7 +21,9 @@ Last updated: 2026-11-18. Read this first at the start of every session.
 | --- | --- |
 | Task board | [GitHub Issues](https://github.com/europalle/flight-path-raiders/issues), by milestone. Status is a label: `status:next`, `status:in-progress`, `status:review`, `status:blocked`. Closed means done |
 | Every decision the Director made | `design/decisions.md` |
-| Design document | Claude Doc in the Director's Claude Docs, doc id `cbc21151-ea09-48bd-9b01-bd12cf9a945f` |
+| Design document | https://claude.ai/artifact/SALKe92QNhpz1sRA7YA2Dk |
+| Browser prototype | https://claude.ai/artifact/YHGsBUgA2y1DGDVTaisGpy (built from `prototype/build.py`) |
+| Combat engine and tests | `engine/`, `tests/check.sh` (Lua 5.1 vs Fengari), `tools/tune.py` |
 | Technical design | Claude Doc: https://claude.ai/artifact/8fVgrn6YoRb2ATCBdEQSfm |
 | Wireframe review page | https://claude.ai/artifact/8b9wnYtUHvZ5BFR1tbkuNa |
 | Mid-fi wireframes and Art handoff | `ux/wireframes/mid-fi/`, `ux/art-handoff/` |
@@ -35,11 +37,13 @@ Last updated: 2026-11-18. Read this first at the start of every session.
 - 2026-11-18: Alliance only (human, dwarf, night elf, gnome), Classic class rules; dwarves can be shamans (WoW: Forever). 18 characters cut out.
 - 2026-11-18: All Gemini prompts done; Ragnaroast and the Molten Bore stage in; first hi-fi stage test.
 - 2026-11-18: Task board set up as GitHub Issues.
-- 2026-11-18: Technical design drafted (12 sections, architecture diagram).
+- 2026-11-18: Technical design signed off.
+- 2026-11-18: Browser prototype v1 and Tuning pass 1.
 
 ## Next
 
-1. Browser prototype with the shared Lua engine (#2), then Tuning's simulations (#3).
+1. Director plays the prototype; Design and Tuning rework the tactic cards (Burn dominates).
+2. QA's first solo playtest script (#15); more bosses in the prototype.
 3. Art direction write-up (#4), frame kit (#5) and the hi-fi hub (#7) alongside.
 4. Milestone plan (#16), then the Phase 2 gate review (#17).
 

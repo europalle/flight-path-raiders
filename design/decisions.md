@@ -4,6 +4,8 @@ Decisions made by the Game Director. Newest first.
 
 | Date | Area | Decision |
 | --- | --- | --- |
+| 2026-11-18 | Tuning | Pass 1 in the prototype: Ragnaroast Normal health 8,400 (was 9,000), Heroic x1.62 and Mythic x2.5 (were x1.4 and x1.9), melee 600, splash 450, adds 500 health and 120 hits. Results with sensible raids: Normal about 70% (Spread), Heroic 46% and Mythic 19% (Burn). Finding: Burn is the best card by about 20 points and Play Safe is never right; flagged for Design |
+| 2026-11-18 | Engineering | Browser prototype v1 published. Lua 5.1 and Fengari give identical results on 2,000 random fights; Fengari's 32-bit integers forced the RNG and hash products into floating point |
 | 2026-11-18 | Engineering | Technical design signed off by the Director |
 | 2026-11-18 | Engineering | One guild per WoW account (all characters fly for it); board settings per character; dailies, lockouts and weekly chest per account. Leaderboards show a player-picked guild name (24 chars) plus a short account tag. Four embedded libraries approved (LibStub, CallbackHandler, AceComm, ChatThrottleLib, LibSerialize, LibDeflate); Legal checks licences before release |
 | 2026-11-18 | Production | Task tracking in GitHub Issues (labels for department and status, milestones per phase); STATUS.md is the session handoff file |

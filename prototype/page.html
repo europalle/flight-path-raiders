@@ -1,0 +1,352 @@
+<title>Ragnaroast Pull Simulator</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a raid leader's planning sheet. Left: the roster and choices. Right: the fight report. */
+:root {
+  --paper: #f3ecdc; --panel: #fbf6ea; --ink: #2a2119; --muted: #6b5d4c; --rule: #d8ccb3;
+  --lava: #c44a1a; --frost: #2f63c4; --good: #2e7d32; --warn: #a86a00; --bad: #b3261e;
+  --lava-tint: rgba(196, 74, 26, .10); --frost-tint: rgba(47, 99, 196, .10);
+  --hand: "Kalam", "Comic Sans MS", cursive; --body: "IBM Plex Sans", system-ui, sans-serif; --mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #1c1f26; --panel: #252a33; --ink: #e6e1d3; --muted: #a8a293; --rule: #3a404c;
+  --lava: #ff8a3d; --frost: #8cc8ff; --good: #7ccf83; --warn: #f0b44c; --bad: #ff7b6e;
+  --lava-tint: rgba(255, 138, 61, .14); --frost-tint: rgba(140, 200, 255, .12); color-scheme: dark } }
+:root[data-theme="dark"] {
+  --paper: #1c1f26; --panel: #252a33; --ink: #e6e1d3; --muted: #a8a293; --rule: #3a404c;
+  --lava: #ff8a3d; --frost: #8cc8ff; --good: #7ccf83; --warn: #f0b44c; --bad: #ff7b6e;
+  --lava-tint: rgba(255, 138, 61, .14); --frost-tint: rgba(140, 200, 255, .12); color-scheme: dark }
+body { background: var(--paper); color: var(--ink); font: 15px/1.5 var(--body); }
+.wrap { max-width: 1240px; margin: 0 auto; padding-block: 24px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 24px; margin-bottom: 20px; }
+h1 { font: 700 2.1rem/1.1 var(--hand); margin: 0; text-wrap: balance; }
+.sub { color: var(--muted); margin: 4px 0 0; max-width: 62ch; }
+.tag { font: 600 .72rem/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted);
+  border: 1px solid var(--rule); border-radius: 999px; padding: 6px 10px; white-space: nowrap; }
+.grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+@media (max-width: 900px) { .grid { grid-template-columns: minmax(0, 1fr); } }
+.panel { background: var(--panel); border: 1px solid var(--rule); border-radius: 12px; padding: 18px; min-width: 0; }
+.panel + .panel { margin-top: 20px; }
+h2 { font: 700 1.35rem/1.2 var(--hand); margin: 0 0 12px; }
+h3 { font: 600 .78rem/1 var(--body); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 18px 0 8px; }
+.roster { width: 100%; border-collapse: collapse; font-size: .9rem; }
+.roster th { text-align: left; font: 600 .72rem/1 var(--body); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); padding: 0 6px 8px 0; }
+.roster td { padding: 3px 6px 3px 0; border-top: 1px solid var(--rule); }
+.roster input[type=text] { width: 7.5em; }
+.tablebox { overflow-x: auto; }
+select { max-width: 100%; }
+select, input[type=text], input[type=number] { font: inherit; font-size: .9rem; color: var(--ink); background: var(--paper);
+  border: 1px solid var(--rule); border-radius: 6px; padding: 4px 6px; }
+input[type=number] { width: 7em; font-family: var(--mono); }
+.row { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--rule); border-radius: 8px; padding: 6px 10px; cursor: pointer; background: var(--paper); }
+.chip:has(input:checked) { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+.chip small { color: var(--muted); }
+.cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+@media (max-width: 560px) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.card { border: 1px solid var(--rule); border-radius: 8px; padding: 8px 10px; cursor: pointer; background: var(--paper); }
+.card input { position: absolute; opacity: 0; }
+.card b { display: block; font: 700 1.05rem/1.2 var(--hand); }
+.card span { font-size: .78rem; color: var(--muted); }
+.card:has(input:checked) { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+.card:has(input:checked) b::before { content: "\2713  "; }
+.card:has(input:focus-visible), .chip:has(input:focus-visible) { outline: 2px solid var(--frost); outline-offset: 2px; }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+button { font: 600 1rem/1 var(--body); border-radius: 8px; padding: 12px 18px; cursor: pointer; border: 1.5px solid var(--ink); background: transparent; color: var(--ink); }
+button.primary { background: var(--ink); color: var(--paper); font: 700 1.25rem/1 var(--hand); padding: 12px 28px; }
+button:focus-visible { outline: 2px solid var(--frost); outline-offset: 2px; }
+button:disabled { opacity: .5; cursor: progress; }
+.banner { border-radius: 10px; padding: 14px 16px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; align-items: baseline; }
+.banner.kill { background: var(--ink); color: var(--paper); }
+.banner.fail { background: var(--lava-tint); border: 1px solid var(--lava); }
+.banner .big { font: 700 1.7rem/1.1 var(--hand); }
+.mono { font-family: var(--mono); font-size: .82rem; font-variant-numeric: tabular-nums; }
+.bar { height: 12px; border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; background: var(--paper); }
+.bar i { display: block; height: 100%; background: var(--lava); }
+.bosshp { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 10px; align-items: center; margin: 14px 0 4px; }
+.raidstrip { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; margin: 10px 0 4px; }
+@media (max-width: 560px) { .raidstrip { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.pc { border: 1px solid var(--rule); border-radius: 6px; padding: 5px 7px; font-size: .8rem; }
+.pc.dead { border-style: dashed; color: var(--muted); }
+.pc .bar { height: 6px; margin-top: 4px; }
+.pc .bar i { background: var(--good); }
+.pc.dead b::after { content: "  DEAD"; font: 600 .7rem/1 var(--mono); color: var(--bad); }
+ol.log { list-style: none; margin: 8px 0 0; padding: 0; max-height: 420px; overflow-y: auto; border-top: 1px solid var(--rule); }
+ol.log li { display: grid; grid-template-columns: 3.2em minmax(0, 1fr); gap: 8px; padding: 6px 2px; border-bottom: 1px solid var(--rule); font-size: .92rem; }
+ol.log .r { font: 600 .78rem/1.9 var(--mono); color: var(--muted); }
+ol.log li.death { color: var(--bad); font-weight: 600; }
+ol.log li.save { color: var(--good); }
+ol.log li.throw { color: var(--lava); }
+ol.log li.aggro { color: var(--warn); font-weight: 600; }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+@media (max-width: 560px) { .stats { grid-template-columns: minmax(0, 1fr); } }
+.stat { border: 1px solid var(--rule); border-radius: 8px; padding: 10px 12px; }
+.stat .k { font: 600 .72rem/1 var(--body); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.stat .v { font: 700 1.8rem/1.2 var(--hand); font-variant-numeric: tabular-nums; }
+.stat .n { font-size: .8rem; color: var(--muted); }
+.cmp { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: .9rem; }
+.cmp td, .cmp th { padding: 6px 6px 6px 0; border-top: 1px solid var(--rule); text-align: left; }
+.cmp td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.cmp .bar { height: 8px; width: 100%; min-width: 60px; }
+.cmp .bar i { background: var(--frost); }
+.target { color: var(--muted); font-size: .85rem; margin-top: 8px; }
+.empty { color: var(--muted); padding: 18px 0; }
+.note { color: var(--muted); font-size: .85rem; margin-top: 24px; max-width: 80ch; }
+.note b { color: var(--ink); }
+.status { font-size: .85rem; color: var(--muted); min-height: 1.4em; }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Ragnaroast Pull Simulator</h1>
+      <p class="sub">Build a 10-character raid, make your choices and pull. The same Lua combat engine the addon will run decides every fight, so a seed always gives the same result.</p>
+    </div>
+    <span class="tag" id="engineTag">Engine loading</span>
+  </header>
+
+  <div class="grid">
+    <section>
+      <div class="panel">
+        <h2>Your raid</h2>
+        <div class="row" style="margin-bottom:10px">
+          <label for="preset">Start from</label>
+          <select id="preset">
+            <option value="balanced">Balanced: 2 tanks, 2 healers, 3 melee, 3 ranged</option>
+            <option value="melee">Melee heavy: 5 melee</option>
+            <option value="ranged">Ranged only: no melee for the lava</option>
+            <option value="threeheals">Three healers</option>
+          </select>
+        </div>
+        <div class="tablebox">
+          <table class="roster" id="roster">
+            <thead><tr><th>Name</th><th>Class</th><th>Spec</th><th>Zone</th><th title="Fire Resistance potion: saves from one lava throw (15 gold)">Fire Res</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Prep</h2>
+        <div class="row">
+          <label for="mode">Mode</label>
+          <select id="mode">
+            <option value="normal">Normal</option>
+            <option value="heroic">Heroic</option>
+            <option value="mythic">Mythic</option>
+          </select>
+          <label for="gl">Gear level</label>
+          <input type="number" id="gl" min="50" max="90" value="60">
+          <label for="seed">Seed</label>
+          <input type="number" id="seed" value="12345">
+          <button type="button" id="reroll" style="padding:6px 10px;font-size:.85rem">New seed</button>
+        </div>
+        <h3>Tactic card</h3>
+        <div class="cards" role="radiogroup" aria-label="Tactic card">
+          <label class="card"><input type="radio" name="tactic" value="spread" id="t-spread" checked><b>Spread</b><span>Splash hits one character; healing -10%</span></label>
+          <label class="card"><input type="radio" name="tactic" value="stack" id="t-stack"><b>Stack</b><span>Healing +15%; splash hits the zone</span></label>
+          <label class="card"><input type="radio" name="tactic" value="burn" id="t-burn"><b>Burn</b><span>Damage and threat +15%; heals cost 20% more</span></label>
+          <label class="card"><input type="radio" name="tactic" value="playsafe" id="t-playsafe"><b>Play Safe</b><span>Damage -10%; everyone takes 10% less</span></label>
+        </div>
+        <h3>Cauldrons</h3>
+        <div class="chips">
+          <label class="chip"><input type="checkbox" id="c-food" checked> Food <small>+5% health</small></label>
+          <label class="chip"><input type="checkbox" id="c-elixirs"> Elixirs <small>+5% power</small></label>
+          <label class="chip"><input type="checkbox" id="c-flasks"> Flasks <small>+10% health and power</small></label>
+        </div>
+        <h3>World buffs</h3>
+        <div class="chips">
+          <label class="chip"><input type="checkbox" id="b-dragonslayer"> Dragonslayer's Roar <small>+10% power</small></label>
+          <label class="chip"><input type="checkbox" id="b-songbloom"> Songbloom <small>+10% crit</small></label>
+          <label class="chip"><input type="checkbox" id="b-warchief"> Warchief's Rival <small>+15% health</small></label>
+        </div>
+        <div class="actions">
+          <button type="button" class="primary" id="pull" disabled>Pull</button>
+          <button type="button" id="sim" disabled>Simulate 1,000 pulls</button>
+          <button type="button" id="cmp" disabled>Compare tactic cards</button>
+        </div>
+        <div class="status" id="status" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="panel" id="fight">
+        <h2>The pull</h2>
+        <div id="fightBody"><p class="empty">Press Pull to run the fight. The report shows here: the result, Ragnaroast's health, your raid and what happened each round.</p></div>
+      </div>
+      <div class="panel" id="simPanel">
+        <h2>1,000 pulls</h2>
+        <div id="simBody"><p class="empty">Simulate 1,000 pulls runs this exact raid against 1,000 different seeds. Compare tactic cards runs 250 pulls per card.</p></div>
+        <p class="target">Tuning targets with a sensible raid: about 70% kills on Normal, 40-60% on Heroic with the right card, 15-30% on Mythic.</p>
+      </div>
+    </section>
+  </div>
+
+  <p class="note"><b>Prototype, engine version <span id="ev">1</span>.</b> Traits, morale, loot and the other bosses are not in yet. Values for food, elixirs, flasks, crit and Ragnaroast's damage are Tuning's first guesses, set in the engine's balance data. Each fight's checksum is identical in this browser and in Lua 5.1, the version WoW runs.</p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/fengari-web@0.1.4/dist/fengari-web.js"></script>
+<script>
+const LUA_SOURCES = /*__LUA__*/[];
+const SPECS = {
+  warrior: [["arms","Arms","damage"],["fury","Fury","damage"],["protection","Protection","tank"]],
+  paladin: [["holy","Holy","healer"],["protection","Protection","tank"],["retribution","Retribution","damage"]],
+  hunter: [["beastmastery","Beast Mastery","damage"],["marksmanship","Marksmanship","damage"],["survival","Survival","damage"]],
+  rogue: [["assassination","Assassination","damage"],["combat","Combat","damage"],["subtlety","Subtlety","damage"]],
+  priest: [["holy","Holy","healer"],["discipline","Discipline","healer"],["shadow","Shadow","damage"]],
+  shaman: [["elemental","Elemental","damage"],["enhancement","Enhancement","damage"],["restoration","Restoration","healer"]],
+  mage: [["arcane","Arcane","damage"],["fire","Fire","damage"],["frost","Frost","damage"]],
+  warlock: [["affliction","Affliction","damage"],["demonology","Demonology","damage"],["destruction","Destruction","damage"]],
+  druid: [["balance","Balance","damage"],["feral","Feral (bear)","tank"],["feralcat","Feral (cat)","damage"],["restoration","Restoration","healer"]],
+};
+const CLASS_NAMES = { warrior:"Warrior", paladin:"Paladin", hunter:"Hunter", rogue:"Rogue", priest:"Priest", shaman:"Shaman", mage:"Mage", warlock:"Warlock", druid:"Druid" };
+const ZONES = [["front","Front"],["melee","Melee"],["ranged","Ranged"],["back","Back"]];
+const PRESETS = {
+  balanced: [["Brannoc","warrior","protection","front",true],["Mira","paladin","protection","front",false],["Kess","rogue","combat","melee",true],
+    ["Tor","warrior","fury","melee",true],["Ash","shaman","enhancement","melee",false],["Lumi","mage","frost","ranged",false],
+    ["Orrin","hunter","marksmanship","ranged",false],["Mortis","warlock","affliction","ranged",false],["Sela","priest","holy","back",false],["Bram","druid","restoration","back",false]],
+  melee: [["Brannoc","warrior","protection","front",true],["Mira","paladin","protection","front",false],["Kess","rogue","combat","melee",true],
+    ["Tor","warrior","fury","melee",true],["Ash","shaman","enhancement","melee",true],["Fen","rogue","subtlety","melee",true],["Vey","druid","feralcat","melee",true],
+    ["Lumi","mage","frost","ranged",false],["Sela","priest","holy","back",false],["Bram","druid","restoration","back",false]],
+  ranged: [["Brannoc","warrior","protection","front",true],["Mira","paladin","protection","front",true],["Lumi","mage","frost","ranged",false],
+    ["Rook","mage","fire","ranged",false],["Orrin","hunter","marksmanship","ranged",false],["Dax","hunter","beastmastery","ranged",false],
+    ["Mortis","warlock","affliction","ranged",false],["Wynn","priest","shadow","ranged",false],["Sela","priest","holy","back",false],["Bram","druid","restoration","back",false]],
+  threeheals: [["Brannoc","warrior","protection","front",true],["Mira","paladin","protection","front",false],["Kess","rogue","combat","melee",true],
+    ["Tor","warrior","fury","melee",true],["Lumi","mage","frost","ranged",false],["Orrin","hunter","marksmanship","ranged",false],
+    ["Mortis","warlock","affliction","ranged",false],["Sela","priest","holy","back",false],["Bram","druid","restoration","back",false],["Ilo","paladin","holy","back",false]],
+};
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const GL_FOR = { normal: 60, heroic: 65, mythic: 74 };
+
+function opt(list, sel) { return list.map(([v, l]) => `<option value="${v}"${v === sel ? " selected" : ""}>${esc(l)}</option>`).join(""); }
+function rowHtml(i, [name, cls, spec, zone, fr]) {
+  return `<tr>
+    <td><input type="text" id="n${i}" value="${esc(name)}" aria-label="Name ${i + 1}"></td>
+    <td><select id="c${i}" aria-label="Class ${i + 1}">${opt(Object.entries(CLASS_NAMES), cls)}</select></td>
+    <td><select id="s${i}" aria-label="Spec ${i + 1}">${opt(SPECS[cls].map(s => [s[0], s[1]]), spec)}</select></td>
+    <td><select id="z${i}" aria-label="Zone ${i + 1}">${opt(ZONES, zone)}</select></td>
+    <td><input type="checkbox" id="f${i}" aria-label="Fire Resistance potion ${i + 1}"${fr ? " checked" : ""}></td></tr>`;
+}
+function loadPreset(name) {
+  $("roster").tBodies[0].innerHTML = PRESETS[name].map((r, i) => rowHtml(i, r)).join("");
+  for (let i = 0; i < 10; i++) {
+    $("c" + i).addEventListener("change", e => {
+      const cls = e.target.value; const s = $("s" + i);
+      s.innerHTML = opt(SPECS[cls].map(x => [x[0], x[1]]), SPECS[cls][0][0]);
+      setZone(i);
+    });
+    $("s" + i).addEventListener("change", () => setZone(i));
+  }
+}
+function setZone(i) {
+  const cls = $("c" + i).value, spec = $("s" + i).value;
+  const role = SPECS[cls].find(s => s[0] === spec)[2];
+  const z = $("z" + i);
+  if (role === "tank") z.value = "front"; else if (role === "healer") z.value = "back";
+  else if (z.value === "front" || z.value === "back") z.value = (["warrior","rogue","paladin"].includes(cls) || spec === "enhancement" || spec === "feralcat") ? "melee" : "ranged";
+}
+
+function readInput() {
+  const raid = [];
+  for (let i = 0; i < 10; i++) raid.push({ name: $("n" + i).value.trim() || ("Raider " + (i + 1)), class: $("c" + i).value, spec: $("s" + i).value, zone: $("z" + i).value, fireres: $("f" + i).checked });
+  const tactic = document.querySelector('input[name="tactic"]:checked').value;
+  const gl = Math.max(50, Math.min(90, Math.round(Number($("gl").value) || 60)));
+  const seed = Math.min(2147483646, Math.max(1, Math.round(Math.abs(Number($("seed").value))) || 1));
+  return { boss: "ragnaroast", mode: $("mode").value, seed, tactic, gl,
+    consumables: { food: $("c-food").checked, elixirs: $("c-elixirs").checked, flasks: $("c-flasks").checked },
+    buffs: { dragonslayer: $("b-dragonslayer").checked, songbloom: $("b-songbloom").checked, warchief: $("b-warchief").checked }, raid };
+}
+function toLua(v) {
+  if (Array.isArray(v)) return "{" + v.map(toLua).join(",") + "}";
+  if (v && typeof v === "object") return "{" + Object.entries(v).map(([k, x]) => `[${JSON.stringify(k)}]=${toLua(x)}`).join(",") + "}";
+  if (typeof v === "string") return JSON.stringify(v).replace(/\\u[0-9a-fA-F]{4}/g, "?");
+  if (typeof v === "boolean") return v ? "true" : "false";
+  return String(Math.round(v));
+}
+function lua(code) { return fengari.load(code)(); }
+
+function renderFight(r, inp) {
+  const kill = r.result === "kill";
+  const head = kill ? `KILL in round ${r.rounds}` : (r.result === "wipe" ? `WIPE in round ${r.rounds}` : "ENRAGE in round 21");
+  const why = kill ? `${r.survivors} of 10 standing` : (r.result === "wipe" ? "Every tank and healer died" : "The raid ran out of time");
+  const pct = Math.round(100 * r.bossHp / r.bossMax);
+  const cls = { 31: "death", 30: "save", 34: "save", 32: "save", 23: "throw", 28: "aggro", 22: "save" };
+  $("fightBody").innerHTML = `
+    <div class="banner ${kill ? "kill" : "fail"}"><span class="big">${head}</span><span>${why}</span></div>
+    <div class="bosshp"><b>Ragnaroast</b><div class="bar" role="img" aria-label="Boss health ${pct}%"><i style="width:${pct}%"></i></div><span class="mono">${r.bossHp.toLocaleString()} / ${r.bossMax.toLocaleString()}</span></div>
+    <div class="raidstrip">${r.raid.map(p => `<div class="pc${p.alive ? "" : " dead"}"><b>${esc(p.name)}</b><div class="bar"><i style="width:${Math.round(100 * p.hp / p.maxhp)}%"></i></div></div>`).join("")}</div>
+    <p class="mono" style="color:var(--muted);margin:8px 0 0">Seed ${inp.seed} · checksum ${r.checksum} · engine v${r.engine}</p>
+    <ol class="log">${r.events.map(e => `<li class="${cls[e.c] || ""}"><span class="r">${e.r ? "R" + e.r : "Pull"}</span><span>${esc(e.t)}</span></li>`).join("")}</ol>`;
+}
+
+function busy(on, msg) { ["pull", "sim", "cmp"].forEach(id => $(id).disabled = on); $("status").textContent = msg || ""; }
+
+async function batch(inp, total, onProgress) {
+  const chunk = 50; const sum = { n: 0, kills: 0, wipes: 0, enrages: 0, killRounds: 0, deaths: 0, survivors: 0, throw: 0, melee: 0, splash: 0, adds: 0 };
+  const lit = toLua(inp);
+  for (let from = 1; from <= total; from += chunk) {
+    const r = JSON.parse(lua(`return FPR_API.Batch(${lit}, ${Math.min(chunk, total - from + 1)}, ${from})`));
+    for (const k in sum) sum[k] += r[k];
+    onProgress && onProgress(sum.n, total);
+    await new Promise(res => setTimeout(res, 0));
+  }
+  return sum;
+}
+function pctTxt(a, b) { return b ? (100 * a / b).toFixed(1) + "%" : "0%"; }
+
+function wire() {
+  loadPreset("balanced");
+  $("preset").addEventListener("change", e => loadPreset(e.target.value));
+  $("mode").addEventListener("change", e => { $("gl").value = GL_FOR[e.target.value]; });
+  $("reroll").addEventListener("click", () => { $("seed").value = 1 + Math.floor(Math.random() * 2147483000); });
+  $("pull").addEventListener("click", () => {
+    const inp = readInput();
+    try { renderFight(JSON.parse(lua(`return FPR_API.Run(${toLua(inp)})`)), inp); $("status").textContent = ""; }
+    catch (e) { $("status").textContent = "The engine stopped with an error: " + e.message; }
+  });
+  $("sim").addEventListener("click", async () => {
+    const inp = readInput(); busy(true, "Simulating...");
+    const s = await batch(inp, 1000, (n, t) => { $("status").textContent = `Simulated ${n} of ${t} pulls`; });
+    const deathsPer = (s.deaths / s.n).toFixed(1);
+    $("simBody").innerHTML = `<div class="stats">
+      <div class="stat"><div class="k">Kill rate</div><div class="v">${pctTxt(s.kills, s.n)}</div><div class="n">${s.kills} kills, ${s.enrages} enrages, ${s.wipes} wipes</div></div>
+      <div class="stat"><div class="k">Average kill round</div><div class="v">${s.kills ? (s.killRounds / s.kills).toFixed(1) : "none"}</div><div class="n">Enrage at round 21</div></div>
+      <div class="stat"><div class="k">Deaths per pull</div><div class="v">${deathsPer}</div><div class="n">Lava ${(s.throw / s.n).toFixed(1)} · melee ${(s.melee / s.n).toFixed(1)} · splash ${(s.splash / s.n).toFixed(1)} · adds ${(s.adds / s.n).toFixed(1)}</div></div></div>`;
+    busy(false, "");
+  });
+  $("cmp").addEventListener("click", async () => {
+    const base = readInput(); busy(true, "Comparing cards...");
+    const names = { spread: "Spread", stack: "Stack", burn: "Burn", playsafe: "Play Safe" };
+    const rows = [];
+    for (const t of Object.keys(names)) {
+      const s = await batch({ ...base, tactic: t }, 250, (n) => { $("status").textContent = `${names[t]}: ${n} of 250`; });
+      rows.push([t, s]);
+    }
+    const best = Math.max(...rows.map(([, s]) => s.kills));
+    $("simBody").innerHTML = `<table class="cmp"><thead><tr><th>Card</th><th>Kill rate</th><th style="width:45%"></th><th>Deaths</th></tr></thead><tbody>${rows.map(([t, s]) =>
+      `<tr><td>${s.kills === best ? "<b>" + names[t] + "</b>" : names[t]}</td><td class="num">${pctTxt(s.kills, s.n)}</td><td><div class="bar"><i style="width:${100 * s.kills / s.n}%"></i></div></td><td class="num">${(s.deaths / s.n).toFixed(1)}</td></tr>`).join("")}</tbody></table>`;
+    busy(false, "");
+  });
+}
+
+function boot() {
+  wire();
+  try {
+    for (const src of LUA_SOURCES) fengari.load(src)();
+    const v = lua("return FPR_ENGINE.ENGINE_VERSION");
+    $("engineTag").textContent = "Lua engine v" + v + " ready"; $("ev").textContent = v;
+    busy(false, "");
+    $("pull").click();
+  } catch (e) {
+    $("engineTag").textContent = "Engine failed to load";
+    $("status").textContent = "The Lua engine could not start: " + e.message;
+  }
+}
+if (window.fengari) boot(); else window.addEventListener("load", () => window.fengari ? boot() : ($("status").textContent = "The Lua runtime could not be loaded. Check your connection and reload."));
+</script>
