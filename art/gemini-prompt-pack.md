@@ -240,6 +240,135 @@ Attach: the character study.
 The look is World of Warcraft Classic (2004): a chunky, hand-painted high-fantasy style with warm saturated colours, exaggerated proportions (huge shoulder pads, big hands, big boots, oversized weapons), and interface frames made of gold-trimmed parchment and dark carved stone with rivets and knotwork ornaments. Draw it as a lovingly clumsy parody of that style, as if a raid leader sketched it in a paper notebook with a dip pen and watercolour: wobbly confident ink outlines, light crosshatching. Original design only: no Blizzard logos, no copied World of Warcraft art. Match the drawing style of the attached reference image. A wide side-view 2D game background layer, aspect ratio 2:1, no characters. A dark cave lair with piles of gold coins and dragon eggs, soft and low in contrast. Fill the whole image.
 ```
 
+
+## R. Races (Director, 2026-11-18)
+
+Classes now come with WoW Classic's real race rules (only night elves and minotaurs are druids, only orcs, trolls and minotaurs are shamans, and so on). These 15 prompts add the race and class combos we don't have yet, with a mix of men and women. Run them like the E prompts.
+
+**Attach to every R prompt:** the character study and your E0 template result.
+
+**Retired:** E3 (human hunter), E6 (human shaman) and E9 (human druid). Classic doesn't allow those combos. E1, E2, E4, E5, E7 and E8 stay as the human versions.
+
+## R1. Orc warrior
+
+Attach: the character study and your E0 template result.
+
+```
+The look is World of Warcraft Classic (2004): a chunky, hand-painted high-fantasy style with warm saturated colours, exaggerated proportions (huge shoulder pads, big hands, big boots, oversized weapons), and interface frames made of gold-trimmed parchment and dark carved stone with rivets and knotwork ornaments. Draw it as a lovingly clumsy parody of that style, as if a raid leader sketched it in a paper notebook with a dip pen and watercolour. Wobbly confident ink outlines, light crosshatching on shadow sides. Original designs only: no Blizzard logos, no real WoW icons, no text. Match the drawing style of the first attached reference image. Exactly ONE full-body orc warrior character, a man, slightly taller and much bulkier than the template, green skin and small tusks: dented plate armour with spikes, a tattered red tabard, war paint. Side view facing right, standing idle in the same pose as the attached mannequin template, hands empty because weapons are added separately, feet on an invisible flat line at the bottom of the image. Original character, not a known WoW character. The background must be one flat solid magenta (#FF00FF) colour edge to edge: no gradient, no glow, no floor shadow, nothing else in the image.
+```
+
+## R2. Dwarf paladin
+
+Attach: the character study and your E0 template result.
+
+```
+The look is World of Warcraft Classic (2004): a chunky, hand-painted high-fantasy style with warm saturated colours, exaggerated proportions (huge shoulder pads, big hands, big boots, oversized weapons), and interface frames made of gold-trimmed parchment and dark carved stone with rivets and knotwork ornaments. Draw it as a lovingly clumsy parody of that style, as if a raid leader sketched it in a paper notebook with a dip pen and watercolour. Wobbly confident ink outlines, light crosshatching on shadow sides. Original designs only: no Blizzard logos, no real WoW icons, no text. Match the drawing style of the first attached reference image. Exactly ONE full-body dwarf paladin character, a woman, short and very stocky, about three-quarters of the template's height, broad as a barrel: polished plate armour with a gold-trimmed blue tabard, braided red hair, a faint halo glow. Side view facing right, standing idle in the same pose as the attached mannequin template, hands empty because weapons are added separately, feet on an invisible flat line at the bottom of the image. Original character, not a known WoW character. The background must be one flat solid magenta (#FF00FF) colour edge to edge: no gradient, no glow, no floor shadow, nothing else in the image.
+```
+
+## R3. Dwarf hunter
+
+Attach: the character study and your E0 template result.
+
+```
+The look is World of Warcraft Classic (2004): a chunky, hand-painted high-fantasy style with warm saturated colours, exaggerated proportions (huge shoulder pads, big hands, big boots, oversized weapons), and interface frames made of gold-trimmed parchment and dark carved stone with rivets and knotwork ornaments. Draw it as a lovingly clumsy parody of that style, as if a raid leader sketched it in a paper notebook with a dip pen and watercolour. Wobbly confident ink outlines, light crosshatching on shadow sides. Original designs only: no Blizzard logos, no real WoW icons, no text. Match the drawing style of the first attached reference image. Exactly ONE full-body dwarf hunter character, a man, short and very stocky, about three-quarters of the template's height, broad as a barrel: mail and leather armour, a big braided beard, a quiver on the back, plus a sturdy bear cub drawn separately beside him. Side view facing right, standing idle in the same pose as the attached mannequin template, hands empty because weapons are added separately, feet on an invisible flat line at the bottom of the image. Original character, not a known WoW character. The background must be one flat solid magenta (#FF00FF) colour edge to edge: no gradient, no glow, no floor shadow, nothing else in the image.
+```
+
+## R4. Night elf hunter
+
+Attach: the character study and your E0 template result.
+
+```
+The look is World of Warcraft Classic (2004): a chunky, hand-painted high-fantasy style with warm saturated colours, exaggerated proportions (huge shoulder pads, big hands, big boots, oversized weapons), and interface frames made of gold-trimmed parchment and dark carved stone with rivets and knotwork ornaments. Draw it as a lovingly clumsy parody of that style, as if a raid leader sketched it in a paper notebook with a dip pen and watercolour. Wobbly confident ink outlines, light crosshatching on shadow sides. Original designs only: no Blizzard logos, no real WoW icons, no text. Match the drawing style of the first attached reference image. Exactly ONE full-body night elf hunter character, a woman, tall and lean, about one and a quarter times the template's height, purple-blue skin and long pointed ears: green and brown leather and mail, a quiver on the back, plus a sleek nightsaber cat drawn separately beside her. Side view facing right, standing idle in the same pose as the attached mannequin template, hands empty because weapons are added separately, feet on an invisible flat line at the bottom of the image. Original character, not a known WoW character. The background must be one flat solid magenta (#FF00FF) colour edge to edge: no gradient, no glow, no floor shadow, nothing else in the image.
+```
+
+## R5. Undead rogue
+
+Attach: the character study and your E0 template result.
+
+```
+The look is World of Warcraft Classic (2004): a chunky, hand-painted high-fantasy style with warm saturated colours, exaggerated proportions (huge shoulder pads, big hands, big boots, oversized weapons), and interface frames made of gold-trimmed parchment and dark carved stone with rivets and knotwork ornaments. Draw it as a lovingly clumsy parody of that style, as if a raid leader sketched it in a paper notebook with a dip pen and watercolour. Wobbly confident ink outlines, light crosshatching on shadow sides. Original designs only: no Blizzard logos, no real WoW icons, no text. Match the drawing style of the first attached reference image. Exactly ONE full-body undead rogue character, a man, the same height as the template but thin and bony, grey-green skin, partly exposed bones and a dry sarcastic grin: dark leather armour and a tattered hood, sneaky grin, missing a few teeth. Side view facing right, standing idle in the same pose as the attached mannequin template, hands empty because weapons are added separately, feet on an invisible flat line at the bottom of the image. Original character, not a known WoW character. The background must be one flat solid magenta (#FF00FF) colour edge to edge: no gradient, no glow, no floor shadow, nothing else in the image.
+```
+
+## R6. Gnome rogue
+
+Attach: the character study and your E0 template result.
+
+```
+The look is World of Warcraft Classic (2004): a chunky, hand-painted high-fantasy style with warm saturated colours, exaggerated proportions (huge shoulder pads, big hands, big boots, oversized weapons), and interface frames made of gold-trimmed parchment and dark carved stone with rivets and knotwork ornaments. Draw it as a lovingly clumsy parody of that style, as if a raid leader sketched it in a paper notebook with a dip pen and watercolour. Wobbly confident ink outlines, light crosshatching on shadow sides. Original designs only: no Blizzard logos, no real WoW icons, no text. Match the drawing style of the first attached reference image. Exactly ONE full-body gnome rogue character, a woman, tiny, about half of the template's height, with a big head and big ears: dark leather armour, goggles pushed up on her forehead, overconfident grin. Side view facing right, standing idle in the same pose as the attached mannequin template, hands empty because weapons are added separately, feet on an invisible flat line at the bottom of the image. Original character, not a known WoW character. The background must be one flat solid magenta (#FF00FF) colour edge to edge: no gradient, no glow, no floor shadow, nothing else in the image.
+```
+
+## R7. Undead priest
+
+Attach: the character study and your E0 template result.
+
+```
+The look is World of Warcraft Classic (2004): a chunky, hand-painted high-fantasy style with warm saturated colours, exaggerated proportions (huge shoulder pads, big hands, big boots, oversized weapons), and interface frames made of gold-trimmed parchment and dark carved stone with rivets and knotwork ornaments. Draw it as a lovingly clumsy parody of that style, as if a raid leader sketched it in a paper notebook with a dip pen and watercolour. Wobbly confident ink outlines, light crosshatching on shadow sides. Original designs only: no Blizzard logos, no real WoW icons, no text. Match the drawing style of the first attached reference image. Exactly ONE full-body undead priest character, a woman, the same height as the template but thin and bony, grey-green skin, partly exposed bones and a dry sarcastic grin: dark purple and black robes with silver trim, calm and slightly smug. Side view facing right, standing idle in the same pose as the attached mannequin template, hands empty because weapons are added separately, feet on an invisible flat line at the bottom of the image. Original character, not a known WoW character. The background must be one flat solid magenta (#FF00FF) colour edge to edge: no gradient, no glow, no floor shadow, nothing else in the image.
+```
+
+## R8. Orc shaman
+
+Attach: the character study and your E0 template result.
+
+```
+The look is World of Warcraft Classic (2004): a chunky, hand-painted high-fantasy style with warm saturated colours, exaggerated proportions (huge shoulder pads, big hands, big boots, oversized weapons), and interface frames made of gold-trimmed parchment and dark carved stone with rivets and knotwork ornaments. Draw it as a lovingly clumsy parody of that style, as if a raid leader sketched it in a paper notebook with a dip pen and watercolour. Wobbly confident ink outlines, light crosshatching on shadow sides. Original designs only: no Blizzard logos, no real WoW icons, no text. Match the drawing style of the first attached reference image. Exactly ONE full-body orc shaman character, a man, slightly taller and much bulkier than the template, green skin and small tusks: mail armour and furs, bone charms and a wolf-skull shoulder piece. Side view facing right, standing idle in the same pose as the attached mannequin template, hands empty because weapons are added separately, feet on an invisible flat line at the bottom of the image. Original character, not a known WoW character. The background must be one flat solid magenta (#FF00FF) colour edge to edge: no gradient, no glow, no floor shadow, nothing else in the image.
+```
+
+## R9. Minotaur shaman
+
+Attach: the character study and your E0 template result.
+
+```
+The look is World of Warcraft Classic (2004): a chunky, hand-painted high-fantasy style with warm saturated colours, exaggerated proportions (huge shoulder pads, big hands, big boots, oversized weapons), and interface frames made of gold-trimmed parchment and dark carved stone with rivets and knotwork ornaments. Draw it as a lovingly clumsy parody of that style, as if a raid leader sketched it in a paper notebook with a dip pen and watercolour. Wobbly confident ink outlines, light crosshatching on shadow sides. Original designs only: no Blizzard logos, no real WoW icons, no text. Match the drawing style of the first attached reference image. Exactly ONE full-body minotaur shaman character, a woman, huge, about one and a half times the template's height, a gentle bull-headed giant with horns, hooves and a nose ring: leather and furs, painted totem patterns on the arms, feathers braided into her mane. Side view facing right, standing idle in the same pose as the attached mannequin template, hands empty because weapons are added separately, feet on an invisible flat line at the bottom of the image. Original character, not a known WoW character. The background must be one flat solid magenta (#FF00FF) colour edge to edge: no gradient, no glow, no floor shadow, nothing else in the image.
+```
+
+## R10. Gnome mage
+
+Attach: the character study and your E0 template result.
+
+```
+The look is World of Warcraft Classic (2004): a chunky, hand-painted high-fantasy style with warm saturated colours, exaggerated proportions (huge shoulder pads, big hands, big boots, oversized weapons), and interface frames made of gold-trimmed parchment and dark carved stone with rivets and knotwork ornaments. Draw it as a lovingly clumsy parody of that style, as if a raid leader sketched it in a paper notebook with a dip pen and watercolour. Wobbly confident ink outlines, light crosshatching on shadow sides. Original designs only: no Blizzard logos, no real WoW icons, no text. Match the drawing style of the first attached reference image. Exactly ONE full-body gnome mage character, a man, tiny, about half of the template's height, with a big head and big ears: a deep blue robe far too long for him, a pointy hat, wild white hair. Side view facing right, standing idle in the same pose as the attached mannequin template, hands empty because weapons are added separately, feet on an invisible flat line at the bottom of the image. Original character, not a known WoW character. The background must be one flat solid magenta (#FF00FF) colour edge to edge: no gradient, no glow, no floor shadow, nothing else in the image.
+```
+
+## R11. Troll mage
+
+Attach: the character study and your E0 template result.
+
+```
+The look is World of Warcraft Classic (2004): a chunky, hand-painted high-fantasy style with warm saturated colours, exaggerated proportions (huge shoulder pads, big hands, big boots, oversized weapons), and interface frames made of gold-trimmed parchment and dark carved stone with rivets and knotwork ornaments. Draw it as a lovingly clumsy parody of that style, as if a raid leader sketched it in a paper notebook with a dip pen and watercolour. Wobbly confident ink outlines, light crosshatching on shadow sides. Original designs only: no Blizzard logos, no real WoW icons, no text. Match the drawing style of the first attached reference image. Exactly ONE full-body troll mage character, a woman, tall and lanky with a forward hunch, about one and a quarter times the template's height, blue skin, long tusks and a tall mohawk: a deep blue and gold robe, glowing blue eyes, bone jewellery. Side view facing right, standing idle in the same pose as the attached mannequin template, hands empty because weapons are added separately, feet on an invisible flat line at the bottom of the image. Original character, not a known WoW character. The background must be one flat solid magenta (#FF00FF) colour edge to edge: no gradient, no glow, no floor shadow, nothing else in the image.
+```
+
+## R12. Orc warlock
+
+Attach: the character study and your E0 template result.
+
+```
+The look is World of Warcraft Classic (2004): a chunky, hand-painted high-fantasy style with warm saturated colours, exaggerated proportions (huge shoulder pads, big hands, big boots, oversized weapons), and interface frames made of gold-trimmed parchment and dark carved stone with rivets and knotwork ornaments. Draw it as a lovingly clumsy parody of that style, as if a raid leader sketched it in a paper notebook with a dip pen and watercolour. Wobbly confident ink outlines, light crosshatching on shadow sides. Original designs only: no Blizzard logos, no real WoW icons, no text. Match the drawing style of the first attached reference image. Exactly ONE full-body orc warlock character, a man, slightly taller and much bulkier than the template, green skin and small tusks: purple robes with spikes, a horned cowl, plus a small imp drawn separately beside him. Side view facing right, standing idle in the same pose as the attached mannequin template, hands empty because weapons are added separately, feet on an invisible flat line at the bottom of the image. Original character, not a known WoW character. The background must be one flat solid magenta (#FF00FF) colour edge to edge: no gradient, no glow, no floor shadow, nothing else in the image.
+```
+
+## R13. Gnome warlock
+
+Attach: the character study and your E0 template result.
+
+```
+The look is World of Warcraft Classic (2004): a chunky, hand-painted high-fantasy style with warm saturated colours, exaggerated proportions (huge shoulder pads, big hands, big boots, oversized weapons), and interface frames made of gold-trimmed parchment and dark carved stone with rivets and knotwork ornaments. Draw it as a lovingly clumsy parody of that style, as if a raid leader sketched it in a paper notebook with a dip pen and watercolour. Wobbly confident ink outlines, light crosshatching on shadow sides. Original designs only: no Blizzard logos, no real WoW icons, no text. Match the drawing style of the first attached reference image. Exactly ONE full-body gnome warlock character, a woman, tiny, about half of the template's height, with a big head and big ears: purple robes, a horned hood, smug grin, plus a small imp drawn separately beside her. Side view facing right, standing idle in the same pose as the attached mannequin template, hands empty because weapons are added separately, feet on an invisible flat line at the bottom of the image. Original character, not a known WoW character. The background must be one flat solid magenta (#FF00FF) colour edge to edge: no gradient, no glow, no floor shadow, nothing else in the image.
+```
+
+## R14. Night elf druid
+
+Attach: the character study and your E0 template result.
+
+```
+The look is World of Warcraft Classic (2004): a chunky, hand-painted high-fantasy style with warm saturated colours, exaggerated proportions (huge shoulder pads, big hands, big boots, oversized weapons), and interface frames made of gold-trimmed parchment and dark carved stone with rivets and knotwork ornaments. Draw it as a lovingly clumsy parody of that style, as if a raid leader sketched it in a paper notebook with a dip pen and watercolour. Wobbly confident ink outlines, light crosshatching on shadow sides. Original designs only: no Blizzard logos, no real WoW icons, no text. Match the drawing style of the first attached reference image. Exactly ONE full-body night elf druid character, a man, tall and lean, about one and a quarter times the template's height, purple-blue skin and long pointed ears: leather and leaves, antler headdress, long green hair. Side view facing right, standing idle in the same pose as the attached mannequin template, hands empty because weapons are added separately, feet on an invisible flat line at the bottom of the image. Original character, not a known WoW character. The background must be one flat solid magenta (#FF00FF) colour edge to edge: no gradient, no glow, no floor shadow, nothing else in the image.
+```
+
+## R15. Minotaur druid
+
+Attach: the character study and your E0 template result.
+
+```
+The look is World of Warcraft Classic (2004): a chunky, hand-painted high-fantasy style with warm saturated colours, exaggerated proportions (huge shoulder pads, big hands, big boots, oversized weapons), and interface frames made of gold-trimmed parchment and dark carved stone with rivets and knotwork ornaments. Draw it as a lovingly clumsy parody of that style, as if a raid leader sketched it in a paper notebook with a dip pen and watercolour. Wobbly confident ink outlines, light crosshatching on shadow sides. Original designs only: no Blizzard logos, no real WoW icons, no text. Match the drawing style of the first attached reference image. Exactly ONE full-body minotaur druid character, a man, huge, about one and a half times the template's height, a gentle bull-headed giant with horns, hooves and a nose ring: leather and leaves, an antler-and-bone headdress, a moon charm necklace. Side view facing right, standing idle in the same pose as the attached mannequin template, hands empty because weapons are added separately, feet on an invisible flat line at the bottom of the image. Original character, not a known WoW character. The background must be one flat solid magenta (#FF00FF) colour edge to edge: no gradient, no glow, no floor shadow, nothing else in the image.
+```
+
 ## What Art builds from these
 
 | Pieces | Become |
