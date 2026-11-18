@@ -9,12 +9,12 @@ Last updated: 2026-11-18. Read this first at the start of every session.
 | Deliverable | Status |
 | --- | --- |
 | Design document | Done, signed off |
-| UX wireframes and art direction | Mid-fi wireframes done (12 screens). Style chosen. Asset kit generated and cut out. First hi-fi stage test done. Art direction write-up and hi-fi hub to do |
+| UX wireframes and art direction | Done: mid-fi wireframes (12 screens), art direction doc https://claude.ai/artifact/QmgH2PCEzUQ7htB5fSzQpZ, hi-fi hub in light and dark (`ux/hifi/`), kit cut into `art/kit/ui/` |
 | Technical design | Done, signed off |
 | Browser prototype | Engine v6 published: https://claude.ai/artifact/YHGsBUgA2y1DGDVTaisGpy (all five Molten Bore bosses, preparation, raid experience, raid moments, 10-week season). QA suite passes; boss tuning done |
 | Playtest build | Published: https://claude.ai/artifact/NfN3hjmbfZ7Hvhf7pncJxM (`playtest/`, built by `playtest/build.py`). Script: `qa/playtest-1.md`. Rules QA `tools/playtest_qa.js`, bot `tools/playtest_bot.js` |
-| Milestone plan | Not started |
-| Gate review (separate agents) | After the above |
+| Milestone plan | Done: https://claude.ai/artifact/MiJAJ6iKh2Dkcn8aYSeBU9 |
+| Gate review (separate agents) | Running |
 
 ## Where things live
 
