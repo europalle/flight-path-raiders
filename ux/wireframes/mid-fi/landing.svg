@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 240" width="480" height="240" role="img" aria-label="Landing popup">
+<title>Landing popup</title>
+<rect width="480" height="240" fill="#ffffff"/>
+<rect x="0.75" y="0.75" width="478.5" height="238.5" rx="10" fill="#ffffff" stroke="#222a33" stroke-width="1.5"/>
+<text x="24" y="42" font-family="Inter, Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="#222a33" text-anchor="start">You landed in Booty Bay</text>
+<text x="24" y="66" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="start">You&#x27;re mid-prep on Ragnaroast (Heroic). Nothing is lost either way.</text>
+<rect x="24" y="88" width="200" height="46" rx="5" fill="#222a33" stroke="#222a33" stroke-width="1.5"/>
+<text x="124.0" y="116.04" font-family="Inter, Arial, Helvetica, sans-serif" font-size="14" font-weight="600" fill="#ffffff" text-anchor="middle">Finish now</text>
+<rect x="236" y="88" width="220" height="46" rx="5" fill="#ffffff" stroke="#222a33" stroke-width="1.5"/>
+<text x="346.0" y="116.04" font-family="Inter, Arial, Helvetica, sans-serif" font-size="14" font-weight="600" fill="#222a33" text-anchor="middle">Pause until next flight</text>
+<text x="24" y="166" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="start">Pausing automatically in 10 s</text>
+<rect x="24" y="176" width="432" height="10" rx="2" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="24" y="176" width="259.2" height="10" rx="2" fill="#222a33" stroke="none" stroke-width="1"/>
+<text x="24" y="214" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#5d6773" text-anchor="start">Finished pulls are always saved. Ground play earns no Frequent Flyer bonus.</text>
+<circle cx="462" cy="110" r="11" fill="#2f6fd6"/>
+<text x="462" y="114.5" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+</svg>

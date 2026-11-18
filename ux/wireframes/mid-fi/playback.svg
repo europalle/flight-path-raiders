@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="960" height="540" role="img" aria-label="Combat playback">
+<title>Combat playback</title>
+<rect width="960" height="540" fill="#ffffff"/>
+<rect x="0.75" y="0.75" width="958.5" height="538.5" rx="8" fill="#ffffff" stroke="#222a33" stroke-width="1.5"/>
+<path d="M0.75 40 V8.75 a8 8 0 0 1 8 -8 H951.25 a8 8 0 0 1 8 8 V40 Z" fill="#eef1f4" stroke="#222a33" stroke-width="1.5"/>
+<text x="16" y="26" font-family="Inter, Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#222a33" text-anchor="start">Flight Path Raiders</text>
+<text x="178" y="26" font-family="Inter, Arial, Helvetica, sans-serif" font-size="15" font-weight="400" fill="#5d6773" text-anchor="start">/  Pull  ·  Ragnaroast (Heroic)</text>
+<rect x="828" y="9" width="24" height="22" rx="4" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="840" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">-</text>
+<rect x="858" y="9" width="24" height="22" rx="4" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="870" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">+</text>
+<rect x="888" y="9" width="24" height="22" rx="4" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="900" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">⚙</text>
+<rect x="918" y="9" width="24" height="22" rx="4" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="930" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">✕</text>
+<text x="818" y="26" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="500" fill="#5d6773" text-anchor="end">100%</text>
+<rect x="20" y="52" width="620" height="330" rx="8" fill="#e6e9ed" stroke="#222a33" stroke-width="1.5"/>
+<text x="34" y="74" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#5d6773" text-anchor="start">STAGE  ·  animated scene (Art)</text>
+<line x1="20" y1="320" x2="640" y2="320" stroke="#9aa3ad" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="300" y="314" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#5d6773" text-anchor="start">floor line</text>
+<rect x="452" y="96" width="168" height="216" rx="8" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="452" y1="96" x2="620" y2="312" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="620" y1="96" x2="452" y2="312" stroke="#9aa3ad" stroke-width="1"/>
+<text x="536" y="348" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="middle">Ragnaroast</text>
+<rect x="420" y="140" width="22" height="22" rx="11" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="431" y="156" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#222a33" text-anchor="middle">!</text>
+<text x="410" y="132" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="end">winding up</text>
+<rect x="150" y="220" width="34" height="44" rx="5" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="150" y="268" width="34" height="44" rx="5" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="230" y="200" width="34" height="44" rx="5" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="230" y="248" width="34" height="44" rx="5" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<text x="247" y="275" font-family="Inter, Arial, Helvetica, sans-serif" font-size="14" font-weight="700" fill="#222a33" text-anchor="middle">✕</text>
+<rect x="230" y="296" width="34" height="44" rx="5" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="260" y="150" width="34" height="44" rx="5" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="90" y="170" width="34" height="44" rx="5" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="90" y="250" width="34" height="44" rx="5" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="40" y="210" width="34" height="44" rx="5" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="40" y="290" width="34" height="44" rx="5" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<text x="34" y="372" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#5d6773" text-anchor="start">10 characters in zones: tanks front, healers back</text>
+<rect x="306" y="118" width="110" height="30" rx="5" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="361" y="138" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="middle">Tor: &quot;bye o/&quot;</text>
+<circle cx="636" cy="56" r="11" fill="#2f6fd6"/>
+<text x="636" y="60.5" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+<text x="656" y="78" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#5d6773" text-anchor="start">Round</text>
+<text x="656" y="112" font-family="Inter, Arial, Helvetica, sans-serif" font-size="36" font-weight="800" fill="#222a33" text-anchor="start">7</text>
+<text x="690" y="112" font-family="Inter, Arial, Helvetica, sans-serif" font-size="16" font-weight="500" fill="#5d6773" text-anchor="start">/ 20</text>
+<text x="920" y="78" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="500" fill="#5d6773" text-anchor="end">Score pace</text>
+<text x="920" y="100" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="end">+30 if kill by 14</text>
+<text x="656" y="138" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#222a33" text-anchor="start">Ragnaroast</text>
+<text x="940" y="138" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#222a33" text-anchor="end">58%</text>
+<rect x="656" y="146" width="284" height="16" rx="2" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="656" y="146" width="164.72" height="16" rx="2" fill="#222a33" stroke="none" stroke-width="1"/>
+<circle cx="944" cy="62" r="11" fill="#2f6fd6"/>
+<text x="944" y="66.5" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+<rect x="656" y="176" width="284" height="206" rx="8" fill="#eef1f4" stroke="#9aa3ad" stroke-width="1"/>
+<text x="670" y="198" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#222a33" text-anchor="start">What happened</text>
+<text x="670" y="224" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#5d6773" text-anchor="start">R4</text>
+<text x="700" y="224" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="500" fill="#222a33" text-anchor="start">Tor into the lava. No Fire Res potion.</text>
+<text x="670" y="254" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#5d6773" text-anchor="start">R5</text>
+<text x="700" y="254" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="500" fill="#222a33" text-anchor="start">Brannoc pulled the next pack.</text>
+<text x="670" y="284" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#5d6773" text-anchor="start"></text>
+<text x="700" y="284" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="500" fill="#222a33" text-anchor="start">Healers were still drinking.</text>
+<text x="670" y="314" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#5d6773" text-anchor="start">R6</text>
+<text x="700" y="314" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="500" fill="#222a33" text-anchor="start">Sela heals Mira for 120.</text>
+<text x="670" y="344" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#5d6773" text-anchor="start">R7</text>
+<text x="700" y="344" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="start">Spread holds: lava hits only Kess.</text>
+<circle cx="944" cy="180" r="11" fill="#2f6fd6"/>
+<text x="944" y="184.5" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+<rect x="20" y="394" width="86" height="48" rx="5" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<text x="28" y="411" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="start">Brannoc</text>
+<rect x="28" y="418" width="70" height="9" rx="2" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="28" y="418" width="63.0" height="9" rx="2" fill="#222a33" stroke="none" stroke-width="1"/>
+<rect x="112" y="394" width="86" height="48" rx="5" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<text x="120" y="411" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="start">Mira</text>
+<rect x="120" y="418" width="70" height="9" rx="2" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="120" y="418" width="49.0" height="9" rx="2" fill="#222a33" stroke="none" stroke-width="1"/>
+<rect x="204" y="394" width="86" height="48" rx="5" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<text x="212" y="411" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="start">Kess</text>
+<rect x="212" y="418" width="70" height="9" rx="2" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="212" y="418" width="28.0" height="9" rx="2" fill="#222a33" stroke="none" stroke-width="1"/>
+<rect x="296" y="394" width="86" height="48" rx="5" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<text x="304" y="411" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="start">Tor</text>
+<text x="374" y="411" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="800" fill="#222a33" text-anchor="end">DEAD</text>
+<rect x="304" y="418" width="70" height="9" rx="2" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="388" y="394" width="86" height="48" rx="5" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<text x="396" y="411" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="start">Ash</text>
+<rect x="396" y="418" width="70" height="9" rx="2" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="396" y="418" width="56.0" height="9" rx="2" fill="#222a33" stroke="none" stroke-width="1"/>
+<rect x="480" y="394" width="86" height="48" rx="5" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<text x="488" y="411" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="start">Vey</text>
+<rect x="488" y="418" width="70" height="9" rx="2" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="488" y="418" width="42.0" height="9" rx="2" fill="#222a33" stroke="none" stroke-width="1"/>
+<rect x="572" y="394" width="86" height="48" rx="5" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<text x="580" y="411" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="start">Lumi</text>
+<rect x="580" y="418" width="70" height="9" rx="2" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="580" y="418" width="63.0" height="9" rx="2" fill="#222a33" stroke="none" stroke-width="1"/>
+<rect x="664" y="394" width="86" height="48" rx="5" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<text x="672" y="411" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="start">Orrin</text>
+<rect x="672" y="418" width="70" height="9" rx="2" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="672" y="418" width="52.5" height="9" rx="2" fill="#222a33" stroke="none" stroke-width="1"/>
+<rect x="756" y="394" width="86" height="48" rx="5" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<text x="764" y="411" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="start">Sela</text>
+<rect x="764" y="418" width="70" height="9" rx="2" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="764" y="418" width="70" height="9" rx="2" fill="#222a33" stroke="none" stroke-width="1"/>
+<rect x="764" y="431" width="70" height="5" rx="2" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="764" y="431" width="38.5" height="5" rx="2" fill="#5d6773" stroke="none" stroke-width="1"/>
+<rect x="848" y="394" width="86" height="48" rx="5" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<text x="856" y="411" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="start">Bram</text>
+<rect x="856" y="418" width="70" height="9" rx="2" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="856" y="418" width="59.5" height="9" rx="2" fill="#222a33" stroke="none" stroke-width="1"/>
+<rect x="856" y="431" width="70" height="5" rx="2" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="856" y="431" width="43.4" height="5" rx="2" fill="#5d6773" stroke="none" stroke-width="1"/>
+<circle cx="20" cy="392" r="11" fill="#2f6fd6"/>
+<text x="20" y="396.5" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">4</text>
+<rect x="20" y="462" width="104" height="36" rx="5" fill="#ffffff" stroke="#222a33" stroke-width="1.5"/>
+<text x="72.0" y="484.68" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">❚❚ Pause</text>
+<rect x="134" y="462" width="104" height="36" rx="5" fill="#ffffff" stroke="#222a33" stroke-width="1.5"/>
+<text x="186.0" y="484.68" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">Speed ×2</text>
+<rect x="248" y="462" width="150" height="36" rx="5" fill="#222a33" stroke="#222a33" stroke-width="1.5"/>
+<text x="323.0" y="484.68" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">Skip to result</text>
+<rect x="408" y="462" width="140" height="36" rx="5" fill="#ffffff" stroke="#222a33" stroke-width="1.5"/>
+<text x="478.0" y="484.68" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">Summary only</text>
+<text x="20" y="524" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="start">Result is decided at Pull. Skipping loses nothing.</text>
+<text x="940" y="488" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="500" fill="#5d6773" text-anchor="end">Motion: Full  (change in ⚙)</text>
+<circle cx="554" cy="466" r="11" fill="#2f6fd6"/>
+<text x="554" y="470.5" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">5</text>
+</svg>

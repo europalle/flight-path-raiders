@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="960" height="540" role="img" aria-label="Settings">
+<title>Settings</title>
+<rect width="960" height="540" fill="#ffffff"/>
+<rect x="0.75" y="0.75" width="958.5" height="538.5" rx="8" fill="#ffffff" stroke="#222a33" stroke-width="1.5"/>
+<path d="M0.75 40 V8.75 a8 8 0 0 1 8 -8 H951.25 a8 8 0 0 1 8 8 V40 Z" fill="#eef1f4" stroke="#222a33" stroke-width="1.5"/>
+<text x="16" y="26" font-family="Inter, Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#222a33" text-anchor="start">Flight Path Raiders</text>
+<text x="178" y="26" font-family="Inter, Arial, Helvetica, sans-serif" font-size="15" font-weight="400" fill="#5d6773" text-anchor="start">/  Settings</text>
+<rect x="828" y="9" width="24" height="22" rx="4" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="840" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">-</text>
+<rect x="858" y="9" width="24" height="22" rx="4" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="870" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">+</text>
+<rect x="888" y="9" width="24" height="22" rx="4" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="900" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">⚙</text>
+<rect x="918" y="9" width="24" height="22" rx="4" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="930" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">✕</text>
+<text x="818" y="26" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="500" fill="#5d6773" text-anchor="end">100%</text>
+<rect x="20" y="52" width="180" height="468" rx="8" fill="#eef1f4" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="30" y="64" width="160" height="36" rx="5" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<text x="44" y="87" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#ffffff" text-anchor="start">Display</text>
+<rect x="30" y="108" width="160" height="36" rx="5" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<text x="44" y="131" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="500" fill="#222a33" text-anchor="start">Playback</text>
+<rect x="30" y="152" width="160" height="36" rx="5" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<text x="44" y="175" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="500" fill="#222a33" text-anchor="start">Accessibility</text>
+<rect x="30" y="196" width="160" height="36" rx="5" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<text x="44" y="219" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="500" fill="#222a33" text-anchor="start">Notifications</text>
+<rect x="30" y="240" width="160" height="36" rx="5" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<text x="44" y="263" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="500" fill="#222a33" text-anchor="start">Data</text>
+<circle cx="200" cy="56" r="11" fill="#2f6fd6"/>
+<text x="200" y="60.5" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+<text x="224" y="72" font-family="Inter, Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#222a33" text-anchor="start">Board size and position</text>
+<line x1="224" y1="80" x2="940" y2="80" stroke="#dde2e7" stroke-width="1"/>
+<text x="224" y="108" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="start">Scale</text>
+<line x1="380" y1="104" x2="680" y2="104" stroke="#222a33" stroke-width="3"/>
+<circle cx="560.0" cy="104" r="9" fill="#ffffff" stroke="#222a33" stroke-width="2"/>
+<text x="380" y="128" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#5d6773" text-anchor="start">70%</text>
+<text x="680" y="128" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#5d6773" text-anchor="end">120%</text>
+<text x="700" y="109" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#222a33" text-anchor="start">100%</text>
+<text x="740" y="128" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#5d6773" text-anchor="start">about 70% of screen width</text>
+<circle cx="930" cy="96" r="11" fill="#2f6fd6"/>
+<text x="930" y="100.5" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+<text x="224" y="156" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="start">Position</text>
+<rect x="380" y="138" width="150" height="32" rx="5" fill="#ffffff" stroke="#222a33" stroke-width="1.5"/>
+<text x="455.0" y="158.68" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">Unlock and drag</text>
+<rect x="540" y="138" width="130" height="32" rx="5" fill="#ffffff" stroke="#222a33" stroke-width="1.5"/>
+<text x="605.0" y="158.68" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">Reset to centre</text>
+<text x="224" y="196" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="start">Saved per character. /fpr reset puts it back if it ever goes off-screen.</text>
+<text x="224" y="236" font-family="Inter, Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#222a33" text-anchor="start">Playback  (preview of the Playback tab)</text>
+<line x1="224" y1="244" x2="940" y2="244" stroke="#dde2e7" stroke-width="1"/>
+<text x="224" y="274" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="start">Motion</text>
+<rect x="380" y="254" width="130" height="32" rx="5" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<text x="445.0" y="275" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#ffffff" text-anchor="middle">Full</text>
+<rect x="510" y="254" width="130" height="32" rx="5" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="575.0" y="275" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="middle">Reduced</text>
+<rect x="640" y="254" width="130" height="32" rx="5" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="705.0" y="275" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="middle">Summary only</text>
+<circle cx="940" cy="262" r="11" fill="#2f6fd6"/>
+<text x="940" y="266.5" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+<text x="224" y="318" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="start">Default speed</text>
+<rect x="380" y="298" width="70" height="32" rx="5" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<text x="415.0" y="319" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#ffffff" text-anchor="middle">×1</text>
+<rect x="450" y="298" width="70" height="32" rx="5" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="485.0" y="319" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="middle">×2</text>
+<rect x="520" y="298" width="70" height="32" rx="5" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="555.0" y="319" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="middle">×4</text>
+<text x="224" y="354" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="start">Auto-skip on landing</text>
+<rect x="380" y="338" width="44" height="24" rx="12" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<circle cx="392" cy="350" r="8" fill="#222a33"/>
+<text x="434" y="355" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="start">Off</text>
+<text x="224" y="394" font-family="Inter, Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#222a33" text-anchor="start">Accessibility  (preview)</text>
+<line x1="224" y1="402" x2="940" y2="402" stroke="#dde2e7" stroke-width="1"/>
+<text x="224" y="430" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="start">Colour palette</text>
+<rect x="380" y="410" width="130" height="32" rx="5" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<text x="445.0" y="431" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#ffffff" text-anchor="middle">Standard</text>
+<rect x="510" y="410" width="130" height="32" rx="5" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="575.0" y="431" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="middle">Deuteranopia</text>
+<rect x="640" y="410" width="130" height="32" rx="5" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="705.0" y="431" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="middle">Protanopia</text>
+<rect x="770" y="410" width="130" height="32" rx="5" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="835.0" y="431" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="middle">Tritanopia</text>
+<text x="224" y="474" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="start">Text size</text>
+<rect x="380" y="454" width="130" height="32" rx="5" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<text x="445.0" y="475" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#ffffff" text-anchor="middle">Normal</text>
+<rect x="510" y="454" width="130" height="32" rx="5" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="575.0" y="475" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="middle">Large +15%</text>
+<circle cx="940" cy="418" r="11" fill="#2f6fd6"/>
+<text x="940" y="422.5" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">4</text>
+<rect x="800" y="484" width="140" height="36" rx="5" fill="#222a33" stroke="#222a33" stroke-width="1.5"/>
+<text x="870.0" y="507.04" font-family="Inter, Arial, Helvetica, sans-serif" font-size="14" font-weight="600" fill="#ffffff" text-anchor="middle">Done</text>
+</svg>
