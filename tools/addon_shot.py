@@ -6,6 +6,7 @@ Usage: python3 tools/build_addon.py && python3 tools/addon_shot.py [out_dir]"""
 import os, sys
 import lupa.lua51 as l51
 from PIL import Image, ImageDraw, ImageFont
+import numpy as np
 ROOT = os.path.normpath(os.path.join(os.path.dirname(__file__), ".."))
 DIST = os.path.join(ROOT, "addon/dist/FlightPathRaiders")
 OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, "addon/shots")
@@ -76,6 +77,9 @@ def draw_text(img, d, o, board):
         yy = y + i * (g(o, "_size") or 13) * 1.2
         if pts_center(o): yy = y - (g(o, "_size") or 13) * 0.6
         d.text((xx * S, yy * S), line, font=f, fill=fill)
+        TEXTS.append({"text": line, "x": xx, "y": yy, "w": tw, "h": (g(o, "_size") or 13), "size": g(o, "_size") or 13, "bold": kind == "head",
+                      "col": c[:3], "dim": (g(o, "_alpha") or 1) < 1})
+TEXTS = []
 def pts_center(o):
     pts = lst(g(o, "_points"))
     return bool(pts) and lst(pts[0])[0] == "CENTER"
@@ -111,19 +115,59 @@ def visible(o):
         o = g(o, "_parent")
     return True
 
+def lum(a):
+    a = np.asarray(a, np.float64) / 255
+    a = np.where(a <= 0.03928, a / 12.92, ((a + 0.055) / 1.055) ** 2.4)
+    return 0.2126 * a[..., 0] + 0.7152 * a[..., 1] + 0.0722 * a[..., 2]
+FAILS = []
 def shot(name):
+    """Draws the board twice (with and without text) and measures every text line against the pixels
+    behind it, like art/tools/check_contrast.py does for the hi-fi: 4.5:1, or 3:1 for large text, at the
+    10th-percentile background pixel; nothing below 11 units. Greyed-out (disabled) labels are exempt,
+    and so is anything under a window's scrim."""
     board = L.eval("FlightPathRaidersBoard")
     frames = [f for f in lst(L.eval("WOW_FRAMES")) if visible(f) and (req(f, board) or is_child(f, board))]
     frames.sort(key=lambda f: g(f, "_level") or 0)
-    img = Image.new("RGBA", (960 * S, 540 * S), (0, 0, 0, 255)); d = ImageDraw.Draw(img)
-    for f in frames:
-        regs = [r for r in lst(g(f, "_regions")) if g(r, "_shown") and g(r, "_layer") != "HIGHLIGHT"]
-        regs.sort(key=lambda r: (LAYERS.get(g(r, "_layer") or "ARTWORK", 2), g(r, "_sub") or 0))
-        for r in regs:
-            if g(r, "_name") == "fontstring": draw_text(img, d, r, board)
-            else: draw_tex(img, r, board)
+    modal_on = L.eval("FPR_NS.Board.modal ~= nil")
+    top = max(g(f, "_level") or 0 for f in frames)
+    imgs = []
+    for with_text in (False, True):
+        TEXTS.clear()
+        img = Image.new("RGBA", (960 * S, 540 * S), (0, 0, 0, 255)); d = ImageDraw.Draw(img)
+        for f in frames:
+            regs = [r for r in lst(g(f, "_regions")) if g(r, "_shown") and g(r, "_layer") != "HIGHLIGHT"]
+            regs.sort(key=lambda r: (LAYERS.get(g(r, "_layer") or "ARTWORK", 2), g(r, "_sub") or 0))
+            for r in regs:
+                if g(r, "_name") == "fontstring":
+                    if with_text: draw_text(img, d, r, board)
+                else: draw_tex(img, r, board)
+        if not with_text:
+            # the text-free pass still needs the text boxes: draw them to a scratch image
+            scratch = Image.new("RGBA", img.size); sd = ImageDraw.Draw(scratch); TEXTS.clear()
+            for f in frames:
+                for r in lst(g(f, "_regions")):
+                    if g(r, "_shown") and g(r, "_name") == "fontstring":
+                        n = len(TEXTS); draw_text(scratch, sd, r, board)
+                        for t in TEXTS[n:]: t["behind"] = modal_on and (g(f, "_level") or 0) < top - 5
+            boxes = list(TEXTS)
+        imgs.append(img)
+    bg = np.asarray(imgs[0].convert("RGB"))
     os.makedirs(OUT, exist_ok=True)
-    img.convert("RGB").save(os.path.join(OUT, name + ".png"))
+    imgs[1].convert("RGB").save(os.path.join(OUT, name + ".png"))
+    bad = 0
+    for t in boxes:
+        if t["behind"] or t["dim"]: continue
+        x0, y0, x1, y1 = int(t["x"] * S), int(t["y"] * S), int((t["x"] + t["w"]) * S), int((t["y"] + t["h"]) * S)
+        px = bg[max(0, y0):max(0, y1), max(0, x0):max(0, x1)].reshape(-1, 3)
+        if not len(px): continue
+        lt = lum(np.array([v * 255 for v in t["col"]])); lb = lum(px)
+        ratio = (np.maximum(lt, lb) + 0.05) / (np.minimum(lt, lb) + 0.05)
+        worst = float(np.percentile(ratio, 10))
+        need = 3.0 if t["size"] >= 18 or (t["size"] >= 14 and t["bold"]) else 4.5
+        if worst < need or t["size"] < 11:
+            bad += 1; FAILS.append(f"{name}: {worst:.1f}:1 needs {need}, {t['size']}u: {t['text'][:50]}")
+    print(f"{name}: {len(boxes)} text lines, {bad} fail")
+
 def is_child(f, board):
     p = g(f, "_parent")
     while p is not None:
@@ -153,3 +197,5 @@ if __name__ == "__main__":
         for page in ("Roster", "Tavern", "Journal"): click(page); shot(f"{page.lower()}-{theme}")
         click("Settings"); shot(f"settings-{theme}"); click("Done")
     print("shots in", os.path.relpath(OUT, ROOT))
+    for f in FAILS: print("  FAIL", f)
+    sys.exit(1 if FAILS else 0)

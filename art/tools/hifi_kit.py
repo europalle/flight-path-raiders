@@ -22,7 +22,7 @@ ICON_INLINE, ICON_PURSE, ICON_BTN = 16, 14, 18
 # Tokens follow the art direction doc.
 THEMES = {
   "light": dict(name="Field Journal", tex="A1.jpeg", ink="#2a2119", muted="#6b5d4c", rule="#b9a582", panel="rgba(251,246,234,.84)", row="rgba(255,252,244,.9)",
-                accent="#a8401a", good="#2e7d32", warn="#8c5a00", bad="#b3261e", badtext="#ffffff", bar="#7a5420", barbg="#e6dcc6", hp="#2e7d32",
+                accent="#a8401a", good="#256b29", warn="#8c5a00", bad="#b3261e", badtext="#ffffff", bar="#7a5420", barbg="#e6dcc6", hp="#2e7d32",
                 scrim="rgba(42,33,25,.72)",
                 metal=["#2b1c0c", "#7a5420", "#c99a45", "#f6e3a8"], btn=["#3a2a16", "#8a6a3a", "#e8dcc0", "#fffaf0"],
                 sel=["#3a1204", "#c44a1a", "#f2c9a8", "#fff4ea"], seltext="#2a2119",

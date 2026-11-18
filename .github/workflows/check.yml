@@ -19,3 +19,7 @@ jobs:
         run: FENGARI=/tmp/fen/node_modules/fengari node tools/playtest_qa.js
       - name: Addon loads and runs its self-test in Lua 5.1 with a WoW API stand-in
         run: python3 tools/build_addon.py && python3 tests/addon_test.py
+      - name: Addon screens drawn headless pass the contrast check (both themes)
+        run: python3 tools/addon_shot.py /tmp/shots
+      - name: Learning path gate (learner bot within 2 weeks of the smart bot in 70% of guilds)
+        run: FENGARI=/tmp/fen/node_modules/fengari python3 tools/gate_learning.py

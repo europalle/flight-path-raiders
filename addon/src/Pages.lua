@@ -123,7 +123,7 @@ function P.Roster(st, args)
     if c.morale < 40 then UI.icon(440, y + 5, 13, "warn") end
     if c.benched then UI.rect(456, y + 4, 60, 16, "bad"); UI.text(456, y + 6, "Benched", { size = 11, col = "badtext", w = 60, justify = "CENTER" })
     else UI.text(456, y + 5, (st.week - c.joined < 2) and "New" or "Ready", { size = 12, col = "muted" }) end
-    UI.button(24, y, 520, 24, nil, function() B().Go("Roster", { sel = c.id }) end, { kind = "row" })
+    UI.button(24, y, 520, 24, nil, function() B().Go("Roster", { sel = c.id }) end, { kind = "row", tip = "Show " .. c.name })
   end
   UI.text(24, 122 + #st.roster * 26 + 6, "Roster " .. #st.roster .. " / " .. g.ECON.rosterMax, { size = 12, col = "muted" })
   if not sel then return end
@@ -138,7 +138,7 @@ function P.Roster(st, args)
   for _, t in ipairs(c.traits) do
     local tr = g.TRAITS[t]
     UI.panel(578, y, 340, 44, "row"); UI.text(588, y + 4, tr.name, { size = 12.5 })
-    UI.text(588, y + 19, tr.text, { size = 10.5, col = "muted", w = 322, wrap = true, h = 24 })
+    UI.text(588, y + 19, tr.text, { size = 11, col = "muted", w = 322, wrap = true, h = 24 })
     y = y + 48
   end
   UI.text(578, y + 6, "Morale", { size = 12, col = "muted" })
@@ -196,7 +196,7 @@ function P.Tavern(st)
       UI.text(x + 10, ty, g.TRAITS[t].name, { size = 12, w = 158 })
       UI.button(x + 6, ty - 2, 164, 20, nil, nil, { kind = "row", tip = g.TRAITS[t].name .. ": " .. g.TRAITS[t].text })
     end
-    UI.text(x + 10, y + 268, "Hover a trait for what it does.", { size = 10.5, col = "muted", w = 158 })
+    UI.text(x + 10, y + 268, "Hover a trait for what it does.", { size = 11, col = "muted", w = 158 })
     local full = #st.roster >= g.ECON.rosterMax
     UI.button(x + 8, 442, 160, 40, "Hire " .. UI.money(c.price) .. " g", function() B().Toast(g.Hire(st, i)); B().Render() end,
       { disabled = full or st.gold < c.price, tip = full and "Roster full (15). Dismiss someone first." or st.gold < c.price and "Not enough gold." or nil })
@@ -223,7 +223,7 @@ function P.Journal(st, args)
       UI.text(94, y + 28, bossState(st, b), { size = 11.5, col = "muted" })
       UI.text(94, y + 45, found .. "/" .. total .. " abilities found", { size = 11.5 })
     end
-    UI.button(24, y, 250, 68, nil, function() B().Go("Journal", { boss = b.id }) end, { kind = "row", disabled = not seen })
+    UI.button(24, y, 250, 68, nil, function() B().Go("Journal", { boss = b.id }) end, { kind = "row", disabled = not seen, tip = seen and ("Read about " .. b.name) or "Not reached yet" })
   end
   local b = sel
   UI.panel(288, 100, 648, 424)

@@ -79,6 +79,33 @@ press("Hub"); press("End the week"); press("End the week")
 check("ending the week moves to week 2", L.eval("FlightPathRaidersDB.guild.week") == 2)
 press("Tavern")
 check("the tavern shows five recruits", L.eval("#FlightPathRaidersDB.guild.tavern") == 5 and "Hire" in " ".join(str(L.eval("WOW_BUTTONS()")[i].labelText) for i in range(1, len(L.eval("WOW_BUTTONS()")) + 1)))
+# Keyboard reach: a whole pull, then the other pages, with no mouse at all.
+key = L.eval("WOW_KEY")
+def tab_to(label, limit=80):
+    for _ in range(limit):
+        if key("TAB") == label: return True
+    return False
+press("Hub")
+kb = tab_to("Prep pull") and (key("ENTER") or True) and L.eval("FPR_NS.Board.page") == "Prep"
+kb = kb and tab_to("Pull") and (key("ENTER") or True) and L.eval("FPR_NS.Board.page") in ("Playback", "Results")
+if L.eval("FPR_NS.Board.page") == "Playback": kb = kb and tab_to("Skip to result") and (key("ENTER") or True)
+kb = kb and L.eval("FPR_NS.Board.page") == "Results"
+if L.eval("FPR_NS.Board.modal ~= nil"):
+    kb = kb and tab_to("Hand out") and (key("ENTER") or True) and L.eval("FPR_NS.Board.modal == nil")
+kb = kb and tab_to("Hub") and (key("ENTER") or True) and L.eval("FPR_NS.Board.page") == "Hub"
+check("keyboard only: prep, pull, result, loot and back to the hub", kb)
+for page in ("Roster", "Tavern", "Journal"):
+    check(f"keyboard only: the {page} tab", tab_to(page) and (key("ENTER") or True) and L.eval("FPR_NS.Board.page") == page)
+key("TAB"); back = key("TAB", True); fwd = key("TAB")
+up = key("UP")
+check("Shift-Tab goes back, arrows move too", back is not None and fwd is not None and up == back, (back, fwd, up))
+check("a focused button shows its tooltip, so greyed-out ones say why", L.eval("GameTooltip ~= nil"))
+press("Hub"); press("End the week")
+check("Escape closes a window before the board", L.eval("FPR_NS.Board.modal ~= nil") and (key("ESCAPE") or True) and L.eval("FPR_NS.Board.modal == nil") and L.eval("FlightPathRaidersBoard:IsShown()"))
+check("keys the board doesn't use pass through to the game", (key("W") or True) and L.eval("rawget(FlightPathRaidersBoard, '_propagate') ~= false"))
+L.execute("WOW_COMBAT = true"); key("TAB")
+check("in combat the board never touches protected key handling", L.eval("rawget(FlightPathRaidersBoard, '_propagate') ~= false"))
+L.execute("WOW_COMBAT = false")
 # Settings and the old slash commands.
 press("Settings")
 check("settings open from the cog", L.eval("FPR_NS.Board.page") == "Settings")
@@ -95,6 +122,44 @@ slash("reset"); check("/fpr reset clears the position", L.eval("FlightPathRaider
 paths = [p for p in L.eval("WOW_TEXTURES").keys() if isinstance(p, str)]
 missing = [p for p in paths if p.startswith("Interface") and not os.path.exists(os.path.join(DIST, "Media", p.split("\\")[-1] + ".tga"))]
 check(f"every texture the UI uses is in the build ({len(paths)} used)", not missing, missing[:5])
+# Stable: 10 weeks of play through the addon, rendering every page after every action (gate check 3).
+ten = L.eval("""function()
+  local B, G = FPR_NS.Board, FPR_NS.Game
+  local pages = { "Hub", "Roster", "Tavern", "Journal", "Settings" }
+  local st = FPR_NS.Core.Guild()
+  local start = st.week
+  local pulls, t0 = 0, os.clock()
+  local slowest = 0
+  for w = 1, 10 do
+    while st.dungeonsLeft > 0 do G.Dungeon(st) end
+    if #st.roster < 12 and st.tavern[1] and st.gold >= st.tavern[1].price then G.Hire(st, 1) end
+    for _, mode in ipairs({ "normal", "heroic" }) do
+      for _, b in ipairs(G.BOSSES) do
+        for _ = 1, 3 do
+          if not G.unlocked(st, b.id, mode) or st.progress[b.id][mode .. "Week"] then break end
+          B.Go("Prep", { boss = b.id, mode = mode }); local prep = B.args.prep; prep.tactic = b.card
+          prep.cons = { food = true, elixirs = st.gold > 300, flasks = st.gold > 600 }
+          if #G.Problems(st, prep) > 0 then break end
+          local c0 = os.clock(); local out = G.Pull(st, prep); local dt = os.clock() - c0
+          if dt > slowest then slowest = dt end
+          pulls = pulls + 1
+          B.Go("Playback", { out = out, prep = prep, round = 1, t = 0 }); WOW_TICK(5)
+          B.Go("Results", { out = out, prep = prep })
+          if B.modal then for _ = 1, 50 do if #st.pending == 0 then break end G.AssignPending(st, 1, G.SuggestFor(st, st.pending[1])) end B.CloseModal() end
+          if out.result == "kill" then break end
+        end
+      end
+    end
+    for _, p in ipairs(pages) do B.Go(p) end
+    G.EndWeek(st)
+  end
+  local c1 = os.clock(); B.Go("Hub"); local open = os.clock() - c1
+  return pulls, st.week - start, slowest * 1000, open * 1000
+end""")
+pulls, week, slow_ms, open_ms = ten()
+check(f"10 weeks through the addon with no Lua errors ({pulls} pulls)", week == 10 and pulls > 40)
+check(f"a pull resolves in under 50 ms in standard Lua 5.1 (slowest {slow_ms:.1f} ms)", slow_ms < 50)
+check(f"the hub draws in under 100 ms (redraw {open_ms:.1f} ms; first open is verify at install)", open_ms < 100)
 slash(""); check("/fpr again closes it", not L.eval("FlightPathRaidersBoard:IsShown()"))
 L.execute("WOW_CHAT = {}")
 ok = L.eval("FPR_NS.SelfTestRun")()

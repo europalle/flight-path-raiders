@@ -77,16 +77,63 @@ function Board.Render()
   else
     modal:Hide()
   end
+  Board.RefreshFocus()
 end
 
+-- Keyboard reach (gate check 5): Tab and Shift-Tab (or the arrow keys) move a focus ring through every
+-- button in reading order, Enter or Space presses it, Escape closes a window and then the board.
+-- Focus shows the button's tooltip, so a greyed-out button still says why. Keys the board doesn't use
+-- pass through to the game; nothing changes in combat, where key handling is protected.
+local focusIndex = 0
+local function focusList()
+  if Board.modal and modal:IsShown() then return modal.focus or {} end
+  local list = {}
+  for _, b in ipairs(chrome.focus or {}) do list[#list + 1] = b end
+  for _, b in ipairs(body.focus or {}) do list[#list + 1] = b end
+  return list
+end
+function Board.RefreshFocus()
+  local list = focusList()
+  for _, b in ipairs(list) do b:SetFocus(false) end
+  if focusIndex > #list then focusIndex = #list end
+  local b = list[focusIndex]
+  if b then
+    b:SetFocus(true)
+    if b.tip then GameTooltip:SetOwner(b, "ANCHOR_TOP"); GameTooltip:SetText(b.tip, 1, 1, 1, 1, true); GameTooltip:Show() else GameTooltip:Hide() end
+  end
+  Board.focused = b
+end
+local MOVE = { TAB = 1, DOWN = 1, RIGHT = 1, UP = -1, LEFT = -1 }
+local function onKey(self, key)
+  local used = false
+  local list = focusList()
+  if MOVE[key] and (key == "TAB" or focusIndex > 0) and #list > 0 then
+    local step = MOVE[key]
+    if key == "TAB" and IsShiftKeyDown() then step = -1 end
+    focusIndex = ((focusIndex - 1 + step) % #list) + 1
+    Board.RefreshFocus(); used = true
+  elseif (key == "ENTER" or key == "SPACE") and Board.focused then
+    local b = Board.focused
+    if b.enabled and b.fn then b.fn() end
+    used = true
+  elseif key == "ESCAPE" and Board.modal then
+    Board.CloseModal(); used = true
+  elseif key == "ESCAPE" then
+    self:Hide(); used = true
+  end
+  if not InCombatLockdown() then self:SetPropagateKeyboardInput(not used) end
+end
+
+
 function Board.Go(page, args)
+  focusIndex = 0  -- a new page starts focus from the top, so Tab always means "from the start"
   Board.StopPlayback()
   Board.page, Board.args, Board.modal = page, args or {}, nil
   Board.Render()
 end
 -- A window over the page (loot, confirmations). fn(st) draws it; Board.CloseModal() closes it.
-function Board.OpenModal(fn) Board.modal = fn; Board.Render() end
-function Board.CloseModal() Board.modal = nil; Board.Render() end
+function Board.OpenModal(fn) Board.modal = fn; focusIndex = 0; Board.Render() end
+function Board.CloseModal() Board.modal = nil; focusIndex = 0; Board.Render() end
 function Board.Toast(msg) Board.toast = msg; ns.Core.Print(msg) end
 
 -- Playback ticks only while a pull is playing.
@@ -126,7 +173,10 @@ local function build()
     ns.db.settings.point = { point, rel, x, y }
   end)
   frame:SetScript("OnHide", function() Board.StopPlayback() end)
-  tinsert(UISpecialFrames, "FlightPathRaidersBoard")  -- Escape closes it
+  tinsert(UISpecialFrames, "FlightPathRaidersBoard")  -- Escape closes it, also when keyboard input is passed on
+  frame:EnableKeyboard(true)
+  frame:SetPropagateKeyboardInput(true)
+  frame:SetScript("OnKeyDown", onKey)
   frame.bg = frame:CreateTexture(nil, "BACKGROUND"); frame.bg:SetAllPoints(frame)
   body = ns.UI.container(frame, frame:GetFrameLevel() + 1)
   chrome = ns.UI.container(frame, frame:GetFrameLevel() + 10)

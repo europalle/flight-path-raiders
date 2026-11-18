@@ -533,6 +533,8 @@ local function lessonFor(st, prep, f, onKill)
   local bySeen = (seen >= 4) and 2 or ((seen >= 2) and 1 or 0)
   local byFam = (fam >= 6) and 2 or ((fam >= 3) and 1 or 0)
   local tier = math.min(2, math.max(bySeen, byFam))
+  -- The answer itself waits for two wipes on this lesson, however well the raid knows the boss (gate check 6).
+  if tier == 2 and seen < 3 then tier = 1 end
   return { id = L.id, tier = tier, text = fill(L.t[tier + 1], f), seen = seen,
     next = (tier == 0) and "More will make sense as your raid learns this fight." or ((tier == 1) and "Your raid is close to working it out." or "") }
 end

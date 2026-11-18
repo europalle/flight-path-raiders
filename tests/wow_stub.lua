@@ -47,6 +47,7 @@ local function frame(kind, name, parent)
   f.Hide = function(self) self._shown = false end
   f.IsShown = function(self) return self._shown end
   f.IsVisible = function(self) local x = self; while x do if not x._shown then return false end; x = rawget(x, "_parent") end; return true end
+  f.SetPropagateKeyboardInput = function(self, v) self._propagate = v end
   f.GetFrameLevel = function(self) return self._level end
   f.SetFrameLevel = function(self, l) self._level = l end
   f.CreateTexture = function(self, _, layer, _, sub) local t = region("texture", self, layer, sub); f._regions[#f._regions + 1] = t; return t end
@@ -124,4 +125,15 @@ function WOW_TICK(seconds)
   local fn = b and b._scripts.OnUpdate
   if fn then fn(b, seconds) end
   return fn ~= nil
+end
+IsShiftKeyDown = function() return WOW_SHIFT == true end
+InCombatLockdown = function() return WOW_COMBAT == true end
+-- Presses a key on the board, like the player would. Returns the label of the focused button after.
+function WOW_KEY(key, shift)
+  WOW_SHIFT = shift
+  local b = FlightPathRaidersBoard
+  b._scripts.OnKeyDown(b, key)
+  WOW_SHIFT = false
+  local f = FPR_NS.Board.focused
+  return f and (rawget(f, "labelText") or rawget(f, "tip")) or nil
 end

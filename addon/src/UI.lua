@@ -29,7 +29,7 @@ function UI.container(parent, level)
   f.pools, f.used = {}, {}
   return f
 end
-function UI.begin(c) cur = c; for k in pairs(c.used) do c.used[k] = 0 end; c:Show() end
+function UI.begin(c) cur = c; for k in pairs(c.used) do c.used[k] = 0 end; c.focus = {}; c:Show() end
 function UI.finish(c)
   for kind, list in pairs(c.pools) do
     for i = (c.used[kind] or 0) + 1, #list do list[i]:Hide() end
@@ -124,6 +124,17 @@ function UI.button(x, y, w, h, label, onClick, opts)
   local b = acquire("button", function()
     local b = CreateFrame("Button", nil, cur)
     b.hl = b:CreateTexture(nil, "HIGHLIGHT"); b.hl:SetAllPoints(b); b.hl:SetColorTexture(1, 0.85, 0.5, 0.12)
+    -- Keyboard focus ring: four 2-unit edges in the accent colour, shown by Board's Tab handling.
+    b.ring = {}
+    for i = 1, 4 do b.ring[i] = b:CreateTexture(nil, "OVERLAY") end
+    b.ring[1]:SetPoint("TOPLEFT", b, "TOPLEFT", -2, 2); b.ring[1]:SetPoint("TOPRIGHT", b, "TOPRIGHT", 2, 2); b.ring[1]:SetHeight(2)
+    b.ring[2]:SetPoint("BOTTOMLEFT", b, "BOTTOMLEFT", -2, -2); b.ring[2]:SetPoint("BOTTOMRIGHT", b, "BOTTOMRIGHT", 2, -2); b.ring[2]:SetHeight(2)
+    b.ring[3]:SetPoint("TOPLEFT", b, "TOPLEFT", -2, 2); b.ring[3]:SetPoint("BOTTOMLEFT", b, "BOTTOMLEFT", -2, -2); b.ring[3]:SetWidth(2)
+    b.ring[4]:SetPoint("TOPRIGHT", b, "TOPRIGHT", 2, 2); b.ring[4]:SetPoint("BOTTOMRIGHT", b, "BOTTOMRIGHT", 2, -2); b.ring[4]:SetWidth(2)
+    function b.SetFocus(self, on)
+      local r, g, bl = col("accent")
+      for i = 1, 4 do self.ring[i]:SetColorTexture(r, g, bl, 1); if on then self.ring[i]:Show() else self.ring[i]:Hide() end end
+    end
     b:SetScript("OnClick", function(self) if self.enabled and self.fn then self.fn() end end)
     b:SetScript("OnEnter", function(self)
       if not self.tip then return end
@@ -136,6 +147,9 @@ function UI.button(x, y, w, h, label, onClick, opts)
   b:SetFrameLevel(cur:GetFrameLevel() + 2)
   b.fn, b.tip, b.enabled = onClick, opts.tip, not opts.disabled
   b.labelText = label  -- for the headless tests
+  b:SetFocus(false)
+  -- Anything that does something, or explains why it can't, can take keyboard focus.
+  if onClick or opts.tip then cur.focus[#cur.focus + 1] = b end
   return b
 end
 

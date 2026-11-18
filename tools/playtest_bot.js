@@ -9,6 +9,7 @@ const guilds = Number(process.argv[2] || 20), weeks = Number(process.argv[3] || 
 const NIGHT = 10;  // pulls per week the bot is willing to spend on Normal progress
 const stats = []; const firstNormal = {}, firstHeroic = {};
 for (const b of G.BOSSES) { firstNormal[b.id] = []; firstHeroic[b.id] = []; }
+const ragHeroic = {}; let early = 0, answers = 0;
 let scores = [], totalGold = [], totalGL = [], moraleEnd = [], quits = 0, rosterEnd = [], wipes = 0, pullsAll = 0, tierSeen = [0, 0, 0];
 for (let g = 0; g < guilds; g++) {
   const st = G.newGame(1000 + g * 7919);
@@ -58,9 +59,10 @@ for (let g = 0; g < guilds; g++) {
             done = true;
             const arr = mode === 'normal' ? firstNormal[b.id] : firstHeroic[b.id];
             const pp = st.progress[b.id];  // re-read: the Lua rules refresh the state object
-            if ((mode === 'normal' ? pp.normalKills : pp.heroicKills) === 1) arr.push(w);
+            if ((mode === 'normal' ? pp.normalKills : pp.heroicKills) === 1) { arr.push(w); if (mode === 'heroic' && b.id === 'ragnaroast') ragHeroic[g] = w; }
           } else {
             wipes++; tierSeen[out.lesson.tier]++;
+            if (out.lesson.tier === 2) { answers++; if (out.lesson.seen < 3) early++; }  // gate 6: no answer before two wipes on that lesson
             if (out.lesson.tier === 2) { if (out.lesson.id === 'card') known[b.id] = b.card; if (out.lesson.id === 'fire') knowFire.v = true; if (out.lesson.id === 'decurse') known.decurse = true; }
           }
         }
@@ -75,6 +77,8 @@ for (let g = 0; g < guilds; g++) {
 const fmt = arr => arr.length ? `week ${(arr.reduce((a, b) => a + b, 0) / arr.length).toFixed(1)} (${Math.round(100 * arr.length / guilds)}% of guilds)` : 'never';
 console.log(`${guilds} guilds, ${weeks} weeks, bot: ${style}`);
 for (const b of G.BOSSES) console.log(`  ${b.name.padEnd(20)} first Normal kill ${fmt(firstNormal[b.id]).padEnd(28)} first Heroic kill ${fmt(firstHeroic[b.id])}`);
+console.log(`  recap answers shown ${answers}, before two wipes on that lesson: ${early}`);
+if (process.env.FPR_KILLWEEKS) fs.writeFileSync(process.env.FPR_KILLWEEKS, JSON.stringify(ragHeroic));
 console.log(`  pulls ${pullsAll}, wipes ${wipes}; recap tiers shown: what ${tierSeen[0]}, clue ${tierSeen[1]}, answer ${tierSeen[2]}`);
 console.log(`  Heroic score per week, last 3 weeks: ${Math.round(scores.reduce((a, b) => a + b, 0) / scores.length)}`);
 console.log(`  end: average morale ${(moraleEnd.reduce((a, b) => a + b, 0) / guilds).toFixed(0)}, roster ${(rosterEnd.reduce((a, b) => a + b, 0) / guilds).toFixed(1)} raiders`);

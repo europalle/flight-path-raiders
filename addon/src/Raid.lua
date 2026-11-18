@@ -82,7 +82,7 @@ function P.Prep(st, args)
     local on = prep.tactic == id
     UI.button(x, 352, 152, 44, g.CARDS[id], function() prep.tactic = id; B().Render() end, { kind = on and "selected" or "normal", size = 14 })
     if on then UI.icon(x + 16, 366, 14, "check") end
-    UI.text(x, 400, g.CARD_TEXT[id], { size = 10.5, col = on and "ink" or "muted", w = 152, justify = "CENTER", wrap = true, h = 28 })
+    UI.text(x, 400, g.CARD_TEXT[id], { size = 11, col = on and "ink" or "muted", w = 152, justify = "CENTER", wrap = true, h = 28 })
   end
   -- Consumables. Fire gear is worn automatically on Ragnaroast; potions go to melee and tanks with one toggle.
   UI.text(30, 446, "Prep", { head = true, size = 14 })
