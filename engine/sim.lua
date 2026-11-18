@@ -6,7 +6,7 @@ local _, ns = ...
 ns = ns or FPR_ENGINE or {}
 FPR_ENGINE = ns
 
-ns.ENGINE_VERSION = 2  -- 2: the boss keeps its target until the 110% threat margin is passed
+ns.ENGINE_VERSION = 3  -- 3: department meeting rules (lava throw damage, zones, spec numbers)
 
 local floor = math.floor
 local function idiv(a, b) return floor(a / b) end
@@ -69,10 +69,10 @@ function ns.Simulate(inputs)
     local base = D.ROLE_BASE[role]
     local hp = pm(pm(base.hp, glmul), hp_mul)
     local power = pm(pm(base.power, glmul), pow_mul)
-    if c.class == "paladin" and c.spec == "retribution" then power = pm(power, 750) end
-    if c.class == "shaman" and c.spec == "enhancement" then power = pm(power, 850) end
-    if c.class == "hunter" and c.spec == "beastmastery" then power = pm(power, 1300) end -- pet
+    local spec_power = D.SPEC_POWER[c.class .. ":" .. c.spec]
+    if spec_power then power = pm(power, spec_power) end
     local armor = D.ARMOR[cls.armor] + ((role == "tank") and D.TANK_ARMOR_BONUS or 0)
+    if c.class == "druid" and c.spec == "feral" then armor = armor + 60; hp = pm(hp, 1100) end -- Bear Form
     if armor > D.ARMOR_CAP then armor = D.ARMOR_CAP end
     raid[i] = {
       slot = i, name = c.name, class = c.class, spec = c.spec, role = role, zone = c.zone,
@@ -169,7 +169,7 @@ function ns.Simulate(inputs)
 
   local function roll(p, amount)
     local mult = D.CRIT_MULT
-    if p.class == "warlock" and p.spec == "destruction" then mult = 2000 end
+    if p.class == "warlock" and p.spec == "destruction" then mult = 1550 end
     if rng:chance(p.crit) then
       local extra = 0
       if p.class == "mage" and p.spec == "fire" then extra = 500 end -- Ignite
@@ -241,8 +241,11 @@ function ns.Simulate(inputs)
           kick_ready_round = round + 5
           log(22, kicker.slot, 0, kicker.name .. " kicks the wind-up. No throw this time.")
         else
+          -- Meeting 2026-11-18: the throw deals a share of max health (ignoring armour) instead of
+          -- killing outright. Targets the lowest-health melee; with no melee, Front; then anyone.
           local victims = alive_in("melee")
           if #victims == 0 then victims = alive_in("front") end
+          if #victims == 0 then victims = alive_in(nil) end
           local v = most_injured(victims)
           if v then
             if v.fireres > 0 then
@@ -250,7 +253,9 @@ function ns.Simulate(inputs)
               log(23, v.slot, 1, boss.name .. " throws " .. v.name .. " into the lava. Fire Resistance saves them.")
             else
               log(23, v.slot, 0, boss.name .. " throws " .. v.name .. " into the lava.")
-              v.hp = 0; kill(v, 23)
+              local burn = pm(pm(v.maxhp, mode.throw), tac.taken)
+              v.hp = v.hp - burn
+              if v.hp <= 0 then kill(v, 23) end
             end
           end
         end
@@ -260,7 +265,7 @@ function ns.Simulate(inputs)
       if inputs.trace and target then inputs.trace[#inputs.trace + 1] = target.slot end
       if target then
         local hit = pm(boss_def.melee, mode_dmg)
-        if target.class == "paladin" and target.spec == "protection" then hit = pm(hit, 1100) end
+        if target.class == "paladin" and target.spec == "protection" then hit = pm(hit, 1050) end
         damage(target, hit, 24)
       end
       -- Magma Splash every 2nd round on a zone picked by the seed.
@@ -292,6 +297,7 @@ function ns.Simulate(inputs)
           if p.alive and p.class == "paladin" and p.spec == "protection" and holder == nil then holder = p end
         end
         local list = alive_in(nil)
+        if holder then hit = pm(hit, 600) end -- Consecration: the paladin takes add hits at 60%
         if #list > 0 then damage(holder or list[rng:int(#list)], hit, 26) end
       end
       if ad.frozen > 0 then ad.frozen = ad.frozen - 1 end
@@ -321,18 +327,18 @@ function ns.Simulate(inputs)
               -- Spec extras.
               if p.class == "priest" and p.spec == "holy" then
                 local zl = alive_in(t.zone)
-                for i = 1, #zl do if zl[i] ~= t then p.healed = p.healed + heal(zl[i], pm(p.power, 400)) end end
+                for i = 1, #zl do if zl[i] ~= t then p.healed = p.healed + heal(zl[i], pm(p.power, 450)) end end
               elseif p.class == "shaman" and p.spec == "restoration" then
                 local second = most_injured(list)
-                if second then p.healed = p.healed + heal(second, pm(p.power, 600)) end
+                if second then p.healed = p.healed + heal(second, pm(p.power, 300)) end
               elseif p.class == "druid" and p.spec == "restoration" then
                 local second = most_injured(list)
-                if second then p.healed = p.healed + heal(second, pm(p.power, 500)) end
+                if second then p.healed = p.healed + heal(second, pm(p.power, 330)) end
               end
             end
           end
           if p.class == "priest" and p.spec == "discipline" and target and target.alive then
-            p.healed = p.healed + heal(target, 60) -- Power Word: Shield, simplified as 60 healing on the boss's target
+            p.healed = p.healed + heal(target, 40) -- Power Word: Shield, simplified as 40 healing on the boss's target
           end
           if p.class == "shaman" and p.spec == "restoration" and not p.used.manatide and p.mana < 40 then
             p.used.manatide = true
@@ -344,22 +350,26 @@ function ns.Simulate(inputs)
           local amount = p.power
           if p.caster then
             local cost = D.CASTER_COST
-            if p.class == "mage" and p.spec == "arcane" and round <= 3 then cost = cost * 2; amount = pm(amount, 1300) end
+            if p.class == "mage" and p.spec == "arcane" and round <= 3 then cost = cost * 2; amount = pm(amount, 1200) end
             if p.mana >= cost then p.mana = p.mana - cost else amount = idiv(amount, 2) end
           end
           amount = pm(amount, tac.dmg)
+          -- Meeting 2026-11-18: melee specs outside the Melee zone, and tanks outside Front, hit at half.
+          if (D.MELEE_SPECS[p.class .. ":" .. p.spec] and p.zone ~= "melee") or (p.role == "tank" and p.zone ~= "front") then
+            amount = idiv(amount, 2)
+          end
           if p.class == "warrior" and p.spec == "fury" then amount = pm(amount, 1000 + 50 * p.stacks) end
           if p.class == "rogue" and p.spec == "assassination" then
             if p.stacks < 5 then p.stacks = p.stacks + 1 end
-            amount = pm(amount, 1000 + 60 * p.stacks)
+            amount = pm(amount, 1000 + 30 * p.stacks)
           end
           if p.class == "warlock" and p.spec == "affliction" then
-            local ramp = 30 * round; if ramp > 300 then ramp = 300 end
+            local ramp = 12 * round; if ramp > 120 then ramp = 120 end
             amount = pm(amount, 1000 + ramp)
           end
           if (p.zone == "melee" or p.zone == "ranged") and has["hunter:marksmanship"] then amount = pm(amount, 1050) end
           if p.zone == "melee" and has["shaman:enhancement"] then amount = pm(amount, 1100) end
-          if p.zone == "ranged" and has["warlock:affliction"] then amount = pm(amount, 1100) end
+          if has["warlock:affliction"] and (p.class == "warlock" or (p.class == "priest" and p.spec == "shadow") or (p.class == "mage" and p.spec == "fire")) then amount = pm(amount, 1100) end -- Curse of the Elements: fire and shadow only
           local dealt, did = roll(p, amount)
           local fire_penalty = boss_def.fire_immune and p.class == "mage" and p.spec == "fire"
           if fire_penalty then dealt = idiv(dealt, 2) end

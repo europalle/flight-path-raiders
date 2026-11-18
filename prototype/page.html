@@ -125,7 +125,7 @@ ol.log li.aggro { color: var(--warn); font-weight: 600; }
         </div>
         <div class="tablebox">
           <table class="roster" id="roster">
-            <thead><tr><th>Name</th><th>Class</th><th>Spec</th><th>Zone</th><th title="Fire Resistance potion: saves from one lava throw (15 gold)">Fire Res</th></tr></thead>
+            <thead><tr><th>Name</th><th>Class</th><th>Spec</th><th>Zone</th><th title="Fire Resistance potion: cancels one lava throw (15 gold)">Fire Res</th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
@@ -150,8 +150,8 @@ ol.log li.aggro { color: var(--warn); font-weight: 600; }
         <div class="cards" role="radiogroup" aria-label="Tactic card">
           <label class="card"><input type="radio" name="tactic" value="spread" id="t-spread" checked><b>Spread</b><span>Splash hits one character; healing -10%</span></label>
           <label class="card"><input type="radio" name="tactic" value="stack" id="t-stack"><b>Stack</b><span>Healing +15%; splash hits the zone</span></label>
-          <label class="card"><input type="radio" name="tactic" value="burn" id="t-burn"><b>Burn</b><span>Damage and threat +15%; heals cost 20% more</span></label>
-          <label class="card"><input type="radio" name="tactic" value="playsafe" id="t-playsafe"><b>Play Safe</b><span>Damage -10%; everyone takes 10% less</span></label>
+          <label class="card"><input type="radio" name="tactic" value="burn" id="t-burn"><b>Burn</b><span>Damage +10%, threat +25%; heals cost 20% more</span></label>
+          <label class="card"><input type="radio" name="tactic" value="playsafe" id="t-playsafe"><b>Play Safe</b><span>Damage -5%; everyone takes 15% less</span></label>
         </div>
         <h3>Cauldrons</h3>
         <div class="chips">
@@ -182,12 +182,12 @@ ol.log li.aggro { color: var(--warn); font-weight: 600; }
       <div class="panel" id="simPanel">
         <h2>1,000 pulls</h2>
         <div id="simBody"><p class="empty">Simulate 1,000 pulls runs this exact raid against 1,000 different seeds. Compare tactic cards runs 250 pulls per card.</p></div>
-        <p class="target">Tuning targets with a sensible raid: about 70% kills on Normal, 40-60% on Heroic with the right card, 15-30% on Mythic.</p>
+        <p class="target">Tuning targets with a sensible raid: about 70% kills on Normal, 40-60% on Heroic with the right card, 15-30% on Mythic. Ragnaroast's right card is Burn: race him before the throws add up.</p>
       </div>
     </section>
   </div>
 
-  <p class="note"><b>Prototype, engine version <span id="ev">1</span>.</b> Traits, morale, loot and the other bosses are not in yet. Values for food, elixirs, flasks, crit and Ragnaroast's damage are Tuning's first guesses, set in the engine's balance data. Each fight's checksum is identical in this browser and in Lua 5.1, the version WoW runs.</p>
+  <p class="note"><b>Prototype, engine version <span id="ev">1</span>.</b> Traits, morale, loot and the other bosses are not in yet. Melee specs outside the Melee zone, and tanks outside Front, hit at half damage. Values for food, elixirs, flasks, crit and Ragnaroast's damage are Tuning's first guesses, set in the engine's balance data. Each fight's checksum is identical in this browser and in Lua 5.1, the version WoW runs.</p>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/fengari-web@0.1.4/dist/fengari-web.js"></script>

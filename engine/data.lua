@@ -18,7 +18,7 @@ D.ROLE_BASE = {
 }
 
 -- Gear level scaling: +20 per-mille (2%) per gear level above 60. TUNING ASSUMPTION.
-D.GL_STEP = 20
+D.GL_STEP = 15  -- Tuning pass 2: was 20
 
 -- Armour type reduction in per-mille, before role. TUNING ASSUMPTION. Cap 500 (design doc 4.2).
 D.ARMOR = { plate = 150, mail = 110, leather = 90, cloth = 50 }
@@ -65,12 +65,26 @@ D.SPECS = {
 }
 D.SPECS.druid.feralcat = "damage"
 
+-- Per-spec power multipliers (Tuning pass 2, 2026-11-18). Beast Mastery includes the pet.
+-- Retribution brings Blessing of Kings to the raid, so its own power sits a little lower.
+D.SPEC_POWER = {
+  ["hunter:beastmastery"] = 1040, ["paladin:retribution"] = 1000, ["paladin:holy"] = 1350,
+  ["rogue:combat"] = 1070, ["rogue:subtlety"] = 1070, ["warrior:fury"] = 1060, ["druid:feralcat"] = 1060,
+}
+
+-- Specs that fight in melee: half damage outside the Melee zone (meeting 2026-11-18).
+D.MELEE_SPECS = {
+  ["warrior:arms"] = true, ["warrior:fury"] = true, ["paladin:retribution"] = true,
+  ["rogue:assassination"] = true, ["rogue:combat"] = true, ["rogue:subtlety"] = true,
+  ["shaman:enhancement"] = true, ["druid:feralcat"] = true,
+}
+
 -- Tactic cards (design doc 5).
 D.TACTICS = {
   spread   = { area_single = true,  heal = 900,  dmg = 1000, threat = 1000, mana = 1000, taken = 1000 },
   stack    = { area_single = false, heal = 1150, dmg = 1000, threat = 1000, mana = 1000, taken = 1000 },
-  burn     = { area_single = false, heal = 1000, dmg = 1150, threat = 1150, mana = 1200, taken = 1000 },
-  playsafe = { area_single = false, heal = 1000, dmg = 900,  threat = 1000, mana = 1000, taken = 900 },
+  burn     = { area_single = false, heal = 1000, dmg = 1100, threat = 1250, mana = 1200, taken = 1000 },  -- meeting: was dmg 1150, threat 1150
+  playsafe = { area_single = false, heal = 1000, dmg = 950,  threat = 1000, mana = 1000, taken = 850 },  -- meeting: was dmg 900, taken 900
 }
 
 -- Consumables. Effects are TUNING ASSUMPTIONS (the design doc gives prices only).
@@ -89,16 +103,17 @@ D.WORLD_BUFFS = {
 -- Modes: boss health and damage multipliers. The design doc's +40% / +90% assumed no gear
 -- scaling; with gear levels 65 and 74, Tuning pass 1 needs +62% / +150% to hit the targets.
 D.MODES = {
-  normal = { hp = 1000, dmg = 1000 },
-  heroic = { hp = 1620, dmg = 1300 },  -- Tuning pass 1 (2026-11-18): was 1400 / 1150
-  mythic = { hp = 2500, dmg = 1700 },  -- Tuning pass 1 (2026-11-18): was 1900 / 1300
+  -- throw = lava throw damage as per-mille of max health (meeting 2026-11-18)
+  normal = { hp = 1000, dmg = 1000, throw = 700 },
+  heroic = { hp = 1330, dmg = 1300, throw = 750 },  -- Tuning pass 2 (2026-11-18)
+  mythic = { hp = 1950, dmg = 1700, throw = 800 },  -- Tuning pass 2 (2026-11-18)
 }
 
 -- Ragnaroast (design doc 6.1). Numbers are TUNING ASSUMPTIONS unless noted.
 D.BOSSES = {
   ragnaroast = {
     name = "Ragnaroast",
-    hp = 8400,                 -- Normal health. Tuning pass 1: was 9000 (design doc), 8400 hits ~70%
+    hp = 10200,                -- Normal health. Pass 1: 8400; pass 2 (meeting rules): 10200 hits ~70%
     fire_immune = true,
     melee = 600,               -- hit on the current target each round (Tuning pass 1: was 280)
     splash = 450,              -- Magma Splash on one zone, every 2nd round (Tuning pass 1: was 200)
