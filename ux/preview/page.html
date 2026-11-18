@@ -80,14 +80,14 @@ kbd { font: 500 .8rem var(--mono); border: 1px solid var(--rule); border-bottom-
   <div class="notes">
     <div class="card"><h2>What you're looking at</h2>
       <ul>
-        <li><b>Hub</b> is hi-fi, built from your Gemini kit, in both themes. Gold, DKP and rank have icons; contrast is measured on every line.</li>
-        <li><b>Every other screen</b> is the approved mid-fi wireframe at the same size, so you can judge layout, reading distance and how much of the game the board covers. Hi-fi for them is issue #32; the Journal and loot window still need wireframes (#31).</li>
+        <li><b>Every slice screen is hi-fi</b>, built from your Gemini kit, in both themes: hub, prep, playback, both results (wipe, and kill with the loot window), roster, tavern, journal and settings. Contrast is measured on every line and all of it passes.</li>
+        <li>The words and numbers are the slice's real rules: the four cards, traits, morale, prices and the learning recap.</li>
         <li>Default size is 70% of the screen width; the scale goes from 70% to 120% of that, like <kbd>/fpr scale</kbd>.</li>
       </ul></div>
     <div class="card"><h2>Try this flow</h2>
       <ul>
-        <li>Hub: <b>Prep pull</b>, then <b>Pull</b>, then <b>Skip to result</b>, then <b>Back to hub</b> or <b>Next boss</b>.</li>
-        <li>Hub tabs: Roster, Tavern, Guild Hall, Bank. The cog opens Settings; <b>Done</b> brings you back.</li>
+        <li>Hub: <b>Prep pull</b>, <b>Pull</b>, <b>Skip to result</b>. The first pull wipes: try a <b>Replay</b> card or <b>Pull again</b>, and the next one kills and opens the loot window.</li>
+        <li>Tabs: Hub, Roster, Tavern, Journal. The cog opens Settings; <b>Done</b> brings you back.</li>
         <li>On any screen, the title (Flight Path Raiders) takes you back to the hub. The title bar's minus and plus change the scale; the X closes the board.</li>
         <li>Look at 70% and at 120%: is the text readable at 70%? Does 120% cover too much of the game?</li>
       </ul></div>
@@ -97,29 +97,31 @@ kbd { font: 500 .8rem var(--mono); border: 1px solid var(--rule); border-bottom-
 
 <script>
 // Hotspots in board units (the 960 x 540 design grid): [x, y, w, h, action, label].
-const MIDFI_TABS = [[20, 52, 54, 30, "hub", "Hub tab"], [80, 52, 60, 30, "roster", "Roster tab"], [146, 52, 62, 30, "tavern", "Tavern tab"], [218, 52, 102, 30, "guild-hall", "Guild Hall tab"], [332, 52, 52, 30, "bank", "Bank tab"]];
-const MIDFI_TITLE = [[8, 6, 150, 26, "hub", "Back to the hub"], [828, 9, 23, 22, "smaller", "Smaller"], [858, 9, 23, 22, "bigger", "Bigger"], [888, 9, 23, 22, "settings", "Settings"], [918, 9, 23, 22, "close", "Close"]];
+const TABS = [[24, 58, 87, 34, "hub", "Hub tab"], [119, 58, 108, 34, "roster", "Roster tab"], [235, 58, 108, 34, "tavern", "Tavern tab"], [351, 58, 115, 34, "journal", "Journal tab"]];
+const TITLE = [[30, 20, 200, 34, "hub", "Back to the hub"], [764, 20, 32, 32, "smaller", "Smaller"], [804, 20, 32, 32, "bigger", "Bigger"], [844, 20, 32, 32, "settings", "Settings"], [884, 20, 32, 32, "close", "Close"]];
+const img = n => t => `assets/${n}-${t}.webp`;
+// Every slice screen is hi-fi now (#32). The first pull wipes and the second kills, so both result screens show up.
 const SCREENS = {
-  hub: { name: "Hub", fi: "hi", img: t => `assets/hub-${t}.svg`, hots: [
-    [24, 58, 87, 34, "hub", "Hub tab"], [119, 58, 108, 34, "roster", "Roster tab"], [235, 58, 108, 34, "tavern", "Tavern tab"],
-    [351, 58, 136, 34, "guild-hall", "Guild Hall tab"], [495, 58, 101, 34, "bank", "Bank tab"], [756, 146, 162, 62, "prep", "Prep pull"],
-    [764, 20, 32, 32, "smaller", "Smaller"], [804, 20, 32, 32, "bigger", "Bigger"], [844, 20, 32, 32, "settings", "Settings"], [884, 20, 32, 32, "close", "Close"]] },
-  prep: { name: "Prep", fi: "mid", img: () => "assets/prep.jpg", hots: [[760, 476, 180, 48, "playback", "Pull"], ...MIDFI_TITLE] },
-  playback: { name: "Playback", fi: "mid", img: () => "assets/playback.jpg", hots: [[354, 464, 186, 34, "results", "Skip to result"], ...MIDFI_TITLE] },
-  results: { name: "Results", fi: "mid", img: () => "assets/results.jpg", hots: [[640, 476, 140, 44, "hub", "Back to hub"], [792, 476, 148, 44, "prep", "Next boss"], ...MIDFI_TITLE] },
-  roster: { name: "Roster", fi: "mid", img: () => "assets/roster.jpg", hots: [...MIDFI_TABS, ...MIDFI_TITLE] },
-  tavern: { name: "Tavern", fi: "mid", img: () => "assets/tavern.jpg", hots: [...MIDFI_TABS, ...MIDFI_TITLE] },
-  "guild-hall": { name: "Guild Hall", fi: "mid", img: () => "assets/guild-hall.jpg", hots: [...MIDFI_TABS, ...MIDFI_TITLE] },
-  bank: { name: "Guild Bank", fi: "mid", img: () => "assets/bank.jpg", hots: [...MIDFI_TABS, ...MIDFI_TITLE] },
-  settings: { name: "Settings", fi: "mid", img: () => "assets/settings.jpg", hots: [[800, 484, 140, 32, "hub", "Done"], ...MIDFI_TITLE] },
+  hub: { name: "Hub", img: img("hub"), hots: [...TABS, [756, 146, 162, 62, "prep", "Prep pull"], [806, 454, 118, 46, "roster", "Manage roster"], ...TITLE] },
+  prep: { name: "Prep", img: img("prep"), hots: [...TABS, [840, 462, 96, 52, "pull", "Pull"], ...TITLE] },
+  playback: { name: "Playback", img: img("playback"), hots: [[270, 474, 190, 44, "skip", "Skip to result"], [468, 474, 150, 44, "skip", "Summary only"], ...TITLE] },
+  results: { name: "Results: wipe", img: img("results"), hots: [[600, 466, 150, 50, "pull", "Pull again"], [758, 466, 110, 50, "prep", "Change plan"], [876, 466, 60, 50, "hub", "Hub"],
+    [618, 284, 96, 36, "pull", "Replay with Spread"], [722, 284, 96, 36, "pull", "Replay with Stack"], [826, 284, 96, 36, "pull", "Replay with Play Safe"], ...TITLE] },
+  loot: { name: "Results: kill and loot", img: img("loot"), hots: [[614, 444, 178, 48, "hub", "Hand out"], [486, 446, 120, 44, "hub", "Decide later"], ...TITLE] },
+  roster: { name: "Roster", img: img("roster"), hots: [...TABS, ...TITLE] },
+  tavern: { name: "Tavern", img: img("tavern"), hots: [...TABS, ...TITLE] },
+  journal: { name: "Journal", img: img("journal"), hots: [...TABS, ...TITLE] },
+  settings: { name: "Settings", img: img("settings"), hots: [[820, 466, 96, 40, "hub", "Done"], ...TITLE] },
 };
+let pulls = 0;
 const $ = id => document.getElementById(id);
 const st = { screen: "hub", theme: "light", scale: 100, open: true, x: 0.5, y: 0.5 };  // x, y: board centre as a share of the screen
 try { Object.assign(st, JSON.parse(localStorage.getItem("fpr-preview") || "{}")); } catch (e) {}
+if (!SCREENS[st.screen]) st.screen = "hub";
 const save = () => { try { localStorage.setItem("fpr-preview", JSON.stringify(st)); } catch (e) {} };
 
 const sel = $("screen");
-sel.innerHTML = Object.entries(SCREENS).map(([k, s]) => `<option value="${k}">${s.name} (${s.fi === "hi" ? "hi-fi" : "mid-fi"})</option>`).join("");
+sel.innerHTML = Object.entries(SCREENS).map(([k, s]) => `<option value="${k}">${s.name}</option>`).join("");
 
 function layout() {
   const box = $("screenbox").getBoundingClientRect(), b = $("board");
@@ -134,8 +136,8 @@ function render() {
   $("shot").src = s.img(st.theme);
   $("shot").alt = s.name + " screen";
   const badge = $("badge");
-  badge.textContent = s.fi === "hi" ? `${s.name} · hi-fi · ${st.theme === "light" ? "Field Journal" : "Midnight Grimoire"}` : `${s.name} · mid-fi wireframe (hi-fi in #32)`;
-  badge.className = "badge" + (s.fi === "hi" ? "" : " mid");
+  badge.textContent = `${s.name} · hi-fi · ${st.theme === "light" ? "Field Journal" : "Midnight Grimoire"}`;
+  badge.className = "badge";
   $("hots").innerHTML = s.hots.map(([x, y, w, h, act, label]) =>
     `<button type="button" class="hot" data-act="${act}" aria-label="${label}" title="${label}" style="left:${x / 9.6}%;top:${y / 5.4}%;width:${w / 9.6}%;height:${h / 5.4}%"></button>`).join("");
   sel.value = st.screen;
@@ -149,6 +151,8 @@ function act(a) {
   if (a === "close") st.open = false;
   else if (a === "smaller") st.scale = Math.max(70, st.scale - 5);
   else if (a === "bigger") st.scale = Math.min(120, st.scale + 5);
+  else if (a === "pull") { pulls++; st.screen = "playback"; }
+  else if (a === "skip") st.screen = pulls % 2 ? "results" : "loot";
   else if (SCREENS[a]) st.screen = a;
   render();
 }

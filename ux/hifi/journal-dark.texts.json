@@ -1,0 +1,472 @@
+[
+{
+"text": "Flight Path Raiders",
+"x": 30,
+"y": 26.84,
+"w": 221.54000000000002,
+"h": 21.56,
+"size": 22,
+"bold": true,
+"col": "#e6e1d3"
+},
+{
+"text": "/ Journal",
+"x": 232,
+"y": 30.740000000000002,
+"w": 76.5,
+"h": 16.66,
+"size": 17,
+"bold": false,
+"col": "#b3ad9e"
+},
+{
+"text": "100%",
+"x": 729.44,
+"y": 32.64,
+"w": 22.56,
+"h": 11.76,
+"size": 12,
+"bold": false,
+"col": "#b3ad9e"
+},
+{
+"text": "Hub",
+"x": 57.41145,
+"y": 69.47,
+"w": 20.177100000000003,
+"h": 13.23,
+"size": 13.5,
+"bold": false,
+"col": "#e6e1d3"
+},
+{
+"text": "Roster",
+"x": 152.8229,
+"y": 69.47,
+"w": 40.354200000000006,
+"h": 13.23,
+"size": 13.5,
+"bold": false,
+"col": "#e6e1d3"
+},
+{
+"text": "Tavern",
+"x": 268.8229,
+"y": 69.47,
+"w": 40.354200000000006,
+"h": 13.23,
+"size": 13.5,
+"bold": false,
+"col": "#e6e1d3"
+},
+{
+"text": "Journal",
+"x": 384.96005,
+"y": 69.47,
+"w": 47.0799,
+"h": 13.23,
+"size": 13.5,
+"bold": true,
+"col": "#ffe9d6"
+},
+{
+"text": "85 DKP",
+"x": 896.635,
+"y": 70.25,
+"w": 37.365,
+"h": 12.25,
+"size": 12.5,
+"bold": false,
+"col": "#e6e1d3"
+},
+{
+"text": "312",
+"x": 836.3175,
+"y": 70.25,
+"w": 18.6825,
+"h": 12.25,
+"size": 12.5,
+"bold": false,
+"col": "#e6e1d3"
+},
+{
+"text": "Week 4",
+"x": 763.25,
+"y": 70.25,
+"w": 35.25,
+"h": 12.25,
+"size": 12.5,
+"bold": false,
+"col": "#b3ad9e"
+},
+{
+"text": "The Molten Bore",
+"x": 24,
+"y": 108.4,
+"w": 159.0,
+"h": 19.6,
+"size": 20,
+"bold": true,
+"col": "#e6e1d3"
+},
+{
+"text": "M",
+"x": 51.64,
+"y": 161.28,
+"w": 12.72,
+"h": 23.52,
+"size": 24,
+"bold": true,
+"col": "#b3ad9e"
+},
+{
+"text": "Magmadad",
+"x": 94,
+"y": 149.86,
+"w": 51.812799999999996,
+"h": 12.74,
+"size": 13,
+"bold": true,
+"col": "#e6e1d3"
+},
+{
+"text": "Normal \u2713 Heroic \u2713",
+"x": 94,
+"y": 168.03,
+"w": 91.88499999999999,
+"h": 11.27,
+"size": 11.5,
+"bold": false,
+"col": "#b3ad9e"
+},
+{
+"text": "3/3 abilities found",
+"x": 94,
+"y": 185.03,
+"w": 108.8567,
+"h": 11.27,
+"size": 11.5,
+"bold": false,
+"col": "#e6e1d3"
+},
+{
+"text": "B",
+"x": 51.64,
+"y": 237.28,
+"w": 12.72,
+"h": 23.52,
+"size": 24,
+"bold": true,
+"col": "#b3ad9e"
+},
+{
+"text": "Baron Get-Down",
+"x": 94,
+"y": 225.86,
+"w": 90.6724,
+"h": 12.74,
+"size": 13,
+"bold": true,
+"col": "#e6e1d3"
+},
+{
+"text": "Normal \u2713 Heroic \u2713",
+"x": 94,
+"y": 244.03,
+"w": 91.88499999999999,
+"h": 11.27,
+"size": 11.5,
+"bold": false,
+"col": "#b3ad9e"
+},
+{
+"text": "2/2 abilities found",
+"x": 94,
+"y": 261.03,
+"w": 108.8567,
+"h": 11.27,
+"size": 11.5,
+"bold": false,
+"col": "#e6e1d3"
+},
+{
+"text": "L",
+"x": 51.64,
+"y": 313.28,
+"w": 12.72,
+"h": 23.52,
+"size": 24,
+"bold": true,
+"col": "#b3ad9e"
+},
+{
+"text": "Lucifrown",
+"x": 94,
+"y": 301.86,
+"w": 58.2894,
+"h": 12.74,
+"size": 13,
+"bold": true,
+"col": "#e6e1d3"
+},
+{
+"text": "Normal \u2713 Heroic: 2 wipes",
+"x": 94,
+"y": 320.03,
+"w": 129.72,
+"h": 11.27,
+"size": 11.5,
+"bold": false,
+"col": "#b3ad9e"
+},
+{
+"text": "3/3 abilities found",
+"x": 94,
+"y": 337.03,
+"w": 108.8567,
+"h": 11.27,
+"size": 11.5,
+"bold": false,
+"col": "#e6e1d3"
+},
+{
+"text": "M",
+"x": 51.64,
+"y": 389.28,
+"w": 12.72,
+"h": 23.52,
+"size": 24,
+"bold": true,
+"col": "#b3ad9e"
+},
+{
+"text": "Majordomo Exhaustus",
+"x": 94,
+"y": 377.86,
+"w": 123.05539999999999,
+"h": 12.74,
+"size": 13,
+"bold": true,
+"col": "#e6e1d3"
+},
+{
+"text": "Normal \u2713",
+"x": 94,
+"y": 396.03,
+"w": 43.239999999999995,
+"h": 11.27,
+"size": 11.5,
+"bold": false,
+"col": "#b3ad9e"
+},
+{
+"text": "2/2 abilities found",
+"x": 94,
+"y": 413.03,
+"w": 108.8567,
+"h": 11.27,
+"size": 11.5,
+"bold": false,
+"col": "#e6e1d3"
+},
+{
+"text": "Ragnaroast",
+"x": 94,
+"y": 453.86,
+"w": 64.76599999999999,
+"h": 12.74,
+"size": 13,
+"bold": true,
+"col": "#e6e1d3"
+},
+{
+"text": "Normal \u2713 Heroic: 4 wipes",
+"x": 94,
+"y": 472.03,
+"w": 129.72,
+"h": 11.27,
+"size": 11.5,
+"bold": false,
+"col": "#b3ad9e"
+},
+{
+"text": "2/3 abilities found",
+"x": 94,
+"y": 489.03,
+"w": 108.8567,
+"h": 11.27,
+"size": 11.5,
+"bold": false,
+"col": "#e6e1d3"
+},
+{
+"text": "Ragnaroast",
+"x": 492,
+"y": 127.28,
+"w": 127.2,
+"h": 23.52,
+"size": 24,
+"bold": true,
+"col": "#e6e1d3"
+},
+{
+"text": "Boss 5 of 5 \u00b7 pulled 6 times \u00b7 best: 31% left",
+"x": 492,
+"y": 158.64,
+"w": 253.79999999999998,
+"h": 11.76,
+"size": 12,
+"bold": false,
+"col": "#b3ad9e"
+},
+{
+"text": "\u201cThe trash is still out there. I can hear it.\u201d",
+"x": 492,
+"y": 182.25,
+"w": 270.25,
+"h": 12.25,
+"size": 12.5,
+"bold": false,
+"col": "#e6e1d3"
+},
+{
+"text": "Your raid knows this fight:",
+"x": 504,
+"y": 215.03,
+"w": 154.6911,
+"h": 11.27,
+"size": 11.5,
+"bold": false,
+"col": "#e6e1d3"
+},
+{
+"text": "Abilities",
+"x": 306,
+"y": 252.74,
+"w": 81.09,
+"h": 16.66,
+"size": 17,
+"bold": true,
+"col": "#e6e1d3"
+},
+{
+"text": "Into the lava",
+"x": 342,
+"y": 284.86,
+"w": 84.19579999999999,
+"h": 12.74,
+"size": 13,
+"bold": true,
+"col": "#e6e1d3"
+},
+{
+"text": "Every 4 rounds he throws the lowest-health melee in. Potions cancel one throw each.",
+"x": 342,
+"y": 304.03,
+"w": 448.61499999999995,
+"h": 11.27,
+"size": 11.5,
+"bold": false,
+"col": "#b3ad9e"
+},
+{
+"text": "found week 3",
+"x": 845.96,
+"y": 286.42,
+"w": 62.04,
+"h": 10.78,
+"size": 11,
+"bold": false,
+"col": "#b3ad9e"
+},
+{
+"text": "Magma Splash",
+"x": 342,
+"y": 336.86,
+"w": 77.7192,
+"h": 12.74,
+"size": 13,
+"bold": true,
+"col": "#e6e1d3"
+},
+{
+"text": "Fire on one zone every 2nd round.",
+"x": 342,
+"y": 356.03,
+"w": 178.36499999999998,
+"h": 11.27,
+"size": 11.5,
+"bold": false,
+"col": "#b3ad9e"
+},
+{
+"text": "found week 3",
+"x": 845.96,
+"y": 338.42,
+"w": 62.04,
+"h": 10.78,
+"size": 11,
+"bold": false,
+"col": "#b3ad9e"
+},
+{
+"text": "?",
+"x": 318.7,
+"y": 395.4,
+"w": 10.600000000000001,
+"h": 19.6,
+"size": 20,
+"bold": true,
+"col": "#b3ad9e"
+},
+{
+"text": "Not seen yet",
+"x": 342,
+"y": 388.86,
+"w": 77.7192,
+"h": 12.74,
+"size": 13,
+"bold": true,
+"col": "#b3ad9e"
+},
+{
+"text": "Pull again: it shows up later in the fight.",
+"x": 342,
+"y": 408.03,
+"w": 232.415,
+"h": 11.27,
+"size": 11.5,
+"bold": false,
+"col": "#b3ad9e"
+},
+{
+"text": "Worked out",
+"x": 306,
+"y": 438.74,
+"w": 90.10000000000001,
+"h": 16.66,
+"size": 17,
+"bold": true,
+"col": "#e6e1d3"
+},
+{
+"text": "Fire resistance: Fire Whelp gear and potions for melee and tanks.",
+"x": 334,
+"y": 470.64,
+"w": 388.596,
+"h": 11.76,
+"size": 12,
+"bold": false,
+"col": "#e6e1d3"
+},
+{
+"text": "Clue: \u201cHe sinks at round 10. We need him low before he does.\u201d",
+"x": 320,
+"y": 499.03,
+"w": 329.705,
+"h": 11.27,
+"size": 11.5,
+"bold": false,
+"col": "#b3ad9e"
+}
+]

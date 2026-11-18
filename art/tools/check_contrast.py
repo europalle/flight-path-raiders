@@ -23,6 +23,7 @@ with sync_playwright() as p:
         texts = json.load(open(svg.replace(".svg", ".texts.json")))
         print(svg)
         for t in texts:
+            if t.get("behind"): continue  # dimmed under a scrim on purpose
             x0, y0 = int(t["x"] * S), int(t["y"] * S); x1, y1 = int((t["x"] + t["w"]) * S), int((t["y"] + t["h"]) * S)
             px = bg[max(0, y0):y1, max(0, x0):x1].reshape(-1, 3)
             if not len(px): continue

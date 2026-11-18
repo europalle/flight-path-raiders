@@ -51,21 +51,9 @@ def font_css():
             css.append(f"@font-face{{font-family:'{fam}';font-weight:{w};font-style:{st};src:url(data:font/woff2;base64,{base64.b64encode(open(p, 'rb').read()).decode()}) format('woff2')}}")
     return "".join(css)
 
-# Tokens follow the art direction doc exactly.
-THEMES = {
-  "light": dict(name="Field Journal", tex="A1.jpeg", ink="#2a2119", muted="#6b5d4c", rule="#b9a582", panel="rgba(251,246,234,.84)", row="rgba(255,252,244,.9)",
-                accent="#c44a1a", good="#2e7d32", warn="#a86a00", bad="#b3261e", badtext="#ffffff",
-                metal=["#2b1c0c", "#7a5420", "#c99a45", "#f6e3a8"], btn=["#3a2a16", "#8a6a3a", "#e8dcc0", "#fffaf0"],
-                sel=["#3a1204", "#c44a1a", "#f2c9a8", "#fff4ea"], seltext="#2a2119",
-                primary=["#120c07", "#4a3a2a", "#2a2119", "#241a12"], ptext="#fbf6ea", slot=["#2b1c0c", "#7a5420", "#c99a45", "#f3ecdc"],
-                gem=["#2a0606", "#7a1414", "#d84a3a", "#ffd0c0"]),
-  "dark": dict(name="Midnight Grimoire", tex="A2b.png", ink="#e6e1d3", muted="#b3ad9e", rule="#4a515e", panel="rgba(30,34,42,.86)", row="rgba(37,42,51,.92)",
-               accent="#ff8a3d", good="#7ccf83", warn="#f0b44c", bad="#ff7b6e", badtext="#1c1f26",
-               metal=["#0d0f13", "#3c424d", "#8b93a1", "#dfe4ec"], btn=["#0d0f13", "#5a616e", "#8b93a1", "#2a2f38"],
-               sel=["#1a0a04", "#ff8a3d", "#c45a1c", "#3a1a0c"], seltext="#ffe9d6",
-               primary=["#1a0a04", "#ff8a3d", "#c45a1c", "#3a1206"], ptext="#ffe9d6", slot=["#0d0f13", "#3c424d", "#8b93a1", "#252a33"],
-               gem=["#2a0606", "#7a1414", "#ff6a5a", "#ffd0c0"]),
-}
+# Tokens live in hifi_kit.py, shared with every other hi-fi screen.
+import sys; sys.path.insert(0, os.path.dirname(__file__))
+from hifi_kit import THEMES
 HAND = "Kalam, 'Comic Sans MS', cursive"
 BODY = "'IBM Plex Sans', Arial, sans-serif"
 ICON_INLINE, ICON_PURSE, ICON_BTN = 16, 14, 18
@@ -114,7 +102,7 @@ def build(theme, notext=False):
     # Navigation tabs.
     tab = gradmap(piece("B3-00.png", w=300), T["btn"]); sel = gradmap(piece("B3-00.png", w=300), T["sel"])
     x = 24
-    for i, name in enumerate(["Hub", "Roster", "Tavern", "Guild Hall", "Bank"]):
+    for i, name in enumerate(["Hub", "Roster", "Tavern", "Journal"]):
         w = 66 + len(name) * 7
         img(sel if i == 0 else tab, x, 58, w, 34)
         text(x + w / 2, 80, name, 13.5, T["seltext"] if i == 0 else T["ink"], weight=700 if i == 0 else 600, anchor="middle")

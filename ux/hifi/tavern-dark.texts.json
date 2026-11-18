@@ -1,0 +1,562 @@
+[
+{
+"text": "Flight Path Raiders",
+"x": 30,
+"y": 26.84,
+"w": 221.54000000000002,
+"h": 21.56,
+"size": 22,
+"bold": true,
+"col": "#e6e1d3"
+},
+{
+"text": "/ Tavern",
+"x": 232,
+"y": 30.740000000000002,
+"w": 68.0,
+"h": 16.66,
+"size": 17,
+"bold": false,
+"col": "#b3ad9e"
+},
+{
+"text": "100%",
+"x": 729.44,
+"y": 32.64,
+"w": 22.56,
+"h": 11.76,
+"size": 12,
+"bold": false,
+"col": "#b3ad9e"
+},
+{
+"text": "Hub",
+"x": 57.41145,
+"y": 69.47,
+"w": 20.177100000000003,
+"h": 13.23,
+"size": 13.5,
+"bold": false,
+"col": "#e6e1d3"
+},
+{
+"text": "Roster",
+"x": 152.8229,
+"y": 69.47,
+"w": 40.354200000000006,
+"h": 13.23,
+"size": 13.5,
+"bold": false,
+"col": "#e6e1d3"
+},
+{
+"text": "Tavern",
+"x": 268.8229,
+"y": 69.47,
+"w": 40.354200000000006,
+"h": 13.23,
+"size": 13.5,
+"bold": true,
+"col": "#ffe9d6"
+},
+{
+"text": "Journal",
+"x": 384.96005,
+"y": 69.47,
+"w": 47.0799,
+"h": 13.23,
+"size": 13.5,
+"bold": false,
+"col": "#e6e1d3"
+},
+{
+"text": "85 DKP",
+"x": 896.635,
+"y": 70.25,
+"w": 37.365,
+"h": 12.25,
+"size": 12.5,
+"bold": false,
+"col": "#e6e1d3"
+},
+{
+"text": "312",
+"x": 836.3175,
+"y": 70.25,
+"w": 18.6825,
+"h": 12.25,
+"size": 12.5,
+"bold": false,
+"col": "#e6e1d3"
+},
+{
+"text": "Week 4",
+"x": 763.25,
+"y": 70.25,
+"w": 35.25,
+"h": 12.25,
+"size": 12.5,
+"bold": false,
+"col": "#b3ad9e"
+},
+{
+"text": "The Bench & Barrel",
+"x": 24,
+"y": 108.4,
+"w": 190.8,
+"h": 19.6,
+"size": 20,
+"bold": true,
+"col": "#e6e1d3"
+},
+{
+"text": "5 recruits this week \u00b7 new faces at the weekly reset",
+"x": 214,
+"y": 113.64,
+"w": 293.28,
+"h": 11.76,
+"size": 12,
+"bold": false,
+"col": "#b3ad9e"
+},
+{
+"text": "Reroll 25 g",
+"x": 838.3787,
+"y": 112.54,
+"w": 71.2426,
+"h": 12.74,
+"size": 13,
+"bold": true,
+"col": "#e6e1d3"
+},
+{
+"text": "Grimli",
+"x": 34,
+"y": 295.96,
+"w": 57.24,
+"h": 17.64,
+"size": 18,
+"bold": true,
+"col": "#e6e1d3"
+},
+{
+"text": "Dwarf Warrior",
+"x": 54,
+"y": 321.64,
+"w": 73.32,
+"h": 11.76,
+"size": 12,
+"bold": false,
+"col": "#e6e1d3"
+},
+{
+"text": "Arms",
+"x": 34,
+"y": 339.64,
+"w": 22.56,
+"h": 11.76,
+"size": 12,
+"bold": false,
+"col": "#b3ad9e"
+},
+{
+"text": "Common",
+"x": 78,
+"y": 360.64,
+"w": 35.8704,
+"h": 11.76,
+"size": 12,
+"bold": true,
+"col": "#c7c1b3"
+},
+{
+"text": "GL 54",
+"x": 160.108,
+"y": 360.64,
+"w": 29.892,
+"h": 11.76,
+"size": 12,
+"bold": false,
+"col": "#e6e1d3"
+},
+{
+"text": "Traits",
+"x": 34,
+"y": 383.42,
+"w": 32.8812,
+"h": 10.78,
+"size": 11,
+"bold": true,
+"col": "#b3ad9e"
+},
+{
+"text": "Pulls on Cooldown",
+"x": 34,
+"y": 400.64,
+"w": 101.6328,
+"h": 11.76,
+"size": 12,
+"bold": false,
+"col": "#e6e1d3"
+},
+{
+"text": "Hire 50 g",
+"x": 82.8553,
+"y": 456.54,
+"w": 58.2894,
+"h": 12.74,
+"size": 13,
+"bold": true,
+"col": "#e6e1d3"
+},
+{
+"text": "Saffi",
+"x": 218,
+"y": 295.96,
+"w": 47.7,
+"h": 17.64,
+"size": 18,
+"bold": true,
+"col": "#e6e1d3"
+},
+{
+"text": "Night Elf Priest",
+"x": 238,
+"y": 321.64,
+"w": 90.24,
+"h": 11.76,
+"size": 12,
+"bold": false,
+"col": "#e6e1d3"
+},
+{
+"text": "Holy",
+"x": 218,
+"y": 339.64,
+"w": 22.56,
+"h": 11.76,
+"size": 12,
+"bold": false,
+"col": "#b3ad9e"
+},
+{
+"text": "Rare",
+"x": 262,
+"y": 360.64,
+"w": 23.9136,
+"h": 11.76,
+"size": 12,
+"bold": true,
+"col": "#7fb2ff"
+},
+{
+"text": "GL 55",
+"x": 344.108,
+"y": 360.64,
+"w": 29.892,
+"h": 11.76,
+"size": 12,
+"bold": false,
+"col": "#e6e1d3"
+},
+{
+"text": "Traits",
+"x": 218,
+"y": 383.42,
+"w": 32.8812,
+"h": 10.78,
+"size": 11,
+"bold": true,
+"col": "#b3ad9e"
+},
+{
+"text": "Never Stands in Fire",
+"x": 218,
+"y": 400.64,
+"w": 119.568,
+"h": 11.76,
+"size": 12,
+"bold": false,
+"col": "#e6e1d3"
+},
+{
+"text": "Alt-Tabbed",
+"x": 218,
+"y": 418.64,
+"w": 59.784,
+"h": 11.76,
+"size": 12,
+"bold": false,
+"col": "#e6e1d3"
+},
+{
+"text": "Hire 300 g",
+"x": 263.617,
+"y": 456.54,
+"w": 64.76599999999999,
+"h": 12.74,
+"size": 13,
+"bold": true,
+"col": "#e6e1d3"
+},
+{
+"text": "Rare find",
+"x": 501.6191,
+"y": 158.92,
+"w": 49.321799999999996,
+"h": 10.78,
+"size": 11,
+"bold": true,
+"col": "#1c1f26"
+},
+{
+"text": "Mortis",
+"x": 402,
+"y": 295.96,
+"w": 57.24,
+"h": 17.64,
+"size": 18,
+"bold": true,
+"col": "#e6e1d3"
+},
+{
+"text": "Gnome Warlock",
+"x": 422,
+"y": 321.64,
+"w": 73.32,
+"h": 11.76,
+"size": 12,
+"bold": false,
+"col": "#e6e1d3"
+},
+{
+"text": "Destruction",
+"x": 402,
+"y": 339.64,
+"w": 62.04,
+"h": 11.76,
+"size": 12,
+"bold": false,
+"col": "#b3ad9e"
+},
+{
+"text": "Epic",
+"x": 446,
+"y": 360.64,
+"w": 23.9136,
+"h": 11.76,
+"size": 12,
+"bold": true,
+"col": "#d39bff"
+},
+{
+"text": "GL 56",
+"x": 528.108,
+"y": 360.64,
+"w": 29.892,
+"h": 11.76,
+"size": 12,
+"bold": false,
+"col": "#e6e1d3"
+},
+{
+"text": "Traits",
+"x": 402,
+"y": 383.42,
+"w": 32.8812,
+"h": 10.78,
+"size": 11,
+"bold": true,
+"col": "#b3ad9e"
+},
+{
+"text": "Parse Goblin",
+"x": 402,
+"y": 400.64,
+"w": 71.7408,
+"h": 11.76,
+"size": 12,
+"bold": false,
+"col": "#e6e1d3"
+},
+{
+"text": "Hire 1,500 g",
+"x": 441.1404,
+"y": 456.54,
+"w": 77.7192,
+"h": 12.74,
+"size": 13,
+"bold": true,
+"col": "#e6e1d3"
+},
+{
+"text": "Fizzwick",
+"x": 586,
+"y": 295.96,
+"w": 76.32000000000001,
+"h": 17.64,
+"size": 18,
+"bold": true,
+"col": "#e6e1d3"
+},
+{
+"text": "Gnome Mage",
+"x": 606,
+"y": 321.64,
+"w": 56.4,
+"h": 11.76,
+"size": 12,
+"bold": false,
+"col": "#e6e1d3"
+},
+{
+"text": "Fire",
+"x": 586,
+"y": 339.64,
+"w": 22.56,
+"h": 11.76,
+"size": 12,
+"bold": false,
+"col": "#b3ad9e"
+},
+{
+"text": "Common",
+"x": 630,
+"y": 360.64,
+"w": 35.8704,
+"h": 11.76,
+"size": 12,
+"bold": true,
+"col": "#c7c1b3"
+},
+{
+"text": "GL 53",
+"x": 712.108,
+"y": 360.64,
+"w": 29.892,
+"h": 11.76,
+"size": 12,
+"bold": false,
+"col": "#e6e1d3"
+},
+{
+"text": "Traits",
+"x": 586,
+"y": 383.42,
+"w": 32.8812,
+"h": 10.78,
+"size": 11,
+"bold": true,
+"col": "#b3ad9e"
+},
+{
+"text": "Partner Aggro",
+"x": 586,
+"y": 400.64,
+"w": 77.7192,
+"h": 11.76,
+"size": 12,
+"bold": false,
+"col": "#e6e1d3"
+},
+{
+"text": "Hire 50 g",
+"x": 634.8552999999999,
+"y": 456.54,
+"w": 58.2894,
+"h": 12.74,
+"size": 13,
+"bold": true,
+"col": "#e6e1d3"
+},
+{
+"text": "Valen",
+"x": 770,
+"y": 295.96,
+"w": 47.7,
+"h": 17.64,
+"size": 18,
+"bold": true,
+"col": "#e6e1d3"
+},
+{
+"text": "Night Elf Hunter",
+"x": 790,
+"y": 321.64,
+"w": 90.24,
+"h": 11.76,
+"size": 12,
+"bold": false,
+"col": "#e6e1d3"
+},
+{
+"text": "Survival",
+"x": 770,
+"y": 339.64,
+"w": 45.12,
+"h": 11.76,
+"size": 12,
+"bold": false,
+"col": "#b3ad9e"
+},
+{
+"text": "Common",
+"x": 814,
+"y": 360.64,
+"w": 35.8704,
+"h": 11.76,
+"size": 12,
+"bold": true,
+"col": "#c7c1b3"
+},
+{
+"text": "GL 54",
+"x": 896.108,
+"y": 360.64,
+"w": 29.892,
+"h": 11.76,
+"size": 12,
+"bold": false,
+"col": "#e6e1d3"
+},
+{
+"text": "Traits",
+"x": 770,
+"y": 383.42,
+"w": 32.8812,
+"h": 10.78,
+"size": 11,
+"bold": true,
+"col": "#b3ad9e"
+},
+{
+"text": "Pet on Aggressive",
+"x": 770,
+"y": 400.64,
+"w": 101.6328,
+"h": 11.76,
+"size": 12,
+"bold": false,
+"col": "#e6e1d3"
+},
+{
+"text": "Hire 50 g",
+"x": 818.8552999999999,
+"y": 456.54,
+"w": 58.2894,
+"h": 12.74,
+"size": 13,
+"bold": true,
+"col": "#e6e1d3"
+},
+{
+"text": "Roster 13 / 15. Hired raiders start at morale 70 and count as new for 2 weeks (Pug Hero likes that).",
+"x": 48,
+"y": 501.03,
+"w": 540.5,
+"h": 11.27,
+"size": 11.5,
+"bold": false,
+"col": "#b3ad9e"
+}
+]

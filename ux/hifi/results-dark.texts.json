@@ -1,0 +1,282 @@
+[
+{
+"text": "Flight Path Raiders",
+"x": 30,
+"y": 26.84,
+"w": 221.54000000000002,
+"h": 21.56,
+"size": 22,
+"bold": true,
+"col": "#e6e1d3"
+},
+{
+"text": "/ Result \u00b7 Ragnaroast (Heroic)",
+"x": 232,
+"y": 30.740000000000002,
+"w": 255.0,
+"h": 16.66,
+"size": 17,
+"bold": false,
+"col": "#b3ad9e"
+},
+{
+"text": "100%",
+"x": 729.44,
+"y": 32.64,
+"w": 22.56,
+"h": 11.76,
+"size": 12,
+"bold": false,
+"col": "#b3ad9e"
+},
+{
+"text": "Wipe in round 15",
+"x": 44,
+"y": 119.72,
+"w": 220.48000000000002,
+"h": 25.48,
+"size": 26,
+"bold": true,
+"col": "#e6e1d3"
+},
+{
+"text": "Ragnaroast at 31%",
+"x": 805.8978,
+"y": 121.86,
+"w": 110.1022,
+"h": 12.74,
+"size": 13,
+"bold": true,
+"col": "#e6e1d3"
+},
+{
+"text": "Every tank and healer is down",
+"x": 752.44,
+"y": 140.64,
+"w": 163.56,
+"h": 11.76,
+"size": 12,
+"bold": false,
+"col": "#b3ad9e"
+},
+{
+"text": "\u201cIs that your healer or a decorative candle?\u201d",
+"x": 44,
+"y": 181.86,
+"w": 274.95,
+"h": 12.74,
+"size": 13,
+"bold": false,
+"col": "#e6e1d3"
+},
+{
+"text": "WHAT HAPPENED",
+"x": 42,
+"y": 217.42,
+"w": 71.2426,
+"h": 10.78,
+"size": 11,
+"bold": true,
+"col": "#f0b44c"
+},
+{
+"text": "3 died to fire: the lava, Magma Splash and the fire adds.",
+"x": 42,
+"y": 237.47,
+"w": 383.3649,
+"h": 13.23,
+"size": 13.5,
+"bold": false,
+"col": "#e6e1d3"
+},
+{
+"text": "Raid leader: \u201cWe\u2019re melting. Literally.\u201d",
+"x": 42,
+"y": 263.86,
+"w": 244.39999999999998,
+"h": 12.74,
+"size": 13,
+"bold": false,
+"col": "#e6e1d3"
+},
+{
+"text": "Your raid is close to working it out.",
+"x": 42,
+"y": 290.64,
+"w": 208.67999999999998,
+"h": 11.76,
+"size": 12,
+"bold": false,
+"col": "#b3ad9e"
+},
+{
+"text": "New in the journal: Magma Splash, Sinks and sends adds",
+"x": 64,
+"y": 315.64,
+"w": 322.83360000000005,
+"h": 11.76,
+"size": 12,
+"bold": false,
+"col": "#e6e1d3"
+},
+{
+"text": "Gold",
+"x": 24,
+"y": 352.3,
+"w": 31.8,
+"h": 14.7,
+"size": 15,
+"bold": true,
+"col": "#e6e1d3"
+},
+{
+"text": "Prep -150 \u00b7 Repairs waived: first wipe this week (62 gold)",
+"x": 24,
+"y": 374.64,
+"w": 327.12,
+"h": 11.76,
+"size": 12,
+"bold": false,
+"col": "#e6e1d3"
+},
+{
+"text": "Getting better",
+"x": 24,
+"y": 400.3,
+"w": 111.30000000000001,
+"h": 14.7,
+"size": 15,
+"bold": true,
+"col": "#e6e1d3"
+},
+{
+"text": "Skill +0.6 \u00b7 knows Ragnaroast +0.3 \u00b7 chemistry +0.4",
+"x": 24,
+"y": 422.64,
+"w": 287.64,
+"h": 11.76,
+"size": 12,
+"bold": false,
+"col": "#e6e1d3"
+},
+{
+"text": "Morale",
+"x": 24,
+"y": 448.3,
+"w": 47.7,
+"h": 14.7,
+"size": 15,
+"bold": true,
+"col": "#e6e1d3"
+},
+{
+"text": "Wipe: 10 raiders -3 \u00b7 Backseat raid leading: 9 raiders -2",
+"x": 24,
+"y": 470.64,
+"w": 321.47999999999996,
+"h": 11.76,
+"size": 12,
+"bold": false,
+"col": "#e6e1d3"
+},
+{
+"text": "Rook 18: may quit at the end of the week",
+"x": 46,
+"y": 495.64,
+"w": 239.136,
+"h": 11.76,
+"size": 12,
+"bold": true,
+"col": "#ff7b6e"
+},
+{
+"text": "Replay that pull",
+"x": 618,
+"y": 219.52,
+"w": 135.68,
+"h": 15.68,
+"size": 16,
+"bold": true,
+"col": "#e6e1d3"
+},
+{
+"text": "The exact same pull with another card.",
+"x": 618,
+"y": 244.64,
+"w": 214.32,
+"h": 11.76,
+"size": 12,
+"bold": false,
+"col": "#b3ad9e"
+},
+{
+"text": "Nothing is won or lost. Once per boss a week.",
+"x": 618,
+"y": 260.64,
+"w": 253.79999999999998,
+"h": 11.76,
+"size": 12,
+"bold": false,
+"col": "#b3ad9e"
+},
+{
+"text": "Spread",
+"x": 646.5702,
+"y": 296.54,
+"w": 38.8596,
+"h": 12.74,
+"size": 13,
+"bold": true,
+"col": "#e6e1d3"
+},
+{
+"text": "Stack",
+"x": 753.8085,
+"y": 296.54,
+"w": 32.382999999999996,
+"h": 12.74,
+"size": 13,
+"bold": true,
+"col": "#e6e1d3"
+},
+{
+"text": "Play Safe",
+"x": 844.8552999999999,
+"y": 296.54,
+"w": 58.2894,
+"h": 12.74,
+"size": 13,
+"bold": true,
+"col": "#e6e1d3"
+},
+{
+"text": "Pull again",
+"x": 622.0,
+"y": 483.59999999999997,
+"w": 106.0,
+"h": 19.6,
+"size": 20,
+"bold": true,
+"col": "#ffe9d6"
+},
+{
+"text": "Change plan",
+"x": 777.3787,
+"y": 485.54,
+"w": 71.2426,
+"h": 12.74,
+"size": 13,
+"bold": true,
+"col": "#e6e1d3"
+},
+{
+"text": "Hub",
+"x": 896.2851,
+"y": 485.54,
+"w": 19.4298,
+"h": 12.74,
+"size": 13,
+"bold": true,
+"col": "#e6e1d3"
+}
+]
