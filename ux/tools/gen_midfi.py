@@ -222,7 +222,7 @@ r.note(1,934,58)
 r.text(20,154,"Loot",15,700)
 items=[("Roasting Spit of the Tryhard","Epic · Weapon · Agility · BoP",4,"Kess (+6 GL)"),
        ("Molten Bulwark Pauldrons","Rare · Plate · Warrior set 1/3 · BoP",3,"Brannoc (+4 GL)"),
-       ("Robe of Questionable Pulls","Rare · Cloth · BoE · no cloth user",3,"Bank  (26/28)")]
+       ("Robe of Questionable Pulls","Rare · Cloth · BoE · no cloth user",3,"Bank  (14/16)")]
 for i,(nm,meta,q,who) in enumerate(items):
     y=166+i*62
     r.rect(20,y,520,54,fill=PAPER,stroke=LINE,r=6)
@@ -309,46 +309,54 @@ frames.append(("landing",l,["Same logic as low-fi at real sizes. Countdown defau
 g=S(W,H,"Guild bank")
 g.frame("Guild Bank")
 g.text(20,70,"The Guild Hoard",17,700)
-g.text(178,70,"Gear only. Bound items stay on characters.",12,400,MUTED)
-g.rect(640,50,300,30,fill=FILL,stroke=INK,r=15)
-g.text(656,70,"✉ Mailbox 3",13,700); g.text(756,70,"oldest auto-sells in 2 days",12,400,MUTED)
+g.text(178,70,"Unlocked at level 60. Gear and consumables share the slots.",12,400,MUTED)
+g.rect(660,50,280,30,fill=FILL,stroke=INK,r=15)
+g.text(676,70,"✉ Mailbox 2 / 5",13,700); g.text(800,70,"oldest sells in 3 d",12,400,MUTED)
 g.note(1,940,48)
-tabs=[("Tab 1",  "26 / 28",True,False),("Tab 2","Buy: 3 h of play",False,False),("Tab 3","Unlocks after Tab 2",False,True),("Tab 4","Unlocks after Tab 3",False,True)]
+tabs=[("Tab 1","14 / 16",True,False),("Tab 2","Buy: 6 h of play",False,False)]
 for i,(a,b_,sel,lock) in enumerate(tabs):
     x=20+i*150
-    g.rect(x,90,142,44,fill=INK if sel else PAPER,stroke=INK if not lock else LINE,r=6,dash=lock)
-    g.text(x+12,108,("🔒 " if lock else "")+a,13,700,PAPER if sel else (MUTED if lock else INK))
-    g.text(x+12,125,b_,11,500 if sel else 400,PAPER if sel else MUTED)
-g.text(624,108,"Slots",12,600,MUTED); g.bar(624,116,170,12,26/28,INK); g.text(804,127,"26 / 28",13,700)
+    g.rect(x,90,142,44,fill=INK if sel else PAPER,stroke=INK,r=6)
+    g.text(x+12,108,a,13,700,PAPER if sel else INK); g.text(x+12,125,b_,11,500 if sel else 400,PAPER if sel else MUTED)
+g.text(330,108,"Max 2 tabs, 32 slots",12,600,MUTED); g.text(330,125,"Poor-quality junk auto-sells, never uses a slot",11,400,MUTED)
 g.note(2,612,92)
-# filters
-for i,f in enumerate(["All","Weapon","Plate","Mail","Leather","Cloth","Trinket"]):
-    w=[44,70,56,52,72,56,66][i]; x=20+sum([44,70,56,52,72,56,66][:i])+i*6
-    g.rect(x,146,w,26,fill=INK if i==0 else PAPER,stroke=INK,r=13)
-    g.text(x+w/2,163,f,11,600,PAPER if i==0 else INK,"middle")
-g.text(590,163,"Sort: gear level ▾",12,600,INK,"end")
-# grid 7x4
-types=["BoE"]*26
-gls=[58,57,57,56,56,55,55,54,54,54,53,53,52,52,51,51,50,50,49,48,48,47,46,45,44,42]
-for i in range(28):
-    c,rw=i%7,i//7; x=20+c*82; y=182+rw*72
-    sel=(i==1)
-    if i<26:
-        g.rect(x,y,76,64,fill=PAPER,stroke=INK if sel else LINE,r=6,sw=2.5 if sel else 1)
+for i,(f,w) in enumerate([("All",44),("Gear",56),("Consumables",104)]):
+    x=20+sum([44,56,104][:i])+i*6
+    g.rect(x,146,w,26,fill=INK if i==0 else PAPER,stroke=INK,r=13); g.text(x+w/2,163,f,11,600,PAPER if i==0 else INK,"middle")
+g.text(590,163,"Sort: type, then gear level ▾",12,600,INK,"end")
+items=[("Chainmail of the Pug Leader","BoE · Rare · Mail","GL 57",3,"g"),
+       ("Bracers of Mild Concern","BoE · Uncommon · Plate","GL 55",2,"g"),
+       ("Wand of Last Resort","BoE · Uncommon · Wand","GL 54",2,"g"),
+       ("Hand-me-down Hauberk","BoE · Common · Mail","GL 48",1,"c"),
+       ("Slightly Used Robe","BoE · Common · Cloth","GL 47",1,"c"),
+       ("Loaner Shield","BoE · Common · Plate","GL 46",1,"c"),
+       ("Fire Resistance Potion","Consumable","× 5",0,"k"),
+       ("Fire Resistance Potion","Consumable","× 3",0,"k"),
+       ("Flask of Big Numbers","Consumable","× 2",0,"k"),
+       ("Elixir of Not Standing In It","Consumable","× 5",0,"k"),
+       ("Conjured Raid Snacks","Consumable","× 4",0,"k"),
+       ("Tome of Respec","Consumable","× 1",0,"k"),
+       ("Ring of the Bench","BoE · Uncommon · Trinket","GL 53",2,"g"),
+       ("Kilt of Questionable Taste","BoE · Common · Leather","GL 45",1,"c")]
+for i in range(16):
+    c,rw=i%4,i//4; x=20+c*144; y=182+rw*74
+    if i<len(items):
+        nm,meta,gl,q,k=items[i]; sel=(i==0)
+        g.rect(x,y,138,68,fill=PAPER,stroke=INK if sel else LINE,r=6,sw=2.5 if sel else 1)
         g.rect(x+6,y+6,30,30,fill=FILL2,stroke=LINE,r=3)
-        g.text(x+70,y+19,"BoE",10,700,INK,"end")
-        g.text(x+70,y+34,f"GL {gls[i]}",11,600,INK,"end")
-        g.pips(x+8,y+52,[4,3,3,3,2,3,2,2,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2][i])
-        if gls[i]<46: g.text(x+70,y+56,"old",10,600,MUTED,"end")
+        if k=="k": g.text(x+21,y+26,"⚗",14,600,MUTED,"middle")
+        g.text(x+132,y+20,gl,12,700,INK,"end")
+        short=nm if len(nm)<=18 else nm[:17]+"…"
+        g.text(x+8,y+50,short,11,600); g.text(x+8,y+63,meta,10,400,MUTED)
+        if k=="c": g.text(x+42,y+20,"starter",10,700,MUTED)
+        if q: g.pips(x+44,y+32,q)
     else:
-        g.rect(x,y,76,64,fill=PAPER,stroke=LINE,r=6,dash=True)
-        g.text(x+38,y+37,"empty",11,400,MUTED,"middle")
+        g.rect(x,y,138,68,fill=PAPER,stroke=LINE,r=6,dash=True); g.text(x+69,y+39,"empty",11,400,MUTED,"middle")
 g.note(3,592,180)
-# detail panel
 g.rect(608,146,332,330,fill=FILL,stroke=LINE,r=8)
 g.img(622,160,52,52)
 g.text(686,178,"Chainmail of the Pug Leader",14,700)
-g.text(686,196,"Rare · Mail · Armor · GL 57",12,400,MUTED); g.pips(686,207,3)
+g.text(686,196,"Rare · Mail · Armor · GL 57 · req. level 58",12,400,MUTED); g.pips(686,207,3)
 g.rect(622,222,140,24,fill=PAPER,stroke=INK,r=12); g.text(692,239,"◇ Bind on Equip",12,700,INK,"middle")
 g.text(622,272,"+14 Agility   +9 Stamina   of the Monkey",12,500)
 g.text(622,300,"Fits: Orrin (Hunter), Ash (Shaman)",12,600)
@@ -356,21 +364,32 @@ g.text(622,320,"Best upgrade: Orrin, +3 GL",12,400,MUTED)
 g.btn(622,334,200,36,"Equip on Orrin",True)
 g.rect(830,334,96,36,fill=PAPER,stroke=INK,r=5); g.text(878,357,"Other ▾",12,600,INK,"middle")
 g.text(622,392,"Equipping binds it to that character.",12,400,INK,italic=True)
-g.btn(622,408,140,34,"Sell  (11 g)"); g.text(774,430,"Sells at 20% of value",11,400,MUTED)
-g.text(622,464,"Price check: worth more equipped than sold.",11,400,MUTED,italic=True)
+g.btn(622,408,140,34,"Sell  (11 g)"); g.text(774,430,"20% of value, no buyback",11,400,MUTED)
 g.note(4,940,150)
-# bottom strip
 g.rect(20,482,580,46,fill=PAPER,stroke=LINE,r=6)
 g.text(32,500,"Quest items (no slot used)",12,700)
 g.text(32,518,"Thunderflurry half: Magmadad  ·  Drakefire Amulet (attunement)",12,400,MUTED)
-g.btn(608,486,160,38,"Sell all 'old' (3)"); g.btn(778,486,162,38,"Open mailbox (3)")
+g.btn(608,486,160,38,"Sell all starter (4)"); g.btn(778,486,162,38,"Open mailbox (2)")
 g.note(5,600,484)
 frames.append(("bank",g,[
- "Overflow goes to the mailbox (Director, option A). The chip says how many items wait and when the oldest auto-sells, so nothing disappears silently.",
- "Tuning: tabs of 28 slots. Tab 1 is free; Tabs 2-4 cost 3, 8 and 20 hours of play at level 60 (gold set against the economy table in the prototype). Capacity is always text, never just a bar.",
- "7 by 4 grid, 76 x 64 slots. Every item shows BoE, gear level and quality pips; items two steps below the current tier are marked 'old'.",
- "Detail panel answers 'who can use this?' first and offers one-click equip on the best upgrade. Binding is spelled out, plus a warning that equipping binds it.",
- "Quest items (legendary halves, attunement pieces) never use slots, so a full bank can't block progress. 'Sell all old' clears space in one click."]))
+ "Mailbox holds at most 5 overflow items and auto-sells each after 7 days; beyond 5, overflow sells at once. The chip shows count and the next sale.",
+ "Tuning: the bank unlocks at roster average level 60 plus a first Normal raid kill, as a guild hall upgrade (about 2 h of play at 60). Tab 1 has 16 slots; Tab 2 adds 16 for about 6 h. 32 is the cap. Poor junk auto-sells.",
+ "4 by 4 grid with names on every slot. Consumables stack 5 per slot and compete with gear. Common 'starter' gear is labelled as such so nobody mistakes it for an upgrade.",
+ "Detail panel shows the required level (a fresh 55 can't wear 58 gear), who it fits, and one-click equip. Equipping binds it.",
+ "Quest items never use slots. 'Sell all starter' clears Common gear in one click once the roster has outgrown it."]))
+
+# ---------- Guild bank, locked ----------
+gl_=S(480,240,"Guild bank (locked)")
+gl_.rect(0.75,0.75,478.5,238.5,fill=PAPER,stroke=INK,r=10,sw=1.5)
+gl_.text(24,42,"🔒 Guild Bank",18,700)
+gl_.text(24,66,"An end-game upgrade for your guild hall.",12,400,MUTED)
+gl_.text(24,100,"☑  Roster average level 60   (60.4)",13,600)
+gl_.text(24,126,"☐  Kill your first Normal raid boss",13,600)
+gl_.text(24,152,"☐  Upgrade cost: about 2 h of play at 60",13,600)
+gl_.text(24,190,"Until then, BoE drops are equipped or sold on the results screen.",11,400,MUTED)
+gl_.btn(24,200,180,30,"Go to guild hall")
+gl_.note(1,462,108)
+frames.append(("bank-locked",gl_,["Locked state lists every requirement as a checklist with your current value, so the goal is clear before the bank exists."]))
 
 for slug,s,notes in frames:
     open(f"{OUT}/{slug}.svg","w").write(s.svg())

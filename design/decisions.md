@@ -4,6 +4,9 @@ Decisions made by the Game Director. Newest first.
 
 | Date | Area | Decision |
 | --- | --- | --- |
+| 2026-11-18 | Art / UX | Mid-fi wireframes approved as the hi-fi base; Art handoff brief in ux/art-handoff (stage ground plane first) |
+| 2026-11-18 | Loot | Trash loot: Poor junk auto-sells; Common starter gear is BoE, about 10 GL below current content, labelled "starter" |
+| 2026-11-18 | Tuning | Guild Bank revised: end-game unlock (avg level 60 + first Normal raid kill, about 2 h of play); 16 + 16 slots, cap 32; consumables stack 5 per slot; BoE 1 in 8, never from raid bosses; required levels; 20% sell value, no buyback; mailbox max 5 |
 | 2026-11-18 | Loot / Tuning | BoP boss drops, about 1 in 5 other drops BoE (one step below current raid BoP). Guild Bank: own roster only, no player trading; tabs of 28 slots, Tab 1 free, Tabs 2-4 at 3 / 8 / 20 hours of play at 60; quest items use no slots. Full bank: overflow mailbox, auto-sell after 7 days (Director chose A). New mid-fi Guild Bank screen |
 | 2026-11-18 | UX | Director's UI scale measured at 0.64 (about 1.2 px per UI unit at 1440p). 960 x 540 becomes the design grid; in-game default size is about 70% of screen width at 16:9, so it matches the approved map-sized frame on any UI scale. Mid-fi wireframes drawn, low-fi moved to ux/wireframes/low-fi |
 | 2026-11-18 | UX | Board goes wide: 960 x 540 UI units (16:9) by default, about the size of the world map; scale slider 70-120%, movable, position saved per character. Extra width goes to the playback stage for Art |

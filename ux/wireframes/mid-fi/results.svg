@@ -60,7 +60,7 @@
 <circle cx="327" cy="309" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
 <circle cx="336" cy="309" r="3.2" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
 <rect x="356" y="302" width="172" height="30" rx="5" fill="#eef1f4" stroke="#222a33" stroke-width="1"/>
-<text x="368" y="322" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="start">Bank  (26/28)</text>
+<text x="368" y="322" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="start">Bank  (14/16)</text>
 <text x="518" y="322" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="end">▾</text>
 <circle cx="536" cy="160" r="11" fill="#2f6fd6"/>
 <text x="536" y="164.5" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
