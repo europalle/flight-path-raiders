@@ -308,7 +308,7 @@ wire.tavern = () => {
 function vJournal() {
   return G.BOSSES.map(b => {
     const j = S.journal[b.id] || {}; const p = S.progress[b.id];
-    const learned = Object.keys(S.lessons).filter(k => k.startsWith(b.id + ":") && S.lessons[k] >= 4).map(k => k.split(":")[1]);
+    const learned = Object.keys(S.lessonTier || {}).filter(k => k.startsWith(b.id + ":") && S.lessonTier[k] >= 2).map(k => k.split(":")[1]);
     const ans = (G.LESSONS[b.id] || []).filter(l => learned.includes(l.id)).map(l => `<p class="small">&#10003; ${esc(l.t[2])}</p>`).join("");
     return `<div class="panel"><div class="row" style="gap:12px"><div class="sigil">${bossSigil(b.id)}</div><div><h2 style="margin:0">${esc(b.name)}</h2>
       <div class="small muted">${p.pulls ? `${p.pulls} pull${p.pulls > 1 ? "s" : ""}, ${p.normalKills} Normal kill${p.normalKills === 1 ? "" : "s"}, ${p.heroicKills} Heroic` : "Not met yet"}</div></div></div>

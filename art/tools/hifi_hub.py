@@ -1,5 +1,5 @@
 """Hi-fi hub, light (Field Journal) and dark (Midnight Grimoire), assembled from the Gemini kit.
-Writes ux/hifi/hub-<theme>.svg on the 960 x 540 design grid, with the fonts embedded, plus a no-text
+Writes ux/hifi/hub-full-<theme>.svg (the full-game hub, the target for Phase 4; the slice hub is in hifi_screens.py) on the 960 x 540 design grid, with the fonts embedded, plus a no-text
 version and a list of text boxes so art/tools/check_contrast.py can measure every line.
 Usage: python3 art/tools/hifi_hub.py
 
@@ -179,9 +179,9 @@ def build(theme, notext=False):
            f'<title>Flight Path Raiders hub, {T["name"]}</title><style>{font_css()}</style>'
            f'<defs>{"".join(defs)}</defs>{"".join(out)}</svg>')
     suffix = "-notext" if notext else ""
-    path = os.path.join(ROOT, f"ux/hifi/hub-{theme}{suffix}.svg"); open(path, "w").write(svg)
+    path = os.path.join(ROOT, f"ux/hifi/hub-full-{theme}{suffix}.svg"); open(path, "w").write(svg)
     if not notext:
-        json.dump(texts, open(os.path.join(ROOT, f"ux/hifi/hub-{theme}.texts.json"), "w"), indent=0)
+        json.dump(texts, open(os.path.join(ROOT, f"ux/hifi/hub-full-{theme}.texts.json"), "w"), indent=0)
         print(os.path.relpath(path, ROOT), len(svg) // 1024, "KB")
 
 if __name__ == "__main__":

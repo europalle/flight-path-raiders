@@ -30,7 +30,7 @@ for (let g = 0; g < 25; g++) {
         check('frames, one per round', out.run.frames.length === out.run.rounds, [out.run.frames.length, out.run.rounds]);
         if (out.result === 'kill' && mode === 'normal') check('Normal loot only on the first kill of the week', (out.loot.length === 2) === firstWeek, [firstWeek, out.loot.length]);
         if (out.result !== 'kill') check('a wipe has a recap lesson', out.lesson && out.lesson.text && !/\{/.test(out.lesson.text), out.lesson);
-        for (const l of [out.lesson, out.note]) if (l) check('the recap never gives the answer before two wipes on that lesson', l.tier < 2 || l.seen >= 3, l);
+        for (const l of [out.lesson, out.note]) if (l) check('the recap never gives the answer before two wipes on that lesson', l.tier < 2 || l.wipes >= 2, l);
         if (out.note) check('a kill note has text', out.note.text && !/\{/.test(out.note.text), out.note);
         check('loot goes to the pending list', (st.pending || []).length === pendBefore + out.loot.length, 'pending');
         if (mode === 'heroic') {

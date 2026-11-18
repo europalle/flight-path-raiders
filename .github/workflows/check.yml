@@ -8,7 +8,7 @@ jobs:
       - uses: actions/setup-python@v5
         with: { python-version: "3.12" }
       - uses: actions/setup-node@v4
-        with: { node-version: "20" }
+        with: { node-version: "22" }
       - run: pip install lupa==2.4 numpy pillow
       - run: npm install --prefix /tmp/fen fengari@0.1.5
       - name: Lua 5.1, LuaJIT and Fengari agree, and results match the saved golden file
@@ -19,7 +19,9 @@ jobs:
         run: FENGARI=/tmp/fen/node_modules/fengari node tools/playtest_qa.js
       - name: Addon loads and runs its self-test in Lua 5.1 with a WoW API stand-in
         run: python3 tools/build_addon.py && python3 tests/addon_test.py
-      - name: Addon screens drawn headless pass the contrast check (both themes)
-        run: python3 tools/addon_shot.py /tmp/shots
+      - name: Addon screens drawn headless pass the contrast check (both themes, 70% and 120%)
+        run: python3 tools/addon_shot.py
+      - name: Addon screens match the hi-fi layout (fixed labels within 2 units)
+        run: python3 tools/layout_compare.py --strict
       - name: Learning path gate (learner bot within 2 weeks of the smart bot in 70% of guilds)
         run: FENGARI=/tmp/fen/node_modules/fengari python3 tools/gate_learning.py

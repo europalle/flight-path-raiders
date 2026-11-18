@@ -59,7 +59,7 @@
     }
     // Lua's encoder writes an empty table as []; fix the few maps that start empty.
     function norm(st) {
-      for (const k of ["bonds", "buffs", "journal", "lessons", "replays", "freeWipe", "lastPrep"]) if (Array.isArray(st[k])) st[k] = {};
+      for (const k of ["bonds", "buffs", "journal", "lessons", "lessonWipes", "lessonTier", "replays", "freeWipe", "lastPrep"]) if (Array.isArray(st[k])) st[k] = {};
       for (const c of st.roster.concat(st.tavern || [])) { if (Array.isArray(c.fam10)) c.fam10 = {}; if (Array.isArray(c.pulls)) c.pulls = {}; }
       for (const b in st.journal) if (Array.isArray(st.journal[b])) st.journal[b] = {};
       return st;

@@ -7,7 +7,7 @@ ns.Core = Core
 local SAVE_VERSION = 2
 local DEFAULTS = {
   version = SAVE_VERSION,
-  settings = { scale = 1.0, theme = "auto", point = nil, playback = "animated", speed = 1, sound = true },
+  settings = { scale = 1.0, theme = "auto", point = nil, playback = "animated", speed = 1, sound = true, keys = true },
   guild = nil,          -- the game state (engine/game.lua), created on first open; one guild per account (design doc)
 }
 

@@ -28,6 +28,37 @@ CARDS = [("Spread", "Splash hits one character", "healing -10%"), ("Stack", "Hea
 
 def morale_col(T, m): return T["bad"] if m < 20 else T["warn"] if m < 40 else T["good"] if m >= 80 else T["ink"]
 
+# ------------------------------------------------------------------ hub (the slice's hub; the full-game hub is hifi_hub.py)
+def hub(b):
+    T = b.T
+    b.chrome("Hub", nav="Hub", purse=("Week 4", "312", "85 DKP"))
+    b.panel(24, 100, 912, 150)
+    b.boss_scene(40, 114, 210, 122, boss_h=110)
+    b.hand(270, 138, "Next: Ragnaroast (Heroic)", 20)
+    b.text(270, 161, "Boss 5 of 5 · 9 ready, 1 benched until reset", 12.5, T["muted"])
+    b.text(270, 183, "Last pull: Ragnaroast, wipe, boss at 31%.", 12.5)
+    b.button(756, 146, 162, 62, "Prep pull", "primary", 20)
+    b.hand(24, 276, "The Molten Bore", 16)
+    states = [("Magmadad", "N done · H done"), ("Baron Get-Down", "N done · H done"), ("Lucifrown", "N done · H 2 wipes"),
+              ("Majordomo Exhaustus", "N done · H done"), ("Ragnaroast", "N done · H open")]
+    for i, (n, st_) in enumerate(states):
+        y = 286 + i * 40
+        b.rect(24, y, 440, 34, T["row"], T["rule"], 1)
+        b.text(36, y + 22, n, 13)
+        b.text(190, y + 22, st_, 11.5, T["muted"])
+        b.button(330, y + 3, 60, 28, "Normal", size=11.5)
+        b.button(396, y + 3, 60, 28, "Heroic", size=11.5)
+    b.hand(484, 276, "This week", 16)
+    b.button(484, 286, 220, 40, "Quick dungeon (5 left)", size=13)
+    b.button(712, 286, 224, 40, "Loot waiting: 2", size=13)
+    b.button(484, 334, 220, 40, "End the week", size=13)
+    b.text(712, 357, "Heroic score: 3,240 (best 3,240)", 12, T["muted"])
+    b.rect(484, 388, 452, 40, T["row"], T["warn"], 1.2)
+    b.icon("C2-11.png", 502, 408, ICON_INLINE)
+    b.text(516, 401, "1 low on morale: Rook 18", 12.5)
+    b.text(516, 419, "Under 20 they may quit at the end of the week.", 11, T["muted"])
+    b.text(484, 449, "Week 4. Lockouts reset, benched raiders are back, +300 gold from the week's quests.", 11.5, T["muted"])
+
 # ------------------------------------------------------------------ prep
 def prep(b):
     T = b.T
@@ -367,14 +398,12 @@ def settings(b):
     label(140, "Theme", "Auto follows the time of day")
     seg(440, 120, ["Field Journal", "Midnight", "Auto"], 2 if False else (0 if b.theme == "light" else 1), 136)
     label(196, "Size", "Same as /fpr scale")
-    b.rect(440, 186, 300, 4, T["rule"], r=2); b.rect(440, 186, 180, 4, T["accent"], r=2)
-    b.add(f'<circle cx="620" cy="188" r="10" fill="{T["row"]}" stroke="{T["accent"]}" stroke-width="2.5"/>')
-    b.text(440, 214, "70%", 11, T["muted"]); b.text(740, 214, "120%", 11, T["muted"], anchor="end"); b.text(760, 193, "100%", 14, weight=700)
+    b.button(440, 178, 40, 30, "-", size=13); b.text(516, 197, "100%", 14, weight=700, anchor="middle"); b.button(552, 178, 40, 30, "+", size=13)
     label(250, "Position", "Lost it? /fpr reset")
-    b.button(440, 232, 150, 36, "Unlock and drag", size=12.5); b.button(598, 232, 140, 36, "Reset to centre", size=12.5)
+    b.button(440, 232, 150, 36, "Reset to centre", size=12.5)
     b.hand(262, 306, "Playback", 18)
-    label(342, "Motion", "Reduced holds the stage still")
-    seg(440, 322, ["Full", "Reduced", "Summary only"], 0, 120)
+    label(342, "Motion", "Summary only skips playback")
+    seg(440, 322, ["Full", "Summary only"], 0, 120)
     label(398, "Speed")
     seg(440, 380, ["×1", "×2", "×4"], 1, 64)
     b.hand(262, 452, "Checks", 18)
@@ -383,8 +412,8 @@ def settings(b):
     b.text(602, 486, "Last run: passed, engine 10", 12, T["good"], weight=700)
     b.button(820, 466, 96, 40, "Done", "primary", 19)
 
-SCREENS = {"prep": prep, "playback": playback, "results": results, "loot": loot, "roster": roster, "tavern": tavern, "journal": journal, "settings": settings}
-TITLES = {"prep": "prep", "playback": "playback", "results": "results, wipe", "loot": "results, loot window", "roster": "roster", "tavern": "tavern", "journal": "journal", "settings": "settings"}
+SCREENS = {"hub": hub, "prep": prep, "playback": playback, "results": results, "loot": loot, "roster": roster, "tavern": tavern, "journal": journal, "settings": settings}
+TITLES = {"hub": "hub", "prep": "prep", "playback": "playback", "results": "results, wipe", "loot": "results, loot window", "roster": "roster", "tavern": "tavern", "journal": "journal", "settings": "settings"}
 
 def png(paths):
     from playwright.sync_api import sync_playwright

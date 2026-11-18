@@ -345,7 +345,7 @@ end
 
 function G.NewGame(seed)
   local st = { v = 3, seed = seed, rng = (seed % 2147483646) + 1, week = 1, gold = G.ECON.startGold, dkp = 0, nextId = 1,
-    roster = {}, bonds = {}, buffs = {}, journal = {}, lessons = {}, progress = {}, history = {}, pending = {}, dungeonsLeft = G.ECON.dungeon.perWeek,
+    roster = {}, bonds = {}, buffs = {}, journal = {}, lessons = {}, lessonWipes = {}, lessonTier = {}, progress = {}, history = {}, pending = {}, dungeonsLeft = G.ECON.dungeon.perWeek,
     rerolls = 0, replays = {}, pulls = 0, news = {}, score = { kills = 0, wipes = 0, rounds = 0 }, bestScore = 0, freeWipe = {}, lastPrep = {} }
   -- A sensible but uneven starting guild: 2 tanks, 3 healers, 7 damage dealers, mostly common.
   local start = { { "warrior", "protection", "rare" }, { "paladin", "protection", "common" }, { "priest", "holy", "rare" }, { "shaman", "restoration", "common" },
@@ -461,7 +461,14 @@ function G.PrepCost(st, prep)
   end
   return { gold = g, items = items }
 end
+-- Someone may have quit since the plan was made; on Heroic, whoever died is benched and the raid pulls again
+-- with whoever is left (design doc 4.5), so benched raiders leave the plan.
+function G.CleanPrep(st, prep)
+  prep.ids = filter(prep.ids, function(id) local c = byId(st, id) return c ~= nil and not (prep.mode == "heroic" and c.benched) end)
+  return prep
+end
 function G.Problems(st, prep)
+  G.CleanPrep(st, prep)
   local out = {}
   local p = st.progress[prep.boss]
   if not G.unlocked(st, prep.boss, prep.mode) then out[#out + 1] = "Locked: kill the boss before it first" .. ((prep.mode == "heroic") and " (and Ragnaroast on Normal for Heroic)" or "") .. "." end
@@ -572,14 +579,21 @@ local function lessonFor(st, prep, f, onKill)
   local key = prep.boss .. ":" .. L.id
   local seen = (st.lessons[key] or 0) + 1
   st.lessons[key] = seen
+  -- Wipes on this lesson are counted on their own: kill notes ("you won, but...") never count toward the answer.
+  st.lessonWipes = st.lessonWipes or {}
+  st.lessonTier = st.lessonTier or {}
+  if not onKill then st.lessonWipes[key] = (st.lessonWipes[key] or 0) + 1 end
+  local wipes = st.lessonWipes[key] or 0
   local fam = G.famAvg(st, prep.ids, prep.boss)
   -- Tier: whichever is further along, how often this lesson came up or how well the raid knows the boss.
   local bySeen = (seen >= 4) and 2 or ((seen >= 2) and 1 or 0)
   local byFam = (fam >= 6) and 2 or ((fam >= 3) and 1 or 0)
   local tier = math.min(2, math.max(bySeen, byFam))
-  -- The answer itself waits for two wipes on this lesson, however well the raid knows the boss (gate check 6).
-  if tier == 2 and seen < 3 then tier = 1 end
-  return { id = L.id, tier = tier, text = fill(L.t[tier + 1], f), seen = seen,
+  -- The answer itself waits until the raid has wiped on this lesson twice, however well it knows the boss
+  -- and however many kill notes it has seen (gate check 6). The journal and prep keep the furthest step shown.
+  if tier == 2 and wipes < 2 then tier = 1 end
+  if tier > (st.lessonTier[key] or -1) then st.lessonTier[key] = tier end
+  return { id = L.id, tier = tier, text = fill(L.t[tier + 1], f), seen = seen, wipes = wipes,
     next = (tier == 0) and "More will make sense as your raid learns this fight." or ((tier == 1) and "Your raid is close to working it out." or "") }
 end
 
@@ -632,7 +646,7 @@ end
 -- ---------------------------------------------------------------- the pull
 -- Runs the pull through the engine and applies everything that follows. Returns `out` (or { error = ... }).
 function G.Pull(st, prep)
-  prep.ids = filter(prep.ids, function(id) return byId(st, id) ~= nil end)  -- someone may have quit since the plan was made
+  G.CleanPrep(st, prep)
   local bad = G.Problems(st, prep)
   if #bad > 0 then return { error = bad[1] } end
   local cost = G.PrepCost(st, prep)

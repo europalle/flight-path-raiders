@@ -5,3 +5,4 @@ Thumbs.db
 addon/dist/
 node_modules/
 addon/shots/
+__pycache__/

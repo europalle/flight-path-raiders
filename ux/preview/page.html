@@ -102,7 +102,7 @@ const TITLE = [[30, 20, 200, 34, "hub", "Back to the hub"], [764, 20, 32, 32, "s
 const img = n => t => `assets/${n}-${t}.webp`;
 // Every slice screen is hi-fi now (#32). The first pull wipes and the second kills, so both result screens show up.
 const SCREENS = {
-  hub: { name: "Hub", img: img("hub"), hots: [...TABS, [756, 146, 162, 62, "prep", "Prep pull"], [806, 454, 118, 46, "roster", "Manage roster"], ...TITLE] },
+  hub: { name: "Hub", img: img("hub"), hots: [...TABS, [756, 146, 162, 62, "prep", "Prep pull"], [330, 446, 60, 28, "prep", "Normal: Ragnaroast"], [396, 446, 60, 28, "prep", "Heroic: Ragnaroast"], ...TITLE] },
   prep: { name: "Prep", img: img("prep"), hots: [...TABS, [840, 462, 96, 52, "pull", "Pull"], ...TITLE] },
   playback: { name: "Playback", img: img("playback"), hots: [[270, 474, 190, 44, "skip", "Skip to result"], [468, 474, 150, 44, "skip", "Summary only"], ...TITLE] },
   results: { name: "Results: wipe", img: img("results"), hots: [[600, 466, 150, 50, "pull", "Pull again"], [758, 466, 110, 50, "prep", "Change plan"], [876, 466, 60, 50, "hub", "Hub"],
@@ -111,7 +111,7 @@ const SCREENS = {
   roster: { name: "Roster", img: img("roster"), hots: [...TABS, ...TITLE] },
   tavern: { name: "Tavern", img: img("tavern"), hots: [...TABS, ...TITLE] },
   journal: { name: "Journal", img: img("journal"), hots: [...TABS, ...TITLE] },
-  settings: { name: "Settings", img: img("settings"), hots: [[820, 466, 96, 40, "hub", "Done"], ...TITLE] },
+  settings: { name: "Settings", img: img("settings"), hots: [[820, 466, 96, 40, "hub", "Done"], [30, 20, 200, 34, "hub", "Back to the hub"], [884, 20, 32, 32, "close", "Close"]] },
 };
 let pulls = 0;
 const $ = id => document.getElementById(id);

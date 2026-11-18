@@ -7,7 +7,7 @@ import os, sys, io
 import numpy as np
 from PIL import Image
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "art", "tools"))
-from hifi_kit import THEMES, piece, trimmed, gradmap, portrait_img, rim, ROOT, CLASS_ICON, ROLE_ICON
+from hifi_kit import THEMES, piece, trimmed, gradmap, portrait_img, rim, ROOT, CLASS_ICON, ROLE_ICON, FULL_BODY, LOOK
 
 ICONS = {"coin": "C3-05.png", "gem": "B2-07.png", "warn": "C2-11.png", "check": "C2-16.png", "book": "C3-04.png", "chest": "C3-08.png",
          "firepot": "C3-03.png", "food": "C3-00.png", "elixir": "C3-02.png", "flask": "C3-01.png", "lock": "C2-15.png", "gear": "C2-23.png",
@@ -23,6 +23,12 @@ def fit(im, size):
     """Fit inside a size x size transparent square, centred."""
     im = im.copy(); im.thumbnail((size, size), Image.LANCZOS)
     out = Image.new("RGBA", (size, size), (0, 0, 0, 0)); out.alpha_composite(im, ((size - im.size[0]) // 2, (size - im.size[1]) // 2))
+    return out
+
+def fit_tall(im):
+    """Fit inside 128 x 256 (a full-body figure), bottom-aligned, transparent around it."""
+    im = im.copy(); im.thumbnail((128, 256), Image.LANCZOS)
+    out = Image.new("RGBA", (128, 256), (0, 0, 0, 0)); out.alpha_composite(im, ((128 - im.size[0]) // 2, 256 - im.size[1]))
     return out
 
 def rgb(h):
@@ -55,7 +61,10 @@ def export(out_dir):
         # The playback stage (issue #8): the Molten Bore, toned down on the left where the raid stands,
         # on the cave's own floor.
         cave = Image.open(os.path.join(ROOT, "art/source/gemini/G1.jpeg")).convert("RGB")
-        W, H = cave.size; cave = cave.crop((0, int(H * 0.08), W, int(H * 0.08) + int(W * 340 / 610))).resize((512, 256), Image.LANCZOS).convert("RGBA")
+        # Crop to the stage's shape (610 x 340) inside the image, never past its edge (a crop past the
+        # bottom left a black band: gate review M3).
+        W, H = cave.size; ch = min(H, int(W * 340 / 610)); cw = int(ch * 610 / 340); x0 = (W - cw) // 2; y0 = H - ch
+        cave = cave.crop((x0, y0, x0 + cw, y0 + ch)).resize((512, 256), Image.LANCZOS).convert("RGBA")
         # The G3 ground strip does not blend with this cave crop (it shows a pale band), so the stage uses
         # the cave's own floor. G3 waits for the animated stage in Phase 4.
         panel = rgb(T["panel"])
@@ -71,6 +80,12 @@ def export(out_dir):
         save(gradmap(piece("B1-03.png", w=16, h=256), m), f"edge-v-{theme}")
         for i, f in enumerate(("B1-00.png", "B1-01.png", "B1-08.png", "B1-09.png")):
             save(gradmap(piece(f, w=64, h=64), m), f"corner-{i + 1}-{theme}")
+        # Full-body art for the Tavern cards (64 x 128 board units, as the hi-fi), with rim light in dark mode.
+        for cls, races in LOOK.items():
+            for look, race in enumerate(races):
+                im = Image.open(os.path.join(ROOT, "art/kit/characters", FULL_BODY[(cls, race)])).convert("RGBA"); im = im.crop(im.getbbox())
+                if theme == "dark": im = rim(im, width=5)
+                save(fit_tall(im), f"body-{cls}-{look}-{theme}")
         slot = gradmap(piece("B4-01.png", w=64, h=64), T["slot"])
         for cls in CLASS_ICON:
             for look in (0, 1):

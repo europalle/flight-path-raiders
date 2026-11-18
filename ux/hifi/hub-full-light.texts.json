@@ -1,0 +1,462 @@
+[
+{
+"text": "Flight Path Raiders",
+"x": 30,
+"y": 26.84,
+"w": 209.0,
+"h": 21.56,
+"size": 22,
+"bold": true,
+"col": "#2a2119"
+},
+{
+"text": "/ Hub",
+"x": 232,
+"y": 30.740000000000002,
+"w": 42.5,
+"h": 16.66,
+"size": 17,
+"bold": false,
+"col": "#6b5d4c"
+},
+{
+"text": "100%",
+"x": 729.44,
+"y": 32.64,
+"w": 22.56,
+"h": 11.76,
+"size": 12,
+"bold": false,
+"col": "#6b5d4c"
+},
+{
+"text": "Hub",
+"x": 57.9825,
+"y": 69.47,
+"w": 19.035,
+"h": 13.23,
+"size": 13.5,
+"bold": true,
+"col": "#2a2119"
+},
+{
+"text": "Roster",
+"x": 153.965,
+"y": 69.47,
+"w": 38.07,
+"h": 13.23,
+"size": 13.5,
+"bold": false,
+"col": "#2a2119"
+},
+{
+"text": "Tavern",
+"x": 269.965,
+"y": 69.47,
+"w": 38.07,
+"h": 13.23,
+"size": 13.5,
+"bold": false,
+"col": "#2a2119"
+},
+{
+"text": "Journal",
+"x": 386.2925,
+"y": 69.47,
+"w": 44.415,
+"h": 13.23,
+"size": 13.5,
+"bold": false,
+"col": "#2a2119"
+},
+{
+"text": "12th in guild",
+"x": 857.625,
+"y": 70.25,
+"w": 76.375,
+"h": 12.25,
+"size": 12.5,
+"bold": false,
+"col": "#2a2119"
+},
+{
+"text": "86 DKP",
+"x": 785.125,
+"y": 70.25,
+"w": 35.25,
+"h": 12.25,
+"size": 12.5,
+"bold": false,
+"col": "#2a2119"
+},
+{
+"text": "2,340",
+"x": 712.0,
+"y": 70.25,
+"w": 29.375,
+"h": 12.25,
+"size": 12.5,
+"bold": false,
+"col": "#2a2119"
+},
+{
+"text": "LFR",
+"x": 652.25,
+"y": 70.25,
+"w": 17.625,
+"h": 12.25,
+"size": 12.5,
+"bold": false,
+"col": "#6b5d4c"
+},
+{
+"text": "Continue: Ragnaroast, The Molten Bore",
+"x": 270,
+"y": 125.62,
+"w": 388.5,
+"h": 20.58,
+"size": 21,
+"bold": true,
+"col": "#2a2119"
+},
+{
+"text": "Heroic \u00b7 Boss 5 of 5 \u00b7 13 ready, 2 benched until reset",
+"x": 270,
+"y": 154.25,
+"w": 317.25,
+"h": 12.25,
+"size": 12.5,
+"bold": false,
+"col": "#6b5d4c"
+},
+{
+"text": "Last pull: wipe in round 18. Raid leader: \u201cWe\u2019re melting. Literally.\u201d",
+"x": 270,
+"y": 176.25,
+"w": 405.375,
+"h": 12.25,
+"size": 12.5,
+"bold": false,
+"col": "#2a2119"
+},
+{
+"text": "This week:",
+"x": 286,
+"y": 210.25,
+"w": 58.75,
+"h": 12.25,
+"size": 12.5,
+"bold": true,
+"col": "#2a2119"
+},
+{
+"text": "Floor Is Lava",
+"x": 380,
+"y": 210.25,
+"w": 76.375,
+"h": 12.25,
+"size": 12.5,
+"bold": false,
+"col": "#2a2119"
+},
+{
+"text": "Fortified Trash",
+"x": 494,
+"y": 210.25,
+"w": 88.125,
+"h": 12.25,
+"size": 12.5,
+"bold": false,
+"col": "#2a2119"
+},
+{
+"text": "Prep pull",
+"x": 792.0,
+"y": 168.4,
+"w": 90.0,
+"h": 19.6,
+"size": 20,
+"bold": true,
+"col": "#fbf6ea"
+},
+{
+"text": "Raids",
+"x": 26,
+"y": 264.74,
+"w": 42.5,
+"h": 16.66,
+"size": 17,
+"bold": true,
+"col": "#2a2119"
+},
+{
+"text": "The Molten Bore",
+"x": 58,
+"y": 299.86,
+"w": 91.64999999999999,
+"h": 12.74,
+"size": 13,
+"bold": false,
+"col": "#2a2119"
+},
+{
+"text": "N 5/5 \u00b7 H 4/5 \u00b7 M 0/5",
+"x": 188.495,
+"y": 301.03,
+"w": 113.505,
+"h": 11.27,
+"size": 11.5,
+"bold": false,
+"col": "#6b5d4c"
+},
+{
+"text": "Onyxiety\u2019s Lair",
+"x": 58,
+"y": 341.86,
+"w": 91.64999999999999,
+"h": 12.74,
+"size": 13,
+"bold": false,
+"col": "#2a2119"
+},
+{
+"text": "N 1/1 \u00b7 H 0/1 \u00b7 M locked",
+"x": 172.28,
+"y": 343.03,
+"w": 129.72,
+"h": 11.27,
+"size": 11.5,
+"bold": false,
+"col": "#6b5d4c"
+},
+{
+"text": "Blackwing attunement",
+"x": 58,
+"y": 383.86,
+"w": 122.19999999999999,
+"h": 12.74,
+"size": 13,
+"bold": false,
+"col": "#2a2119"
+},
+{
+"text": "2 of 3 steps",
+"x": 237.14,
+"y": 385.03,
+"w": 64.86,
+"h": 11.27,
+"size": 11.5,
+"bold": false,
+"col": "#6b5d4c"
+},
+{
+"text": "Dungeons & keystone",
+"x": 338,
+"y": 264.74,
+"w": 161.5,
+"h": 16.66,
+"size": 17,
+"bold": true,
+"col": "#2a2119"
+},
+{
+"text": "Quick dungeon",
+"x": 370,
+"y": 299.86,
+"w": 79.42999999999999,
+"h": 12.74,
+"size": 13,
+"bold": false,
+"col": "#2a2119"
+},
+{
+"text": "one flight (~3 min)",
+"x": 511.305,
+"y": 301.03,
+"w": 102.695,
+"h": 11.27,
+"size": 11.5,
+"bold": false,
+"col": "#6b5d4c"
+},
+{
+"text": "Key: Gnomeregret +7",
+"x": 370,
+"y": 341.86,
+"w": 116.08999999999999,
+"h": 12.74,
+"size": 13,
+"bold": false,
+"col": "#2a2119"
+},
+{
+"text": "best +9 \u00b7 2nd in guild",
+"x": 495.09000000000003,
+"y": 343.03,
+"w": 118.91,
+"h": 11.27,
+"size": 11.5,
+"bold": false,
+"col": "#6b5d4c"
+},
+{
+"text": "Weekly chest",
+"x": 370,
+"y": 383.86,
+"w": 73.32,
+"h": 12.74,
+"size": 13,
+"bold": false,
+"col": "#2a2119"
+},
+{
+"text": "1 of 1 ready",
+"x": 549.14,
+"y": 385.03,
+"w": 64.86,
+"h": 11.27,
+"size": 11.5,
+"bold": false,
+"col": "#6b5d4c"
+},
+{
+"text": "Daily quests",
+"x": 650,
+"y": 264.74,
+"w": 102.0,
+"h": 16.66,
+"size": 17,
+"bold": true,
+"col": "#2a2119"
+},
+{
+"text": "Clear any dungeon",
+"x": 682,
+"y": 299.86,
+"w": 103.86999999999999,
+"h": 12.74,
+"size": 13,
+"bold": false,
+"col": "#2a2119"
+},
+{
+"text": "12 g \u00b7 2 DKP",
+"x": 861.14,
+"y": 301.03,
+"w": 64.86,
+"h": 11.27,
+"size": 11.5,
+"bold": false,
+"col": "#6b5d4c"
+},
+{
+"text": "Kill a raid boss",
+"x": 682,
+"y": 341.86,
+"w": 97.75999999999999,
+"h": 12.74,
+"size": 13,
+"bold": false,
+"col": "#2a2119"
+},
+{
+"text": "done",
+"x": 904.38,
+"y": 343.03,
+"w": 21.619999999999997,
+"h": 11.27,
+"size": 11.5,
+"bold": false,
+"col": "#256b29"
+},
+{
+"text": "Survive a Loot Council",
+"x": 682,
+"y": 383.86,
+"w": 134.42,
+"h": 12.74,
+"size": 13,
+"bold": false,
+"col": "#2a2119"
+},
+{
+"text": "12 g \u00b7 2 DKP",
+"x": 861.14,
+"y": 385.03,
+"w": 64.86,
+"h": 11.27,
+"size": 11.5,
+"bold": false,
+"col": "#6b5d4c"
+},
+{
+"text": "Roster 15 / 15",
+"x": 42,
+"y": 432.74,
+"w": 119.0,
+"h": 16.66,
+"size": 17,
+"bold": true,
+"col": "#2a2119"
+},
+{
+"text": "13 ready \u00b7 2 benched until reset",
+"x": 172,
+"y": 435.64,
+"w": 180.48,
+"h": 11.76,
+"size": 12,
+"bold": false,
+"col": "#6b5d4c"
+},
+{
+"text": "Benched",
+"x": 344.905,
+"y": 500.92,
+"w": 36.19,
+"h": 10.78,
+"size": 11,
+"bold": true,
+"col": "#ffffff"
+},
+{
+"text": "Benched",
+"x": 494.905,
+"y": 500.92,
+"w": 36.19,
+"h": 10.78,
+"size": 11,
+"bold": true,
+"col": "#ffffff"
+},
+{
+"text": "2 characters low morale",
+"x": 594,
+"y": 464.25,
+"w": 135.125,
+"h": 12.25,
+"size": 12.5,
+"bold": true,
+"col": "#2a2119"
+},
+{
+"text": "Rook 22, Fen 35: quit risk",
+"x": 574,
+"y": 485.03,
+"w": 140.53,
+"h": 11.27,
+"size": 11.5,
+"bold": false,
+"col": "#6b5d4c"
+},
+{
+"text": "Manage",
+"x": 843.85,
+"y": 470.3,
+"w": 42.3,
+"h": 14.7,
+"size": 15,
+"bold": true,
+"col": "#2a2119"
+}
+]

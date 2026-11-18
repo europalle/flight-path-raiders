@@ -103,7 +103,7 @@ def draw_tex(img, o, board):
     im = tex(path)
     if im is None: return
     if "\\bg-" in path:  # tiled background
-        tile = im.resize((240 * S, 240 * S))
+        tile = im.resize((round(240 * S), round(240 * S)))
         for tx in range(box[0], box[2], tile.size[0]):
             for ty in range(box[1], box[3], tile.size[1]): img.alpha_composite(tile.crop((0, 0, min(tile.size[0], box[2] - tx), min(tile.size[1], box[3] - ty))), (tx, ty))
         return
@@ -123,6 +123,21 @@ def lum(a):
     a = np.where(a <= 0.03928, a / 12.92, ((a + 0.055) / 1.055) ** 2.4)
     return 0.2126 * a[..., 0] + 0.7152 * a[..., 1] + 0.0722 * a[..., 2]
 FAILS = []
+def shot_scales(name):
+    """The screen at the default 2 px per unit, then as it would be on the Director's 2560 x 1440 screen at
+    the smallest and largest board scales (70% and 120%), each with its own contrast check (gate check 4).
+    Reports the smallest text in real pixels at 70%."""
+    global S
+    shot(name)
+    for pct in (70, 120):
+        S = 2560 * 0.70 * pct / 100 / 960
+        shot(f"{name}@{pct}")
+        if pct == 70:
+            small = min((t["size"] for t in TEXTS_LAST if not t.get("behind")), default=0)
+            SMALLEST.append((name, round(small * S, 1)))
+        S = 2
+SMALLEST = []
+TEXTS_LAST = []
 def shot(name):
     """Draws the board twice (with and without text) and measures every text line against the pixels
     behind it, like art/tools/check_contrast.py does for the hi-fi: 4.5:1, or 3:1 for large text, at the
@@ -136,7 +151,7 @@ def shot(name):
     imgs = []
     for with_text in (False, True):
         TEXTS.clear()
-        img = Image.new("RGBA", (960 * S, 540 * S), (0, 0, 0, 255)); d = ImageDraw.Draw(img)
+        img = Image.new("RGBA", (round(960 * S), round(540 * S)), (0, 0, 0, 255)); d = ImageDraw.Draw(img)
         for f in frames:
             regs = [r for r in lst(g(f, "_regions")) if g(r, "_shown") and g(r, "_layer") != "HIGHLIGHT"]
             regs.sort(key=lambda r: (LAYERS.get(g(r, "_layer") or "ARTWORK", 2), g(r, "_sub") or 0))
@@ -157,6 +172,8 @@ def shot(name):
     bg = np.asarray(imgs[0].convert("RGB"))
     os.makedirs(OUT, exist_ok=True)
     imgs[1].convert("RGB").save(os.path.join(OUT, name + ".png"))
+    import json
+    json.dump([{k: t[k] for k in ("text", "x", "y", "w", "h", "size", "bold", "behind", "dim")} for t in boxes], open(os.path.join(OUT, name + ".texts.json"), "w"))
     bad = 0
     for t in boxes:
         if t["behind"] or t["dim"]: continue
@@ -169,6 +186,7 @@ def shot(name):
         need = 3.0 if t["size"] >= 18 or (t["size"] >= 14 and t["bold"]) else 4.5
         if worst < need or t["size"] < 11:
             bad += 1; FAILS.append(f"{name}: {worst:.1f}:1 needs {need}, {t['size']}u: {t['text'][:50]}")
+    TEXTS_LAST[:] = boxes
     print(f"{name}: {len(boxes)} text lines, {bad} fail")
 
 def is_child(f, board):
@@ -182,23 +200,30 @@ if __name__ == "__main__":
     click = L.eval("WOW_CLICK")
     L.execute("WOW_FIRE('ADDON_LOADED', 'FlightPathRaiders')")
     slash = L.eval("SlashCmdList.FLIGHTPATHRAIDERS")
+    # A guild whose first pull on the wrong card wipes, so the recap screen is always shot (gate review M6).
+    probe = """(function(seed) local G = FPR_NS.Game local st = G.NewGame(seed)
+      local p = G.DefaultPrep(st, "magmadad", "normal") p.tactic = "spread" return G.Pull(st, p).result ~= "kill" end)"""
+    seed = next(sd for sd in range(1, 500) if L.eval(probe)(sd * 104729))
     for theme in ("light", "dark"):
-        L.execute("FlightPathRaidersDB.guild = nil")
+        L.execute(f"FlightPathRaidersDB.guild = FPR_NS.Game.NewGame({seed * 104729})")
         slash("theme " + theme)
         if not L.eval("FlightPathRaidersBoard and FlightPathRaidersBoard:IsShown()"): slash("")
-        click("Hub"); shot(f"hub-{theme}")
-        click("Prep pull"); click("Burn"); shot(f"prep-{theme}")
+        click("Hub"); shot_scales(f"hub-{theme}")
+        click("Prep pull"); click("Spread"); shot_scales(f"prep-{theme}")
         click("Pull")
         for _ in range(8): L.eval("WOW_TICK(1)")
-        shot(f"playback-{theme}")
+        shot_scales(f"playback-{theme}")
         click("Skip to result")
-        for _ in range(8):
+        assert L.eval("FPR_NS.Board.args.out.result") != "kill", "the probe pull should wipe"
+        shot_scales(f"results-{theme}")
+        for _ in range(10):
+            click("Change plan"); click("Burn"); click("Pull"); click("Skip to result")
             if L.eval("FPR_NS.Board.args.out.result") == "kill": break
-            shot(f"results-{theme}"); click("Pull again"); click("Skip to result")
-        shot(f"loot-{theme}")
+        shot_scales(f"loot-{theme}")
         click("Hand out"); click("Hub")
-        for page in ("Roster", "Tavern", "Journal"): click(page); shot(f"{page.lower()}-{theme}")
-        click("Settings"); shot(f"settings-{theme}"); click("Done")
+        for page in ("Roster", "Tavern", "Journal"): click(page); shot_scales(f"{page.lower()}-{theme}")
+        click("Settings"); shot_scales(f"settings-{theme}"); click("Done")
     print("shots in", os.path.relpath(OUT, ROOT))
+    print("smallest text at 70% on a 2560 x 1440 screen: " + ", ".join(f"{n} {px} px" for n, px in SMALLEST))
     for f in FAILS: print("  FAIL", f)
     sys.exit(1 if FAILS else 0)

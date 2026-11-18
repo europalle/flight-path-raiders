@@ -54,7 +54,7 @@ for (let g = 0; g < guilds; g++) {
           const out = G.pull(st, prep); pullsAll++;
           if (process.env.FPR_TRACE) console.log('T', g, w, b.id, mode, out.result, out.run && out.run.checksum, st.gold, st.rng, st.roster.map(c => c.id + ':' + c.morale).join(',')); if (mode === 'normal') budget--;
           clear();
-          if (out.note) { tierSeen[out.note.tier]++; if (out.note.tier === 2) { if (out.note.id === 'card') known[b.id] = b.card; if (out.note.id === 'fire') knowFire.v = true; if (out.note.id === 'decurse') known.decurse = true; } }
+          if (out.note) { tierSeen[out.note.tier]++; if (out.note.tier === 2) { answers++; if (out.note.wipes < 2) early++; } if (out.note.tier === 2) { if (out.note.id === 'card') known[b.id] = b.card; if (out.note.id === 'fire') knowFire.v = true; if (out.note.id === 'decurse') known.decurse = true; } }
           if (out.result === 'kill') {
             done = true;
             const arr = mode === 'normal' ? firstNormal[b.id] : firstHeroic[b.id];
@@ -62,7 +62,7 @@ for (let g = 0; g < guilds; g++) {
             if ((mode === 'normal' ? pp.normalKills : pp.heroicKills) === 1) { arr.push(w); if (mode === 'heroic' && b.id === 'ragnaroast') ragHeroic[g] = w; }
           } else {
             wipes++; tierSeen[out.lesson.tier]++;
-            if (out.lesson.tier === 2) { answers++; if (out.lesson.seen < 3) early++; }  // gate 6: no answer before two wipes on that lesson
+            if (out.lesson.tier === 2) { answers++; if (out.lesson.wipes < 2) early++; }  // gate 6: no answer before two wipes on that lesson
             if (out.lesson.tier === 2) { if (out.lesson.id === 'card') known[b.id] = b.card; if (out.lesson.id === 'fire') knowFire.v = true; if (out.lesson.id === 'decurse') known.decurse = true; }
           }
         }

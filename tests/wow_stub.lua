@@ -29,6 +29,7 @@ local function region(kind, parent, layer, sub)
   r.SetTextColor = function(self, a, b, c, d) self._textcol = { a, b, c, d or 1 } end
   r.SetJustifyH = function(self, j) self._justify = j end
   r.SetWordWrap = function(self, w) self._wrap = w end
+  r.GetStringWidth = function(self) local t = rawget(self, "_text") return type(t) == "string" and #t * (rawget(self, "_size") or 13) * 0.55 or 0 end
   r.Show = function(self) self._shown = true end
   r.Hide = function(self) self._shown = false end
   r.IsShown = function(self) return self._shown end
@@ -48,6 +49,7 @@ local function frame(kind, name, parent)
   f.IsShown = function(self) return self._shown end
   f.IsVisible = function(self) local x = self; while x do if not x._shown then return false end; x = rawget(x, "_parent") end; return true end
   f.SetPropagateKeyboardInput = function(self, v) self._propagate = v end
+  f.EnableKeyboard = function(self, v) self._keyboard = v end
   f.GetFrameLevel = function(self) return self._level end
   f.SetFrameLevel = function(self, l) self._level = l end
   f.CreateTexture = function(self, _, layer, _, sub) local t = region("texture", self, layer, sub); f._regions[#f._regions + 1] = t; return t end

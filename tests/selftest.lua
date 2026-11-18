@@ -44,6 +44,8 @@ function T.fuzz(N)
   local zone_for = { tank="front", healer="back" }
   local acc, kills = 7.0, 0
   for f = 1, N do
+    -- The addon runs this inside a coroutine and sets T.yield, so the client never freezes (gate review).
+    if T.yield and f % 40 == 0 then T.yield() end
     local raid = {}
     for i = 1, 10 do
       local c = classes[gen:int(9)]

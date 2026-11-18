@@ -103,9 +103,57 @@ check("a focused button shows its tooltip, so greyed-out ones say why", L.eval("
 press("Hub"); press("End the week")
 check("Escape closes a window before the board", L.eval("FPR_NS.Board.modal ~= nil") and (key("ESCAPE") or True) and L.eval("FPR_NS.Board.modal == nil") and L.eval("FlightPathRaidersBoard:IsShown()"))
 check("keys the board doesn't use pass through to the game", (key("W") or True) and L.eval("rawget(FlightPathRaidersBoard, '_propagate') ~= false"))
-L.execute("WOW_COMBAT = true"); key("TAB")
-check("in combat the board never touches protected key handling", L.eval("rawget(FlightPathRaidersBoard, '_propagate') ~= false"))
-L.execute("WOW_COMBAT = false")
+key("TAB")  # a key the board uses: input stops passing through...
+L.execute("WOW_FIRE('PLAYER_REGEN_DISABLED')"); L.execute("WOW_COMBAT = true"); key("TAB")
+check("entering combat hands every key back to the game, even right after Tab (M4)",
+      L.eval("rawget(FlightPathRaidersBoard, '_propagate') == true and rawget(FlightPathRaidersBoard, '_keyboard') == false"))
+L.execute("WOW_COMBAT = false"); L.execute("WOW_FIRE('PLAYER_REGEN_ENABLED')")
+check("after combat the keyboard works again", L.eval("rawget(FlightPathRaidersBoard, '_keyboard') == true"))
+key("TAB"); key("ESCAPE")
+check("Escape first lets go of the focus (arrows and Space go back to the game)", L.eval("FPR_NS.Board.focused == nil and FlightPathRaidersBoard:IsShown()"))
+L.execute("FlightPathRaidersDB.settings.keys = false"); key("TAB")
+check("keyboard control can be turned off in Settings", L.eval("FPR_NS.Board.focused == nil and rawget(FlightPathRaidersBoard, '_propagate') == true"))
+L.execute("FlightPathRaidersDB.settings.keys = true")
+# Heroic: pull again with whoever is left (gate review M1).
+heroic = L.eval("""function()
+  local G, B = FPR_NS.Game, FPR_NS.Board
+  for seed = 1, 30 do
+    local st = G.NewGame(4242 + seed)
+    for _, b in ipairs(G.BOSSES) do st.progress[b.id].normalKills = 1 end
+    FlightPathRaidersDB.guild = st
+    B.Go("Prep", { boss = "magmadad", mode = "heroic" }); local prep = B.args.prep; prep.tactic = "spread"
+    local out = G.Pull(st, prep)
+    if out.error then return false, out.error end
+    if out.result ~= "kill" and #out.benched > 0 then
+      B.Go("Results", { out = out, prep = prep }); B.CloseModal()
+      local p2 = G.Problems(st, prep)
+      if #p2 > 0 then return false, p2[1] end
+      local out2 = G.Pull(st, prep)
+      if out2.error then return false, out2.error end
+      for _, id in ipairs(prep.ids) do if G.byId(st, id).benched and out2.input then
+        for _, c in ipairs(out2.input.raid) do if c.name == G.byId(st, id).name then return false, "benched raider pulled" end end end end
+      return true, #out.benched .. " benched, pulled again with " .. #out2.input.raid
+    end
+  end
+  return false, "no Heroic wipe with deaths found"
+end""")
+ok, why = heroic()
+check(f"Heroic: after a wipe the dead are benched and Pull again goes with whoever is left ({why})", ok is True, why)
+# Prep: a 5th raider in a zone is still shown (S1).
+five = L.eval("""function()
+  local G, B = FPR_NS.Game, FPR_NS.Board
+  FlightPathRaidersDB.guild = G.NewGame(99)
+  B.Go("Prep", { boss = "magmadad", mode = "normal" })
+  local prep = B.args.prep
+  for _, id in ipairs(prep.ids) do prep.zones[tostring(id)] = "melee" end
+  B.Render()
+  local n = 0
+  for _, b in ipairs(WOW_BUTTONS()) do local t = rawget(b, "tip") if type(t) == "string" and t:find("click to bench") then n = n + 1 end end
+  return n, #prep.ids
+end""")
+shown, total = five()
+check(f"prep shows every raider even with all {total} in one zone ({shown} shown)", shown == total)
+FIX = None
 played = " ".join(L.eval("FPR_NS.Audio.played")[i] for i in range(1, len(L.eval("FPR_NS.Audio.played")) + 1))
 check("sound cues fire for the pull, the result and the loot (" + played + ")", all(c in played for c in ("pull", "tab")) and ("kill" in played or "wipe" in played))
 L.execute("PlaySound = function() end; SOUNDKIT = { READY_CHECK = 8960 }")
@@ -166,7 +214,23 @@ check(f"a pull resolves in under 50 ms in standard Lua 5.1 (slowest {slow_ms:.1f
 check(f"the hub draws in under 100 ms (redraw {open_ms:.1f} ms; first open is verify at install)", open_ms < 100)
 slash(""); check("/fpr again closes it", not L.eval("FlightPathRaidersBoard:IsShown()"))
 L.execute("WOW_CHAT = {}")
-ok = L.eval("FPR_NS.SelfTestRun")()
+# Async, as /fpr selftest runs in the client: a few dozen fights a frame, never one long freeze.
+L.execute("WOW_CHAT = {}")
+slash("selftest")
+frames = L.eval("""function()
+  local n = 0
+  for i = 1, 500 do
+    local busy = false
+    for _, f in ipairs(WOW_FRAMES) do local fn = f._scripts.OnUpdate if fn and f ~= FlightPathRaidersBoard then busy = true; fn(f, 0.016) end end
+    if not busy then break end
+    n = n + 1
+  end
+  return n
+end""")()
+chat = " ".join(L.eval("WOW_CHAT")[i] for i in range(1, len(L.eval("WOW_CHAT")) + 1))
+check(f"/fpr selftest runs spread over {frames} frames and passes", frames > 20 and "passed" in chat, chat[-200:])
+L.execute("WOW_CHAT = {}")
+ok = L.eval("FPR_NS.SelfTestRun")(True)
 chat = " ".join(L.eval("WOW_CHAT")[i] for i in range(1, len(L.eval("WOW_CHAT")) + 1))
 check("/fpr selftest passes inside the addon: " + chat[:120], ok is True and "passed" in chat)
 print("Addon test:", "all passed" if not fails else f"{len(fails)} failed")

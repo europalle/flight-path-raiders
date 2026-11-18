@@ -106,78 +106,101 @@ end
 -- ------------------------------------------------------------------ roster
 function P.Roster(st, args)
   local g = G()
-  local sel = args.sel and g.byId(st, args.sel) or st.roster[1]
-  local cols = { { 70, "Name" }, { 178, "Class · spec" }, { 342, "GL" }, { 374, "Morale" }, { 456, "Status" } }
-  for _, c in ipairs(cols) do UI.text(c[1], 106, c[2], { size = 11, col = "muted" }) end
-  for i, c in ipairs(st.roster) do
-    local y = 122 + (i - 1) * 26
-    local on = sel and c.id == sel.id
-    UI.panel(24, y, 520, 24, "row", on and "accent" or "rule")
-    UI.portrait(28, y + 1, 22, c.cls, c.look, c.benched)
-    UI.text(70, y + 5, c.name, { size = 12.5, col = c.benched and "muted" or "ink" })
-    UI.icon(178, y + 5, 14, "class-" .. c.cls)
-    UI.text(196, y + 5, UI.title(c.cls) .. " · " .. g.specName(c.cls, c.spec), { size = 12, w = 142 })
-    UI.text(342, y + 5, tostring(g.gearLevel(c)), { size = 12 })
-    UI.bar(374, y + 9, 36, 7, c.morale / 100, UI.moraleCol(c.morale))
-    UI.text(414, y + 5, tostring(c.morale), { size = 11.5, col = UI.moraleCol(c.morale) })
-    if c.morale < 40 then UI.icon(440, y + 5, 13, "warn") end
-    if c.benched then UI.rect(456, y + 4, 60, 16, "bad"); UI.text(456, y + 6, "Benched", { size = 11, col = "badtext", w = 60, justify = "CENTER" })
-    else UI.text(456, y + 5, (st.week - c.joined < 2) and "New" or "Ready", { size = 12, col = "muted" }) end
-    UI.button(24, y, 520, 24, nil, function() B().Go("Roster", { sel = c.id }) end, { kind = "row", tip = "Show " .. c.name })
+  -- Layout follows ux/hifi/roster-*.svg. Filters by role along the top.
+  local counts = { tank = 0, healer = 0, damage = 0 }
+  for _, c in ipairs(st.roster) do local r = g.role(c.cls, c.spec) counts[r] = counts[r] + 1 end
+  local filter = args.filter or "all"
+  local x = 24
+  for _, f in ipairs({ { "all", "All " .. #st.roster }, { "tank", "Tanks " .. counts.tank }, { "healer", "Healers " .. counts.healer }, { "damage", "Damage " .. counts.damage } }) do
+    local w = #f[2] * 7 + 30
+    UI.button(x, 100, w, 28, f[2], function() B().Go("Roster", { filter = f[1], sel = args.sel }) end, { kind = filter == f[1] and "selected" or "normal", size = 12 })
+    x = x + w + 6
   end
-  UI.text(24, 122 + #st.roster * 26 + 6, "Roster " .. #st.roster .. " / " .. g.ECON.rosterMax, { size = 12, col = "muted" })
+  local list = {}
+  for _, c in ipairs(st.roster) do if filter == "all" or g.role(c.cls, c.spec) == filter then list[#list + 1] = c end end
+  local sel = args.sel and g.byId(st, args.sel) or list[1] or st.roster[1]
+  local cols = { { 70, "Name" }, { 178, "Class · spec" }, { 342, "GL" }, { 374, "Morale" }, { 456, "Status" } }
+  for _, c in ipairs(cols) do UI.text(c[1], 137, c[2], { size = 11, col = "muted" }) end
+  for i, c in ipairs(list) do
+    local y = 156 + (i - 1) * 24
+    local on = sel and c.id == sel.id
+    UI.panel(24, y, 520, 22, "row", on and "accent" or "rule")
+    UI.portrait(28, y + 1, 20, c.cls, c.look, c.benched)
+    UI.text(70, y + 4, c.name, { size = 12.5, col = c.benched and "muted" or "ink" })
+    UI.icon(178, y + 4, 14, "class-" .. c.cls)
+    UI.text(196, y + 4, UI.title(c.cls) .. " · " .. g.specName(c.cls, c.spec), { size = 12, w = 142 })
+    UI.text(342, y + 4, tostring(g.gearLevel(c)), { size = 12 })
+    UI.bar(374, y + 8, 36, 7, c.morale / 100, UI.moraleCol(c.morale))
+    UI.text(416, y + 4, tostring(c.morale), { size = 11.5, col = UI.moraleCol(c.morale) })
+    if c.morale < 40 then UI.icon(440, y + 4, 13, "warn") end
+    if c.benched then UI.rect(456, y + 3, 60, 16, "bad"); UI.text(456, y + 5, "Benched", { size = 11, col = "badtext", w = 60, justify = "CENTER" })
+    else UI.text(456, y + 4, (st.week - c.joined < 2) and "New" or "Ready", { size = 12, col = "muted" }) end
+    UI.button(24, y, 520, 22, nil, function() B().Go("Roster", { sel = c.id, filter = filter }) end, { kind = "row", tip = "Show " .. c.name })
+  end
+  if #list < 14 then UI.text(24, 496, "Roster " .. #st.roster .. " / " .. g.ECON.rosterMax, { size = 12, col = "muted" }) end
   if not sel then return end
   local c = sel
   UI.panel(560, 100, 376, 424, nil, nil, true)
-  UI.portrait(578, 116, 72, c.cls, c.look, c.benched)
-  UI.text(662, 120, c.name, { head = true, size = 20 })
-  UI.text(662, 146, c.race .. " " .. UI.title(c.cls) .. " · " .. g.specName(c.cls, c.spec) .. " · " .. g.RARITY[c.rarity].label, { size = 12, col = "muted", w = 260 })
-  UI.text(662, 164, "GL " .. g.gearLevel(c) .. " · skill " .. math.floor(c.skill10 / 10), { size = 12 })
-  UI.text(578, 198, "Traits", { size = 12, col = "muted" })
-  local y = 214
+  UI.portrait(578, 118, 72, c.cls, c.look, c.benched)
+  UI.text(662, 120, c.name, { head = true, size = 22 })
+  UI.text(662, 150, c.race .. " " .. UI.title(c.cls) .. " · " .. g.specName(c.cls, c.spec) .. " · " .. g.RARITY[c.rarity].label, { size = 12, col = "muted", w = 260 })
+  UI.text(704, 170, "GL " .. g.gearLevel(c) .. " · skill " .. math.floor(c.skill10 / 10), { size = 12 })
+  local pips = ({ common = 1, rare = 2, epic = 3, legendary = 4 })[c.rarity] or 1
+  for i = 1, 4 do UI.rect(663 + (i - 1) * 9, 174, 6, 6, i <= pips and UI.T().rarity[c.rarity] or "barbg") end
+  UI.text(578, 202, "Traits", { size = 12, col = "muted" })
+  local y = 222
   for _, t in ipairs(c.traits) do
     local tr = g.TRAITS[t]
-    UI.panel(578, y, 340, 44, "row"); UI.text(588, y + 4, tr.name, { size = 12.5 })
-    UI.text(588, y + 19, tr.text, { size = 11, col = "muted", w = 322, wrap = true, h = 24 })
-    y = y + 48
+    UI.panel(578, y, 340, 40, "row"); UI.text(588, y + 3.5, tr.name, { size = 12.5 })
+    UI.text(588, y + 20.5, tr.text, { size = 11.5, col = "muted", w = 322 })
+    UI.button(578, y, 340, 40, nil, nil, { kind = "row", tip = tr.name .. ": " .. tr.text })
+    y = y + 44
   end
-  UI.text(578, y + 6, "Morale", { size = 12, col = "muted" })
-  UI.bar(640, y + 8, 220, 9, c.morale / 100, UI.moraleCol(c.morale)); UI.text(870, y + 5, tostring(c.morale), { size = 13, w = 48, justify = "RIGHT" })
-  y = y + 28
-  UI.text(578, y, "Gear", { size = 12, col = "muted" }); y = y + 16
-  for _, slot in ipairs({ "weapon", "armor", "trinket" }) do
+  local extra = y - 266  -- 0 with one trait; the rest of the panel moves down with a second
+  UI.text(578, 272 + extra, "Morale", { size = 12, col = "muted" })
+  UI.bar(640, 276 + extra, 220, 10, c.morale / 100, UI.moraleCol(c.morale)); UI.text(870, 272 + extra, tostring(c.morale), { size = 13, w = 48, justify = "RIGHT" })
+  UI.text(578, 290 + extra, "Under 20 they may quit at the end of the week.", { size = 11.5, col = "muted" })
+  local gy = 316 + extra
+  local step = extra > 0 and 28 or 30
+  UI.text(578, gy, "Gear", { size = 12, col = "muted" })
+  for k, slot in ipairs({ "weapon", "armor", "trinket" }) do
     local it = c.gear[slot]
-    UI.panel(578, y, 340, 24, "row"); UI.icon(586, y + 4, 16, slot == "armor" and (it.type or g.ARMOR[c.cls]) or slot)
-    UI.text(608, y + 6, it.name, { size = 12, col = it.q == "epic" and UI.T().rarity.epic or it.q == "rare" and UI.T().rarity.rare or "ink", w = 240 })
-    UI.text(858, y + 6, "GL " .. it.lvl, { size = 12, w = 52, justify = "RIGHT" })
-    if g.FLAVOUR[it.name] then UI.button(578, y, 340, 24, nil, nil, { kind = "row", tip = it.name .. "\n" .. g.FLAVOUR[it.name] }) end
-    y = y + 27
+    local ry = gy + 20 + (k - 1) * step
+    UI.panel(578, ry, 340, 26, "row"); UI.icon(586, ry + 5, 16, slot == "armor" and (it.type or g.ARMOR[c.cls]) or slot)
+    UI.text(608, ry + 6, it.name, { size = 12, col = it.q == "epic" and UI.T().rarity.epic or it.q == "rare" and UI.T().rarity.rare or "ink", w = 240 })
+    UI.text(858, ry + 6, "GL " .. it.lvl, { size = 12, w = 52, justify = "RIGHT" })
+    if g.FLAVOUR[it.name] then UI.button(578, ry, 340, 26, nil, nil, { kind = "row", tip = it.name .. "\n" .. g.FLAVOUR[it.name] }) end
   end
-  UI.text(578, y + 4, "Fire Whelp gear " .. c.fire .. " of 2", { size = 12 })
-  y = y + 24
-  -- Spec buttons (respec costs gold), fire gear, dismiss.
-  local specs = g.SPECS[c.cls]
-  for i, s in ipairs(specs) do
-    local on = s[1] == c.spec
-    UI.button(578 + (i - 1) * (340 / #specs), y, 340 / #specs - 4, 30, s[2], function()
-      if on then return end
-      confirm("Respec " .. c.name .. " to " .. s[2] .. " for " .. g.ECON.respec .. " gold?", function() B().Toast(g.Respec(st, c.id, s[1])); B().Render() end, "Respec")
-    end, { kind = on and "selected" or "normal", size = 11.5, disabled = not on and st.gold < g.ECON.respec, tip = on and "Current spec" or (g.ECON.respec .. " gold") })
-  end
-  y = y + 36
-  UI.button(578, y, 166, 34, "Fire gear " .. g.ECON.fireGear .. " g", function() B().Toast(g.BuyFire(st, c.id)); B().Render() end,
-    { size = 12, disabled = c.fire >= 2 or st.gold < g.ECON.fireGear, tip = "Fire resistance for Ragnaroast. Two pieces at most." })
+  UI.text(578, math.min(434, gy + 20 + 3 * step + 4), "Fire Whelp gear " .. c.fire .. " of 2", { size = 12 })
+  UI.button(578, 460, 112, 40, "Respec " .. g.ECON.respec .. " g", function()
+    B().OpenModal(function()
+      UI.panel(280, 180, 400, 180, "panel", "rule", true)
+      UI.text(300, 198, "Respec " .. c.name .. " for " .. g.ECON.respec .. " gold", { head = true, size = 16 })
+      local specs = g.SPECS[c.cls]
+      for i, sp in ipairs(specs) do
+        local cur = sp[1] == c.spec
+        UI.button(300 + (i - 1) * (360 / #specs), 240, 360 / #specs - 6, 40, sp[2], function()
+          B().Toast(g.Respec(st, c.id, sp[1])); B().CloseModal()
+        end, { kind = cur and "selected" or "normal", size = 12, disabled = cur, tip = cur and "Current spec" or nil })
+      end
+      UI.button(560, 300, 100, 36, "Cancel", function() B().CloseModal() end)
+    end)
+  end, { size = 12.5, disabled = st.gold < g.ECON.respec, tip = st.gold < g.ECON.respec and "Not enough gold." or "Change spec" })
+  UI.button(698, 460, 132, 40, "Fire gear " .. g.ECON.fireGear .. " g", function() B().Toast(g.BuyFire(st, c.id)); B().Render() end,
+    { size = 12.5, disabled = c.fire >= 2 or st.gold < g.ECON.fireGear, tip = "Fire resistance for Ragnaroast. Two pieces at most." })
   local back = math.floor(g.RARITY[c.rarity].cost * g.ECON.dismissBack / 100 + 0.5)
-  UI.button(752, y, 166, 34, "Dismiss (+" .. back .. " g)", function()
+  UI.button(838, 460, 80, 40, "Dismiss", function()
     confirm("Dismiss " .. c.name .. "? You get " .. back .. " gold back, and every friendship they had is gone.", function() B().Toast(g.Dismiss(st, c.id)); B().Go("Roster") end, "Dismiss")
-  end, { size = 12, disabled = #st.roster <= 1 })
+  end, { size = 12.5, disabled = #st.roster <= 1 })
+  UI.text(578, 503, "Dismiss gives back " .. back .. " gold and ends every friendship.", { size = 11, col = "muted" })
 end
 
 -- ------------------------------------------------------------------ tavern
 function P.Tavern(st)
   local g = G()
-  UI.text(24, 108, "The Bench & Barrel", { head = true, size = 18 })
-  UI.text(230, 112, #st.tavern .. " recruits this week · new faces at the weekly reset", { size = 12, col = "muted" })
+  -- Layout follows ux/hifi/tavern-*.svg.
+  local head = UI.text(24, 104, "The Bench & Barrel", { head = true, size = 20 })
+  UI.text(math.max(214, 24 + head:GetStringWidth() + 10), 111, #st.tavern .. " recruits this week · new faces at the weekly reset", { size = 12, col = "muted" })
   local cost = g.RerollCost(st)
   UI.button(790, 100, 146, 36, "Reroll " .. cost .. " g", function() B().Toast(g.Reroll(st)); B().Render() end,
     { disabled = st.gold < cost, tip = "The price doubles with every reroll this week." })
@@ -185,25 +208,28 @@ function P.Tavern(st)
     local x, y = 24 + (i - 1) * 184, 144
     local rc = c.rarity ~= "common" and UI.T().rarity[c.rarity] or nil
     UI.panel(x, y, 176, 346, "panel", rc or "rule")
-    UI.portrait(x + 44, y + 12, 88, c.cls, c.look)
-    UI.text(x + 10, y + 112, c.name, { head = true, size = 17 })
-    UI.icon(x + 10, y + 138, 14, "class-" .. c.cls); UI.text(x + 28, y + 139, c.race .. " " .. UI.title(c.cls), { size = 12, w = 140 })
-    UI.text(x + 10, y + 158, g.specName(c.cls, c.spec), { size = 12, col = "muted" })
-    UI.text(x + 10, y + 180, g.RARITY[c.rarity].label, { size = 12, col = UI.T().rarity[c.rarity] })
-    UI.text(x + 96, y + 180, "GL " .. g.gearLevel(c), { size = 12, w = 70, justify = "RIGHT" })
-    UI.text(x + 10, y + 204, "Traits", { size = 11, col = "muted" })
+    UI.rect(x + 8, y + 8, 160, 132, "barbg")
+    UI.tex(x + 56, y + 12, 64, 128, "body-" .. c.cls .. "-" .. (c.look or 0) .. "-" .. UI.theme)
+    if c.cls == "warlock" then UI.rect(x + 100, y + 12, 64, 16, "accent", 1, "plate"); UI.text(x + 100, y + 14, "Rare find", { size = 11, col = "badtext", w = 64, justify = "CENTER" }) end
+    UI.text(x + 10, y + 148, c.name, { head = true, size = 18 })
+    UI.icon(x + 11, y + 175, 14, "class-" .. c.cls); UI.text(x + 30, y + 175, c.race .. " " .. UI.title(c.cls), { size = 12, w = 140 })
+    UI.text(x + 10, y + 193, g.specName(c.cls, c.spec), { size = 12, col = "muted" })
+    local pips = ({ common = 1, rare = 2, epic = 3, legendary = 4 })[c.rarity] or 1
+    for k = 1, 4 do UI.rect(x + 11 + (k - 1) * 9, y + 219, 6, 6, k <= pips and UI.T().rarity[c.rarity] or "barbg") end
+    UI.text(x + 54, y + 214, g.RARITY[c.rarity].label, { size = 12, col = UI.T().rarity[c.rarity] })
+    UI.text(x + 96, y + 214, "GL " .. g.gearLevel(c), { size = 12, w = 70, justify = "RIGHT" })
+    UI.text(x + 10, y + 237, "Traits", { size = 11, col = "muted" })
     for k, t in ipairs(c.traits) do
-      local ty = y + 220 + (k - 1) * 22
+      local ty = y + 254 + (k - 1) * 18
       UI.text(x + 10, ty, g.TRAITS[t].name, { size = 12, w = 158 })
-      UI.button(x + 6, ty - 2, 164, 20, nil, nil, { kind = "row", tip = g.TRAITS[t].name .. ": " .. g.TRAITS[t].text })
+      UI.button(x + 6, ty - 2, 164, 18, nil, nil, { kind = "row", tip = g.TRAITS[t].name .. ": " .. g.TRAITS[t].text })
     end
-    UI.text(x + 10, y + 268, "Hover a trait for what it does.", { size = 11, col = "muted", w = 158 })
     local full = #st.roster >= g.ECON.rosterMax
     UI.button(x + 8, 442, 160, 40, "Hire " .. UI.money(c.price) .. " g", function() B().Toast(g.Hire(st, i)); B().Render() end,
       { disabled = full or st.gold < c.price, tip = full and "Roster full (15). Dismiss someone first." or st.gold < c.price and "Not enough gold." or nil })
   end
-  UI.icon(28, 500, 16, "warn")
-  UI.text(48, 501, "Roster " .. #st.roster .. " / 15. Hired raiders start at morale 70 and count as new for 2 weeks.", { size = 11.5, col = "muted" })
+  UI.icon(26, 498, 16, "warn")
+  UI.text(48, 498.5, "Roster " .. #st.roster .. " / 15. Hired raiders start at morale 70 and count as new for 2 weeks. Hover a trait for what it does.", { size = 11.5, col = "muted" })
 end
 
 -- ------------------------------------------------------------------ journal
@@ -211,7 +237,7 @@ local function stripFill(s) return (string.gsub(s, "{%w+}", "...")) end
 function P.Journal(st, args)
   local g = G()
   local sel = g.BOSS[args.boss or "magmadad"]
-  UI.text(24, 106, "The Molten Bore", { head = true, size = 18 })
+  UI.text(24, 104, "The Molten Bore", { head = true, size = 20 })  -- layout follows ux/hifi/journal-*.svg
   for i, b in ipairs(g.BOSSES) do
     local y = 136 + (i - 1) * 76
     local seen = st.progress[b.id].pulls > 0
@@ -219,85 +245,119 @@ function P.Journal(st, args)
     for _, a in ipairs(b.abilities) do if (st.journal[b.id] or {})[a.id] then found = found + 1 end end
     UI.panel(24, y, 250, 68, "row", b.id == sel.id and "accent" or "rule")
     if seen then bossArt(32, y + 8, 52, 52, b) else UI.rect(32, y + 8, 52, 52, "barbg"); UI.icon(48, y + 24, 20, "lock") end
-    UI.text(94, y + 10, seen and b.name or "Not reached yet", { size = 13, col = seen and "ink" or "muted" })
+    UI.text(94, y + 11, seen and b.name or "Not reached yet", { size = 13, col = seen and "ink" or "muted" })
     if seen then
-      UI.text(94, y + 28, bossState(st, b), { size = 11.5, col = "muted" })
-      UI.text(94, y + 45, found .. "/" .. total .. " abilities found", { size = 11.5 })
+      UI.text(94, y + 29.5, bossState(st, b), { size = 11.5, col = "muted" })
+      UI.text(94, y + 46.5, found .. "/" .. total .. " abilities found", { size = 11.5 })
     end
     UI.button(24, y, 250, 68, nil, function() B().Go("Journal", { boss = b.id }) end, { kind = "row", disabled = not seen, tip = seen and ("Read about " .. b.name) or "Not reached yet" })
   end
   local b = sel
   UI.panel(288, 100, 648, 424, nil, nil, true)
   bossArt(306, 118, 170, 120, b)
-  UI.text(492, 122, b.name, { head = true, size = 22 })
+  UI.text(492, 122, b.name, { head = true, size = 24 })
   local p = st.progress[b.id]
-  UI.text(492, 152, "Boss " .. b.index .. " of 5 · pulled " .. p.pulls .. " times · " .. p.normalKills .. " Normal and " .. p.heroicKills .. " Heroic kills", { size = 12, col = "muted", w = 430 })
-  UI.text(492, 174, b.pull, { size = 12.5, w = 430 })
-  UI.text(306, 252, "Abilities", { head = true, size = 15 })
-  local y = 274
+  UI.text(492, 156, "Boss " .. b.index .. " of 5 · pulled " .. p.pulls .. (p.pulls == 1 and " time · " or " times · ") .. p.normalKills .. " Normal and " .. p.heroicKills .. " Heroic kills", { size = 12, col = "muted", w = 430 })
+  UI.text(492, 179.5, b.pull, { size = 12.5, w = 430 })
+  local fam = 0
+  if #st.roster > 0 then
+    local ids = {}
+    for _, c in ipairs(st.roster) do ids[#ids + 1] = c.id end
+    fam = g.famAvg(st, ids, b.id)
+  end
+  UI.panel(492, 206, 236, 26, "row")
+  UI.text(504, 212, "Your raid knows this fight:", { size = 11.5 }); UI.bar(668, 215, 50, 8, fam / 10, "accent")
+  UI.text(306, 249, "Abilities", { head = true, size = 17 })
+  local y = 276
   for _, a in ipairs(b.abilities) do
     local wk = (st.journal[b.id] or {})[a.id]
-    UI.panel(306, y, 612, 44, wk and "row" or "panel", "rule")
+    UI.panel(306, y, 612, 46, wk and "row" or "panel", "rule")
     if wk then
-      UI.icon(316, y + 14, 16, "check")
-      UI.text(342, y + 6, a.name, { size = 13 }); UI.text(842, y + 6, "week " .. wk, { size = 11, col = "muted", w = 66, justify = "RIGHT" })
-      UI.text(342, y + 24, a.text, { size = 11.5, col = "muted", w = 566 })
+      UI.icon(316, y + 15, 16, "check")
+      UI.text(342, y + 6, a.name, { size = 13 }); UI.text(842, y + 8, "found week " .. wk, { size = 11, col = "muted", w = 66, justify = "RIGHT" })
+      UI.text(342, y + 25.5, a.text, { size = 11.5, col = "muted", w = 566 })
     else
-      UI.text(318, y + 12, "?", { head = true, size = 18, col = "muted" })
+      UI.text(318, y + 11, "?", { head = true, size = 20, col = "muted" })
       UI.text(342, y + 6, "Not seen yet", { size = 13, col = "muted" })
-      UI.text(342, y + 24, "Pull again: it shows up as the fight goes on.", { size = 11.5, col = "muted" })
+      UI.text(342, y + 25.5, "Pull again: it shows up later in the fight.", { size = 11.5, col = "muted" })
     end
-    y = y + 50
+    y = y + 52
   end
-  UI.text(306, y + 4, "Worked out", { head = true, size = 15 }); y = y + 26
+  y = math.max(y, 432)
+  UI.text(306, y + 3, "Worked out", { head = true, size = 17 }); y = y + 27
   local any = false
   for _, l in ipairs(g.LESSONS[b.id] or {}) do
-    local seen = st.lessons[b.id .. ":" .. l.id] or 0
-    if seen >= 2 and y < 500 then
+    local tier = (st.lessonTier or {})[b.id .. ":" .. l.id] or -1
+    if tier >= 1 and y < 500 then
       any = true
-      local solid = seen >= 4
-      UI.panel(306, y, 612, 24, solid and "row" or "panel", solid and "good" or "rule")
-      if solid then UI.icon(314, y + 4, 16, "check") end
-      UI.text(336, y + 6, stripFill(solid and l.t[3] or ("Clue: " .. l.t[2])), { size = 11.5, col = solid and "ink" or "muted", w = 576 })
-      y = y + 28
+      local solid = tier >= 2
+      UI.panel(306, y, 612, 26, solid and "row" or "panel", solid and "good" or "rule")
+      if solid then UI.icon(314, y + 5, 16, "check") end
+      UI.text(334, y + 6, stripFill(solid and l.t[3] or ("Clue: " .. l.t[2])), { size = 11.5, col = solid and "ink" or "muted", w = 576 })
+      y = y + 30
     end
   end
   if not any then UI.text(306, y, "Nothing yet. The recap after each wipe gets clearer as your raid learns the fight.", { size = 12, col = "muted" }) end
 end
 
 -- ------------------------------------------------------------------ settings
-function P.Settings(st)
+function P.Settings(st, args)
+  -- Layout follows ux/hifi/settings-*.svg: sections on the left, the chosen one on the right.
   B().tabs = false
   local s = ns.db.settings
-  UI.panel(24, 70, 912, 454, nil, nil, true)
+  local section = args.section or "Display"
+  UI.panel(24, 70, 200, 454)
+  for i, t in ipairs({ "Display", "Playback", "Accessibility", "Guild data" }) do
+    UI.button(36, 84 + (i - 1) * 48, 176, 40, t, function() B().Go("Settings", { section = t }) end, { kind = t == section and "selected" or "normal", size = 13.5 })
+  end
+  UI.panel(238, 70, 698, 454, nil, nil, true)
   local function seg(x, y, opts, cur, set, w)
     for i, o in ipairs(opts) do
-      UI.button(x + (i - 1) * (w + 6), y, w, 32, o[2], function() set(o[1]); B().Render() end, { kind = o[1] == cur and "selected" or "normal", size = 12.5 })
+      UI.button(x + (i - 1) * (w + 6), y, w, 34, o[2], function() set(o[1]); B().Render() end, { kind = o[1] == cur and "selected" or "normal", size = 12.5 })
     end
   end
-  local function label(y, a, b) UI.text(48, y, a, { size = 13.5 }); if b then UI.text(48, y + 18, b, { size = 11.5, col = "muted" }) end end
-  UI.text(48, 90, "Board", { head = true, size = 17 })
-  label(126, "Theme", "Auto follows the time of day")
-  seg(300, 122, { { "light", "Field Journal" }, { "dark", "Midnight" }, { "auto", "Auto" } }, s.theme, function(v) s.theme = v end, 136)
-  label(178, "Size", "Same as /fpr scale 70-120")
-  UI.button(300, 174, 40, 32, "-", function() B().SetScale((s.scale or 1) - 0.05) end)
-  UI.text(346, 182, math.floor((s.scale or 1) * 100 + 0.5) .. "%", { size = 14, w = 60, justify = "CENTER" })
-  UI.button(412, 174, 40, 32, "+", function() B().SetScale((s.scale or 1) + 0.05) end)
-  label(230, "Position", "Drag the board to move it")
-  UI.button(300, 226, 150, 32, "Reset to centre", function() s.point = nil; B().ApplyPosition() end, { size = 12.5 })
-  UI.text(48, 280, "Playback", { head = true, size = 17 })
-  label(316, "Motion", "Summary only goes straight to the result")
-  seg(300, 312, { { "animated", "Full" }, { "summary", "Summary only" } }, s.playback, function(v) s.playback = v end, 136)
-  label(366, "Speed")
-  seg(300, 362, { { 1, "x1" }, { 2, "x2" }, { 4, "x4" } }, s.speed or 1, function(v) s.speed = v end, 60)
-  UI.text(560, 366, "Sounds", { size = 13.5 })
-  seg(630, 362, { { true, "On" }, { false, "Off" } }, s.sound ~= false, function(v) s.sound = v end, 60)
-  UI.text(48, 414, "Checks", { head = true, size = 17 })
-  label(448, "Self-test", "The golden fights, in your client")
-  UI.button(300, 444, 150, 34, "Run self-test", function() ns.SelfTestRun(); B().Render() end, { size = 12.5 })
-  if ns.lastSelfTest then UI.text(462, 453, ns.lastSelfTest, { size = 12, col = ns.lastSelfTestOk and "good" or "bad", w = 300 }) end
-  UI.button(600, 444, 150, 34, "New guild", function()
-    confirm("Start a new guild? This one is gone for good.", function() ns.db.guild = nil; B().Go("Hub") end, "Start over")
-  end, { size = 12.5 })
-  UI.button(820, 470, 96, 40, "Done", function() B().Go("Hub") end, { kind = "primary" })
+  -- label(y): y is the hi-fi baseline of the label; the addon draws from the top of the line.
+  local function label(y, a, b) UI.text(262, y - 13.5, a, { size = 13.5 }); if b then UI.text(262, y + 6.5, b, { size = 11.5, col = "muted" }) end end
+  local function heading(y, t) UI.text(262, y - 18, t, { head = true, size = 18 }) end
+  local function playback(top)
+    heading(top + 18, "Playback")
+    label(top + 54, "Motion", "Summary only skips playback")
+    seg(440, top + 34, { { "animated", "Full" }, { "summary", "Summary only" } }, s.playback, function(v) s.playback = v end, 120)
+    label(top + 110, "Speed")
+    seg(440, top + 92, { { 1, "x1" }, { 2, "x2" }, { 4, "x4" } }, s.speed or 1, function(v) s.speed = v end, 64)
+  end
+  if section == "Display" then
+    heading(104, "Board")
+    label(140, "Theme", "Auto follows the time of day")
+    seg(440, 120, { { "light", "Field Journal" }, { "dark", "Midnight" }, { "auto", "Auto" } }, s.theme, function(v) s.theme = v end, 136)
+    label(196, "Size", "Same as /fpr scale")
+    UI.button(440, 178, 40, 30, "-", function() B().SetScale((s.scale or 1) - 0.05) end, { tip = "Smaller" })
+    UI.text(486, 184, math.floor((s.scale or 1) * 100 + 0.5) .. "%", { size = 14, w = 60, justify = "CENTER" })
+    UI.button(552, 178, 40, 30, "+", function() B().SetScale((s.scale or 1) + 0.05) end, { tip = "Bigger" })
+    label(250, "Position", "Lost it? /fpr reset")
+    UI.button(440, 232, 150, 36, "Reset to centre", function() s.point = nil; B().ApplyPosition() end, { size = 12.5 })
+    playback(288)
+    heading(452, "Checks")
+    label(486, "Self-test", "18 golden fights, here")
+    UI.button(440, 466, 150, 38, "Run self-test", function() ns.SelfTestRun(); B().Render() end, { size = 13 })
+    if ns.lastSelfTest then UI.text(602, 474, ns.lastSelfTest, { size = 12, col = ns.lastSelfTestOk and "good" or "bad", w = 210 }) end
+  elseif section == "Playback" then
+    playback(86)
+    UI.text(262, 250, "Playback replays a pull that is already decided. Skipping never changes the result.", { size = 12, col = "muted", w = 640 })
+  elseif section == "Accessibility" then
+    heading(104, "Keyboard and sound")
+    label(140, "Keyboard", "Tab moves between buttons; Enter presses; Escape lets go")
+    seg(560, 120, { { true, "On" }, { false, "Off" } }, s.keys ~= false, function(v) s.keys = v end, 64)
+    label(196, "Sounds", "Every sound also shows on screen")
+    seg(560, 176, { { true, "On" }, { false, "Off" } }, s.sound ~= false, function(v) s.sound = v end, 64)
+    UI.text(262, 236, "In combat the board hands every key back to the game.", { size = 12, col = "muted", w = 640 })
+  else
+    heading(104, "Guild data")
+    UI.text(262, 122, "Your guild is saved with your account (FlightPathRaidersDB). Week " .. st.week .. ", " .. #st.roster .. " raiders.", { size = 12.5, w = 640 })
+    label(180, "New guild", "Starts over. This one is gone for good.")
+    UI.button(560, 160, 150, 36, "New guild", function()
+      confirm("Start a new guild? This one is gone for good.", function() ns.db.guild = nil; B().Go("Hub") end, "Start over")
+    end, { size = 12.5 })
+  end
+  UI.button(820, 466, 96, 40, "Done", function() B().Go("Hub") end, { kind = "primary", size = 19 })
 end

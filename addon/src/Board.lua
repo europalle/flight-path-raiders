@@ -36,8 +36,9 @@ local function drawChrome()
   UI.tex(0, H - 34, 34, 34, "corner-3-" .. UI.theme); UI.tex(W - 34, H - 34, 34, 34, "corner-4-" .. UI.theme)
   -- Title bar.
   UI.button(26, 20, 196, 30, "", function() Board.Go("Hub") end, { kind = "row", tip = "Back to the hub" })
-  UI.text(30, 24, "Flight Path Raiders", { head = true, size = 20 })
-  UI.text(236, 28, "/ " .. (Board.crumb or Board.page), { size = 15, col = "muted" })
+  local title = UI.text(30, 22, "Flight Path Raiders", { head = true, size = 22 })
+  -- The crumb follows the title's real width (the client's heading font is wider than the hi-fi's).
+  UI.text(math.max(232, 30 + title:GetStringWidth() + 8), 27, "/ " .. (Board.crumb or Board.page), { size = 17, col = "muted" })
   UI.text(700, 30, math.floor((ns.db.settings.scale or 1) * 100 + 0.5) .. "%", { size = 12, col = "muted", w = 52, justify = "RIGHT" })
   UI.button(764, 20, 32, 32, "-", function() Board.SetScale((ns.db.settings.scale or 1) - 0.05) end, { tip = "Smaller" })
   UI.button(804, 20, 32, 32, "+", function() Board.SetScale((ns.db.settings.scale or 1) + 0.05) end, { tip = "Bigger" })
@@ -105,9 +106,12 @@ function Board.RefreshFocus()
 end
 local MOVE = { TAB = 1, DOWN = 1, RIGHT = 1, UP = -1, LEFT = -1 }
 local function onKey(self, key)
+  if InCombatLockdown() then return end  -- in combat the board never decides what a key does
   local used = false
   local list = focusList()
-  if MOVE[key] and (key == "TAB" or focusIndex > 0) and #list > 0 then
+  if ns.db.settings.keys == false then
+    used = false                          -- keyboard control off in Settings: every key goes to the game
+  elseif MOVE[key] and (key == "TAB" or focusIndex > 0) and #list > 0 then
     local step = MOVE[key]
     if key == "TAB" and IsShiftKeyDown() then step = -1 end
     focusIndex = ((focusIndex - 1 + step) % #list) + 1
@@ -116,13 +120,30 @@ local function onKey(self, key)
     local b = Board.focused
     if b.enabled and b.fn then b.fn() end
     used = true
+  elseif key == "ESCAPE" and focusIndex > 0 then
+    -- Escape first lets go of the focus, so arrows, Space and Enter go back to the game.
+    focusIndex = 0; Board.RefreshFocus(); GameTooltip:Hide(); used = true
   elseif key == "ESCAPE" and Board.modal then
     Board.CloseModal(); used = true
   elseif key == "ESCAPE" then
     self:Hide(); used = true
   end
-  if not InCombatLockdown() then self:SetPropagateKeyboardInput(not used) end
+  self:SetPropagateKeyboardInput(not used)
 end
+-- Entering combat hands every key back to the game before the lockdown starts (gate review M4):
+-- PLAYER_REGEN_DISABLED fires just before protected calls are blocked.
+local combat = CreateFrame("Frame")
+combat:RegisterEvent("PLAYER_REGEN_DISABLED")
+combat:RegisterEvent("PLAYER_REGEN_ENABLED")
+combat:SetScript("OnEvent", function(_, event)
+  if not frame then return end
+  if event == "PLAYER_REGEN_DISABLED" then
+    focusIndex = 0; Board.focused = nil
+    frame:SetPropagateKeyboardInput(true); frame:EnableKeyboard(false)
+  else
+    frame:EnableKeyboard(true)
+  end
+end)
 
 
 function Board.Go(page, args)
