@@ -47,6 +47,10 @@ The Director flagged that the mid-fi stage reads as floating characters. The sta
 
 Deliver a pencil sketch of the stage first, for the Director to check, before any painting.
 
+## Build from a reusable kit (Director, 2026-11-18)
+
+Everything is assembled from shared pieces: two colour textures (parchment, slate), neutral 9-slice borders and ornaments tinted in code, one button base with state overlays, shared slots and rings with separate glyphs, quality marks plus tint, generic effects tinted per school, characters on one body template with separate props, and layered stage backgrounds. The full kit and its prompts are in `art/gemini-prompt-pack.md`.
+
 ## Icons are textures, not characters
 
 WoW's in-game fonts can't draw symbols such as a lock, envelope, tick, checkbox, arrow or warning sign; they show up as empty boxes. In the wireframes every such symbol is drawn in ochre. Each one needs an icon texture, shown inline in text at the text's height. The set so far: affix shapes, warning, tick, checkbox (empty and ticked), envelope (mailbox), lock, potion (consumable), Bind on Equip mark, dropdown arrow, upgrade arrow, rename pencil, pause, settings, close, and the rank arrow on the results banner.

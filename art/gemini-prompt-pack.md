@@ -1,95 +1,130 @@
-# Gemini prompt pack: Flight Path Raiders assets
+# Gemini prompt pack v2: a reusable kit
 
-Art department, 2026-11-18. Run these in order, one prompt per message. Attach `art/sketches/character-study-v1.png` to every prompt as the style reference. Send the results back as PNG files, original resolution.
+Art department, 2026-11-18. Replaces v1. The whole game is assembled from a small kit of reusable pieces instead of one drawing per screen element.
 
-## How it works
+## The reuse rules
 
-- **Background:** every prompt asks for a flat magenta (#FF00FF) background. Image models rarely give real transparency, so Art keys out the magenta afterwards.
-- **One sheet per prompt:** each prompt asks for a sheet of separate pieces with space between them. Art cuts them apart, cleans the edges, recolours where needed and builds the stretchable frames.
-- **If a result copies Blizzard's real art** (logos, the real Ragnaros, real icons), throw it away and run the prompt again. Legal & Compliance: we parody the Classic UI, we never copy it.
-- **Licence:** generated images may not be protected by copyright on their own. Art always edits on top (cleanup, recolour, redraw) and keeps the layered files.
+1. **Draw once, tint in code.** WoW can recolour a texture at runtime (`SetVertexColor`). So borders, ornaments, buttons, rings, quality marks and effects are drawn **in neutral greys and white**, then tinted: sepia and gold for light mode, silver and iron for dark mode, green, blue or purple for item quality, orange for fire, ice-blue for frost. One border serves dozens of uses.
+2. **Colour lives in the textures.** The paper and slate textures carry the watercolour richness; everything drawn on top stays neutral and gets tinted.
+3. **Stretch, don't redraw.** Every frame is a 9-slice set (4 corners, 4 edges, centre texture), so one set covers every window, panel, card and tooltip at any size.
+4. **Frame plus glyph.** Icons are a shared frame (square slot or round ring) with a separate glyph on top. Thirty icons cost one frame and thirty small glyphs.
+5. **States are overlays.** Hover, pressed, disabled and selected are a glow, an inner shadow or a desaturation on the same base, not four drawings.
+6. **Characters share a body template.** All nine classes stand on the same template: same height, same stance, empty hands. Weapons and shields are separate props, reused across classes (a sword for warrior, paladin and rogue). The stage animates the props and body parts separately.
+7. **Effects are generic.** One glow, one sparkle, one hit spark, one smoke puff, one swirl, all neutral, tinted per school of magic.
 
-## Style block (already included in every prompt below)
+## How to run
 
-> Hand-drawn parody of the World of Warcraft Classic interface, as if a raid leader sketched it in a paper notebook with a dip pen and watercolour. Wobbly confident ink outlines, loose watercolour fills that bleed slightly past the lines, light crosshatching on shadow sides. Charming and a bit clumsy, never sloppy. Original designs only: no Blizzard logos, no real WoW icons, no text unless asked. Flat solid magenta (#FF00FF) background with nothing else on it, no drop shadows on the background. Each piece separate, with clear magenta space between pieces.
+- Attach `art/sketches/character-study-v1.png` to every prompt as the style reference.
+- One prompt per message, in order. Send results back as PNG at full resolution.
+- Everything except the textures and backgrounds is on flat magenta (#FF00FF). Art keys it out.
+- If something copies Blizzard's real art, logos or characters, rerun it. Art edits on top of everything, for the licence.
 
-Light mode = **Field Journal**: cream parchment, sepia ink, tarnished gold trim.
-Dark mode = **Midnight Grimoire**: charcoal slate, silver-white ink, soft glowing orange and ice-blue accents.
+## Style block (included below as [Style])
 
----
+> Hand-drawn parody of the World of Warcraft Classic interface, as if a raid leader sketched it in a paper notebook with a dip pen and watercolour. Wobbly confident ink outlines, light crosshatching on shadow sides. Charming and a bit clumsy, never sloppy. Original designs only: no Blizzard logos, no real WoW icons, no text. Flat solid magenta (#FF00FF) background with nothing else on it. Each piece separate, with clear magenta space between pieces.
 
-## 1. Window frame kit, light mode
-
-> [Style block] Light mode: cream parchment panels, sepia ink, tarnished gold trim, like a hand-drawn copy of a Classic quest log window. Draw a sprite sheet of separate pieces: 4 ornate corner pieces (top-left, top-right, bottom-left, bottom-right), a straight top edge, bottom edge, left edge and right edge (each a short strip that could repeat), a title banner ribbon with no text, a round close button with an X, and a small square parchment panel. Lay them out in a grid with magenta space between them.
-
-## 2. Window frame kit, dark mode
-
-> [Style block] Dark mode: charcoal slate stone panels, silver-white ink lines, dull iron trim with small rivets, faint ice-blue glow at the edges, like a hand-drawn copy of a Classic dark dialog frame. Same pieces as a sprite sheet: 4 corner pieces, top, bottom, left and right edge strips, a title banner with no text, a round close button with an X, a small square slate panel. Grid layout, magenta space between pieces.
-
-## 3. Buttons
-
-> [Style block] A sprite sheet of hand-drawn game buttons, no text on them. Row 1, light mode: a wide red-and-gold primary button like a Classic dialog button, in four states: normal, hover (slightly brighter), pressed (pushed in), disabled (faded grey). Row 2, light mode: a plain parchment secondary button in the same four states. Row 3 and 4: the same two buttons in dark mode (slate and silver with an orange glow on hover). Every button the same size, wide rectangle with rounded corners.
-
-## 4. Portrait rings and unit frames
-
-> [Style block] A sprite sheet of hand-drawn unit frame pieces in the spirit of the Classic player frame, but clearly original: a round gold portrait ring (empty centre), the same ring with a parody dragon wrapped around it for elite bosses (cartoonish, not the real WoW elite dragon), a long empty health bar frame, a thinner mana bar frame, a small level badge circle (empty), and a small square buff icon frame. Light mode versions on the top row, dark mode versions on the bottom row.
-
-## 5. Item slots and quality borders
-
-> [Style block] A sprite sheet of six empty square item slot frames, hand-drawn, each with an ink border coloured by item quality: grey (poor), white (common), green (uncommon), blue (rare), purple (epic), orange (legendary). Each border also has a different corner mark so they are distinguishable without colour: none, one dot, two dots, a small diamond, a small star, a small flame. Then the same six on dark slate. Empty centres.
-
-## 6. Role and class icons
-
-> [Style block] A sprite sheet of small square icons, each inside a simple ink circle, original designs. Row 1, three role icons: a tank (a dented kite shield), a healer (a glowing hand with a small plus sign), a damage dealer (two crossed swords). Row 2 and 3, nine class crests, each a simple object, not the WoW class icons: warrior (a notched axe), paladin (a hammer with a halo), hunter (a bow with a paw print), rogue (a dagger and a mask), priest (a candle), shaman (a totem pole), mage (a pointed hat with a star), warlock (a skull candle with green flame), druid (an oak leaf and a paw).
-
-## 7. Affix and status icons
-
-> [Style block] A sprite sheet of small square icons inside ink circles, original designs: a stone shield (Fortified Trash), a crown on a goblin (Tyrannical Raid Leader), a group of feet pushing (Peer Pressure), a tilted sad face (Tilted), a floor with lava cracks (Floor Is Lava), a glowing orb with a sign saying nothing (Orbs Nobody Kills), a dripping red blade (Bleeding Edge), a snail with an hourglass (Lag Spike), a cracked summoning stone (Summoning Stone Broken). Also: a warning triangle, an envelope, a padlock, a tick mark, an empty checkbox, a ticked checkbox, a small upward arrow.
-
-## 8. Consumables and loot
-
-> [Style block] A sprite sheet of small item icons inside square slot frames, original designs: a plate of food with steam, a small round elixir bottle, a tall flask, a red potion with a flame symbol (Fire Resistance), a thick book with a swirl on the cover (Tome of Respec), a gold coin stack, a small treasure chest, a scroll. Then four armor icons: a plate chestpiece, a mail chestpiece, a leather vest, a cloth robe. Then a staff, a sword, a bow, a wand, a shield, a ring.
-
-## 9. Characters, one prompt per class
-
-Run this nine times, swapping the class line. Same pose and size every time.
-
-> [Style block] One full-body fantasy character, side view facing right, standing idle, feet resting on an invisible flat line at the bottom of the image, about two-thirds of the image height tall. Same drawing style, proportions and line weight as the attached reference. Original character, not a known WoW character. **Class line here.**
-
-Class lines:
-1. A dwarf-sized human warrior in red tabard and dented plate, kite shield and sword, tank stance.
-2. A paladin in polished plate with a gold-trimmed blue tabard, two-handed hammer resting on the shoulder.
-3. A hunter in mail and leather with a longbow and a fat loyal boar at their feet.
-4. A rogue in a dark leather hood and scarf with two daggers, slightly hunched, sneaky grin.
-5. A priest in white and gold robes holding a glowing candle, calm and slightly smug.
-6. A shaman in mail and furs carrying a small wooden totem and a stone hammer.
-7. A frost mage in a deep blue hooded robe, face in shadow with glowing eyes, staff with an ice crystal.
-8. A warlock in purple robes with horned cowl, a little imp perched on the shoulder.
-9. A druid in leather and leaves with antler headdress and a wooden staff with a moon charm.
-
-## 10. Bosses
-
-> [Style block] One large boss character, side view facing left, standing on an invisible flat line at the bottom of the image, filling most of the image. Same style as the attached reference. Original parody design. **Boss line here.**
-
-Boss lines (more follow once the boss list is final):
-1. Ragnaroast: a giant lava chef made of cracked molten rock, rising out of his own iron stew pot, chef's hat, flame moustache, raising a huge roasting spit. Use the attached Ragnaroast as the design.
-2. Onyxiety: a nervous black dragon who worries about everything, wings half folded, chewing her claw, small anxious eyes. Cartoonish and sympathetic, not scary.
-
-## 11. Stage backgrounds
-
-> [Style block, but no magenta: fill the whole image] A wide side-view background for a 2D stage, aspect ratio 2:1, no characters. A flat ground strip across the bottom fifth of the image so characters can stand on it. **Place line here.** Keep the middle of the image calm and low in detail so characters read clearly in front of it.
-
-Place lines:
-1. The Molten Bore: a volcanic cave with lava rivers in the distance, glowing cracks, a few stalactites.
-2. Onyxiety's Lair: a dark cave lair with scattered gold coins, eggs, and a lonely therapy couch.
+[Neutral] means: **draw only in black ink, greys and white, no colour at all, so it can be tinted later.**
 
 ---
 
-## What Art does with the results
+## A. Textures (colour, full canvas, no magenta)
 
-1. Keys out the magenta and trims each piece.
-2. Rebuilds frames as 9-slice pieces so windows can stretch to any size.
-3. Recolours light-mode pieces into dark mode where Gemini's two versions don't match.
-4. Traces icons and frames to SVG where they need to stay sharp; keeps characters and backgrounds as high-resolution PNG.
-5. Splits characters into parts (head, arm, weapon) so the stage can animate them.
-6. Checks every piece against the readability rules: contrast, shape plus text, no flashing.
+**A1. Parchment (light mode)**
+> A seamless tileable square texture of aged cream notebook parchment with faint watercolour stains, very subtle paper grain and faint blue ruled lines. Even lighting, no shadows, no objects, no vignette. The left edge must continue into the right edge and the top into the bottom.
+
+**A2. Slate (dark mode)**
+> A seamless tileable square texture of dark charcoal slate, like a dark spellbook page, with very subtle chalky grain and faint lighter streaks. Even lighting, no objects, no vignette. Edges must tile seamlessly.
+
+**A3. Paper wear stickers**
+> [Style] A sheet of small decorative stickers to scatter on a page: a coffee ring stain, an ink blot, a smudged thumbprint, a strip of torn masking tape, a folded dog-ear corner, a small doodled star, a doodled skull, a doodled arrow. Watercolour colour allowed on these.
+
+## B. Frame kit [Neutral]
+
+**B1. Borders**
+> [Style] [Neutral] A 9-slice border kit for game windows, in two weights. Heavy weight: 4 ornate corner pieces (top-left, top-right, bottom-left, bottom-right) and 4 straight edge strips (top, bottom, left, right) that can repeat seamlessly. Light weight: the same 8 pieces, thinner and plainer. Edges must be perfectly straight strips so they can be stretched.
+
+**B2. Ornaments**
+> [Style] [Neutral] A sheet of small ornaments to decorate frames: a title ribbon banner with no text, a short horizontal divider with a flourish in the middle, a round rivet, a small cut gem, a wax seal with no symbol, a hanging tassel, a scroll curl end.
+
+**B3. Controls**
+> [Style] [Neutral] A sheet of interface controls: one wide rounded button base, a round button base, a square tab base, a checkbox box, a slider track and a slider knob, a dropdown arrow, a close X, a minus and a plus. Then three overlays the same size as the wide button: a soft outer glow, an inner pressed shadow, and a thin selected outline.
+
+**B4. Rings, slots and bars**
+> [Style] [Neutral] A sheet of empty frames: a round portrait ring, a square item slot, a small round badge, a long thin bar frame, and a cartoonish parody dragon that wraps around the round ring as an elite overlay (not the real WoW elite dragon). Also a plain bar fill texture with brush-stroke edges.
+
+**B5. Quality marks**
+> [Style] [Neutral] Six tiny corner marks to place in the corner of an item slot, so quality reads without colour: nothing (empty circle), one dot, two dots, a small diamond, a small star, a small flame.
+
+## C. Glyphs (ink plus at most one accent colour, no frame)
+
+Each glyph sits on the shared slot or ring from B4.
+
+**C1. Roles and classes**
+> [Style] Small icon glyphs, dark ink with one watercolour accent each, no frames or circles around them: tank (dented kite shield), healer (glowing hand with a plus), damage (crossed swords); warrior (notched axe), paladin (hammer with a halo), hunter (bow with a paw print), rogue (dagger and mask), priest (candle), shaman (small totem), mage (pointed hat with a star), warlock (skull candle with green flame), druid (oak leaf and paw).
+
+**C2. Affixes and status**
+> [Style] Small icon glyphs, dark ink with one accent each, no frames: stone shield, goblin wearing a crown, feet pushing each other, tilted sad face, floor with lava cracks, glowing orb, dripping blade, snail with an hourglass, cracked summoning stone, warning triangle, envelope, padlock, tick, empty checkbox, ticked checkbox, upward arrow, pencil, pause symbol, cog.
+
+**C3. Items**
+> [Style] Small item glyphs, ink and watercolour, no frames: plate of food, round elixir bottle, tall flask, red potion with a flame mark, thick book with a swirl, coin stack, small chest, scroll, plate chestpiece, mail chestpiece, leather vest, cloth robe, ring, trinket charm.
+
+## D. Effects [Neutral, tinted per school]
+
+**D1. Effects**
+> [Style] [Neutral] A sheet of simple 2D effect sprites drawn in white and grey ink so they can be tinted: a soft round glow, a four-point sparkle, a jagged hit spark, a smoke puff, a swirl of magic, a rising heal plus, a small flame shape, a crescent slash arc, a shockwave ring.
+
+## E. Characters on a shared template
+
+**E0. Template (run first)**
+> [Style] One plain mannequin figure for a 2D game, side view facing right, standing idle, feet on an invisible flat line at the bottom, about two-thirds of the image height tall, hands open and empty. Simple clothing. This is a proportion template that all characters will match.
+
+**E1 to E9. Classes (attach the template result as well as the style reference)**
+> [Style] One full-body character drawn on exactly the same proportions, height and pose as the attached template, side view facing right, hands empty (weapons are added separately). Original character, not a known WoW character. **Class line.**
+
+1. Warrior: red tabard over dented plate, heavy pauldrons, crested helmet.
+2. Paladin: polished plate, gold-trimmed blue tabard, small halo glow.
+3. Hunter: mail and leather, quiver on the back, a fat loyal boar beside them (the boar as a separate drawing).
+4. Rogue: dark leather hood and scarf, slightly hunched, sneaky grin.
+5. Priest: white and gold robes, calm and slightly smug.
+6. Shaman: mail and furs, bone charms.
+7. Mage: deep blue hooded robe, face in shadow with glowing eyes.
+8. Warlock: purple robes, horned cowl, a small imp on the shoulder (imp as a separate drawing).
+9. Druid: leather and leaves, antler headdress.
+
+**E10. Props**
+> [Style] A sheet of separate weapons and held items, each drawn at the scale of the attached template's hands, angled as if held: sword, axe, two-handed hammer, longbow, dagger, staff with an ice crystal, wooden staff with a moon charm, wand, kite shield, round shield, small totem, candle, spellbook.
+
+## F. Bosses
+
+> [Style] One large boss character, side view facing left, standing on an invisible flat line at the bottom, filling most of the image, limbs and held items clearly separated so they can be animated. Original parody. **Boss line.**
+
+1. Ragnaroast: a giant lava chef of cracked molten rock rising out of an iron stew pot, chef's hat, flame moustache. The roasting spit as a separate drawing. Match the attached Ragnaroast.
+2. Onyxiety: a nervous black dragon, wings half folded, chewing a claw, anxious eyes. Cartoonish and sympathetic.
+
+The other Molten Bore bosses follow once their designs are written up.
+
+## G. Stage backgrounds in layers (full canvas, no magenta)
+
+Each raid is three layers so the ground and middle can be reused and recoloured.
+
+> [Style, but fill the whole image instead of magenta] A wide side-view 2D game background, aspect ratio 2:1, no characters. **Layer line.**
+
+1. Far layer, Molten Bore: distant volcanic cave walls and lava rivers, soft and low contrast.
+2. Middle layer, Molten Bore: rock pillars and stalactites at the sides only, empty centre.
+3. Ground strip (shared): a flat rocky ground strip filling the bottom fifth, horizontally tileable, the rest of the image magenta.
+4. Far layer, Onyxiety's Lair: a dark cave with piles of gold coins and eggs, soft and low contrast.
+
+---
+
+## What Art builds from the kit
+
+| Kit piece | Becomes |
+| --- | --- |
+| A1 / A2 + B1 + B2 | Every window, panel, card, tooltip and popup in both modes |
+| B3 + overlays | Every button, tab, checkbox, slider and dropdown, in every state |
+| B4 + C glyphs | Every icon, portrait, item slot and boss frame |
+| B4 + B5 + tint | Every item quality, readable without colour |
+| B4 bar + fill + tint | Health, mana, morale, XP, progress and countdown bars |
+| D1 + tint | Every spell, heal, hit and buff effect |
+| E0 to E10 | All characters on the stage, cards and roster, with any weapon |
+| G layers | Every raid stage; new raids reuse the ground strip |
