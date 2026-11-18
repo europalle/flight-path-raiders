@@ -10,7 +10,7 @@ Last updated: 2026-11-18. Read this first at the start of every session.
 | --- | --- |
 | Design document | Done, signed off |
 | UX wireframes and art direction | Mid-fi wireframes done (12 screens). Style chosen. Asset kit generated and cut out. First hi-fi stage test done. Art direction write-up and hi-fi hub to do |
-| Technical design | Draft complete, waiting for Director review (3 open questions in section 12) |
+| Technical design | Draft complete; the 3 open questions are answered. Waiting for the Director's sign-off |
 | Browser prototype | Not started |
 | Milestone plan | Not started |
 | Gate review (separate agents) | After the above |
@@ -39,7 +39,7 @@ Last updated: 2026-11-18. Read this first at the start of every session.
 
 ## Next
 
-1. Director reviews the technical design and answers its open questions (#1).
+1. Director signs off the technical design (#1).
 2. Browser prototype with the shared Lua engine (#2), then Tuning's simulations (#3).
 3. Art direction write-up (#4), frame kit (#5) and the hi-fi hub (#7) alongside.
 4. Milestone plan (#16), then the Phase 2 gate review (#17).

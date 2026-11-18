@@ -4,6 +4,7 @@ Decisions made by the Game Director. Newest first.
 
 | Date | Area | Decision |
 | --- | --- | --- |
+| 2026-11-18 | Engineering | One guild per WoW account (all characters fly for it); board settings per character; dailies, lockouts and weekly chest per account. Leaderboards show a player-picked guild name (24 chars) plus a short account tag. Four embedded libraries approved (LibStub, CallbackHandler, AceComm, ChatThrottleLib, LibSerialize, LibDeflate); Legal checks licences before release |
 | 2026-11-18 | Production | Task tracking in GitHub Issues (labels for department and status, milestones per phase); STATUS.md is the session handoff file |
 | 2026-11-18 | Design / Art | Shamans stay: dwarves can be shamans in WoW: Forever (Director). Two dwarf shaman looks, R11 and R12 |
 | 2026-11-18 | Design / Art | Alliance only: human, dwarf, night elf, gnome with Classic class rules (replaces the all-races entry). Two looks per class; 10 R prompts. Shaman open: Classic Alliance had none |
