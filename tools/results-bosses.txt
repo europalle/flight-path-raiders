@@ -1,0 +1,72 @@
+Boss tuning (2026-11-18, engine v6): typical raid (skill 50, familiarity 5, chemistry 8), moments on. Fire gear only on Ragnaroast.
+magmadad
+  normal  unprepared sprea  84  stack  84  burn  94  plays  74   best burn
+  normal  partial    sprea  93  stack  93  burn  98  plays  88   best burn
+  normal  full       sprea  98  stack  98  burn 100  plays  94   best burn
+  normal  min-maxed  sprea 100  stack 100  burn 100  plays 100   best burn
+  heroic  unprepared sprea  27  stack  28  burn  48  plays  14   best burn
+  heroic  partial    sprea  49  stack  49  burn  60  plays  38   best burn
+  heroic  full       sprea  61  stack  61  burn  82  plays  52   best burn
+  heroic  min-maxed  sprea  93  stack  92  burn  98  plays  86   best burn
+  mythic  unprepared sprea   2  stack   2  burn   3  plays   1   best burn
+  mythic  partial    sprea   5  stack   5  burn   6  plays   3   best burn
+  mythic  full       sprea   6  stack   6  burn  26  plays   5   best burn
+  mythic  min-maxed  sprea  51  stack  51  burn  65  plays  39   best burn
+baron
+  normal  unprepared sprea  98  stack  70  burn  76  plays  75   best spread
+  normal  partial    sprea  99  stack  90  burn  92  plays  92   best spread
+  normal  full       sprea 100  stack  98  burn  99  plays  99   best spread
+  normal  min-maxed  sprea 100  stack 100  burn 100  plays 100   best spread
+  heroic  unprepared sprea  20  stack   0  burn   0  plays   0   best spread
+  heroic  partial    sprea  48  stack   0  burn   0  plays   0   best spread
+  heroic  full       sprea  83  stack   1  burn   4  plays   4   best spread
+  heroic  min-maxed  sprea  99  stack  42  burn  45  plays  54   best spread
+  mythic  unprepared sprea   0  stack   0  burn   0  plays   0   best spread
+  mythic  partial    sprea   0  stack   0  burn   0  plays   0   best spread
+  mythic  full       sprea   4  stack   0  burn   0  plays   0   best spread
+  mythic  min-maxed  sprea  49  stack   0  burn   0  plays   0   best spread
+lucifrown
+  normal  unprepared sprea 100  stack  40  burn 100  plays 100   best burn
+  normal  partial    sprea 100  stack  78  burn 100  plays 100   best spread
+  normal  full       sprea 100  stack  99  burn 100  plays 100   best spread
+  normal  min-maxed  sprea 100  stack 100  burn 100  plays 100   best spread
+  heroic  unprepared sprea   2  stack   0  burn   7  plays  14   best playsafe
+  heroic  partial    sprea  13  stack   0  burn  26  plays  40   best playsafe
+  heroic  full       sprea  55  stack   0  burn  74  plays  86   best playsafe
+  heroic  min-maxed  sprea  97  stack   1  burn  99  plays 100   best playsafe
+  mythic  unprepared sprea   0  stack   0  burn   0  plays   0   best spread
+  mythic  partial    sprea   0  stack   0  burn   0  plays   0   best spread
+  mythic  full       sprea   0  stack   0  burn   1  plays   1   best burn
+  mythic  min-maxed  sprea  16  stack   0  burn  34  plays  50   best playsafe
+majordomo
+  normal  unprepared sprea  64  stack 100  burn  95  plays  50   best stack
+  normal  partial    sprea  92  stack 100  burn 100  plays  72   best stack
+  normal  full       sprea 100  stack 100  burn 100  plays  97   best spread
+  normal  min-maxed  sprea 100  stack 100  burn 100  plays 100   best spread
+  heroic  unprepared sprea   0  stack  28  burn   9  plays   0   best stack
+  heroic  partial    sprea   8  stack  50  burn  34  plays   1   best stack
+  heroic  full       sprea  35  stack  77  burn  56  plays  15   best stack
+  heroic  min-maxed  sprea  85  stack 100  burn 100  plays  62   best stack
+  mythic  unprepared sprea   0  stack   0  burn   0  plays   0   best spread
+  mythic  partial    sprea   0  stack   0  burn   0  plays   0   best spread
+  mythic  full       sprea   0  stack   5  burn   0  plays   0   best stack
+  mythic  min-maxed  sprea   6  stack  51  burn  36  plays   1   best stack
+ragnaroast
+  normal  unprepared sprea  84  stack  72  burn  81  plays  67   best spread
+  normal  partial    sprea  97  stack  97  burn  98  plays  92   best burn
+  normal  full       sprea  99  stack  99  burn 100  plays  98   best burn
+  normal  min-maxed  sprea 100  stack 100  burn 100  plays 100   best spread
+  heroic  unprepared sprea   1  stack   0  burn   0  plays   0   best spread
+  heroic  partial    sprea  21  stack  10  burn  20  plays   8   best spread
+  heroic  full       sprea  43  stack  39  burn  64  plays  30   best burn
+  heroic  min-maxed  sprea  93  stack  92  burn  98  plays  78   best burn
+  mythic  unprepared sprea   0  stack   0  burn   0  plays   0   best spread
+  mythic  partial    sprea   0  stack   0  burn   0  plays   0   best spread
+  mythic  full       sprea   0  stack   0  burn   1  plays   0   best burn
+  mythic  min-maxed  sprea  14  stack  14  burn  38  plays   5   best burn
+Fire gear and potions on fully prepared Heroic, each boss's right card: without / with
+  magmadad      82 /   70
+  baron         83 /   67
+  lucifrown     86 /   73
+  majordomo     77 /   59
+  ragnaroast    22 /   64

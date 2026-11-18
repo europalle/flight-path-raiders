@@ -1,4 +1,4 @@
-<title>Ragnaroast Pull Simulator</title>
+<title>Molten Bore Simulator</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
@@ -109,7 +109,7 @@ button.exp[aria-pressed="true"] { outline: 2px solid var(--accent, currentColor)
 <div class="wrap">
   <header>
     <div>
-      <h1>Ragnaroast Pull Simulator</h1>
+      <h1>Molten Bore Simulator</h1>
       <p class="sub">Build a 10-character raid, make your choices and pull. The same Lua combat engine the addon will run decides every fight, so a seed always gives the same result.</p>
     </div>
     <span class="tag" id="engineTag">Engine loading</span>
@@ -138,6 +138,17 @@ button.exp[aria-pressed="true"] { outline: 2px solid var(--accent, currentColor)
 
       <div class="panel">
         <h2>Prep</h2>
+        <div class="row" style="margin-bottom:8px">
+          <label for="boss">Boss</label>
+          <select id="boss">
+            <option value="magmadad">1. Magmadad</option>
+            <option value="baron">2. Baron Get-Down</option>
+            <option value="lucifrown">3. Lucifrown</option>
+            <option value="majordomo">4. Majordomo Exhaustus</option>
+            <option value="ragnaroast" selected>5. Ragnaroast</option>
+          </select>
+        </div>
+        <p class="hint" id="bossHint" style="margin-top:0"></p>
         <div class="row">
           <label for="mode">Mode</label>
           <select id="mode">
@@ -158,7 +169,7 @@ button.exp[aria-pressed="true"] { outline: 2px solid var(--accent, currentColor)
           <button type="button" class="prep" data-prep="full">Fully prepared</button>
           <button type="button" class="prep" data-prep="minmax">Min-maxed</button>
         </div>
-        <p class="hint">Sets cauldrons, world buffs, fire gear and potions in one click. Fire gear and Fire Protection Potions are the answer to Ragnaroast.</p>
+        <p class="hint">Sets cauldrons, world buffs, fire gear and potions in one click, for the boss you picked. Fire gear and Fire Protection Potions are the answer to Ragnaroast only: on the other bosses they cost you power for nothing.</p>
         <h3>Raid experience</h3>
         <div class="chips" id="expButtons">
           <button type="button" class="prep exp" data-exp="fresh">Fresh guild</button>
@@ -199,17 +210,17 @@ button.exp[aria-pressed="true"] { outline: 2px solid var(--accent, currentColor)
     <section>
       <div class="panel" id="fight">
         <h2>The pull</h2>
-        <div id="fightBody"><p class="empty">Press Pull to run the fight. The report shows here: the result, Ragnaroast's health, your raid and what happened each round.</p></div>
+        <div id="fightBody"><p class="empty">Press Pull to run the fight. The report shows here: the result, the boss's health, your raid and what happened each round.</p></div>
       </div>
       <div class="panel" id="simPanel">
         <h2>Simulations</h2>
         <div id="simBody"><p class="empty">Simulate 1,000 pulls runs this exact raid against 1,000 different seeds. Compare tactic cards runs 250 pulls per card. Play a 10-week season starts these ten as a brand-new guild and raids 5 pulls a week, 20 times over, so you can watch them get better together.</p></div>
-        <p class="target">Targets are for a raid a few weeks in. Heroic: unprepared under 10%, partly prepared 20-40%, fully prepared 40-60%, min-maxed 70%+. Normal (fresh guild): about 70% unprepared. Mythic: 30-40% min-maxed. Veterans add about 15 points on fully prepared Heroic. Ragnaroast&#39;s right card is Burn.</p>
+        <p class="target">Targets are for a raid a few weeks in. Heroic: unprepared under 10%, partly prepared 20-40%, fully prepared 40-60%, min-maxed 70%+. Normal (fresh guild): about 70% unprepared. Mythic: 30-40% min-maxed. Veterans add about 15 points on fully prepared Heroic. Bosses get harder through the raid, and each one rewards a different tactic card.</p>
       </div>
     </section>
   </div>
 
-  <p class="note"><b>Prototype, engine version <span id="ev">1</span>.</b> Traits, morale, loot and the other bosses are not in yet. Skill (0-100), boss familiarity (0-10) and chemistry between pairs (0-20) each add up to about +2% power; skill also dodges Magma Splash, familiarity cuts mechanic damage and a tank's bond with a healer boosts that healer's heals on them. Melee specs outside the Melee zone, and tanks outside Front, hit at half damage. Ragnaroast's throw, splash and adds are fire: fire resistance from gear and a paladin aura or shaman totem cuts it, up to 60%. Values for food, elixirs, flasks, crit and Ragnaroast's damage are Tuning's first guesses, set in the engine's balance data. Each fight's checksum is identical in this browser and in Lua 5.1, the version WoW runs.</p>
+  <p class="note"><b>Prototype, engine version <span id="ev">1</span>.</b> Traits, morale and loot are not in yet. Skill (0-100), boss familiarity (0-10) and chemistry between pairs (0-20) each add up to about +2% power; skill also dodges Magma Splash, familiarity cuts mechanic damage and a tank's bond with a healer boosts that healer's heals on them. Melee specs outside the Melee zone, and tanks outside Front, hit at half damage. Ragnaroast's throw, splash and adds are fire: fire resistance from gear and a paladin aura or shaman totem cuts it, up to 60%. Values for food, elixirs, flasks, crit and boss damage are Tuning's first guesses, set in the engine's balance data. Each fight's checksum is identical in this browser and in Lua 5.1, the version WoW runs.</p>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/fengari-web@0.1.4/dist/fengari-web.js"></script>
@@ -285,7 +296,7 @@ function readInput() {
   raid.forEach(c => { c.skill = x.skill; c.fam = x.fam; });
   const pairs = [];
   if (x.chem) for (let a = 1; a <= 10; a++) for (let b = a + 1; b <= 10; b++) pairs.push({ a, b, v: x.chem });
-  return { boss: "ragnaroast", mode: $("mode").value, seed, tactic, gl, pairs, moments: $("moments").checked,
+  return { boss: $("boss").value, mode: $("mode").value, seed, tactic, gl, pairs, moments: $("moments").checked,
     consumables: { food: $("c-food").checked, elixirs: $("c-elixirs").checked, flasks: $("c-flasks").checked },
     buffs: { dragonslayer: $("b-dragonslayer").checked, songbloom: $("b-songbloom").checked, warchief: $("b-warchief").checked }, raid };
 }
@@ -304,10 +315,11 @@ function renderFight(r, inp) {
   const why = kill ? `${r.survivors} of 10 standing` : (r.result === "wipe" ? "Every tank and healer died" : "The raid ran out of time");
   const pct = Math.round(100 * r.bossHp / r.bossMax);
   const cls = { 31: "death", 30: "save", 34: "save", 32: "save", 23: "throw", 28: "aggro", 22: "save", 35: "save",
-    40: "good", 41: "good", 42: "good", 43: "bad", 44: "bad", 45: "bad", 46: "bad" };
+    40: "good", 41: "good", 42: "good", 43: "bad", 44: "bad", 45: "bad", 46: "bad",
+    61: "aggro", 62: "throw", 64: "aggro", 65: "aggro", 66: "aggro", 68: "throw" };
   $("fightBody").innerHTML = `
     <div class="banner ${kill ? "kill" : "fail"}"><span class="big">${head}</span><span>${why}</span></div>
-    <div class="bosshp"><b>Ragnaroast</b><div class="bar" role="img" aria-label="Boss health ${pct}%"><i style="width:${pct}%"></i></div><span class="mono">${r.bossHp.toLocaleString()} / ${r.bossMax.toLocaleString()}</span></div>
+    <div class="bosshp"><b>${esc(BOSS[inp.boss].name)}</b><div class="bar" role="img" aria-label="Boss health ${pct}%"><i style="width:${pct}%"></i></div><span class="mono">${r.bossHp.toLocaleString()} / ${r.bossMax.toLocaleString()}</span></div>
     <div class="raidstrip">${r.raid.map(p => `<div class="pc${p.alive ? "" : " dead"}"><b>${esc(p.name)}</b><div class="bar"><i style="width:${Math.round(100 * p.hp / p.maxhp)}%"></i></div></div>`).join("")}</div>
     <p class="mono" style="color:var(--muted);margin:8px 0 0">Seed ${inp.seed} · checksum ${r.checksum} · engine v${r.engine}</p>
     <ol class="log">${r.events.map(e => `<li class="${cls[e.c] || ""}"><span class="r">${e.r ? "R" + e.r : "Pull"}</span><span>${esc(e.t)}</span></li>`).join("")}</ol>`;
@@ -334,8 +346,16 @@ const PREPS = {
   full: { cons: ["food", "elixirs", "flasks"], buffs: [], gear: { front: 2, melee: 2, ranged: 1, back: 1 }, potion: ["melee", "front"] },
   minmax: { cons: ["food", "elixirs", "flasks"], buffs: ["dragonslayer", "songbloom", "warchief"], gear: { front: 2, melee: 2, ranged: 2, back: 2 }, potion: ["melee", "front", "ranged", "back"] },
 };
+const BOSS = {
+  magmadad: { name: "Magmadad", card: "burn", hint: "Three magma pups pulse fire on everyone and get back up unless all three die within a round of each other. Burst them: Burn." },
+  baron: { name: "Baron Get-Down", card: "spread", hint: "Every round someone becomes the bomb and explodes on their zone next round. Spread and the bomb only hits its carrier." },
+  lucifrown: { name: "Lucifrown", card: "playsafe", hint: "Shadow Volley hits everyone every round, and curses double mana costs. Bring a mage or druid to decurse, and Play Safe." },
+  majordomo: { name: "Majordomo Exhaustus", card: "stack", hint: "Eight interns fight first; he only joins when they are all dead. Stack and every hit on an intern splashes onto another." },
+  ragnaroast: { name: "Ragnaroast", card: "burn", hint: "Throws melee into the lava every 4 rounds, splashes fire, sinks at round 10 and sends fire adds. Fire gear and potions, then Burn." },
+};
+function applyBoss(b) { $("bossHint").textContent = BOSS[b].hint; }
 const EXP = {
-  fresh: { skill: 30, fam: 0, chem: 0, hint: "Fresh guild: skill 30, never seen Ragnaroast, no chemistry yet. Bad moments are more likely." },
+  fresh: { skill: 30, fam: 0, chem: 0, hint: "Fresh guild: skill 30, never seen this boss, no chemistry yet. Bad moments are more likely." },
   typical: { skill: 50, fam: 5, chem: 8, hint: "A few weeks in: skill 50, familiarity 5, chemistry 8 between every pair. Tuning's targets are set for this raid." },
   veteran: { skill: 75, fam: 10, chem: 16, hint: "Veterans: skill 75, familiarity 10 (max), chemistry 16. Good moments are more likely." },
 };
@@ -367,7 +387,8 @@ function applyPrep(name) {
   const p = PREPS[name];
   for (const c of ["food", "elixirs", "flasks"]) $("c-" + c).checked = p.cons.includes(c);
   for (const b of ["dragonslayer", "songbloom", "warchief"]) $("b-" + b).checked = p.buffs.includes(b);
-  for (let i = 0; i < 10; i++) { const z = $("z" + i).value; $("g" + i).value = String(p.gear[z] || 0); $("f" + i).checked = p.potion.includes(z); }
+  const fire = $("boss").value === "ragnaroast";
+  for (let i = 0; i < 10; i++) { const z = $("z" + i).value; $("g" + i).value = fire ? String(p.gear[z] || 0) : "0"; $("f" + i).checked = fire && p.potion.includes(z); }
   $("status").textContent = "Preparation set: " + document.querySelector(`[data-prep="${name}"]`).textContent;
 }
 function wire() {
@@ -376,6 +397,8 @@ function wire() {
   document.querySelectorAll("button.exp").forEach(b => b.addEventListener("click", () => applyExp(b.dataset.exp)));
   applyExp("typical");
   $("season").addEventListener("click", season);
+  applyBoss($("boss").value);
+  $("boss").addEventListener("change", e => { applyBoss(e.target.value); $("status").textContent = "Boss set: " + BOSS[e.target.value].name + ". Press a preparation button to re-gear for this boss."; });
   $("preset").addEventListener("change", e => loadPreset(e.target.value));
   $("mode").addEventListener("change", e => { $("gl").value = GL_FOR[e.target.value]; });
   $("reroll").addEventListener("click", () => { $("seed").value = 1 + Math.floor(Math.random() * 2147483000); });

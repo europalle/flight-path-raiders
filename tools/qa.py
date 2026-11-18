@@ -109,6 +109,10 @@ for name, raid in edges.items():
                 try:
                     r = run(raid, mode=mode, seed=seed, gl=gl)
                     invariants(r, raid, f"edge {name} {mode} seed{seed} gl{gl}")
+                    for b in ("magmadad", "baron", "lucifrown", "majordomo"):
+                        t = L.table_from({"boss": b, "mode": mode, "seed": seed, "tactic": "stack", "gl": gl, "consumables": L.table_from({}),
+                                          "buffs": L.table_from({}), "raid": L.table_from([L.table_from(c) for c in raid])})
+                        invariants(SIM(t), raid, f"edge {name} {b} {mode}")
                     edge_results[(name, mode, gl)] = r["result"]
                 except Exception as e:  # noqa
                     check("edge raids never crash", False, f"{name} {mode} {seed} {gl}: {e}")
@@ -225,6 +229,58 @@ check("a kill teaches more than a wipe", a1 - 550 == 2 * (g2.members[1]["skill10
 g3 = guild(10); g3.members[1]["skill10"] = 750; P.AfterPull(g3, T(ids), "b", True)
 check("gains halve above skill 70", g3.members[1]["skill10"] == 756, str(g3.members[1]["skill10"]))
 
+# 7. The other Molten Bore bosses (engine v6).
+BOSSES = ["magmadad", "baron", "lucifrown", "majordomo", "ragnaroast"]
+def runb(raid, boss, **kw):
+    t = L.table_from({"boss": boss, "mode": kw.get("mode", "heroic"), "seed": kw.get("seed", 1), "tactic": kw.get("tactic", "spread"),
+                      "gl": kw.get("gl", 65), "consumables": L.table_from(kw.get("cons", {"food": True, "elixirs": True, "flasks": True})),
+                      "buffs": L.table_from({}), "raid": L.table_from([L.table_from(c) for c in raid])})
+    return SIM(t)
+rr = random.Random(31); n_boss = 0; seen = collections.Counter()
+for i in range(4000):
+    raid = sensible(rr); boss = BOSSES[i % 5]; tac = rr.choice(["spread", "stack", "burn", "playsafe"])
+    for c in raid: c["skill"] = rr.randint(0, 100); c["fam"] = rr.randint(0, 10)
+    r = runb(raid, boss, mode=rr.choice(["normal", "heroic", "mythic"]), seed=rr.randrange(1, 2**31 - 2), tactic=tac, gl=rr.randint(50, 90))
+    lab = f"boss#{i} {boss} {tac}"
+    invariants(r, raid, lab); ev = events(r); codes = [e[1] for e in ev]
+    seen[(boss, r["result"])] += 1
+    if boss == "majordomo":
+        joined = [e[0] for e in ev if e[1] == 64]
+        check("Majordomo only dies after he joins", r["result"] != "kill" or bool(joined), lab)
+        check("Majordomo joins once, after the last intern", len(joined) <= 1 and sum(1 for c in codes if c == 27) >= (8 if joined else 0), lab)
+    if boss == "magmadad":
+        done = [e for e in ev if e[1] == 65 and e[3] == 1]
+        check("Magmadad only dies after all pups go down together", r["result"] != "kill" or bool(done), lab)
+        check("no pup revives after they are all down", not done or all(not (e[1] == 65 and e[3] == 0 and e[0] > done[0][0]) for e in ev), lab)
+    if boss == "baron":
+        for e in ev:
+            if e[1] == 62:
+                check("Spread: the bomb hits only its carrier", tac != "spread" or e[3] == 1, lab)
+        check("a bomb only goes off after someone was marked", codes.count(62) <= codes.count(61), lab)
+    if boss == "lucifrown":
+        check("curses only on every 3rd round", all(e[0] % 3 == 0 for e in ev if e[1] == 66), lab)
+        dec = any(c["class"] in ("mage", "druid") for c in raid)
+        check("decurse status matches the raid", all(e[3] == (1 if dec else 0) for e in ev if e[1] == 66), lab)
+    if boss != "ragnaroast":
+        check("only Ragnaroast throws and submerges", not any(c in (20, 21, 22, 23) for c in codes), lab)
+    n_boss += 1
+check("every boss can be killed and can wipe or enrage", all(seen[(b, "kill")] > 0 and (seen[(b, "wipe")] + seen[(b, "enrage")]) > 0 for b in BOSSES), str(dict(seen)))
+# The decurser matters: Lucifrown with no mage or druid is harder.
+def luci(dec, n=300):
+    rr = random.Random(9); k = 0
+    for i in range(n):
+        raid = sensible(rr)
+        for c in raid:
+            if not dec and c["class"] in ("mage", "druid"):
+                if c["zone"] == "back": c.update({"class": "priest", "spec": "holy"})
+                elif c["zone"] == "front": c.update({"class": "warrior", "spec": "protection"})
+                else: c.update({"class": "warlock", "spec": "affliction", "zone": "ranged"})
+        if dec and not any(c["class"] in ("mage", "druid") for c in raid): raid[-1] = dict(raid[-1], **{"class": "druid", "spec": "restoration", "zone": "back"})
+        k += runb(raid, "lucifrown", tactic="playsafe", seed=rr.randrange(1, 2**31 - 2))["result"] == "kill"
+    return k
+k_dec, k_none = luci(True), luci(False)
+check("Lucifrown: a decurser helps", k_dec > k_none, f"{k_dec} vs {k_none}")
+print(f"QA: {n_boss} fights across five bosses; Lucifrown kills with a decurser {k_dec}/300, without {k_none}/300")
 print(f"QA: {n_mom} v5 fights (skill, chemistry, moments), progression module checks")
 print(f"QA: {n_inv} random fights, {len(edges)} edge raids x 12 runs, determinism x199")
 if not fails:

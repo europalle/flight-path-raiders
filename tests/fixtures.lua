@@ -22,4 +22,12 @@ ns.Fixtures = {
   { boss="ragnaroast", mode="heroic", seed=777, tactic="stack", gl=65, raid=standard, consumables={food=true,elixirs=true}, buffs={dragonslayer=true} },
   { boss="ragnaroast", mode="mythic", seed=42, tactic="burn", gl=74, raid=standard, consumables={food=true,elixirs=true,flasks=true}, buffs={songbloom=true,warchief=true} },
   { boss="ragnaroast", mode="normal", seed=2026, tactic="playsafe", gl=60, raid=standard, consumables={}, buffs={} },
+  { boss="magmadad", mode="heroic", seed=101, tactic="burn", gl=65, raid=standard, consumables={food=true,elixirs=true,flasks=true}, buffs={} },
+  { boss="magmadad", mode="normal", seed=102, tactic="playsafe", gl=60, raid=standard, consumables={}, buffs={} },
+  { boss="baron", mode="heroic", seed=201, tactic="spread", gl=65, raid=standard, consumables={food=true,elixirs=true,flasks=true}, buffs={} },
+  { boss="baron", mode="heroic", seed=202, tactic="stack", gl=65, raid=standard, consumables={food=true,elixirs=true,flasks=true}, buffs={} },
+  { boss="lucifrown", mode="heroic", seed=301, tactic="playsafe", gl=65, raid=standard, consumables={food=true,elixirs=true,flasks=true}, buffs={} },
+  { boss="lucifrown", mode="normal", seed=302, tactic="stack", gl=60, raid=standard, consumables={food=true}, buffs={} },
+  { boss="majordomo", mode="heroic", seed=401, tactic="stack", gl=65, raid=standard, consumables={food=true,elixirs=true,flasks=true}, buffs={} },
+  { boss="majordomo", mode="mythic", seed=402, tactic="spread", gl=74, raid=standard, consumables={food=true,elixirs=true,flasks=true}, buffs={dragonslayer=true} },
 }

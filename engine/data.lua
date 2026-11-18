@@ -122,6 +122,23 @@ D.BOSSES = {
     submerge_rounds = 3,
     adds = 4, add_hp = 500, add_hit = 220,  -- fire adds (pass 3: hits were 120)
   },
+  -- The other four Molten Bore bosses (design doc 6.1, engine v6). Each favours a different card.
+  magmadad = {                 -- favours Burn: kill all three pups inside the window
+    name = "Magmadad", hp = 8000, fire_immune = true, melee = 600,
+    pups = 3, add_hp = 450, add_hit = 80, add_aoe = true, pup_window = 1, add_name = "a magma pup",
+  },
+  baron = {                    -- favours Spread: the bomb only hits its carrier when the raid is spread
+    name = "Baron Get-Down", hp = 11500, fire_immune = true, melee = 600, bomb = 620,
+  },
+  lucifrown = {                -- favours Play Safe: constant magic damage on a curse-starved mana bar
+    name = "Lucifrown", hp = 8500, melee = 550, volley = 120, frown = 500,
+    curse_every = 3, curse_rounds = 3, decursed_rounds = 1,
+  },
+  majordomo = {                -- favours Stack: eight interns spread damage over everyone
+    name = "Majordomo Exhaustus", hp = 7000, melee = 650,
+    interns = 8, add_hp = 800, add_hit = 180, add_fire = false, add_name = "an intern", stack_splash = 450,
+    defeat = "Majordomo Exhaustus gives up, files a complaint and leaves a bonus chest.",
+  },
 }
 
 -- Fire resistance (Tuning pass 3). Each gear piece: +60 resistance and -3% power. Paladin aura or

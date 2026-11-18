@@ -19,6 +19,7 @@ for i = 1, #classes do
   specs[c] = order[c]
 end
 local tactics = { "spread","stack","burn","playsafe" }
+local bosses = { "ragnaroast","magmadad","baron","lucifrown","majordomo" }
 local modes = { "normal","heroic","mythic" }
 local zone_for = { tank="front", healer="back" }
 local acc, kills = 7.0, 0
@@ -34,7 +35,8 @@ for f = 1, N do
   end
   local pl = {}
   for k = 1, gen:int(12) - 1 do pl[#pl + 1] = { a = gen:int(10), b = gen:int(10), v = gen:int(25) - 2 } end
-  local r = ns.Simulate({ pairs = pl, moments = gen:int(5) ~= 1, boss = "ragnaroast", mode = modes[gen:int(3)], seed = gen:next(),
+  local boss = bosses[gen:int(#bosses)]
+  local r = ns.Simulate({ pairs = pl, moments = gen:int(5) ~= 1, boss = boss, mode = modes[gen:int(3)], seed = gen:next(),
     tactic = tactics[gen:int(4)], gl = 59 + gen:int(20),
     consumables = { food = gen:int(2) == 1, elixirs = gen:int(2) == 1, flasks = gen:int(2) == 1 },
     buffs = { dragonslayer = gen:int(3) == 1, songbloom = gen:int(3) == 1, warchief = gen:int(3) == 1 },

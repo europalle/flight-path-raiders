@@ -6,7 +6,7 @@ local _, ns = ...
 ns = ns or FPR_ENGINE or {}
 FPR_ENGINE = ns
 
-ns.ENGINE_VERSION = 5  -- 5: player skill, boss familiarity, chemistry, raid moments
+ns.ENGINE_VERSION = 6  -- 6: the other four Molten Bore bosses (5: skill, familiarity, chemistry, moments)
 
 local floor = math.floor
 local function idiv(a, b) return floor(a / b) end
@@ -147,6 +147,23 @@ function ns.Simulate(inputs)
   local adds = {}
   local target = nil  -- the boss's current target
   local moments = { clutch = 0, early = false, early_target = nil }
+  local add_name = boss_def.add_name or "a fire add"
+  local function spawn_adds(n, hp)
+    for a = 1, n do
+      adds[#adds + 1] = { hp = pm(hp, mode.hp), maxhp = pm(hp, mode.hp), alive = true, frozen = 0, held = 0, died = 0 }
+    end
+    local first = #adds - n + 1
+    if has["hunter:survival"] then adds[first].frozen = 3 end
+    if has["warlock:demonology"] and adds[first + 1] then adds[first + 1].held = 4 end
+    if has["hunter:beastmastery"] and adds[first + 2] then adds[first + 2].held = 2 end
+  end
+  local function add_dies(ad)
+    ad.alive = false; ad.died = round
+    log(27, 0, 0, string.upper(string.sub(add_name, 1, 1)) .. string.sub(add_name, 2) .. " dies.")
+  end
+  local cursed_until = 0     -- Lucifrown: mana costs double through this round
+  local bomb = nil           -- Baron Get-Down: the character carrying the bomb
+  local pups_done = false    -- Magmadad: all pups died inside the window
   local kick_ready_round = 1
 
   local function alive_in(zone)
@@ -182,10 +199,11 @@ function ns.Simulate(inputs)
     log(31, p.slot, cause, p.name .. " dies.")
   end
 
-  local function damage(p, amount, cause, fire)
+  local function damage(p, amount, cause, fire, magic)
     if not p.alive then return end
-    -- Fire ignores armour; fire resistance reduces it instead (pass 3).
-    local dmg = fire and pm(amount, 1000 - p.firered) or pm(amount, 1000 - p.armor)
+    -- Fire ignores armour; fire resistance reduces it instead (pass 3). Other magic ignores both.
+    local dmg
+    if fire then dmg = pm(amount, 1000 - p.firered) elseif magic then dmg = amount else dmg = pm(amount, 1000 - p.armor) end
     dmg = pm(dmg, tac.taken)
     if cause ~= 24 then dmg = pm(dmg, 1000 - D.FAMILIARITY.per_point * p.fam) end -- knows the mechanics
     if p.class == "warrior" and p.spec == "fury" then dmg = pm(dmg, 1100) end
@@ -325,13 +343,37 @@ function ns.Simulate(inputs)
     -- 1. The boss acts.
     if round == boss_def.submerge_at then
       boss.submerged = true; boss.surface_at = round + boss_def.submerge_rounds
-      for a = 1, boss_def.adds do
-        adds[a] = { hp = pm(boss_def.add_hp, mode.hp), alive = true, frozen = 0, held = 0 }
-      end
-      if has["hunter:survival"] then adds[1].frozen = 3 end
-      if has["warlock:demonology"] and adds[2] then adds[2].held = 4 end
-      if has["hunter:beastmastery"] and adds[3] then adds[3].held = 2 end
+      spawn_adds(boss_def.adds, boss_def.add_hp)
       log(20, boss_def.adds, 0, boss.name .. " sinks into the lava and summons " .. boss_def.adds .. " fire adds.")
+    end
+    -- Magmadad: pups from the pull. Majordomo: interns from the pull while he stays away.
+    if round == 1 and boss_def.pups then
+      spawn_adds(boss_def.pups, boss_def.add_hp)
+      log(60, boss_def.pups, 0, boss.name .. " brings his " .. boss_def.pups .. " magma pups. \"Say hi, kids.\"")
+    end
+    if round == 1 and boss_def.interns then
+      spawn_adds(boss_def.interns, boss_def.add_hp)
+      boss.submerged = true; boss.surface_at = 1000
+      log(63, boss_def.interns, 0, boss.name .. " sends " .. boss_def.interns .. " interns to deal with it.")
+    end
+    if boss_def.interns and boss.submerged and round > 1 then
+      local left = 0
+      for a = 1, #adds do if adds[a].alive then left = left + 1 end end
+      if left == 0 then
+        boss.submerged = false
+        log(64, 0, 0, "\"Fine. FINE.\" " .. boss.name .. " joins the fight himself.")
+      end
+    end
+    -- Lucifrown: a curse every few rounds doubles mana costs. A decurser (mage or druid) shortens it.
+    if boss_def.curse_every and not boss.submerged and round % boss_def.curse_every == 0 then
+      local len = boss_def.curse_rounds
+      if has["mage"] or has["druid"] then
+        len = boss_def.decursed_rounds
+        log(66, 0, 1, boss.name .. " curses the raid. Decursed fast.")
+      else
+        log(66, 0, 0, boss.name .. " curses the raid. Nobody can decurse. Mana costs double.")
+      end
+      cursed_until = round + len - 1
     end
     if boss.submerged and round >= boss.surface_at then
       boss.submerged = false
@@ -340,7 +382,7 @@ function ns.Simulate(inputs)
 
     if not boss.submerged then
       -- Lava throw every 4 rounds (Subtlety rogue's Kick can cancel one every 5 rounds).
-      if round % boss_def.throw_every == 0 then
+      if boss_def.throw_every and round % boss_def.throw_every == 0 then
         local kicker = nil
         for i = 1, #raid do
           local p = raid[i]
@@ -393,7 +435,7 @@ function ns.Simulate(inputs)
         damage(target, boss_hit(hit), 24, false)
       end
       -- Magma Splash every 2nd round on a zone picked by the seed.
-      if round % 2 == 0 then
+      if boss_def.splash and round % 2 == 0 then
         local zone = D.ZONES[rng:int(4)]
         local list = alive_in(zone)
         if #list > 0 then
@@ -418,14 +460,53 @@ function ns.Simulate(inputs)
           end
         end
       end
+      -- Baron Get-Down: last round's bomb goes off, then a new character is marked.
+      if boss_def.bomb then
+        if bomb and bomb.alive then
+          local amt = boss_hit(pm(boss_def.bomb, mode_dmg))
+          if tac.area_single then
+            log(62, bomb.slot, 1, bomb.name .. " GETS DOWN, out of the group, and explodes alone.")
+            damage(bomb, amt, 62, true)
+          else
+            local list = alive_in(bomb.zone)
+            log(62, bomb.slot, #list, bomb.name .. " explodes in the " .. bomb.zone .. " zone.")
+            for i = 1, #list do damage(list[i], amt, 62, true) end
+          end
+        end
+        bomb = nil
+        if round >= 2 then
+          local nt = {}
+          for i = 1, #raid do if raid[i].alive and raid[i].role ~= "tank" then nt[#nt + 1] = raid[i] end end
+          if #nt > 0 then bomb = nt[rng:int(#nt)]; log(61, bomb.slot, 0, bomb.name .. " is the bomb.") end
+        end
+      end
+      -- Lucifrown: Shadow Volley on everyone each round (magic, ignores armour), Frown on a zone every 3rd.
+      if boss_def.volley then
+        local list = alive_in(nil)
+        local amt = pm(boss_def.volley, mode_dmg)
+        for i = 1, #list do damage(list[i], amt, 67, false, true) end
+      end
+      if boss_def.frown and round % 3 == 0 then
+        local zone = D.ZONES[rng:int(4)]
+        local stacked = inputs.tactic == "stack"
+        local list = stacked and alive_in(nil) or alive_in(zone)
+        log(68, #list, 0, stacked and (boss.name .. " frowns at the whole stacked raid.") or (boss.name .. " frowns at the " .. zone .. " zone."))
+        local amt = boss_hit(pm(boss_def.frown, mode_dmg))
+        for i = 1, #list do damage(list[i], amt, 68, false, true) end
+      end
     end
-    -- Fire adds attack.
+    -- Adds attack (fire adds, pups, interns).
     local frost_slow = has["mage:frost"]
     for a = 1, #adds do
       local ad = adds[a]
       if ad.alive and ad.frozen == 0 and ad.held == 0 then
         local hit = pm(boss_def.add_hit, mode_dmg)
         if frost_slow then hit = pm(hit, 850) end
+        if boss_def.add_aoe then  -- pups pulse fire on the whole raid
+          local list = alive_in(nil)
+          for i = 1, #list do damage(list[i], hit, 26, boss_def.add_fire ~= false) end
+          hit = 0
+        end
         local holder = nil
         for i = 1, #raid do
           local p = raid[i]
@@ -433,7 +514,7 @@ function ns.Simulate(inputs)
         end
         local list = alive_in(nil)
         if holder then hit = pm(hit, 600) end -- Consecration: the paladin takes add hits at 60%
-        if #list > 0 then damage(holder or list[rng:int(#list)], hit, 26, true) end
+        if hit > 0 and #list > 0 then damage(holder or list[rng:int(#list)], hit, 26, boss_def.add_fire ~= false) end
       end
       if ad.frozen > 0 then ad.frozen = ad.frozen - 1 end
       if ad.held > 0 then ad.held = ad.held - 1 end
@@ -446,12 +527,13 @@ function ns.Simulate(inputs)
       local p = order[k]
       if p.alive and (round < p.skip_from or round > p.skip_to) then
         if p.role == "healer" then
-          local cost = pm(D.HEAL_COST, tac.mana)
+          local curse = (round <= cursed_until) and 2 or 1
+          local cost = pm(D.HEAL_COST, tac.mana) * curse
           local list = alive_in(nil)
           local t, pct = most_injured(list, true)
           if t and pct < 1000 then
             local big = pct < D.BIG_HEAL_BELOW
-            if big then cost = pm(D.BIG_HEAL_COST, tac.mana) end
+            if big then cost = pm(D.BIG_HEAL_COST, tac.mana) * curse end
             if p.mana >= cost then
               p.mana = p.mana - cost
               local amount = pm(p.power, healmul)
@@ -487,7 +569,7 @@ function ns.Simulate(inputs)
           -- Damage: adds first when any are alive and not held, else the boss if it is up.
           local amount = p.power
           if p.caster then
-            local cost = D.CASTER_COST
+            local cost = D.CASTER_COST * ((round <= cursed_until) and 2 or 1)
             if p.class == "mage" and p.spec == "arcane" and round <= 3 then cost = cost * 2; amount = pm(amount, 1200) end
             if p.mana >= cost then p.mana = p.mana - cost else amount = idiv(amount, 2) end
           end
@@ -522,12 +604,22 @@ function ns.Simulate(inputs)
           local cleave = (p.class == "shaman" and p.spec == "elemental") or (p.class == "rogue" and p.spec == "combat" and round % 6 <= 2)
           if hit_add then
             hit_add.hp = hit_add.hp - dealt; p.dealt = p.dealt + dealt
-            if hit_add.hp <= 0 then hit_add.alive = false; log(27, 0, 0, "A fire add dies.") end
+            if hit_add.hp <= 0 then add_dies(hit_add) end
+            -- Majordomo: stacked, the raid drags the interns together and every hit splashes onto another.
+            if boss_def.interns and inputs.tactic == "stack" then
+              for a = 1, #adds do
+                if adds[a].alive and adds[a] ~= hit_add then
+                  adds[a].hp = adds[a].hp - pm(dealt, boss_def.stack_splash)
+                  if adds[a].hp <= 0 then add_dies(adds[a]) end
+                  break
+                end
+              end
+            end
             if cleave then
               for a = 1, #adds do
                 if adds[a].alive and adds[a] ~= hit_add then
                   adds[a].hp = adds[a].hp - idiv(dealt, 2)
-                  if adds[a].hp <= 0 then adds[a].alive = false; log(27, 0, 0, "A fire add dies.") end
+                  if adds[a].hp <= 0 then add_dies(adds[a]) end
                   break
                 end
               end
@@ -569,8 +661,28 @@ function ns.Simulate(inputs)
       end
     end
 
+    -- Magmadad's pups: dead pups get back up unless every pup died within the window.
+    if boss_def.pups and not pups_done then
+      local first, dead = nil, 0
+      for a = 1, #adds do
+        if not adds[a].alive then
+          dead = dead + 1
+          if first == nil or adds[a].died < first then first = adds[a].died end
+        end
+      end
+      if dead == #adds then
+        pups_done = true
+        log(65, 0, 1, "All the pups are down at once. Magmadad is sad. \"Time for a timeout.\"")
+      elseif dead > 0 and round - first >= boss_def.pup_window then
+        for a = 1, #adds do
+          if not adds[a].alive then adds[a].alive = true; adds[a].hp = adds[a].maxhp end
+        end
+        log(65, dead, 0, "The pups get back up. \"Walk it off, champ.\"")
+      end
+    end
+
     if boss.hp <= 0 and not boss.submerged then
-      log(80, round, 0, boss.name .. " dies in round " .. round .. ".")
+      log(80, round, 0, boss_def.defeat and (boss_def.defeat .. " (round " .. round .. ")") or (boss.name .. " dies in round " .. round .. "."))
       result = "kill"; break
     end
     if count_alive_role("tank") + count_alive_role("healer") == 0 then
