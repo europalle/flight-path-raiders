@@ -4,6 +4,8 @@ Decisions made by the Game Director. Newest first.
 
 | Date | Area | Decision |
 | --- | --- | --- |
+| 2026-11-18 | Production | No launch date and no cuts: the game launches when the Director is happy. The milestone plan uses quality gates, not dates |
+| 2026-11-18 | Design / Tuning | Specs: three Classic specs per class (27), each sets role, one signature passive and stat priorities; no talent trees. Within ±5% of role average; meme specs viable. Respec cost rises (10 min to 4 h of play at 60), drops a step per week. Tome of Respec: rare drop (dungeon final bosses ~2%, weekly chest ~10%), one free respec |
 | 2026-11-18 | All departments | Pre-Art review: hub gets a navigation row (Hub, Roster, Tavern, Guild Hall, Bank); "starter" label dropped for upgrade markers; mailbox timers count play-days scaled by quality (Common 3, Uncommon 5, Rare 7, Epic 10; 30 calendar-day cap); bank tabs renamable (local only); hub boss illustration 210 x 128; all symbols become icon textures |
 | 2026-11-18 | Tuning | Ranked gear band replaces fixed scaling: Heroic 60-70, Mythic 68-80. Only base stat budget is clamped; set bonuses, stat allocation, suffixes, perks and legendary effects carry. Target gap: full set at cap beats fresh roster at floor by about 25-30% power |
 | 2026-11-18 | Art / UX | Mid-fi wireframes approved as the hi-fi base; Art handoff brief in ux/art-handoff (stage ground plane first) |
