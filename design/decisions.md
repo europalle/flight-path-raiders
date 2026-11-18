@@ -4,6 +4,7 @@ Decisions made by the Game Director. Newest first.
 
 | Date | Area | Decision |
 | --- | --- | --- |
+| 2026-11-18 | Art | Style: A Field Journal is light mode, C Midnight Grimoire is dark mode. Direction: a hand-drawn parody of the WoW Classic UI (parchment quest log, dark slate frames), never copying Blizzard art. Assets come from Gemini via art/gemini-prompt-pack.md, on a magenta background; Art cleans, slices, recolours and edits every piece |
 | 2026-11-18 | QA / Production | Solo development: playtests are solo; all guild interaction (sync, leaderboard, guildies) is simulated |
 | 2026-11-18 | Tuning | Guild Bank unlock costs 150 DKP like other guild hall buildings; only Tab 2 costs gold |
 | 2026-11-18 | UX / Art | Roster, Tavern and Guild Hall mid-fi wireframes; character study accepted as the style bar; three style tiles for the Director to choose from |
