@@ -127,6 +127,50 @@ G.BOSSES = {
     },
     loot = { weapon = { "Sulfurous Rolling Pin", "Roasting Spit of the Firelord" }, armor = { "Oven Mitts of Might", "Crispy Chainmail" }, trinket = { "Eye of Ragnaroast (Medium Rare)", "Marinade of Fury" } } },
 }
+-- Item flavour text (Narrative): one line each, shown in tooltips on the loot window and the roster.
+G.FLAVOUR = {
+  ["Dad's Grill Spatula"] = "Flips burgers and raid leaders with equal confidence.",
+  ["Molten Tongs of Supervision"] = "\"I'll just hold these while you do it wrong.\"",
+  ["Sensible Magma Sandals"] = "Worn with socks. Molten socks.",
+  ["Cardigan of Mild Disappointment"] = "Warm, cosy, and quietly judging your parse.",
+  ["World's Okayest Dad Mug"] = "Still warm. It is always still warm.",
+  ["Pup Treat Pouch"] = "Empty. The pups found it.",
+  ["Fuse-Lit Shortsword"] = "Do not hold the pointy end. Do not hold the fizzy end either.",
+  ["Baron's Detonator Baton"] = "Conducts orchestras and controlled demolitions.",
+  ["Blast-Proof Pantaloons"] = "Blast-proof. Not dignity-proof.",
+  ["Singed Dancing Shoes"] = "They still remember every step of the Get-Down.",
+  ["Ticking Pocketwatch"] = "Nobody knows what it counts down to. Nobody asks.",
+  ["Earplugs of the Baron"] = "Packaged with a note: \"You'll want these.\"",
+  ["Scepter of Mild Contempt"] = "Points at things disapprovingly, on its own.",
+  ["Grumpy Rod"] = "It's a rod. It's grumpy. Moving on.",
+  ["Robes of Resting Frown"] = "Comes with matching eyebrows.",
+  ["Furrowed Brow Helm"] = "Adds +5 to looking worried about the next pull.",
+  ["Decurse Reminder Note"] = "\"BRING A MAGE.\" Underlined three times.",
+  ["Smiley Badge (Defaced)"] = "Someone drew a frown on it. You can guess who.",
+  ["Clipboard of Authority"] = "Everything on it is already overdue.",
+  ["Stapler of Smiting"] = "Red, heavy, and nobody else is allowed to touch it.",
+  ["Overtime Vestments"] = "Unpaid. Very, very unpaid.",
+  ["Lanyard Mail"] = "Chain mail made entirely of visitor badges.",
+  ["Complaint Form 27-B"] = "Filed in triplicate. Lost in quadruplicate.",
+  ["Executive Stress Ball"] = "Squeezed until it achieved enlightenment.",
+  ["Sulfurous Rolling Pin"] = "For pastry, and for raid leaders who pull early.",
+  ["Roasting Spit of the Firelord"] = "Recently cleaned. Mostly.",
+  ["Oven Mitts of Might"] = "Rated for lava. Not rated for hot coffee.",
+  ["Crispy Chainmail"] = "Golden brown on the outside. Still you on the inside.",
+  ["Eye of Ragnaroast (Medium Rare)"] = "It's watching you. It thinks you need more salt.",
+  ["Marinade of Fury"] = "Apply to weapon. Let rest overnight. Hit things.",
+  ["Scarlet Monotony Mace"] = "You have run this dungeon so many times.",
+  ["Deadmines Pickaxe"] = "Still has a bit of the mine on it.",
+  ["Ratchet's Wrench"] = "Fixes boats. Breaks goblins.",
+  ["Robes of the Monotonous"] = "Smells faintly of the same boss, again.",
+  ["Gnomeregan Hand-me-downs"] = "Slightly radioactive. Very fashionable.",
+  ["Smoky Jerkin"] = "Everyone knows where you've been.",
+  ["Lucky Coin"] = "Lands on its edge when it matters.",
+  ["Murloc Fin Charm"] = "Mrglglgl. That's all it says.",
+  ["Bent Spoon of Insight"] = "There is no spoon. There is, however, this one.",
+  ["Lucky Rabbit's Foot"] = "Not so lucky for the rabbit.",
+}
+
 G.BOSS = {}
 for i = 1, #G.BOSSES do G.BOSS[G.BOSSES[i].id] = G.BOSSES[i]; G.BOSSES[i].index = i end
 
@@ -901,7 +945,7 @@ function G.Static()
   end
   return { SPECS = G.SPECS, CLASS_NAMES = G.CLASS_NAMES, ARMOR = G.ARMOR, RARITY = G.RARITY, ECON = G.ECON, MODES = G.MODES, CARDS = G.CARDS,
     CARD_ORDER = G.CARD_ORDER, CARD_TEXT = G.CARD_TEXT, WB = G.WB, WB_ORDER = G.WB_ORDER, TRAITS = G.TRAITS, MORALE = G.MORALE,
-    BOSSES = G.BOSSES, ANSWERS = journalAnswers }
+    BOSSES = G.BOSSES, ANSWERS = journalAnswers, FLAVOUR = G.FLAVOUR }
 end
 
 return G

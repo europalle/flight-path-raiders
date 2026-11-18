@@ -209,6 +209,38 @@ Attach: the character study.
 The look is our own original fantasy style: a chunky, hand-painted high-fantasy style with warm saturated colours, exaggerated proportions (huge shoulder pads, big hands, big boots, oversized weapons), and interface frames made of gold-trimmed parchment and dark carved stone with rivets and knotwork ornaments. Draw it as a lovingly clumsy parody of that style, as if a raid leader sketched it in a paper notebook with a dip pen and watercolour. Wobbly confident ink outlines, light crosshatching on shadow sides. Charming and a bit clumsy, never sloppy. Original designs only: no Blizzard logos, no real WoW icons, no text. Flat solid magenta (#FF00FF) background with nothing else on it. Each piece separate, with clear magenta space between pieces. Match the drawing style of the attached reference image. One large boss character, side view facing left, standing on an invisible flat line at the bottom, filling most of the image, with limbs clearly separated so they can be animated. Original parody design: a nervous black dragon, wings half folded, chewing one claw, anxious eyes. Cartoonish and sympathetic, not scary.
 ```
 
+## F3. Boss: Magmadad
+
+Attach: the character study. Save the result as `art/kit/bosses/F3-magmadad.png` after Art cuts it: the addon picks it up on the next build.
+
+```
+The look is our own original fantasy style: a chunky, hand-painted high-fantasy style with warm saturated colours and exaggerated proportions. Draw it as a lovingly clumsy parody of that style, as if a raid leader sketched it in a paper notebook with a dip pen and watercolour: wobbly confident ink outlines, light crosshatching. Original design only: no Blizzard logos, no copies of any existing game's characters, armour sets or interface. Match the drawing style of the attached reference image. One large boss character, side view facing left, standing on an invisible flat line at the bottom, filling most of the image, with limbs clearly separated so they can be animated. Magmadad, an original parody boss: a big, round, friendly lava golem dad made of cooling dark rock with glowing orange cracks. He wears a grey cardigan over his rocky chest, sandals with socks, and holds a barbecue spatula in one hand and a mug in the other. Kind, slightly tired eyes and a proud dad smile. Separately, to the right of him with clear space in between, draw three small magma pups on their own, each one a little round lava puppy with stubby legs and a wagging flame tail, all three in different playful poses. The background must be one flat solid magenta (#FF00FF) colour edge to edge: no gradient, no glow, no floor shadow, no frames, no text, nothing else in the image.
+```
+
+## F4. Boss: Baron Get-Down
+
+Attach: the character study. Save the result as `art/kit/bosses/F4-baron.png` after Art cuts it: the addon picks it up on the next build.
+
+```
+The look is our own original fantasy style: a chunky, hand-painted high-fantasy style with warm saturated colours and exaggerated proportions. Draw it as a lovingly clumsy parody of that style, as if a raid leader sketched it in a paper notebook with a dip pen and watercolour: wobbly confident ink outlines, light crosshatching. Original design only: no Blizzard logos, no copies of any existing game's characters, armour sets or interface. Match the drawing style of the attached reference image. One large boss character, side view facing left, standing on an invisible flat line at the bottom, filling most of the image, with limbs clearly separated so they can be animated. Baron Get-Down, an original parody boss: a tall, skinny fire elemental nobleman in a disco-era suit with huge flared trousers, a ruffled shirt and a top hat with a lit fuse sticking out of the top. He is mid dance move, one arm pointing up, hips to the side. Flames for hair under the hat, a thin moustache and a confident grin. Separately, to the right of him with clear space in between, draw one round cartoon bomb on its own, black with a lit fuse and a small bow tie. The background must be one flat solid magenta (#FF00FF) colour edge to edge: no gradient, no glow, no floor shadow, no frames, no text, nothing else in the image.
+```
+
+## F5. Boss: Lucifrown
+
+Attach: the character study. Save the result as `art/kit/bosses/F5-lucifrown.png` after Art cuts it: the addon picks it up on the next build.
+
+```
+The look is our own original fantasy style: a chunky, hand-painted high-fantasy style with warm saturated colours and exaggerated proportions. Draw it as a lovingly clumsy parody of that style, as if a raid leader sketched it in a paper notebook with a dip pen and watercolour: wobbly confident ink outlines, light crosshatching. Original design only: no Blizzard logos, no copies of any existing game's characters, armour sets or interface. Match the drawing style of the attached reference image. One large boss character, side view facing left, standing on an invisible flat line at the bottom, filling most of the image, with limbs clearly separated so they can be animated. Lucifrown, an original parody boss: a big, grumpy shadow demon in long purple robes, with small curled horns, arms crossed, and the deepest frown ever drawn: heavy eyebrows, a down-turned mouth and dark rings under his eyes. A small storm cloud floats above his head. He looks annoyed rather than scary. Separately, to the right of him with clear space in between, draw his staff on its own: a crooked wooden staff topped with a frowning purple crystal. The background must be one flat solid magenta (#FF00FF) colour edge to edge: no gradient, no glow, no floor shadow, no frames, no text, nothing else in the image.
+```
+
+## F6. Boss: Majordomo Exhaustus
+
+Attach: the character study. Save the result as `art/kit/bosses/F6-majordomo.png` after Art cuts it: the addon picks it up on the next build.
+
+```
+The look is our own original fantasy style: a chunky, hand-painted high-fantasy style with warm saturated colours and exaggerated proportions. Draw it as a lovingly clumsy parody of that style, as if a raid leader sketched it in a paper notebook with a dip pen and watercolour: wobbly confident ink outlines, light crosshatching. Original design only: no Blizzard logos, no copies of any existing game's characters, armour sets or interface. Match the drawing style of the attached reference image. One large boss character, side view facing left, standing on an invisible flat line at the bottom, filling most of the image, with limbs clearly separated so they can be animated. Majordomo Exhaustus, an original parody boss: a very tired fire elemental butler in a long tailcoat with a loosened tie, holding a clipboard and a coffee cup, with huge bags under his glowing eyes and his flame hair drooping. Separately, to the right of him with clear space in between, draw two small intern minions on their own: little round fire sprites wearing lanyards and carrying stacks of paper, looking flustered. The background must be one flat solid magenta (#FF00FF) colour edge to edge: no gradient, no glow, no floor shadow, no frames, no text, nothing else in the image.
+```
+
 ## G1. Molten Bore, far layer
 
 Attach: the character study.

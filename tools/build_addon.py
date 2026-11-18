@@ -6,7 +6,7 @@ ROOT = os.path.normpath(os.path.join(os.path.dirname(__file__), ".."))
 OUT = os.path.join(ROOT, "addon/dist/FlightPathRaiders")
 ENGINE = ["engine/rng.lua", "engine/data.lua", "engine/sim.lua", "engine/bosses.lua", "engine/validate.lua", "engine/progress.lua", "engine/replay.lua", "engine/game.lua"]
 TESTS = ["tests/fixtures.lua", "tests/selftest.lua"]
-SRC = ["addon/src/Core.lua", "addon/src/SelfTest.lua", "addon/src/UI.lua", "addon/src/Board.lua", "addon/src/Pages.lua", "addon/src/Raid.lua"]
+SRC = ["addon/src/Core.lua", "addon/src/SelfTest.lua", "addon/src/Audio.lua", "addon/src/UI.lua", "addon/src/Board.lua", "addon/src/Pages.lua", "addon/src/Raid.lua"]
 version = re.search(r"ENGINE_VERSION = (\d+)", open(os.path.join(ROOT, "engine/sim.lua")).read()).group(1)
 shutil.rmtree(OUT, ignore_errors=True)
 for sub in ("Engine", "Test"): os.makedirs(os.path.join(OUT, sub))

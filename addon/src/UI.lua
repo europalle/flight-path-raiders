@@ -60,7 +60,8 @@ function UI.text(x, y, s, opts)
   fs:SetTextColor(col(opts.col or "ink")); fs:SetAlpha(1)
   fs:SetJustifyH(opts.justify or "LEFT"); fs:SetJustifyV("TOP")
   fs:SetWordWrap(opts.wrap and true or false)
-  place(fs, x, y, opts.w, opts.wrap and opts.h or nil)
+  -- Width 0 means "as wide as the text": pooled strings must not keep the width of their last use.
+  place(fs, x, y, opts.w or 0, opts.wrap and opts.h or 0)
   fs:SetText(s)
   return fs
 end

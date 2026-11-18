@@ -42,15 +42,15 @@ function P.Prep(st, args)
           UI.portrait(x + 4, y + 4, 40, c.cls, c.look)
           UI.text(x + 50, y + 4, c.name, { size = 12.5, w = 70 })
           UI.icon(x + 132, y + 4, 14, "role-" .. g.role(c.cls, c.spec))
-          UI.text(x + 50, y + 19, g.specName(c.cls, c.spec), { size = 11, col = "muted", w = 98 })
+          UI.text(x + 50, y + 19, g.specName(c.cls, c.spec), { size = 11, col = "muted", w = 74 })
           UI.text(x + 50, y + 33, "GL " .. g.gearLevel(c), { size = 11 })
-          UI.text(x + 92, y + 33, "Mor " .. c.morale, { size = 11, col = UI.moraleCol(c.morale) })
-          if prep.potions[tostring(id)] then UI.icon(x + 134, y + 30, 13, "firepot") end
+          UI.text(x + 84, y + 33, "Mor " .. c.morale, { size = 11, col = UI.moraleCol(c.morale) })
+          if prep.potions[tostring(id)] then UI.icon(x + 30, y + 30, 14, "firepot") end
           UI.button(x, y, 118, 48, nil, function()
             for i, v in ipairs(prep.ids) do if v == id then table.remove(prep.ids, i); break end end
-            B().Render()
+            ns.Audio.Play("bench"); B().Render()
           end, { kind = "row", tip = c.name .. ": click to bench for this pull" })
-          UI.button(x + 120, y + 20, 30, 26, string.sub(ZONE_LABEL[z], 1, 1), function()
+          UI.button(x + 126, y + 24, 24, 20, string.sub(ZONE_LABEL[z], 1, 1), function()
             local nz = ZONES[(zi % 4) + 1]; prep.zones[tostring(id)] = nz; B().Render()
           end, { size = 11, tip = "Move to " .. ZONE_LABEL[ZONES[(zi % 4) + 1]] })
         end
@@ -80,7 +80,7 @@ function P.Prep(st, args)
   for i, id in ipairs(g.CARD_ORDER) do
     local x = 96 + (i - 1) * 160
     local on = prep.tactic == id
-    UI.button(x, 352, 152, 44, g.CARDS[id], function() prep.tactic = id; B().Render() end, { kind = on and "selected" or "normal", size = 14 })
+    UI.button(x, 352, 152, 44, g.CARDS[id], function() prep.tactic = id; ns.Audio.Play("pick"); B().Render() end, { kind = on and "selected" or "normal", size = 14 })
     if on then UI.icon(x + 16, 366, 14, "check") end
     UI.text(x, 400, g.CARD_TEXT[id], { size = 11, col = on and "ink" or "muted", w = 152, justify = "CENTER", wrap = true, h = 28 })
   end
@@ -122,6 +122,7 @@ end
 function P.DoPull(st, prep)
   local out = G().Pull(st, prep)
   if out.error then B().Toast(out.error); B().Render(); return end
+  ns.Audio.Play("pull")
   if ns.db.settings.playback == "summary" then B().Go("Results", { out = out, prep = prep })
   else B().Go("Playback", { out = out, prep = prep, round = 1, t = 0 }) end
 end
@@ -194,7 +195,13 @@ function P.Playback(st, args)
     if args.t >= step then
       args.t = 0
       if args.round >= run.rounds then B().Go("Results", { out = out, prep = args.prep })
-      else args.round = args.round + 1; B().Render() end
+      else
+        args.round = args.round + 1
+        for _, e in ipairs(run.events) do
+          if e.r == args.round and (e.c == 23 or e.c == 61 or e.c == 68) then ns.Audio.Play("windup"); break end
+        end
+        B().Render()
+      end
     end
   end)
 end
@@ -275,7 +282,8 @@ function P.Results(st, args)
     { kind = "primary", size = 18, disabled = #g.Problems(st, args.prep) > 0, tip = g.Problems(st, args.prep)[1] })
   UI.button(758, 466, 110, 50, "Change plan", function() B().Go("Prep", { boss = out.boss, mode = out.mode, prep = args.prep }) end, { size = 12.5 })
   UI.button(876, 466, 60, 50, "Hub", function() B().Go("Hub") end, { size = 12.5 })
-  if #out.loot > 0 and not args.lootShown then args.lootShown = true; P.LootWindow() end
+  if not args.sounded then args.sounded = true; ns.Audio.Play(kill and "kill" or "wipe") end
+  if #out.loot > 0 and not args.lootShown then args.lootShown = true; ns.Audio.Play("loot"); P.LootWindow() end
 end
 
 -- ------------------------------------------------------------------ loot window
@@ -303,6 +311,7 @@ function P.LootWindow()
       UI.panel(168, y, 624, 122, "row")
       UI.icon(184, y + 16, 48, it.slot == "armor" and it.type or it.slot)
       UI.text(248, y + 12, it.name, { size = 15, col = UI.T().rarity[it.q] or "ink", w = 530 })
+      if g.FLAVOUR[it.name] then UI.button(244, y + 8, 300, 22, nil, nil, { kind = "row", tip = it.name .. "\n" .. g.FLAVOUR[it.name] }) end
       UI.text(248, y + 32, UI.title(it.q) .. " · " .. (it.slot == "armor" and (UI.title(it.type) .. " armor") or UI.title(it.slot)) .. " · gear level " .. it.lvl .. " · " .. (it.from or ""), { size = 12, col = "muted", w = 530 })
       local list = candidates(st, it)
       local best = list[1] and list[1].gain > 0 and list[1].c.id
@@ -310,7 +319,7 @@ function P.LootWindow()
       for k = 1, math.min(3, #list) do
         local cd = list[k]
         local x = 248 + (k - 1) * 150
-        UI.button(x, y + 56, 144, 40, "", function() B().Toast(g.AssignPending(st, i, cd.c.id)); B().Render() end,
+        UI.button(x, y + 56, 144, 40, "", function() B().Toast(g.AssignPending(st, i, cd.c.id)); ns.Audio.Play("assign"); B().Render() end,
           { kind = cd.c.id == best and "selected" or "normal", tip = "Give it to " .. cd.c.name })
         UI.portrait(x + 14, y + 62, 28, cd.c.cls, cd.c.look)
         UI.text(x + 46, y + 69, cd.c.name, { size = 12.5, col = cd.c.id == best and "seltext" or "ink", w = 60 })
@@ -322,7 +331,7 @@ function P.LootWindow()
         end
       end
       if #list == 0 then UI.text(248, y + 70, "Nobody in the pull can use this.", { size = 12, col = "muted" }) end
-      UI.button(700, y + 56, 84, 40, "Sell " .. g.sellValue(it) .. " g", function() B().Toast(g.AssignPending(st, i, "sell")); B().Render() end, { size = 12 })
+      UI.button(700, y + 56, 84, 40, "Sell " .. g.sellValue(it) .. " g", function() B().Toast(g.AssignPending(st, i, "sell")); ns.Audio.Play("assign"); B().Render() end, { size = 12 })
       if warn then UI.icon(250, y + 102, 14, "warn"); UI.text(270, y + 102, warn, { size = 11.5, w = 500 })
       else UI.text(248, y + 102, it.slot == "armor" and ("Only " .. it.type .. " wearers are offered " .. it.type .. ".") or "", { size = 11.5, col = "muted", w = 500 }) end
     end

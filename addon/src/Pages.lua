@@ -34,7 +34,7 @@ local function bossState(st, b)
   return n .. " · " .. h
 end
 local function bossArt(x, y, w, h, b)
-  if b.id == "ragnaroast" then UI.tex(x, y, w, h, "boss-ragnaroast")
+  if ns.MEDIA.bosses and ns.MEDIA.bosses[b.id] then UI.tex(x, y, w, h, "boss-" .. b.id)
   else UI.rect(x, y, w, h, "barbg"); UI.text(x, y + h / 2 - 14, string.sub(b.name, 1, 1), { head = true, size = 26, col = "muted", w = w, justify = "CENTER" }) end
 end
 P.bossArt = bossArt
@@ -150,6 +150,7 @@ function P.Roster(st, args)
     UI.panel(578, y, 340, 24, "row"); UI.icon(586, y + 4, 16, slot == "armor" and (it.type or g.ARMOR[c.cls]) or slot)
     UI.text(608, y + 6, it.name, { size = 12, col = it.q == "epic" and UI.T().rarity.epic or it.q == "rare" and UI.T().rarity.rare or "ink", w = 240 })
     UI.text(858, y + 6, "GL " .. it.lvl, { size = 12, w = 52, justify = "RIGHT" })
+    if g.FLAVOUR[it.name] then UI.button(578, y, 340, 24, nil, nil, { kind = "row", tip = it.name .. "\n" .. g.FLAVOUR[it.name] }) end
     y = y + 27
   end
   UI.text(578, y + 4, "Fire Whelp gear " .. c.fire .. " of 2", { size = 12 })
@@ -289,6 +290,8 @@ function P.Settings(st)
   seg(300, 312, { { "animated", "Full" }, { "summary", "Summary only" } }, s.playback, function(v) s.playback = v end, 136)
   label(366, "Speed")
   seg(300, 362, { { 1, "x1" }, { 2, "x2" }, { 4, "x4" } }, s.speed or 1, function(v) s.speed = v end, 60)
+  UI.text(560, 366, "Sounds", { size = 13.5 })
+  seg(630, 362, { { true, "On" }, { false, "Off" } }, s.sound ~= false, function(v) s.sound = v end, 60)
   UI.text(48, 414, "Checks", { head = true, size = 17 })
   label(448, "Self-test", "The golden fights, in your client")
   UI.button(300, 444, 150, 34, "Run self-test", function() ns.SelfTestRun(); B().Render() end, { size = 12.5 })

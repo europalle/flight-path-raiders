@@ -47,7 +47,7 @@ local function drawChrome()
   if Board.tabs then
     for _, t in ipairs(TABS) do
       local on = Board.page == t[1]
-      UI.button(t[2], 58, t[3], 34, t[1], function() Board.Go(t[1]) end, { kind = on and "selected" or "normal", size = 13.5 })
+      UI.button(t[2], 58, t[3], 34, t[1], function() ns.Audio.Play("tab"); Board.Go(t[1]) end, { kind = on and "selected" or "normal", size = 13.5 })
     end
     local st = Board.State()
     UI.text(614, 69, "Week " .. st.week, { size = 12.5, col = "muted", w = 120, justify = "RIGHT" })
@@ -189,7 +189,7 @@ end
 
 function Board.Toggle()
   if not frame then build() end
-  if frame:IsShown() then frame:Hide() else frame:Show(); Board.Render() end
+  if frame:IsShown() then frame:Hide(); ns.Audio.Play("close") else frame:Show(); ns.Audio.Play("open"); Board.Render() end
 end
 function Board.Open(page)
   if not frame then build() end

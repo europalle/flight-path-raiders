@@ -67,6 +67,9 @@ def draw_text(img, d, o, board):
             if d.textlength(test, font=f) / S > w and cur: lines.append(cur); cur = wd
             else: cur = test
         lines.append(cur)
+    if not g(o, "_wrap") and w and not pts_center(o):
+        # WoW cuts a one-line FontString that is too long for its width and ends it with "..."
+        while lines[0] and d.textlength(lines[0], font=f) / S > w + 1: lines[0] = lines[0][:-2] + "…" if not lines[0].endswith("…") else lines[0][:-2] + "…"
     j = g(o, "_justify") or "LEFT"
     for i, line in enumerate(lines):
         tw = d.textlength(line, font=f) / S
