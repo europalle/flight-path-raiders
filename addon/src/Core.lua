@@ -4,11 +4,11 @@ ns.ADDON = ADDON
 local Core = {}
 ns.Core = Core
 
-local SAVE_VERSION = 1
+local SAVE_VERSION = 2
 local DEFAULTS = {
   version = SAVE_VERSION,
-  settings = { scale = 1.0, theme = "auto", point = nil, playback = "animated" },
-  guild = nil,          -- created on first open (one guild per account, design doc)
+  settings = { scale = 1.0, theme = "auto", point = nil, playback = "animated", speed = 1 },
+  guild = nil,          -- the game state (engine/game.lua), created on first open; one guild per account (design doc)
 }
 
 local function copyDefaults(src, dst)
@@ -27,7 +27,18 @@ function Core.Print(msg)
 end
 
 -- Save data migrations: each step upgrades one version. Nothing is ever deleted silently.
-local MIGRATIONS = {}
+local MIGRATIONS = {
+  [1] = function(db) end,  -- 1 to 2: adds the guild (created on first open) and the playback speed (a default)
+}
+
+-- The guild, created the first time anyone asks for it. A guild from an older rules version is kept as-is;
+-- engine/game.lua bumps st.v when a migration is needed.
+function Core.Guild()
+  if not ns.db.guild then
+    ns.db.guild = ns.Game.NewGame(((time and time()) or 1) % 2147483646 + 1)
+  end
+  return ns.db.guild
+end
 
 local function loadSave()
   FlightPathRaidersDB = FlightPathRaidersDB or {}

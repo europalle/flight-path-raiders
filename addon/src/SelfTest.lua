@@ -13,6 +13,8 @@ function ns.SelfTestRun()
   local t2 = debugprofilestop()
   local got = "engine " .. ns.ENGINE_VERSION .. "\n" .. golden .. "\n" .. fuzz
   local n = ns.SelfTest.fights or 0
+  ns.lastSelfTestOk = got == ns.GOLDEN
+  ns.lastSelfTest = ns.lastSelfTestOk and ("Passed, engine " .. ns.ENGINE_VERSION) or "Failed: see chat"
   if got == ns.GOLDEN then
     Print(string.format("|cff60ff60selftest passed|r: engine %d, %d golden fights and the fuzz run match every other runtime. %.1f ms per fight.",
       ns.ENGINE_VERSION, #ns.Fixtures, (t2 - t0) / (#ns.Fixtures + 2000 + 60)))
