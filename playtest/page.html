@@ -172,27 +172,16 @@ const PORTRAITS = /*__PORTRAITS__*/{};
 </script>
 <script>
 "use strict";
-const G = window.FPR_GAME;
+let G = null;         // the game rules (engine/game.lua through playtest/game_lua.js), set up in boot()
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-const SAVE_KEY = "fpr-playtest-v2";
+const SAVE_KEY = "fpr-playtest-v3";  // v3: the rules moved to Lua
 let S = null;          // game state
 let view = "hub";
 let prep = null;       // prep being edited
 let lastOut = null;    // last pull result for the results screen
 let playing = null;    // playback timer
 let speed = 1;
-
-// ---------- engine bridge ----------
-function toLua(v) {
-  if (Array.isArray(v)) return "{" + v.map(toLua).join(",") + "}";
-  if (v && typeof v === "object") return "{" + Object.entries(v).map(([k, x]) => `[${JSON.stringify(k)}]=${toLua(x)}`).join(",") + "}";
-  if (typeof v === "string") return JSON.stringify(v).replace(/\\u[0-9a-fA-F]{4}/g, "?");
-  if (typeof v === "boolean") return v ? "true" : "false";
-  return String(Math.round(v));
-}
-function lua(code) { return fengari.load(code)(); }
-function engine(input) { return JSON.parse(lua(`return FPR_API.Run(${toLua(input)})`)); }
 
 // ---------- save ----------
 function save() { try { localStorage.setItem(SAVE_KEY, JSON.stringify(S)); } catch (e) { /* storage blocked: the game still runs */ } }
@@ -260,7 +249,7 @@ wire.hub = () => {
   $("dungeon").onclick = () => { const d = G.dungeon(S); if (d.error) return toast(d.error); toast(`Dungeon cleared: +${d.gold} gold` + (d.item ? `, and ${d.item.name} (GL ${d.item.lvl}) dropped.` : ".")); render(); };
   $("endWeek").onclick = () => {
     $("endConfirm").innerHTML = `<button type="button" class="small" id="endYes">Yes, end week ${S.week}</button> <button type="button" class="small link" id="endNo">Not yet</button>`;
-    $("endYes").onclick = () => { S.news.push(G.endWeek(S)); render(); }; $("endNo").onclick = () => $("endConfirm").innerHTML = "";
+    $("endYes").onclick = () => { G.endWeek(S); render(); }; $("endNo").onclick = () => $("endConfirm").innerHTML = "";
   };
   const gl = $("goLoot"); if (gl) gl.onclick = () => document.getElementById("lootPanel").scrollIntoView({ behavior: "smooth" });
   wireLoot();
@@ -339,7 +328,7 @@ function vGuild() {
 wire.guild = () => {
   $("copySave").onclick = () => { const t = btoa(unescape(encodeURIComponent(JSON.stringify(S)))); $("saveText").value = t;
     navigator.clipboard.writeText(t).then(() => toast("Save copied."), () => { $("saveText").select(); toast("Select the text and copy it."); }); };
-  $("loadSave").onclick = () => { try { const s = JSON.parse(decodeURIComponent(escape(atob($("saveText").value.trim())))); if (!s.roster) throw 0; S = s; toast("Save loaded."); go("hub"); } catch (e) { toast("That doesn't look like a save."); } };
+  $("loadSave").onclick = () => { try { const s = JSON.parse(decodeURIComponent(escape(atob($("saveText").value.trim())))); if (!s.roster || s.v !== 3) throw 0; S = G.load(s); toast("Save loaded."); go("hub"); } catch (e) { toast("That doesn't look like a save."); } };
   $("reset").onclick = () => { $("resetC").innerHTML = `<button type="button" class="small" id="resetYes">Yes, delete this guild</button>`;
     $("resetYes").onclick = () => { S = G.newGame(1 + Math.floor(Math.random() * 2147000000)); go("hub"); }; };
 };
@@ -393,7 +382,7 @@ wire.prep = () => {
   document.querySelectorAll("[data-cons]").forEach(s => s.onchange = () => { prep.cons[s.dataset.cons] = s.checked; render(); });
   document.querySelectorAll("[data-wb]").forEach(s => s.onchange = () => { prep.buffs[s.dataset.wb] = s.checked; render(); });
   $("pullBtn").onclick = () => {
-    let out; try { out = G.pull(S, prep, engine); } catch (e) { return toast("The engine stopped: " + e.message); }
+    let out; try { out = G.pull(S, prep); } catch (e) { return toast("The engine stopped: " + e.message); }
     if (out.error) return toast(out.error);
     lastOut = out; lastOut.whatif = null; go("pull");
   };
@@ -477,11 +466,11 @@ function results() {
   if ($("again")) $("again").onclick = () => {
     prep = JSON.parse(JSON.stringify(prep));
     if (prep.mode === "heroic") prep.ids = prep.ids.filter(id => !G.byId(S, id).benched);  // whoever is left
-    const out = G.pull(S, prep, engine); if (out.error) return toast(out.error); lastOut = out; go("pull"); };
+    const out = G.pull(S, prep); if (out.error) return toast(out.error); lastOut = out; go("pull"); };
   $("toPrep").onclick = () => { if (o.mode === "heroic") prep = G.defaultPrep(S, o.boss, o.mode); go("prep"); };
   $("toHub").onclick = () => go("hub");
   document.querySelectorAll("[data-whatif]").forEach(bt => bt.onclick = () => {
-    const w = G.replay(S, bt.dataset.whatif, engine); if (w.error) return toast(w.error);
+    const w = G.replay(S, bt.dataset.whatif); if (w.error) return toast(w.error);
     const rr = w.run; const res = rr.result === "kill" ? `a kill in round ${rr.rounds}` : rr.result === "wipe" ? `still a wipe, in round ${rr.rounds}` : `still out of time, boss at ${Math.round(100 * rr.bossHp / rr.bossMax)}%`;
     $("whatif").innerHTML = `<div class="recap ${rr.result === "kill" ? "answer" : ""}"><div class="tier">What if</div><p>Same pull with <b>${G.CARDS[w.card]}</b>: ${res}.</p></div>`;
     document.querySelectorAll("[data-whatif]").forEach(x => x.disabled = true); save();
@@ -494,12 +483,11 @@ function results() {
 document.querySelectorAll("#nav button").forEach(b => b.onclick = () => go(b.dataset.v));
 function boot() {
   try {
-    for (const src of LUA_SOURCES) fengari.load(src)();
-    const rules = JSON.parse(lua(`local R = FPR_ENGINE.Progress.RULES local t = {} for k, v in pairs(R) do t[#t + 1] = string.format('"%s":%d', k, v) end return "{" .. table.concat(t, ",") .. "}"`));
-    G.setRules(rules);
+    G = window.FPR_GAME_LUA(fengari, LUA_SOURCES);
   } catch (e) { $("view").innerHTML = `<p class="err">The Lua engine could not start: ${esc(e.message)}</p>`; return; }
-  S = load();
-  if (!S || S.v !== 2) S = G.newGame(1 + Math.floor(Math.random() * 2147000000));
+  const saved = load();
+  try { S = saved && saved.v === 3 ? G.load(saved) : null; } catch (e) { S = null; }
+  if (!S) S = G.newGame(1 + Math.floor(Math.random() * 2147000000));
   go("hub");
 }
 if (window.fengari) boot(); else window.addEventListener("load", () => window.fengari ? boot() : ($("view").innerHTML = `<p class="err">The Lua runtime could not be loaded. Check your connection and reload.</p>`));

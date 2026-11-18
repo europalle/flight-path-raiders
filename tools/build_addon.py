@@ -4,7 +4,7 @@ runs exactly the code every test checks. Usage: python3 tools/build_addon.py"""
 import os, shutil, re
 ROOT = os.path.normpath(os.path.join(os.path.dirname(__file__), ".."))
 OUT = os.path.join(ROOT, "addon/dist/FlightPathRaiders")
-ENGINE = ["engine/rng.lua", "engine/data.lua", "engine/sim.lua", "engine/validate.lua", "engine/progress.lua"]
+ENGINE = ["engine/rng.lua", "engine/data.lua", "engine/sim.lua", "engine/validate.lua", "engine/progress.lua", "engine/game.lua"]
 TESTS = ["tests/fixtures.lua", "tests/selftest.lua"]
 SRC = ["addon/src/Core.lua", "addon/src/SelfTest.lua", "addon/src/Board.lua"]
 version = re.search(r"ENGINE_VERSION = (\d+)", open(os.path.join(ROOT, "engine/sim.lua")).read()).group(1)

@@ -35,5 +35,13 @@ L.execute("WOW_CHAT = {}")
 ok = L.eval("FPR_NS.SelfTestRun")()
 chat = " ".join(L.eval("WOW_CHAT")[i] for i in range(1, len(L.eval("WOW_CHAT")) + 1))
 check("/fpr selftest passes inside the addon: " + chat[:140], ok is True and "passed" in chat)
+pull = L.eval("""function()
+  local G = FPR_NS.Game
+  local st = G.NewGame(12345)
+  local prep = G.DefaultPrep(st, "magmadad", "normal"); prep.tactic = "burn"
+  local out = G.Pull(st, prep)
+  return #st.roster == 12 and out.run and out.run.engine == FPR_NS.ENGINE_VERSION and (out.result == "kill" or out.lesson ~= nil)
+end""")
+check("the game rules run inside the addon: new guild, prep and a pull", pull() is True)
 print("Addon test:", "all passed" if not fails else f"{len(fails)} failed")
 sys.exit(1 if fails else 0)

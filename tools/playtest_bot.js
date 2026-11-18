@@ -1,25 +1,10 @@
-// Tuning: plays the playtest build headless with a simple "learning" bot and reports week-by-week progress.
+// Tuning: plays the game rules (engine/game.lua, through the playtest page's bridge) headless with a simple "learning" bot and reports week-by-week progress.
 // Usage: FENGARI=... node tools/playtest_bot.js [guilds] [weeks] [style]
 // style: learner (follows the recap once it names the answer), smart (knows every answer), stubborn (always Spread)
 const path = require('path'), fs = require('fs');
-const { lua, lauxlib, lualib, to_luastring } = require(process.env.FENGARI || 'fengari');
 const root = path.join(__dirname, '..');
-const L = lauxlib.luaL_newstate(); lualib.luaL_openlibs(L);
-function exec(src, name, nres) {
-  if (lauxlib.luaL_loadbuffer(L, to_luastring(src), null, to_luastring('@' + name)) !== lua.LUA_OK || lua.lua_pcall(L, 0, nres, 0) !== lua.LUA_OK)
-    throw new Error(lua.lua_tojsstring(L, -1));
-}
-for (const f of ['engine/rng.lua', 'engine/data.lua', 'engine/sim.lua', 'engine/validate.lua', 'engine/progress.lua', 'prototype/api.lua']) exec(fs.readFileSync(path.join(root, f), 'utf8'), f, 0);
-function toLua(v) {
-  if (Array.isArray(v)) return "{" + v.map(toLua).join(",") + "}";
-  if (v && typeof v === "object") return "{" + Object.entries(v).map(([k, x]) => `[${JSON.stringify(k)}]=${toLua(x)}`).join(",") + "}";
-  if (typeof v === "string") return JSON.stringify(v);
-  if (typeof v === "boolean") return v ? "true" : "false";
-  return String(Math.round(v));
-}
-function engine(input) { exec(`return FPR_API.Run(${toLua(input)})`, 'run', 1); const s = lua.lua_tojsstring(L, -1); lua.lua_pop(L, 1); return JSON.parse(s); }
-require(path.join(root, 'playtest/game.js'));
-const G = globalThis.FPR_GAME;
+require(path.join(root, 'playtest/game_lua.js'));
+const G = globalThis.FPR_GAME_LUA(require(process.env.FENGARI || 'fengari'), ['engine/rng.lua', 'engine/data.lua', 'engine/sim.lua', 'engine/validate.lua', 'engine/progress.lua', 'engine/game.lua'].map(f => [f, fs.readFileSync(path.join(root, f), 'utf8')]));
 const guilds = Number(process.argv[2] || 20), weeks = Number(process.argv[3] || 10), style = process.argv[4] || 'learner';
 const NIGHT = 10;  // pulls per week the bot is willing to spend on Normal progress
 const stats = []; const firstNormal = {}, firstHeroic = {};
@@ -54,7 +39,7 @@ for (let g = 0; g < guilds; g++) {
           if (b.id === 'ragnaroast' && (style === 'smart' || knowFire.v)) {
             for (const id of prep.ids) { const c = G.byId(st, id); const z = prep.zones[id];
               if ((z === 'melee' || z === 'front') && c.fire < 2 && st.gold > 400) G.buyFire(st, id);
-              prep.fireOn[id] = c.fire; prep.potions[id] = (z === 'melee' || z === 'front') && st.gold > 200; }
+              prep.fireOn[id] = G.byId(st, id).fire; prep.potions[id] = (z === 'melee' || z === 'front') && st.gold > 200; }
           }
           if (b.id === 'lucifrown' && (style === 'smart' || known.decurse) && !prep.ids.some(id => ['mage', 'druid'].includes(G.byId(st, id).cls))) {
             // hire a mage or druid if the tavern has one
@@ -65,13 +50,15 @@ for (let g = 0; g < guilds; g++) {
           }
           if (G.problems(st, prep).length) { prep.cons = { food: true, elixirs: false, flasks: false }; prep.potions = {}; }
           if (G.problems(st, prep).length) break;
-          const out = G.pull(st, prep, engine); pullsAll++; if (mode === 'normal') budget--;
+          const out = G.pull(st, prep); pullsAll++;
+          if (process.env.FPR_TRACE) console.log('T', g, w, b.id, mode, out.result, out.run && out.run.checksum, st.gold, st.rng, st.roster.map(c => c.id + ':' + c.morale).join(',')); if (mode === 'normal') budget--;
           clear();
           if (out.note) { tierSeen[out.note.tier]++; if (out.note.tier === 2) { if (out.note.id === 'card') known[b.id] = b.card; if (out.note.id === 'fire') knowFire.v = true; if (out.note.id === 'decurse') known.decurse = true; } }
           if (out.result === 'kill') {
             done = true;
             const arr = mode === 'normal' ? firstNormal[b.id] : firstHeroic[b.id];
-            if ((mode === 'normal' ? p.normalKills : p.heroicKills) === 1) arr.push(w);
+            const pp = st.progress[b.id];  // re-read: the Lua rules refresh the state object
+            if ((mode === 'normal' ? pp.normalKills : pp.heroicKills) === 1) arr.push(w);
           } else {
             wipes++; tierSeen[out.lesson.tier]++;
             if (out.lesson.tier === 2) { if (out.lesson.id === 'card') known[b.id] = b.card; if (out.lesson.id === 'fire') knowFire.v = true; if (out.lesson.id === 'decurse') known.decurse = true; }
