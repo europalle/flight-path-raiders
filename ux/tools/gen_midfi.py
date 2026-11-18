@@ -401,6 +401,129 @@ gl_.btn(24,200,180,30,"Go to guild hall")
 gl_.note(1,462,108)
 frames.append(("bank-locked",gl_,["Locked state lists every requirement as a checklist with your current value, so the goal is clear before the bank exists."]))
 
+def navrow(s,active,right="LFR  ·  Gold 2,340  ·  DKP 86"):
+    x=20
+    for n in ["Hub","Roster","Tavern","Guild Hall","Bank"]:
+        w=len(n)*8+28; on=(n==active)
+        s.rect(x,50,w,30,fill=INK if on else PAPER,stroke=INK,r=6)
+        s.text(x+w/2,70,n,13,700 if on else 600,PAPER if on else INK,"middle"); x+=w+8
+    s.text(940,70,right,13,500,MUTED,"end")
+
+# ---------- Roster ----------
+ro=S(W,H,"Roster")
+ro.frame("Roster"); navrow(ro,"Roster")
+for i,(f,w) in enumerate([("All 15",62),("Tanks 3",72),("Healers 4",82),("Damage 8",82)]):
+    x=20+sum([62,72,82,82][:i])+i*6
+    ro.rect(x,92,w,26,fill=INK if i==0 else PAPER,stroke=INK,r=13); ro.text(x+w/2,109,f,11,600,PAPER if i==0 else INK,"middle")
+ro.text(540,109,"Sort: status ▾",12,600,INK,"end")
+cols=[(20,"Name"),(150,"Class · spec"),(300,"Lvl"),(336,"GL"),(372,"Morale"),(450,"Status")]
+for x,c in cols: ro.text(x+8,140,c,11,700,MUTED)
+rows=[("Brannoc","Warrior · Protection",60,64,72,"Ready"),("Mira","Paladin · Protection",60,63,80,"Ready"),
+      ("Sela","Priest · Holy",60,63,71,"Ready"),("Lumi","Mage · Frost",60,65,68,"Ready"),
+      ("Kess","Rogue · Combat",60,66,55,"Ready"),("Bram","Druid · Restoration",60,61,77,"Ready"),
+      ("Orrin","Hunter · Marksmanship",60,62,66,"Ready"),("Rook","Mage · Fire",59,58,22,"Benched until reset"),
+      ("Fen","Rogue · Subtlety",58,57,35,"Bench"),("Dax","Hunter · Beast Mastery",56,52,60,"Bench")]
+for i,r in enumerate(rows):
+    y=148+i*34; sel=(i==3)
+    ro.rect(20,y,520,30,fill=FILL if sel else PAPER,stroke=INK if sel else LINE,r=5,sw=2 if sel else 1,dash=r[5].startswith("Benched"))
+    ro.rect(26,y+4,22,22,fill=FILL2,stroke=LINE,r=3)
+    ro.text(56,y+20,r[0],12,700); ro.text(158,y+20,r[1],12,400)
+    ro.text(308,y+20,str(r[2]),12,500); ro.text(344,y+20,str(r[3]),12,500)
+    ro.bar(380,y+11,40,8,r[4]/100,INK); ro.text(426,y+20,str(r[4]),11,600,INK if r[4]>=40 else INK)
+    if r[4]<40: ro.text(446,y+20,"⚠",11,700)
+    ro.text(462,y+20,r[5] if len(r[5])<12 else "Benched",11,600,MUTED if r[5]!="Ready" else INK)
+ro.text(20,500,"+ 5 more  ·  Roster 15 / 15  ·  Barracks upgrade adds 5",12,400,MUTED)
+ro.note(1,540,140)
+# detail
+ro.rect(556,92,384,428,fill=FILL,stroke=LINE,r=8)
+ro.img(570,106,64,64)
+ro.text(648,126,"Lumi",18,700); ro.text(648,146,"Mage  ·  Level 60  ·  GL 65",12,400,MUTED)
+ro.text(648,164,"Trait: Brings Her Own Snacks (free food)",12,500)
+ro.text(570,196,"Spec",13,700)
+for i,(sp,role) in enumerate([("Arcane","Damage"),("Fire","Damage"),("✓ Frost","Damage")]):
+    sel=(i==2); x=570+i*120
+    ro.rect(x,204,114,40,fill=INK if sel else PAPER,stroke=INK,r=6)
+    ro.text(x+57,221,sp,13,700,PAPER if sel else INK,"middle"); ro.text(x+57,237,role,11,400,PAPER if sel else MUTED,"middle")
+ro.text(570,264,"Ice Block: once per fight, survives a killing hit, so",12,500)
+ro.text(570,280,"no benching. Frostbolt: adds deal 15% less damage.",12,500)
+ro.rect(570,292,356,52,fill=PAPER,stroke=INK,r=6)
+ro.text(582,312,"Respec: 30 min of play (you respecced last week)",12,700)
+ro.text(582,332,"Price drops a step each week without one",11,400,MUTED)
+ro.btn(570,352,172,32,"Use Tome of Respec (1)"); ro.btn(752,352,174,32,"Respec for gold")
+ro.text(570,408,"Gear",13,700)
+for i,(sl,it,gl) in enumerate([("Weapon","Staff of Mild Frostbite","GL 66"),("Armor","Robes of the Pugged · 2/3 set","GL 65"),("Trinket","Ring of the Bench","GL 64")]):
+    y=414+i*24; ro.text(570,y+18,sl,11,600,MUTED); ro.text(632,y+18,it,12,600); ro.text(926,y+18,gl,12,700,INK,"end")
+ro.text(570,504,"Set (2/3): +5% frost damage",11,500,MUTED)
+ro.btn(842,106,84,28,"Dismiss",False,12)
+ro.note(2,556,96); ro.note(3,940,200); ro.note(4,940,296)
+frames.append(("roster",ro,[
+ "Table, not cards: 10 rows visible, sortable and filterable by role. Benched rows are dashed; morale under 40 gets a warning icon plus the number.",
+ "Detail panel answers 'who is this?' in one glance: class, level, gear level, trait.",
+ "Spec is chosen here and only here. Three buttons with role underneath; the passive is written out in full below.",
+ "Respec shows the price in play time and the reason it rose. A Tome of Respec is always offered first when you have one."]))
+
+# ---------- Tavern ----------
+tv=S(W,H,"Tavern")
+tv.frame("Tavern"); navrow(tv,"Tavern")
+tv.text(20,108,"The Bench & Barrel",17,700); tv.text(200,108,"5 recruits today  ·  new offers at daily reset (6 h)",12,400,MUTED)
+tv.btn(800,88,140,32,"Reroll  ·  25 g")
+tv.note(1,940,86)
+recs=[("Grizzle","Warrior · Arms","Common",1,57,48,"Pulls Before Tank Is Ready","50 g"),
+      ("Wynn","Priest · Shadow","Rare",2,58,52,"Wears Full Healing Set Anyway","300 g"),
+      ("Mortis","Warlock · Destruction","Epic",4,59,55,"Has Never Read Tactics","1,500 g"),
+      ("Pella","Druid · Feral","Rare",2,57,50,"Main Tank in Every Other Guild","300 g"),
+      ("Sprocket","Rogue · Combat","Common",1,56,47,"Needs on Everything","50 g")]
+for i,(n,cs,rar,q,lv,gl,tr,pr) in enumerate(recs):
+    x=20+i*186; y=130
+    tv.rect(x,y,178,300,fill=PAPER,stroke=INK if i==2 else LINE,r=8,sw=2 if i==2 else 1)
+    tv.img(x+12,y+12,154,110)
+    tv.text(x+12,y+146,n,15,700); tv.text(x+12,y+166,cs,12,500)
+    tv.pips(x+16,y+184,q); tv.text(x+66,y+188,rar,11,600,MUTED)
+    tv.text(x+12,y+212,f"Level {lv}  ·  GL {gl}",12,500)
+    tv.text(x+12,y+236,"Trait",11,700,MUTED)
+    words=tr.split(); l1=" ".join(words[:3]); l2=" ".join(words[3:])
+    tv.text(x+12,y+252,l1,12,600); tv.text(x+12,y+268,l2,12,600)
+    tv.btn(x+12,y+258+0 if False else y+278-10,154,0.1,"") if False else None
+    tv.btn(x+12,y+282,154,0.1,"") if False else None
+for i,(n,cs,rar,q,lv,gl,tr,pr) in enumerate(recs):
+    x=20+i*186
+    tv.btn(x+12,442,154,36,"Hire  ·  "+pr,i==2)
+tv.rect(368,126,120,24,fill=INK,stroke=INK,r=12); tv.text(428,143,"rare find: warlock",11,700,PAPER,"middle")
+tv.note(2,198,128); tv.note(3,374,124)
+tv.rect(20,490,920,34,fill=FILL,stroke=INK,r=6)
+tv.text(34,512,"⚠ Roster 15 / 15. Hiring means dismissing someone (gold back) or building Barracks in the Guild Hall.",12,600)
+tv.note(4,940,488)
+frames.append(("tavern",tv,[
+ "Reroll price is on the button and doubles each reroll that day, so the cost is never a surprise.",
+ "Five cards, each answers: who, what class and spec, how rare (pips plus word), how strong, and the trait that makes them funny.",
+ "Warlocks are a 5% find (the guild has none), so they get a tag in words when one shows up.",
+ "Full roster is explained before the player clicks Hire, with both ways out."]))
+
+# ---------- Guild Hall ----------
+gh=S(W,H,"Guild hall")
+gh.frame("Guild Hall"); navrow(gh,"Guild Hall")
+gh.text(20,108,"Built with DKP. Upgrades are permanent.",13,500,MUTED)
+gh.text(940,108,"DKP 86  ·  next weekly DKP at reset",12,600,INK,"end")
+blds=[("Barracks","+5 roster slots","Level 0 of 2: 15 → 20","100 DKP",False,True),
+      ("Tavern","6 recruits on offer","Level 0 of 2","80 DKP",True,False),
+      ("Training Dummy","Simulate a pull, no risk, once a day","Not built","150 DKP",False,False),
+      ("War Room","2nd tactic card in Normal","Not built","200 DKP",False,False),
+      ("Trophy Hall","Show kills and titles to guildies","Built ✓","",False,False),
+      ("Guild Bank","End-game storage, 16 slots","Needs level 60 + first raid kill","150 DKP",False,False)]
+for i,(n,eff,state,cost,affordable,progress) in enumerate(blds):
+    c,rw=i%3,i//3; x=20+c*312; y=124+rw*196
+    lock=n=="Guild Bank"; done=state.startswith("Built")
+    gh.rect(x,y,300,184,fill=FILL if done else PAPER,stroke=INK if affordable else LINE,r=8,sw=2 if affordable else 1,dash=lock)
+    gh.img(x+12,y+12,276,70)
+    gh.text(x+12,y+106,("🔒 " if lock else "")+n,15,700)
+    gh.text(x+12,y+126,eff,12,500); gh.text(x+12,y+146,state,11,400,MUTED)
+    if cost: gh.btn(x+188,y+140,100,32,cost,affordable)
+gh.note(1,332,122); gh.note(2,952,318)
+gh.text(20,524,"Bank Tab 2 is bought inside the bank with gold, not here.",11,400,MUTED)
+frames.append(("guild-hall",gh,[
+ "One card per building: what it does, its level, and the price on the button. The only button you can afford right now is the dark one, and the card's border says so too.",
+ "Locked buildings list their requirement in words. The Guild Bank costs DKP like every other building (Tuning: 150 DKP); only its second tab costs gold."]))
+
 for slug,s,notes in frames:
     open(f"{OUT}/{slug}.svg","w").write(s.svg())
 json.dump([(slug,s.title,s.w,s.h,notes) for slug,s,notes in frames],open(os.path.dirname(__file__)+"/notes_mid.json","w"))

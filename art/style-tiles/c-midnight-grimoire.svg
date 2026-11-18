@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 640" width="400" height="640" role="img" aria-label="Style tile C · Midnight Grimoire">
+<title>C · Midnight Grimoire</title>
+<defs>
+<filter id="ink-c-midnight-grimoire" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="1.6"/></filter>
+<filter id="wash-c-midnight-grimoire" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="3" seed="8"/><feDisplacementMap in="SourceGraphic" scale="5"/></filter>
+<filter id="grain-c-midnight-grimoire"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="2"/><feColorMatrix values="0 0 0 0 0.4  0 0 0 0 0.35  0 0 0 0 0.3  0 0 0 0.06 0"/></filter>
+<filter id="glow-c-midnight-grimoire"><feGaussianBlur stdDeviation="4"/></filter>
+<pattern id="hatch-c-midnight-grimoire" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(38)"><line x1="0" y1="0" x2="0" y2="4" stroke="#e6e1d3" stroke-width="0.8"/></pattern>
+</defs>
+<rect width="400" height="640" fill="#1c1f26"/>
+<line x1="0" y1="36" x2="400" y2="36" stroke="#2f3540" stroke-width="0.6" opacity="0.5"/>
+<line x1="0" y1="60" x2="400" y2="60" stroke="#2f3540" stroke-width="0.6" opacity="0.5"/>
+<line x1="0" y1="84" x2="400" y2="84" stroke="#2f3540" stroke-width="0.6" opacity="0.5"/>
+<line x1="0" y1="108" x2="400" y2="108" stroke="#2f3540" stroke-width="0.6" opacity="0.5"/>
+<line x1="0" y1="132" x2="400" y2="132" stroke="#2f3540" stroke-width="0.6" opacity="0.5"/>
+<line x1="0" y1="156" x2="400" y2="156" stroke="#2f3540" stroke-width="0.6" opacity="0.5"/>
+<line x1="0" y1="180" x2="400" y2="180" stroke="#2f3540" stroke-width="0.6" opacity="0.5"/>
+<line x1="0" y1="204" x2="400" y2="204" stroke="#2f3540" stroke-width="0.6" opacity="0.5"/>
+<line x1="0" y1="228" x2="400" y2="228" stroke="#2f3540" stroke-width="0.6" opacity="0.5"/>
+<line x1="0" y1="252" x2="400" y2="252" stroke="#2f3540" stroke-width="0.6" opacity="0.5"/>
+<line x1="0" y1="276" x2="400" y2="276" stroke="#2f3540" stroke-width="0.6" opacity="0.5"/>
+<line x1="0" y1="300" x2="400" y2="300" stroke="#2f3540" stroke-width="0.6" opacity="0.5"/>
+<line x1="0" y1="324" x2="400" y2="324" stroke="#2f3540" stroke-width="0.6" opacity="0.5"/>
+<line x1="0" y1="348" x2="400" y2="348" stroke="#2f3540" stroke-width="0.6" opacity="0.5"/>
+<line x1="0" y1="372" x2="400" y2="372" stroke="#2f3540" stroke-width="0.6" opacity="0.5"/>
+<line x1="0" y1="396" x2="400" y2="396" stroke="#2f3540" stroke-width="0.6" opacity="0.5"/>
+<line x1="0" y1="420" x2="400" y2="420" stroke="#2f3540" stroke-width="0.6" opacity="0.5"/>
+<line x1="0" y1="444" x2="400" y2="444" stroke="#2f3540" stroke-width="0.6" opacity="0.5"/>
+<line x1="0" y1="468" x2="400" y2="468" stroke="#2f3540" stroke-width="0.6" opacity="0.5"/>
+<line x1="0" y1="492" x2="400" y2="492" stroke="#2f3540" stroke-width="0.6" opacity="0.5"/>
+<line x1="0" y1="516" x2="400" y2="516" stroke="#2f3540" stroke-width="0.6" opacity="0.5"/>
+<line x1="0" y1="540" x2="400" y2="540" stroke="#2f3540" stroke-width="0.6" opacity="0.5"/>
+<line x1="0" y1="564" x2="400" y2="564" stroke="#2f3540" stroke-width="0.6" opacity="0.5"/>
+<line x1="0" y1="588" x2="400" y2="588" stroke="#2f3540" stroke-width="0.6" opacity="0.5"/>
+<line x1="0" y1="612" x2="400" y2="612" stroke="#2f3540" stroke-width="0.6" opacity="0.5"/>
+<line x1="0" y1="636" x2="400" y2="636" stroke="#2f3540" stroke-width="0.6" opacity="0.5"/>
+<rect width="400" height="640" filter="url(#grain-c-midnight-grimoire)"/>
+<text x="24" y="46" font-family="Kalam, sans-serif" font-size="26" font-weight="700" fill="#e6e1d3" text-anchor="start">C · Midnight Grimoire</text>
+<text x="24" y="70" font-family="IBM Plex Sans, sans-serif" font-size="11.5" font-weight="400" fill="#a8a293" text-anchor="start">Dark pages, silver ink, glowing accents. Matches WoW&#x27;s frames.</text>
+<rect x="24" y="88" width="60" height="40" rx="6" fill="#1c1f26" stroke="#e6e1d3" stroke-width="1.2" filter="url(#ink-c-midnight-grimoire)"/>
+<text x="54" y="144" font-family="IBM Plex Sans, sans-serif" font-size="10" font-weight="400" fill="#a8a293" text-anchor="middle">paper</text>
+<rect x="96" y="88" width="60" height="40" rx="6" fill="#e6e1d3" stroke="#e6e1d3" stroke-width="1.2" filter="url(#ink-c-midnight-grimoire)"/>
+<text x="126" y="144" font-family="IBM Plex Sans, sans-serif" font-size="10" font-weight="400" fill="#a8a293" text-anchor="middle">ink</text>
+<rect x="168" y="88" width="60" height="40" rx="6" fill="#ff8a3d" stroke="#e6e1d3" stroke-width="1.2" filter="url(#ink-c-midnight-grimoire)"/>
+<text x="198" y="144" font-family="IBM Plex Sans, sans-serif" font-size="10" font-weight="400" fill="#a8a293" text-anchor="middle">lava</text>
+<rect x="240" y="88" width="60" height="40" rx="6" fill="#8cc8ff" stroke="#e6e1d3" stroke-width="1.2" filter="url(#ink-c-midnight-grimoire)"/>
+<text x="270" y="144" font-family="IBM Plex Sans, sans-serif" font-size="10" font-weight="400" fill="#a8a293" text-anchor="middle">frost</text>
+<rect x="312" y="88" width="60" height="40" rx="6" fill="#252a33" stroke="#e6e1d3" stroke-width="1.2" filter="url(#ink-c-midnight-grimoire)"/>
+<text x="342" y="144" font-family="IBM Plex Sans, sans-serif" font-size="10" font-weight="400" fill="#a8a293" text-anchor="middle">panel</text>
+<text x="24" y="184" font-family="Kalam, sans-serif" font-size="24" font-weight="700" fill="#e6e1d3" text-anchor="start">Ragnaroast is up (Heroic)</text>
+<text x="24" y="206" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="#e6e1d3" text-anchor="start">Body text stays clean: 13 units minimum, high contrast.</text>
+<text x="24" y="224" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="#e6e1d3" text-anchor="start">R7  Spread holds: lava hits only Kess.</text>
+<rect x="24" y="246" width="230" height="86" rx="10" fill="#252a33" stroke="#e6e1d3" stroke-width="1.8" filter="url(#ink-c-midnight-grimoire)"/>
+<rect x="36" y="258" width="62" height="62" rx="8" fill="#1c1f26" stroke="#e6e1d3" stroke-width="1.4" filter="url(#ink-c-midnight-grimoire)"/>
+<path d="M48 320 Q46 288 67 270 Q88 288 86 320 Z" fill="#2f4f7a" opacity="0.92" filter="url(#wash-c-midnight-grimoire)"/>
+<path d="M48 320 Q46 288 67 270 Q88 288 86 320" fill="none" stroke="#e6e1d3" stroke-width="1.6" filter="url(#ink-c-midnight-grimoire)"/>
+<path d="M57 304 Q59 288 67 284 Q75 288 77 304 Z" fill="#141a24"/>
+<circle cx="63" cy="294" r="3.5" fill="#8cc8ff" filter="url(#glow-c-midnight-grimoire)"/><circle cx="63" cy="294" r="1.3" fill="#eef8ff"/>
+<circle cx="71" cy="294" r="3.5" fill="#8cc8ff" filter="url(#glow-c-midnight-grimoire)"/><circle cx="71" cy="294" r="1.3" fill="#eef8ff"/>
+<text x="110" y="276" font-family="Kalam, sans-serif" font-size="17" font-weight="700" fill="#e6e1d3" text-anchor="start">Lumi</text>
+<text x="110" y="294" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="#a8a293" text-anchor="start">Mage · Frost</text>
+<circle cx="114" cy="310" r="4" fill="#e6e1d3" stroke="#e6e1d3" stroke-width="1.2"/>
+<circle cx="126" cy="310" r="4" fill="#e6e1d3" stroke="#e6e1d3" stroke-width="1.2"/>
+<circle cx="138" cy="310" r="4" fill="#e6e1d3" stroke="#e6e1d3" stroke-width="1.2"/>
+<circle cx="150" cy="310" r="4" fill="#e6e1d3" stroke="#e6e1d3" stroke-width="1.2"/>
+<circle cx="162" cy="310" r="4" fill="none" stroke="#e6e1d3" stroke-width="1.2"/>
+<text x="180" y="314" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="#a8a293" text-anchor="start">Epic</text>
+<rect x="24" y="352" width="150" height="44" rx="8" fill="#e6e1d3" filter="url(#ink-c-midnight-grimoire)"/>
+<text x="99" y="380" font-family="Kalam, sans-serif" font-size="17" font-weight="700" fill="#1c1f26" text-anchor="middle">Pull</text>
+<rect x="186" y="352" width="150" height="44" rx="8" fill="none" stroke="#e6e1d3" stroke-width="1.8" filter="url(#ink-c-midnight-grimoire)"/>
+<text x="261" y="380" font-family="Kalam, sans-serif" font-size="15" font-weight="700" fill="#e6e1d3" text-anchor="middle">Same as last</text>
+<rect x="24" y="420" width="56" height="56" rx="10" fill="#252a33" stroke="#e6e1d3" stroke-width="1.4" filter="url(#ink-c-midnight-grimoire)"/>
+<path d="M52 432 L66 448 L52 464 L38 448 Z" fill="#ff8a3d" stroke="#e6e1d3" stroke-width="1.6" filter="url(#ink-c-midnight-grimoire)"/>
+<rect x="92" y="420" width="56" height="56" rx="10" fill="#252a33" stroke="#e6e1d3" stroke-width="1.4" filter="url(#ink-c-midnight-grimoire)"/>
+<path d="M120 432 L134 448 L120 464 L106 448 Z" fill="none" stroke="#8cc8ff" stroke-width="2.4" filter="url(#ink-c-midnight-grimoire)"/><circle cx="120" cy="448" r="4" fill="#8cc8ff"/>
+<rect x="160" y="420" width="56" height="56" rx="10" fill="#252a33" stroke="#e6e1d3" stroke-width="1.4" filter="url(#ink-c-midnight-grimoire)"/>
+<path d="M188 431 L205 462 L171 462 Z" fill="#ff8a3d" stroke="#e6e1d3" stroke-width="1.6" filter="url(#ink-c-midnight-grimoire)"/><path d="M188 442 L188 452" stroke="#e6e1d3" stroke-width="2.6"/><circle cx="188" cy="457" r="1.8" fill="#e6e1d3"/>
+<rect x="228" y="420" width="56" height="56" rx="10" fill="#252a33" stroke="#e6e1d3" stroke-width="1.4" filter="url(#ink-c-midnight-grimoire)"/>
+<path d="M251 430 L261 430 L261 440 Q272 448 270 458 Q256 468 242 458 Q240 448 251 440 Z" fill="#ff8a3d" stroke="#e6e1d3" stroke-width="1.6" filter="url(#ink-c-midnight-grimoire)"/>
+<text x="24" y="496" font-family="IBM Plex Sans, sans-serif" font-size="10.5" font-weight="400" fill="#a8a293" text-anchor="start">icons: affix · BoE · warning · Fire Resistance</text>
+<rect x="24" y="520" width="352" height="96" rx="10" fill="#252a33" stroke="#e6e1d3" stroke-width="1.4" filter="url(#ink-c-midnight-grimoire)"/>
+<ellipse cx="300" cy="612" rx="90" ry="40" fill="#ff8a2a" opacity="0.35" filter="url(#glow-c-midnight-grimoire)"/>
+<path d="M244 590 Q240 612 260 612 L340 612 Q360 612 356 590 Z" fill="#3a3d42" stroke="#e6e1d3" stroke-width="1.6" filter="url(#ink-c-midnight-grimoire)"/>
+<path d="M262 590 Q258 550 300 542 Q342 550 338 590 Z" fill="#4a3a34" opacity="0.95" filter="url(#wash-c-midnight-grimoire)"/>
+<path d="M262 590 Q258 550 300 542 Q342 550 338 590" fill="none" stroke="#e6e1d3" stroke-width="1.6" filter="url(#ink-c-midnight-grimoire)"/>
+<path d="M282 564 L296 560 M304 560 L318 564" stroke="#ffd27a" stroke-width="3" filter="url(#glow-c-midnight-grimoire)"/><path d="M282 564 L296 560 M304 560 L318 564" stroke="#ffd27a" stroke-width="1.6"/>
+<path d="M286 542 L284 524 Q276 514 290 512 Q300 504 310 512 Q324 514 316 524 L314 542 Z" fill="#f8f4ea" stroke="#e6e1d3" stroke-width="1.4" filter="url(#ink-c-midnight-grimoire)"/>
+<text x="40" y="560" font-family="Kalam, sans-serif" font-size="14" font-weight="700" fill="#e6e1d3" text-anchor="start">Stage mood</text>
+<text x="40" y="580" font-family="IBM Plex Sans, sans-serif" font-size="11.5" font-weight="400" fill="#a8a293" text-anchor="start">lava light from the right,</text>
+<text x="40" y="596" font-family="IBM Plex Sans, sans-serif" font-size="11.5" font-weight="400" fill="#a8a293" text-anchor="start">shadow side hatched</text>
+<rect x="40" y="602" width="120" height="8" fill="url(#hatch-c-midnight-grimoire)" opacity="0.6"/>
+<text x="24" y="630" font-family="IBM Plex Sans, sans-serif" font-size="9.5" font-weight="400" fill="#a8a293" text-anchor="start">Fonts: Kalam (headings) · IBM Plex Sans (body). Both free to ship (OFL).</text>
+</svg>

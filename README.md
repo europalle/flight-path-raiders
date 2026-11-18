@@ -34,7 +34,7 @@ A World of Warcraft: Forever addon that turns flight paths into raid nights. Rec
 | Art | Art direction, sketches, cards, visual styling over approved wireframes |
 | Engineering | Addon architecture, combat engine, sync, prototype |
 | QA | Test plans, bug lists, in-game checks |
-| QA: Player Research | Playtest scripts and short surveys for the Director to run with the guild |
+| QA: Player Research | Solo playtest scripts and short surveys for the Director; guild interaction is simulated |
 | Audio | Sound cues, stings and their accessibility role |
 | Marketing & Community | Addon pages, screenshots and GIFs, Discord, release notes, launch plan, player feedback |
 | Legal & Compliance | Blizzard addon and fan-content rules, parody names, trademarks, licences (a checklist, not legal advice) |

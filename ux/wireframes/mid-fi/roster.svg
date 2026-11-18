@@ -1,0 +1,193 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="960" height="540" role="img" aria-label="Roster">
+<title>Roster</title>
+<rect width="960" height="540" fill="#ffffff"/>
+<rect x="0.75" y="0.75" width="958.5" height="538.5" rx="8" fill="#ffffff" stroke="#222a33" stroke-width="1.5"/>
+<path d="M0.75 40 V8.75 a8 8 0 0 1 8 -8 H951.25 a8 8 0 0 1 8 8 V40 Z" fill="#eef1f4" stroke="#222a33" stroke-width="1.5"/>
+<text x="16" y="26" font-family="Inter, Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#222a33" text-anchor="start">Flight Path Raiders</text>
+<text x="178" y="26" font-family="Inter, Arial, Helvetica, sans-serif" font-size="15" font-weight="400" fill="#5d6773" text-anchor="start">/  Roster</text>
+<rect x="828" y="9" width="24" height="22" rx="4" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="840" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">-</text>
+<rect x="858" y="9" width="24" height="22" rx="4" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="870" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">+</text>
+<rect x="888" y="9" width="24" height="22" rx="4" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="900" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle"><tspan fill="#c0841a" font-weight="800">⚙</tspan></text>
+<rect x="918" y="9" width="24" height="22" rx="4" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="930" y="25" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle"><tspan fill="#c0841a" font-weight="800">✕</tspan></text>
+<text x="818" y="26" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="500" fill="#5d6773" text-anchor="end">100%</text>
+<rect x="20" y="50" width="52" height="30" rx="6" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="46.0" y="70" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">Hub</text>
+<rect x="80" y="50" width="76" height="30" rx="6" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<text x="118.0" y="70" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">Roster</text>
+<rect x="164" y="50" width="76" height="30" rx="6" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="202.0" y="70" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">Tavern</text>
+<rect x="248" y="50" width="108" height="30" rx="6" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="302.0" y="70" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">Guild Hall</text>
+<rect x="364" y="50" width="60" height="30" rx="6" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="394.0" y="70" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">Bank</text>
+<text x="940" y="70" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="500" fill="#5d6773" text-anchor="end">LFR  ·  Gold 2,340  ·  DKP 86</text>
+<rect x="20" y="92" width="62" height="26" rx="13" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<text x="51.0" y="109" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#ffffff" text-anchor="middle">All 15</text>
+<rect x="88" y="92" width="72" height="26" rx="13" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="124.0" y="109" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="middle">Tanks 3</text>
+<rect x="166" y="92" width="82" height="26" rx="13" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="207.0" y="109" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="middle">Healers 4</text>
+<rect x="254" y="92" width="82" height="26" rx="13" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="295.0" y="109" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="middle">Damage 8</text>
+<text x="540" y="109" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="end">Sort: status <tspan fill="#c0841a" font-weight="800">▾</tspan></text>
+<text x="28" y="140" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#5d6773" text-anchor="start">Name</text>
+<text x="158" y="140" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#5d6773" text-anchor="start">Class · spec</text>
+<text x="308" y="140" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#5d6773" text-anchor="start">Lvl</text>
+<text x="344" y="140" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#5d6773" text-anchor="start">GL</text>
+<text x="380" y="140" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#5d6773" text-anchor="start">Morale</text>
+<text x="458" y="140" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#5d6773" text-anchor="start">Status</text>
+<rect x="20" y="148" width="520" height="30" rx="5" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="26" y="152" width="22" height="22" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<text x="56" y="168" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="start">Brannoc</text>
+<text x="158" y="168" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#222a33" text-anchor="start">Warrior · Protection</text>
+<text x="308" y="168" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="500" fill="#222a33" text-anchor="start">60</text>
+<text x="344" y="168" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="500" fill="#222a33" text-anchor="start">64</text>
+<rect x="380" y="159" width="40" height="8" rx="2" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="380" y="159" width="28.799999999999997" height="8" rx="2" fill="#222a33" stroke="none" stroke-width="1"/>
+<text x="426" y="168" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="start">72</text>
+<text x="462" y="168" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="start">Ready</text>
+<rect x="20" y="182" width="520" height="30" rx="5" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="26" y="186" width="22" height="22" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<text x="56" y="202" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="start">Mira</text>
+<text x="158" y="202" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#222a33" text-anchor="start">Paladin · Protection</text>
+<text x="308" y="202" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="500" fill="#222a33" text-anchor="start">60</text>
+<text x="344" y="202" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="500" fill="#222a33" text-anchor="start">63</text>
+<rect x="380" y="193" width="40" height="8" rx="2" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="380" y="193" width="32.0" height="8" rx="2" fill="#222a33" stroke="none" stroke-width="1"/>
+<text x="426" y="202" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="start">80</text>
+<text x="462" y="202" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="start">Ready</text>
+<rect x="20" y="216" width="520" height="30" rx="5" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="26" y="220" width="22" height="22" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<text x="56" y="236" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="start">Sela</text>
+<text x="158" y="236" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#222a33" text-anchor="start">Priest · Holy</text>
+<text x="308" y="236" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="500" fill="#222a33" text-anchor="start">60</text>
+<text x="344" y="236" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="500" fill="#222a33" text-anchor="start">63</text>
+<rect x="380" y="227" width="40" height="8" rx="2" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="380" y="227" width="28.4" height="8" rx="2" fill="#222a33" stroke="none" stroke-width="1"/>
+<text x="426" y="236" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="start">71</text>
+<text x="462" y="236" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="start">Ready</text>
+<rect x="20" y="250" width="520" height="30" rx="5" fill="#eef1f4" stroke="#222a33" stroke-width="2"/>
+<rect x="26" y="254" width="22" height="22" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<text x="56" y="270" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="start">Lumi</text>
+<text x="158" y="270" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#222a33" text-anchor="start">Mage · Frost</text>
+<text x="308" y="270" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="500" fill="#222a33" text-anchor="start">60</text>
+<text x="344" y="270" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="500" fill="#222a33" text-anchor="start">65</text>
+<rect x="380" y="261" width="40" height="8" rx="2" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="380" y="261" width="27.200000000000003" height="8" rx="2" fill="#222a33" stroke="none" stroke-width="1"/>
+<text x="426" y="270" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="start">68</text>
+<text x="462" y="270" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="start">Ready</text>
+<rect x="20" y="284" width="520" height="30" rx="5" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="26" y="288" width="22" height="22" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<text x="56" y="304" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="start">Kess</text>
+<text x="158" y="304" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#222a33" text-anchor="start">Rogue · Combat</text>
+<text x="308" y="304" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="500" fill="#222a33" text-anchor="start">60</text>
+<text x="344" y="304" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="500" fill="#222a33" text-anchor="start">66</text>
+<rect x="380" y="295" width="40" height="8" rx="2" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="380" y="295" width="22.0" height="8" rx="2" fill="#222a33" stroke="none" stroke-width="1"/>
+<text x="426" y="304" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="start">55</text>
+<text x="462" y="304" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="start">Ready</text>
+<rect x="20" y="318" width="520" height="30" rx="5" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="26" y="322" width="22" height="22" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<text x="56" y="338" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="start">Bram</text>
+<text x="158" y="338" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#222a33" text-anchor="start">Druid · Restoration</text>
+<text x="308" y="338" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="500" fill="#222a33" text-anchor="start">60</text>
+<text x="344" y="338" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="500" fill="#222a33" text-anchor="start">61</text>
+<rect x="380" y="329" width="40" height="8" rx="2" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="380" y="329" width="30.8" height="8" rx="2" fill="#222a33" stroke="none" stroke-width="1"/>
+<text x="426" y="338" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="start">77</text>
+<text x="462" y="338" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="start">Ready</text>
+<rect x="20" y="352" width="520" height="30" rx="5" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="26" y="356" width="22" height="22" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<text x="56" y="372" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="start">Orrin</text>
+<text x="158" y="372" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#222a33" text-anchor="start">Hunter · Marksmanship</text>
+<text x="308" y="372" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="500" fill="#222a33" text-anchor="start">60</text>
+<text x="344" y="372" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="500" fill="#222a33" text-anchor="start">62</text>
+<rect x="380" y="363" width="40" height="8" rx="2" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="380" y="363" width="26.400000000000002" height="8" rx="2" fill="#222a33" stroke="none" stroke-width="1"/>
+<text x="426" y="372" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="start">66</text>
+<text x="462" y="372" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="start">Ready</text>
+<rect x="20" y="386" width="520" height="30" rx="5" fill="#ffffff" stroke="#9aa3ad" stroke-width="1" stroke-dasharray="5 4"/>
+<rect x="26" y="390" width="22" height="22" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<text x="56" y="406" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="start">Rook</text>
+<text x="158" y="406" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#222a33" text-anchor="start">Mage · Fire</text>
+<text x="308" y="406" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="500" fill="#222a33" text-anchor="start">59</text>
+<text x="344" y="406" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="500" fill="#222a33" text-anchor="start">58</text>
+<rect x="380" y="397" width="40" height="8" rx="2" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="380" y="397" width="8.8" height="8" rx="2" fill="#222a33" stroke="none" stroke-width="1"/>
+<text x="426" y="406" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="start">22</text>
+<text x="446" y="406" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#222a33" text-anchor="start"><tspan fill="#c0841a" font-weight="800">⚠</tspan></text>
+<text x="462" y="406" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#5d6773" text-anchor="start">Benched</text>
+<rect x="20" y="420" width="520" height="30" rx="5" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="26" y="424" width="22" height="22" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<text x="56" y="440" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="start">Fen</text>
+<text x="158" y="440" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#222a33" text-anchor="start">Rogue · Subtlety</text>
+<text x="308" y="440" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="500" fill="#222a33" text-anchor="start">58</text>
+<text x="344" y="440" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="500" fill="#222a33" text-anchor="start">57</text>
+<rect x="380" y="431" width="40" height="8" rx="2" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="380" y="431" width="14.0" height="8" rx="2" fill="#222a33" stroke="none" stroke-width="1"/>
+<text x="426" y="440" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="start">35</text>
+<text x="446" y="440" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#222a33" text-anchor="start"><tspan fill="#c0841a" font-weight="800">⚠</tspan></text>
+<text x="462" y="440" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#5d6773" text-anchor="start">Bench</text>
+<rect x="20" y="454" width="520" height="30" rx="5" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="26" y="458" width="22" height="22" rx="3" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<text x="56" y="474" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="start">Dax</text>
+<text x="158" y="474" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#222a33" text-anchor="start">Hunter · Beast Mastery</text>
+<text x="308" y="474" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="500" fill="#222a33" text-anchor="start">56</text>
+<text x="344" y="474" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="500" fill="#222a33" text-anchor="start">52</text>
+<rect x="380" y="465" width="40" height="8" rx="2" fill="#ffffff" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="380" y="465" width="24.0" height="8" rx="2" fill="#222a33" stroke="none" stroke-width="1"/>
+<text x="426" y="474" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#222a33" text-anchor="start">60</text>
+<text x="462" y="474" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#5d6773" text-anchor="start">Bench</text>
+<text x="20" y="500" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="start">+ 5 more  ·  Roster 15 / 15  ·  Barracks upgrade adds 5</text>
+<circle cx="540" cy="140" r="11" fill="#2f6fd6"/>
+<text x="540" y="144.5" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+<rect x="556" y="92" width="384" height="428" rx="8" fill="#eef1f4" stroke="#9aa3ad" stroke-width="1"/>
+<rect x="570" y="106" width="64" height="64" rx="4" fill="#dde2e7" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="570" y1="106" x2="634" y2="170" stroke="#9aa3ad" stroke-width="1"/>
+<line x1="634" y1="106" x2="570" y2="170" stroke="#9aa3ad" stroke-width="1"/>
+<text x="648" y="126" font-family="Inter, Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="#222a33" text-anchor="start">Lumi</text>
+<text x="648" y="146" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#5d6773" text-anchor="start">Mage  ·  Level 60  ·  GL 65</text>
+<text x="648" y="164" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="500" fill="#222a33" text-anchor="start">Trait: Brings Her Own Snacks (free food)</text>
+<text x="570" y="196" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#222a33" text-anchor="start">Spec</text>
+<rect x="570" y="204" width="114" height="40" rx="6" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="627" y="221" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#222a33" text-anchor="middle">Arcane</text>
+<text x="627" y="237" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#5d6773" text-anchor="middle">Damage</text>
+<rect x="690" y="204" width="114" height="40" rx="6" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="747" y="221" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#222a33" text-anchor="middle">Fire</text>
+<text x="747" y="237" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#5d6773" text-anchor="middle">Damage</text>
+<rect x="810" y="204" width="114" height="40" rx="6" fill="#222a33" stroke="#222a33" stroke-width="1"/>
+<text x="867" y="221" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle"><tspan fill="#c0841a" font-weight="800">✓</tspan> Frost</text>
+<text x="867" y="237" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#ffffff" text-anchor="middle">Damage</text>
+<text x="570" y="264" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="500" fill="#222a33" text-anchor="start">Ice Block: once per fight, survives a killing hit, so</text>
+<text x="570" y="280" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="500" fill="#222a33" text-anchor="start">no benching. Frostbolt: adds deal 15% less damage.</text>
+<rect x="570" y="292" width="356" height="52" rx="6" fill="#ffffff" stroke="#222a33" stroke-width="1"/>
+<text x="582" y="312" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="start">Respec: 30 min of play (you respecced last week)</text>
+<text x="582" y="332" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#5d6773" text-anchor="start">Price drops a step each week without one</text>
+<rect x="570" y="352" width="172" height="32" rx="5" fill="#ffffff" stroke="#222a33" stroke-width="1.5"/>
+<text x="656.0" y="372.68" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">Use Tome of Respec (1)</text>
+<rect x="752" y="352" width="174" height="32" rx="5" fill="#ffffff" stroke="#222a33" stroke-width="1.5"/>
+<text x="839.0" y="372.68" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#222a33" text-anchor="middle">Respec for gold</text>
+<text x="570" y="408" font-family="Inter, Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#222a33" text-anchor="start">Gear</text>
+<text x="570" y="432" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#5d6773" text-anchor="start">Weapon</text>
+<text x="632" y="432" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="start">Staff of Mild Frostbite</text>
+<text x="926" y="432" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="end">GL 66</text>
+<text x="570" y="456" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#5d6773" text-anchor="start">Armor</text>
+<text x="632" y="456" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="start">Robes of the Pugged · 2/3 set</text>
+<text x="926" y="456" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="end">GL 65</text>
+<text x="570" y="480" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#5d6773" text-anchor="start">Trinket</text>
+<text x="632" y="480" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="start">Ring of the Bench</text>
+<text x="926" y="480" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#222a33" text-anchor="end">GL 64</text>
+<text x="570" y="504" font-family="Inter, Arial, Helvetica, sans-serif" font-size="11" font-weight="500" fill="#5d6773" text-anchor="start">Set (2/3): +5% frost damage</text>
+<rect x="842" y="106" width="84" height="28" rx="5" fill="#ffffff" stroke="#222a33" stroke-width="1.5"/>
+<text x="884.0" y="124.32" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#222a33" text-anchor="middle">Dismiss</text>
+<circle cx="556" cy="96" r="11" fill="#2f6fd6"/>
+<text x="556" y="100.5" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+<circle cx="940" cy="200" r="11" fill="#2f6fd6"/>
+<text x="940" y="204.5" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+<circle cx="940" cy="296" r="11" fill="#2f6fd6"/>
+<text x="940" y="300.5" font-family="Inter, Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">4</text>
+</svg>

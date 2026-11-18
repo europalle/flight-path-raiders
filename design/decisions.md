@@ -4,6 +4,9 @@ Decisions made by the Game Director. Newest first.
 
 | Date | Area | Decision |
 | --- | --- | --- |
+| 2026-11-18 | QA / Production | Solo development: playtests are solo; all guild interaction (sync, leaderboard, guildies) is simulated |
+| 2026-11-18 | Tuning | Guild Bank unlock costs 150 DKP like other guild hall buildings; only Tab 2 costs gold |
+| 2026-11-18 | UX / Art | Roster, Tavern and Guild Hall mid-fi wireframes; character study accepted as the style bar; three style tiles for the Director to choose from |
 | 2026-11-18 | Studio | New departments: Audio, Marketing & Community, Legal & Compliance; Player Research is a QA subdivision writing playtests for the Director. Milestone reviews run as separate, fresh agents |
 | 2026-11-18 | Art | Director: stage sketch v1 too simple ("3rd grader"). Composition (ground plane, rows, walk-off) kept; Art raises the bar with an ink-and-wash character study before style tiles |
 | 2026-11-18 | Production | No launch date and no cuts: the game launches when the Director is happy. The milestone plan uses quality gates, not dates |
