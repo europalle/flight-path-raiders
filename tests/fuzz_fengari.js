@@ -10,6 +10,6 @@ function run(file, nres) {
     throw new Error(lua.lua_tojsstring(L, -1));
   }
 }
-for (const f of ['engine/rng.lua', 'engine/data.lua', 'engine/sim.lua', 'engine/validate.lua', 'engine/progress.lua', 'tests/selftest.lua']) run(f, 0);
+for (const f of ['engine/rng.lua', 'engine/data.lua', 'engine/sim.lua', 'engine/bosses.lua', 'engine/validate.lua', 'engine/progress.lua', 'tests/selftest.lua']) run(f, 0);
 run('tests/fuzz.lua', 1);
 console.log(lua.lua_tojsstring(L, -1));

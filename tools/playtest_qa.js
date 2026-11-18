@@ -3,7 +3,7 @@
 const path = require('path'), fs = require('fs');
 const root = path.join(__dirname, '..');
 require(path.join(root, 'playtest/game_lua.js'));
-const SRC = ['engine/rng.lua', 'engine/data.lua', 'engine/sim.lua', 'engine/validate.lua', 'engine/progress.lua', 'engine/game.lua'].map(f => [f, fs.readFileSync(path.join(root, f), 'utf8')]);
+const SRC = ['engine/rng.lua', 'engine/data.lua', 'engine/sim.lua', 'engine/bosses.lua', 'engine/validate.lua', 'engine/progress.lua', 'engine/game.lua'].map(f => [f, fs.readFileSync(path.join(root, f), 'utf8')]);
 const G = globalThis.FPR_GAME_LUA(require(process.env.FENGARI || 'fengari'), SRC);
 const ENGINE = Number(/ENGINE_VERSION = (\d+)/.exec(fs.readFileSync(path.join(root, 'engine/sim.lua'), 'utf8'))[1]);
 const sorted = v => Array.isArray(v) ? v.map(sorted) : v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort().map(k => [k, sorted(v[k])])) : v;

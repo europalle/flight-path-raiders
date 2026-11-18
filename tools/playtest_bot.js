@@ -4,7 +4,7 @@
 const path = require('path'), fs = require('fs');
 const root = path.join(__dirname, '..');
 require(path.join(root, 'playtest/game_lua.js'));
-const G = globalThis.FPR_GAME_LUA(require(process.env.FENGARI || 'fengari'), ['engine/rng.lua', 'engine/data.lua', 'engine/sim.lua', 'engine/validate.lua', 'engine/progress.lua', 'engine/game.lua'].map(f => [f, fs.readFileSync(path.join(root, f), 'utf8')]));
+const G = globalThis.FPR_GAME_LUA(require(process.env.FENGARI || 'fengari'), ['engine/rng.lua', 'engine/data.lua', 'engine/sim.lua', 'engine/bosses.lua', 'engine/validate.lua', 'engine/progress.lua', 'engine/game.lua'].map(f => [f, fs.readFileSync(path.join(root, f), 'utf8')]));
 const guilds = Number(process.argv[2] || 20), weeks = Number(process.argv[3] || 10), style = process.argv[4] || 'learner';
 const NIGHT = 10;  // pulls per week the bot is willing to spend on Normal progress
 const stats = []; const firstNormal = {}, firstHeroic = {};
