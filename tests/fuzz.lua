@@ -29,7 +29,7 @@ for f = 1, N do
     local s = specs[c][gen:int(#specs[c])]
     local role = D.SPECS[c][s]
     local z = zone_for[role] or ((gen:int(2) == 1) and "melee" or "ranged")
-    raid[i] = { name = "C" .. i, class = c, spec = s, zone = z, fireres = gen:int(3) == 1 }
+    raid[i] = { name = "C" .. i, class = c, spec = s, zone = z, fireres = gen:int(3) == 1, firegear = gen:int(3) - 1 }
   end
   local r = ns.Simulate({ boss = "ragnaroast", mode = modes[gen:int(3)], seed = gen:next(),
     tactic = tactics[gen:int(4)], gl = 59 + gen:int(20),

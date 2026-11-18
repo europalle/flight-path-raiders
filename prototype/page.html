@@ -97,6 +97,8 @@ ol.log li.aggro { color: var(--warn); font-weight: 600; }
 .empty { color: var(--muted); padding: 18px 0; }
 .note { color: var(--muted); font-size: .85rem; margin-top: 24px; max-width: 80ch; }
 .note b { color: var(--ink); }
+button.prep { font: 600 .85rem/1 var(--body); padding: 8px 12px; }
+.hint { color: var(--muted); font-size: .82rem; margin: 6px 0 0; }
 .status { font-size: .85rem; color: var(--muted); min-height: 1.4em; }
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
 </style>
@@ -125,7 +127,7 @@ ol.log li.aggro { color: var(--warn); font-weight: 600; }
         </div>
         <div class="tablebox">
           <table class="roster" id="roster">
-            <thead><tr><th>Name</th><th>Class</th><th>Spec</th><th>Zone</th><th title="Fire Resistance potion: cancels one lava throw (15 gold)">Fire Res</th></tr></thead>
+            <thead><tr><th>Name</th><th>Class</th><th>Spec</th><th>Zone</th><th title="Fire resistance gear pieces: each +60 fire resistance, -3% power">Fire gear</th><th title="Fire Protection Potion: cancels one lava throw (15 gold)">Potion</th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
@@ -146,6 +148,14 @@ ol.log li.aggro { color: var(--warn); font-weight: 600; }
           <input type="number" id="seed" value="12345">
           <button type="button" id="reroll" style="padding:6px 10px;font-size:.85rem">New seed</button>
         </div>
+        <h3>Preparation</h3>
+        <div class="chips" id="prepButtons">
+          <button type="button" class="prep" data-prep="unprepared">Unprepared</button>
+          <button type="button" class="prep" data-prep="partial">Partly prepared</button>
+          <button type="button" class="prep" data-prep="full">Fully prepared</button>
+          <button type="button" class="prep" data-prep="minmax">Min-maxed</button>
+        </div>
+        <p class="hint">Sets cauldrons, world buffs, fire gear and potions in one click. Fire gear and Fire Protection Potions are the answer to Ragnaroast.</p>
         <h3>Tactic card</h3>
         <div class="cards" role="radiogroup" aria-label="Tactic card">
           <label class="card"><input type="radio" name="tactic" value="spread" id="t-spread" checked><b>Spread</b><span>Splash hits one character; healing -10%</span></label>
@@ -155,7 +165,7 @@ ol.log li.aggro { color: var(--warn); font-weight: 600; }
         </div>
         <h3>Cauldrons</h3>
         <div class="chips">
-          <label class="chip"><input type="checkbox" id="c-food" checked> Food <small>+5% health</small></label>
+          <label class="chip"><input type="checkbox" id="c-food" checked> Food <small>+5% health, +3% power</small></label>
           <label class="chip"><input type="checkbox" id="c-elixirs"> Elixirs <small>+5% power</small></label>
           <label class="chip"><input type="checkbox" id="c-flasks"> Flasks <small>+10% health and power</small></label>
         </div>
@@ -163,7 +173,7 @@ ol.log li.aggro { color: var(--warn); font-weight: 600; }
         <div class="chips">
           <label class="chip"><input type="checkbox" id="b-dragonslayer"> Dragonslayer's Roar <small>+10% power</small></label>
           <label class="chip"><input type="checkbox" id="b-songbloom"> Songbloom <small>+10% crit</small></label>
-          <label class="chip"><input type="checkbox" id="b-warchief"> Warchief's Rival <small>+15% health</small></label>
+          <label class="chip"><input type="checkbox" id="b-warchief"> Warchief's Rival <small>+10% health, +5% power</small></label>
         </div>
         <div class="actions">
           <button type="button" class="primary" id="pull" disabled>Pull</button>
@@ -182,12 +192,12 @@ ol.log li.aggro { color: var(--warn); font-weight: 600; }
       <div class="panel" id="simPanel">
         <h2>1,000 pulls</h2>
         <div id="simBody"><p class="empty">Simulate 1,000 pulls runs this exact raid against 1,000 different seeds. Compare tactic cards runs 250 pulls per card.</p></div>
-        <p class="target">Tuning targets with a sensible raid: about 70% kills on Normal, 40-60% on Heroic with the right card, 15-30% on Mythic. Ragnaroast's right card is Burn: race him before the throws add up.</p>
+        <p class="target">Heroic targets: unprepared under 10%, partly prepared 20-40%, fully prepared 40-60%, min-maxed 70%+. Normal: about 70% unprepared. Mythic: 30-40% min-maxed. Ragnaroast&#39;s right card is Burn.</p>
       </div>
     </section>
   </div>
 
-  <p class="note"><b>Prototype, engine version <span id="ev">1</span>.</b> Traits, morale, loot and the other bosses are not in yet. Melee specs outside the Melee zone, and tanks outside Front, hit at half damage. Values for food, elixirs, flasks, crit and Ragnaroast's damage are Tuning's first guesses, set in the engine's balance data. Each fight's checksum is identical in this browser and in Lua 5.1, the version WoW runs.</p>
+  <p class="note"><b>Prototype, engine version <span id="ev">1</span>.</b> Traits, morale, loot and the other bosses are not in yet. Melee specs outside the Melee zone, and tanks outside Front, hit at half damage. Ragnaroast's throw, splash and adds are fire: fire resistance from gear and a paladin aura or shaman totem cuts it, up to 60%. Values for food, elixirs, flasks, crit and Ragnaroast's damage are Tuning's first guesses, set in the engine's balance data. Each fight's checksum is identical in this browser and in Lua 5.1, the version WoW runs.</p>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/fengari-web@0.1.4/dist/fengari-web.js"></script>
@@ -231,7 +241,8 @@ function rowHtml(i, [name, cls, spec, zone, fr]) {
     <td><select id="c${i}" aria-label="Class ${i + 1}">${opt(Object.entries(CLASS_NAMES), cls)}</select></td>
     <td><select id="s${i}" aria-label="Spec ${i + 1}">${opt(SPECS[cls].map(s => [s[0], s[1]]), spec)}</select></td>
     <td><select id="z${i}" aria-label="Zone ${i + 1}">${opt(ZONES, zone)}</select></td>
-    <td><input type="checkbox" id="f${i}" aria-label="Fire Resistance potion ${i + 1}"${fr ? " checked" : ""}></td></tr>`;
+    <td><select id="g${i}" aria-label="Fire resistance gear ${i + 1}">${opt([["0","None"],["1","1 piece"],["2","2 pieces"]], "0")}</select></td>
+    <td><input type="checkbox" id="f${i}" aria-label="Fire Protection Potion ${i + 1}"${fr ? " checked" : ""}></td></tr>`;
 }
 function loadPreset(name) {
   $("roster").tBodies[0].innerHTML = PRESETS[name].map((r, i) => rowHtml(i, r)).join("");
@@ -254,7 +265,7 @@ function setZone(i) {
 
 function readInput() {
   const raid = [];
-  for (let i = 0; i < 10; i++) raid.push({ name: $("n" + i).value.trim() || ("Raider " + (i + 1)), class: $("c" + i).value, spec: $("s" + i).value, zone: $("z" + i).value, fireres: $("f" + i).checked });
+  for (let i = 0; i < 10; i++) raid.push({ name: $("n" + i).value.trim() || ("Raider " + (i + 1)), class: $("c" + i).value, spec: $("s" + i).value, zone: $("z" + i).value, potion: $("f" + i).checked, firegear: Number($("g" + i).value) });
   const tactic = document.querySelector('input[name="tactic"]:checked').value;
   const gl = Math.max(50, Math.min(90, Math.round(Number($("gl").value) || 60)));
   const seed = Math.min(2147483646, Math.max(1, Math.round(Math.abs(Number($("seed").value))) || 1));
@@ -300,8 +311,22 @@ async function batch(inp, total, onProgress) {
 }
 function pctTxt(a, b) { return b ? (100 * a / b).toFixed(1) + "%" : "0%"; }
 
+const PREPS = {
+  unprepared: { cons: [], buffs: [], gear: {}, potion: [] },
+  partial: { cons: ["food", "elixirs"], buffs: [], gear: { front: 2, melee: 1 }, potion: ["melee"] },
+  full: { cons: ["food", "elixirs", "flasks"], buffs: [], gear: { front: 2, melee: 2, ranged: 1, back: 1 }, potion: ["melee", "front"] },
+  minmax: { cons: ["food", "elixirs", "flasks"], buffs: ["dragonslayer", "songbloom", "warchief"], gear: { front: 2, melee: 2, ranged: 2, back: 2 }, potion: ["melee", "front", "ranged", "back"] },
+};
+function applyPrep(name) {
+  const p = PREPS[name];
+  for (const c of ["food", "elixirs", "flasks"]) $("c-" + c).checked = p.cons.includes(c);
+  for (const b of ["dragonslayer", "songbloom", "warchief"]) $("b-" + b).checked = p.buffs.includes(b);
+  for (let i = 0; i < 10; i++) { const z = $("z" + i).value; $("g" + i).value = String(p.gear[z] || 0); $("f" + i).checked = p.potion.includes(z); }
+  $("status").textContent = "Preparation set: " + document.querySelector(`[data-prep="${name}"]`).textContent;
+}
 function wire() {
   loadPreset("balanced");
+  document.querySelectorAll("button.prep").forEach(b => b.addEventListener("click", () => applyPrep(b.dataset.prep)));
   $("preset").addEventListener("change", e => loadPreset(e.target.value));
   $("mode").addEventListener("change", e => { $("gl").value = GL_FOR[e.target.value]; });
   $("reroll").addEventListener("click", () => { $("seed").value = 1 + Math.floor(Math.random() * 2147483000); });

@@ -1,0 +1,4 @@
+normal  unprepared:  71/ 74   partial:  94/ 98   full:  99/100   min-maxed: 100/100
+heroic  unprepared:   1/  1   partial:  19/ 17   full:  45/ 62   min-maxed:  92/ 99
+mythic  unprepared:   0/  0   partial:   0/  0   full:   0/  1   min-maxed:  17/ 36
+(each cell: Spread/Burn kill %)

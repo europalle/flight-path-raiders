@@ -89,7 +89,7 @@ D.TACTICS = {
 
 -- Consumables. Effects are TUNING ASSUMPTIONS (the design doc gives prices only).
 D.CONSUMABLES = {
-  food    = { hp = 50 },               -- +5% health
+  food    = { hp = 50, power = 30 },   -- +5% health, +3% power (pass 3)
   elixirs = { power = 50 },            -- +5% power
   flasks  = { hp = 100, power = 100 }, -- +10% health and power
 }
@@ -97,15 +97,15 @@ D.CONSUMABLES = {
 D.WORLD_BUFFS = {
   dragonslayer = { power = 100 },  -- +10% power
   songbloom    = { crit = 100 },   -- +10% crit chance
-  warchief     = { hp = 150 },     -- +15% health
+  warchief     = { hp = 100, power = 50 },  -- +10% health, +5% power (pass 3)
 }
 
 -- Modes: boss health and damage multipliers. The design doc's +40% / +90% assumed no gear
 -- scaling; with gear levels 65 and 74, Tuning pass 1 needs +62% / +150% to hit the targets.
 D.MODES = {
   -- throw = lava throw damage as per-mille of max health (meeting 2026-11-18)
-  normal = { hp = 1000, dmg = 1000, throw = 700 },
-  heroic = { hp = 1330, dmg = 1300, throw = 750 },  -- Tuning pass 2 (2026-11-18)
+  normal = { hp = 1000, dmg = 750,  throw = 700 },  -- pass 3: Normal fire is softer (dmg was 1000)
+  heroic = { hp = 1345, dmg = 1300, throw = 750 },  -- Tuning pass 3 (2026-11-18): prep-first targets
   mythic = { hp = 1950, dmg = 1700, throw = 800 },  -- Tuning pass 2 (2026-11-18)
 }
 
@@ -116,12 +116,19 @@ D.BOSSES = {
     hp = 10200,                -- Normal health. Pass 1: 8400; pass 2 (meeting rules): 10200 hits ~70%
     fire_immune = true,
     melee = 600,               -- hit on the current target each round (Tuning pass 1: was 280)
-    splash = 450,              -- Magma Splash on one zone, every 2nd round (Tuning pass 1: was 200)
+    splash = 1100,             -- Magma Splash (fire) on one zone, every 2nd round (pass 3: was 450)
     throw_every = 4,           -- every 4 rounds: lava throw on the lowest-health melee (design doc)
     submerge_at = 10,          -- from round 10 he sinks and summons fire adds (design doc)
     submerge_rounds = 3,
-    adds = 4, add_hp = 500, add_hit = 120,  -- Tuning pass 1: was 450 / 60
+    adds = 4, add_hp = 500, add_hit = 220,  -- fire adds (pass 3: hits were 120)
   },
 }
+
+-- Fire resistance (Tuning pass 3). Each gear piece: +60 resistance and -3% power. Paladin aura or
+-- shaman totem: +40 for the raid (they don't stack). Every 10 resistance cuts fire damage by 3.5%,
+-- capped at 60%. Fire = lava throw, Magma Splash, fire adds; fire ignores armour.
+D.FIRE = { piece = 60, piece_power = 30, aura = 40, per_point = 35, cap = 600 }
+D.BOSS_CRIT, D.BOSS_CRIT_MULT = 100, 1500   -- boss hits crit 10% for 1.5x (pass 3)
+D.TANK_HEAL_PRIORITY = 150                   -- healers treat tanks as 15% lower (pass 3)
 
 D.MAX_ROUNDS = 20  -- round 21 is the enrage (design doc 5)

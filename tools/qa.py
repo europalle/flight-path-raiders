@@ -71,6 +71,7 @@ for i in range(3000):
     raid = sensible(rr)
     for c in raid:
         c["fireres"] = rr.random() < 0.3
+        c["firegear"] = rr.choice([0, 0, 1, 2, 3])  # 3 checks the cap of 2
     mode = rr.choice(["normal", "heroic", "mythic"]); tac = rr.choice(["spread", "stack", "burn", "playsafe"])
     r = run(raid, mode=mode, seed=rr.randrange(1, 2**31 - 2), tactic=tac, gl=rr.randint(50, 90),
             cons={"food": rr.random() < .5, "elixirs": rr.random() < .5, "flasks": rr.random() < .5},

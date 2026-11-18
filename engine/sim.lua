@@ -6,7 +6,7 @@ local _, ns = ...
 ns = ns or FPR_ENGINE or {}
 FPR_ENGINE = ns
 
-ns.ENGINE_VERSION = 3  -- 3: department meeting rules (lava throw damage, zones, spec numbers)
+ns.ENGINE_VERSION = 4  -- 4: fire resistance, boss crits, tank-first healing (Tuning pass 3)
 
 local floor = math.floor
 local function idiv(a, b) return floor(a / b) end
@@ -22,7 +22,8 @@ end
 
 -- Builds a fight from inputs; returns { result, rounds, events, checksum, raid }.
 -- inputs = { boss, mode, seed, tactic, gl, consumables = {food,elixirs,flasks}, buffs = {...},
---            raid = { {name, class, spec, zone, fireres}, ... } }
+--            raid = { {name, class, spec, zone, potion, firegear}, ... } }
+-- potion (or the older name fireres) = one Fire Protection Potion; firegear = 0, 1 or 2 fire resistance pieces.
 function ns.Simulate(inputs)
   local D = ns.Data
   local rng = ns.NewRNG(inputs.seed)
@@ -49,6 +50,8 @@ function ns.Simulate(inputs)
   if buffs.dragonslayer then pow_mul = pow_mul + D.WORLD_BUFFS.dragonslayer.power end
   if buffs.songbloom then crit = crit + D.WORLD_BUFFS.songbloom.crit end
   if buffs.warchief then hp_mul = hp_mul + D.WORLD_BUFFS.warchief.hp end
+  if cons.food and D.CONSUMABLES.food.power then pow_mul = pow_mul + D.CONSUMABLES.food.power end
+  if buffs.warchief and D.WORLD_BUFFS.warchief.power then pow_mul = pow_mul + D.WORLD_BUFFS.warchief.power end
 
   -- Raid-wide spec auras.
   local has = {}
@@ -71,6 +74,14 @@ function ns.Simulate(inputs)
     local power = pm(pm(base.power, glmul), pow_mul)
     local spec_power = D.SPEC_POWER[c.class .. ":" .. c.spec]
     if spec_power then power = pm(power, spec_power) end
+    -- Fire resistance gear trades power for resistance (pass 3).
+    local pieces = c.firegear or 0
+    if pieces > 2 then pieces = 2 end
+    if pieces > 0 then power = pm(power, 1000 - D.FIRE.piece_power * pieces) end
+    local fr = D.FIRE.piece * pieces
+    if has["paladin"] or has["shaman"] then fr = fr + D.FIRE.aura end -- Fire Resistance Aura / Totem
+    local firered = idiv(fr * D.FIRE.per_point, 10)
+    if firered > D.FIRE.cap then firered = D.FIRE.cap end
     local armor = D.ARMOR[cls.armor] + ((role == "tank") and D.TANK_ARMOR_BONUS or 0)
     if c.class == "druid" and c.spec == "feral" then armor = armor + 60; hp = pm(hp, 1100) end -- Bear Form
     if armor > D.ARMOR_CAP then armor = D.ARMOR_CAP end
@@ -79,7 +90,7 @@ function ns.Simulate(inputs)
       maxhp = hp, hp = hp, power = power, armor = armor, speed = cls.speed,
       caster = cls.caster, mana = D.MANA_START, threat = 0, alive = true,
       threatmul = (role == "tank") and D.TANK_THREAT or D.OTHER_THREAT,
-      fireres = c.fireres and 1 or 0, crit = crit,
+      fireres = (c.potion or c.fireres) and 1 or 0, crit = crit, fr = fr, firered = firered,
       used = {}, stacks = 0, shield_wall = 0, dealt = 0, healed = 0, alive_rounds = 0,
     }
     local p = raid[i]
@@ -133,9 +144,10 @@ function ns.Simulate(inputs)
     log(31, p.slot, cause, p.name .. " dies.")
   end
 
-  local function damage(p, amount, cause, is_ground)
+  local function damage(p, amount, cause, fire)
     if not p.alive then return end
-    local dmg = pm(amount, 1000 - p.armor)
+    -- Fire ignores armour; fire resistance reduces it instead (pass 3).
+    local dmg = fire and pm(amount, 1000 - p.firered) or pm(amount, 1000 - p.armor)
     dmg = pm(dmg, tac.taken)
     if p.class == "warrior" and p.spec == "fury" then dmg = pm(dmg, 1100) end
     if p.shield_wall > 0 then dmg = pm(dmg, 250) end
@@ -157,14 +169,21 @@ function ns.Simulate(inputs)
     return p.hp - before
   end
 
-  local function most_injured(list)
-    local best, bestv = nil, 1001
+  local function most_injured(list, tanks_first)
+    -- Healers count a tank as more hurt than it is, so tanks are not left behind (pass 3).
+    local best, bestv, bestpct = nil, 100000, 1001
     for i = 1, #list do
       local p = list[i]
-      local v = idiv(p.hp * 1000, p.maxhp)
-      if v < bestv then best, bestv = p, v end
+      local pct = idiv(p.hp * 1000, p.maxhp)
+      local v = pct
+      if tanks_first and p.role == "tank" then v = v - D.TANK_HEAL_PRIORITY end
+      if v < bestv then best, bestv, bestpct = p, v, pct end
     end
-    return best, bestv
+    return best, bestpct
+  end
+  local function boss_hit(amount)
+    if rng:chance(D.BOSS_CRIT) then return pm(amount, D.BOSS_CRIT_MULT) end
+    return amount
   end
 
   local function roll(p, amount)
@@ -253,7 +272,7 @@ function ns.Simulate(inputs)
               log(23, v.slot, 1, boss.name .. " throws " .. v.name .. " into the lava. Fire Resistance saves them.")
             else
               log(23, v.slot, 0, boss.name .. " throws " .. v.name .. " into the lava.")
-              local burn = pm(pm(v.maxhp, mode.throw), tac.taken)
+              local burn = pm(pm(pm(v.maxhp, mode.throw), tac.taken), 1000 - v.firered)
               v.hp = v.hp - burn
               if v.hp <= 0 then kill(v, 23) end
             end
@@ -266,7 +285,7 @@ function ns.Simulate(inputs)
       if target then
         local hit = pm(boss_def.melee, mode_dmg)
         if target.class == "paladin" and target.spec == "protection" then hit = pm(hit, 1050) end
-        damage(target, hit, 24)
+        damage(target, boss_hit(hit), 24, false)
       end
       -- Magma Splash every 2nd round on a zone picked by the seed.
       if round % 2 == 0 then
@@ -276,10 +295,11 @@ function ns.Simulate(inputs)
           if tac.area_single then
             local v = list[rng:int(#list)]
             log(25, v.slot, 1, "Magma Splash hits " .. v.name .. ".")
-            damage(v, pm(boss_def.splash, mode_dmg), 25, true)
+            damage(v, boss_hit(pm(boss_def.splash, mode_dmg)), 25, true)
           else
             log(25, #list, 0, "Magma Splash hits the " .. zone .. " zone.")
-            for i = 1, #list do damage(list[i], pm(boss_def.splash, mode_dmg), 25, true) end
+            local splash = boss_hit(pm(boss_def.splash, mode_dmg))
+            for i = 1, #list do damage(list[i], splash, 25, true) end
           end
         end
       end
@@ -298,7 +318,7 @@ function ns.Simulate(inputs)
         end
         local list = alive_in(nil)
         if holder then hit = pm(hit, 600) end -- Consecration: the paladin takes add hits at 60%
-        if #list > 0 then damage(holder or list[rng:int(#list)], hit, 26) end
+        if #list > 0 then damage(holder or list[rng:int(#list)], hit, 26, true) end
       end
       if ad.frozen > 0 then ad.frozen = ad.frozen - 1 end
       if ad.held > 0 then ad.held = ad.held - 1 end
@@ -313,7 +333,7 @@ function ns.Simulate(inputs)
         if p.role == "healer" then
           local cost = pm(D.HEAL_COST, tac.mana)
           local list = alive_in(nil)
-          local t, pct = most_injured(list)
+          local t, pct = most_injured(list, true)
           if t and pct < 1000 then
             local big = pct < D.BIG_HEAL_BELOW
             if big then cost = pm(D.BIG_HEAL_COST, tac.mana) end
