@@ -5,7 +5,7 @@ import lupa.luajit21 as lj
 ROOT = os.path.join(os.path.dirname(__file__), "..")
 def load(overrides=None):
     L = lj.LuaRuntime()
-    for f in ("engine/rng.lua", "engine/data.lua", "engine/sim.lua", "engine/progress.lua"):
+    for f in ("engine/rng.lua", "engine/data.lua", "engine/sim.lua", "engine/validate.lua", "engine/progress.lua"):
         L.execute(open(os.path.join(ROOT, f)).read())
     if overrides:
         L.execute(overrides)

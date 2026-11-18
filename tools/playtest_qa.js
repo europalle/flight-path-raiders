@@ -5,11 +5,12 @@ const { lua, lauxlib, lualib, to_luastring } = require(process.env.FENGARI || 'f
 const root = path.join(__dirname, '..');
 const L = lauxlib.luaL_newstate(); lualib.luaL_openlibs(L);
 function exec(src, name, nres) { if (lauxlib.luaL_loadbuffer(L, to_luastring(src), null, to_luastring('@' + name)) !== lua.LUA_OK || lua.lua_pcall(L, 0, nres, 0) !== lua.LUA_OK) throw new Error(lua.lua_tojsstring(L, -1)); }
-for (const f of ['engine/rng.lua', 'engine/data.lua', 'engine/sim.lua', 'engine/progress.lua', 'prototype/api.lua']) exec(fs.readFileSync(path.join(root, f), 'utf8'), f, 0);
+for (const f of ['engine/rng.lua', 'engine/data.lua', 'engine/sim.lua', 'engine/validate.lua', 'engine/progress.lua', 'prototype/api.lua']) exec(fs.readFileSync(path.join(root, f), 'utf8'), f, 0);
 function toLua(v) { if (Array.isArray(v)) return "{" + v.map(toLua).join(",") + "}"; if (v && typeof v === "object") return "{" + Object.entries(v).map(([k, x]) => `[${JSON.stringify(k)}]=${toLua(x)}`).join(",") + "}"; if (typeof v === "string") return JSON.stringify(v); if (typeof v === "boolean") return v ? "true" : "false"; return String(Math.round(v)); }
 function engine(input) { exec(`return FPR_API.Run(${toLua(input)})`, 'run', 1); const s = lua.lua_tojsstring(L, -1); lua.lua_pop(L, 1); return JSON.parse(s); }
 require(path.join(root, 'playtest/game.js'));
 const G = globalThis.FPR_GAME;
+const ENGINE = Number(/ENGINE_VERSION = (\d+)/.exec(fs.readFileSync(path.join(root, 'engine/sim.lua'), 'utf8'))[1]);
 exec(`local R = FPR_ENGINE.Progress.RULES local t = {} for k, v in pairs(R) do t[#t + 1] = string.format('"%s":%d', k, v) end return "{" .. table.concat(t, ",") .. "}"`, 'rules', 1);
 const luaRules = JSON.parse(lua.lua_tojsstring(L, -1)); lua.lua_pop(L, 1); G.setRules(luaRules);
 const fails = {}; const check = (name, ok, d) => { if (!ok) (fails[name] = fails[name] || []).push(d); };
@@ -23,14 +24,14 @@ for (let g = 0; g < 25; g++) {
     check('dungeons capped per week', G.dungeon(st).error, g);
     for (const mode of ['normal', 'heroic']) for (const b of G.BOSSES) {
       if (!G.unlocked(st, b.id, mode)) { const pr = G.defaultPrep(st, b.id, mode); check('locked bosses refuse a pull', G.pull(st, pr, engine).error, b.id); break; }
-      for (let k = 0; k < (mode === 'normal' ? 6 : 2); k++) {
+      for (let k = 0; k < (mode === 'normal' ? 6 : 4); k++) {
         const pr = G.defaultPrep(st, b.id, mode); pr.tactic = b.card; pr.cons = { food: true, elixirs: st.gold > 200, flasks: st.gold > 300 };
         const goldBefore = st.gold; const pendBefore = (st.pending || []).length; const p = st.progress[b.id]; const firstWeek = !p.normalWeek;
         const out = G.pull(st, pr, engine);
-        if (out.error) { check('only a used Heroic attempt or an empty purse stops a pull', (mode === 'heroic' && p.heroicTried) || /gold/.test(out.error), out.error); break; }
+        if (out.error) { check('only a dead Heroic boss, an empty purse or no raiders stops a pull', (mode === 'heroic' && p.heroicWeek) || /gold|raider/.test(out.error), out.error); break; }
         pulls++;
         check('gold never negative', st.gold >= 0, st.gold);
-        check('engine version 7', out.run.engine === 7, out.run.engine);
+        check('the build runs the current engine', out.run.engine === ENGINE, [out.run.engine, ENGINE]);
         check('frames, one per round', out.run.frames.length === out.run.rounds, [out.run.frames.length, out.run.rounds]);
         if (out.result === 'kill' && mode === 'normal') check('Normal loot only on the first kill of the week', (out.loot.length === 2) === firstWeek, [firstWeek, out.loot.length]);
         if (out.result !== 'kill') check('a wipe has a recap lesson', out.lesson && out.lesson.text && !/\{/.test(out.lesson.text), out.lesson);
@@ -48,7 +49,7 @@ for (let g = 0; g < 25; g++) {
       }
     }
     const before = st.gold; G.endWeek(st);
-    check('end week pays quests and resets lockouts', st.gold === before + G.ECON.weeklyQuests && G.BOSSES.every(b => !st.progress[b.id].normalWeek && !st.progress[b.id].heroicTried) && st.roster.every(c => !c.benched), w);
+    check('end week pays quests and resets lockouts', st.gold === before + G.ECON.weeklyQuests && G.BOSSES.every(b => !st.progress[b.id].normalWeek && !st.progress[b.id].heroicWeek) && st.roster.every(c => !c.benched), w);
     check('bond weekly counters reset', Object.values(st.bonds).every(e => e.week === 0), w);
   }
   // Tavern and roster rules.

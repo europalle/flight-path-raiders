@@ -1,4 +1,4 @@
-"""Tuning: every Molten Bore boss by preparation and tactic card (typical raid, moments on).
+"""Tuning: every Molten Bore boss by preparation and tactic card. Normal uses a fresh guild, Heroic and Mythic a raid a few weeks in.
 Usage: python3 tools/tune_bosses.py [bosses] [n] ["lua overrides"] [modes]"""
 import os, sys, random
 sys.path.insert(0, os.path.dirname(__file__))
@@ -28,7 +28,7 @@ def table(L, n, bosses, modes=("normal", "heroic", "mythic")):
         print(boss)
         for mode in modes:
             for prep in PREPS:
-                r = [rate(L, n, boss, mode, prep, t) for t in CARDS]
+                r = [rate(L, n, boss, mode, prep, t, "fresh" if mode == "normal" else "typical") for t in CARDS]
                 best = CARDS[r.index(max(r))]
                 print(f"  {mode:7s} {prep:10s} " + "  ".join(f"{t[:5]} {v:3.0f}" for t, v in zip(CARDS, r)) + f"   best {best}")
 

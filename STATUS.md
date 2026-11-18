@@ -4,17 +4,17 @@ Last updated: 2026-11-18. Read this first at the start of every session.
 
 ## Where we are
 
-**Phase 2, Pre-production.** Art is ahead of plan; Engineering is starting.
+**Phase 2 done (gate passed with conditions, 2026-11-18). Phase 3, vertical slice, is next.**
 
 | Deliverable | Status |
 | --- | --- |
 | Design document | Done, signed off |
 | UX wireframes and art direction | Done: mid-fi wireframes (12 screens), art direction doc https://claude.ai/artifact/QmgH2PCEzUQ7htB5fSzQpZ, hi-fi hub in light and dark (`ux/hifi/`), kit cut into `art/kit/ui/` |
 | Technical design | Done, signed off |
-| Browser prototype | Engine v6 published: https://claude.ai/artifact/YHGsBUgA2y1DGDVTaisGpy (all five Molten Bore bosses, preparation, raid experience, raid moments, 10-week season). QA suite passes; boss tuning done |
+| Browser prototype | Engine v9 published: https://claude.ai/artifact/YHGsBUgA2y1DGDVTaisGpy (all five Molten Bore bosses, preparation, raid experience, raid moments, 10-week season). QA suite passes; boss tuning done |
 | Playtest build | Published: https://claude.ai/artifact/NfN3hjmbfZ7Hvhf7pncJxM (`playtest/`, built by `playtest/build.py`). Script: `qa/playtest-1.md`. Rules QA `tools/playtest_qa.js`, bot `tools/playtest_bot.js` |
 | Milestone plan | Done: https://claude.ai/artifact/MiJAJ6iKh2Dkcn8aYSeBU9 |
-| Gate review (separate agents) | Running |
+| Gate review (separate agents) | Passed with conditions; conditions fixed or filed as Phase 3 issues (#26-#35) |
 
 ## Where things live
 
@@ -24,7 +24,7 @@ Last updated: 2026-11-18. Read this first at the start of every session.
 | Every decision the Director made | `design/decisions.md` |
 | Design document | https://claude.ai/artifact/SALKe92QNhpz1sRA7YA2Dk |
 | Browser prototype | https://claude.ai/artifact/YHGsBUgA2y1DGDVTaisGpy (built from `prototype/build.py`) |
-| Combat engine and tests | `engine/` (sim, progress), `tests/check.sh` (Lua 5.1 vs Fengari), `tools/qa.py`, `tools/tune*.py`, results in `tools/results-pass*.txt`, `tools/results-bosses.txt` |
+| Combat engine and tests | `engine/` (sim, validate, progress), `tests/check.sh` (standard Lua 5.1, LuaJIT and Fengari; CI in `.github/workflows`), `tools/qa.py`, `tools/tune*.py`, results in `tools/results-pass*.txt`, `tools/results-bosses.txt` |
 | Technical design | Claude Doc: https://claude.ai/artifact/8fVgrn6YoRb2ATCBdEQSfm |
 | Wireframe review page | https://claude.ai/artifact/8b9wnYtUHvZ5BFR1tbkuNa |
 | Mid-fi wireframes and Art handoff | `ux/wireframes/mid-fi/`, `ux/art-handoff/` |
@@ -45,13 +45,13 @@ Last updated: 2026-11-18. Read this first at the start of every session.
 - 2026-11-18: Skill, familiarity, chemistry and raid moments (engine v5, Tuning pass 4); design doc 4.6.
 - 2026-11-18: The other four Molten Bore bosses in the engine and prototype (engine v6); design doc 6.1.
 - 2026-11-18: Learning path approved (design doc 3.1); playtest build published (engine v7).
+- 2026-11-18: Art direction, hi-fi hub and milestone plan. Phase 2 gate review: pass with conditions; engine v9 with input checks, CI, Normal retuned, softer card checks, Heroic keep-pulling rule.
 
 ## Next
 
-1. Director plays the playtest build with `qa/playtest-1.md`; feedback goes to all departments.
-2. Tuning keeps the simulator for numbers; the playtest build is where the game is judged.
-3. Art direction write-up (#4), frame kit (#5) and the hi-fi hub (#7) alongside.
-4. Milestone plan (#16), then the Phase 2 gate review (#17).
+1. Director plays the playtest build with `qa/playtest-1.md` (#24) and reruns two Gemini prompts (#33).
+2. Phase 3 starts: addon skeleton (#26), traits and morale (#30), Journal and loot window wireframes (#31), Legal checklist (#14).
+3. Then the Phase 3 list in the milestone plan.
 
 ## Working rules
 

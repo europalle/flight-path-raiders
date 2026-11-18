@@ -17,6 +17,14 @@ local standard = raid({
   {"Orrin","hunter","marksmanship","ranged",false},{"Mortis","warlock","affliction","ranged",false},
   {"Sela","priest","holy","back",false},{"Bram","druid","restoration","back",false},
 })
+local veteran = {}
+for i = 1, #standard do
+  local c = standard[i]
+  veteran[i] = { name = c.name, class = c.class, spec = c.spec, zone = c.zone, fireres = c.fireres,
+    skill = 40 + i * 5, fam = i - 1, gl = 55 + i * 2, firegear = (c.zone == "melee") and 2 or 0 }
+end
+local bonds = {}
+for a = 1, 10 do for b = a + 1, 10 do bonds[#bonds + 1] = { a = a, b = b, v = (a * 7 + b * 3) % 21 } end end
 ns.Fixtures = {
   { boss="ragnaroast", mode="normal", seed=12345, tactic="spread", gl=60, raid=standard, consumables={food=true}, buffs={} },
   { boss="ragnaroast", mode="heroic", seed=777, tactic="stack", gl=65, raid=standard, consumables={food=true,elixirs=true}, buffs={dragonslayer=true} },
@@ -30,4 +38,8 @@ ns.Fixtures = {
   { boss="lucifrown", mode="normal", seed=302, tactic="stack", gl=60, raid=standard, consumables={food=true}, buffs={} },
   { boss="majordomo", mode="heroic", seed=401, tactic="stack", gl=65, raid=standard, consumables={food=true,elixirs=true,flasks=true}, buffs={} },
   { boss="majordomo", mode="mythic", seed=402, tactic="spread", gl=74, raid=standard, consumables={food=true,elixirs=true,flasks=true}, buffs={dragonslayer=true} },
+  -- With progression inputs (gate review): skill, familiarity, chemistry, per-character gear, fire gear, moments.
+  { boss="ragnaroast", mode="normal", seed=503, tactic="burn", gl=60, raid=veteran, consumables={food=true,elixirs=true}, buffs={}, pairs=bonds },
+  { boss="baron", mode="heroic", seed=504, tactic="spread", gl=65, raid=veteran, consumables={food=true,elixirs=true,flasks=true}, buffs={songbloom=true}, pairs=bonds },
+  { boss="lucifrown", mode="mythic", seed=505, tactic="playsafe", gl=74, raid=veteran, consumables={food=true,elixirs=true,flasks=true}, buffs={dragonslayer=true,warchief=true}, pairs=bonds },
 }

@@ -105,8 +105,8 @@ D.WORLD_BUFFS = {
 D.MODES = {
   -- throw = lava throw damage as per-mille of max health (meeting 2026-11-18)
   normal = { hp = 1000, dmg = 750,  throw = 700 },  -- pass 3: Normal fire is softer (dmg was 1000)
-  heroic = { hp = 1400, dmg = 1300, throw = 750 },  -- pass 4: targets now for a "typical" raid (skill 50, fam 5, chem 8)
-  mythic = { hp = 2035, dmg = 1700, throw = 800 },  -- pass 4: typical raid, was 1950
+  heroic = { hp = 1400, dmg = 1300, throw = 750, band = { 60, 70 } },  -- pass 4: targets now for a "typical" raid (skill 50, fam 5, chem 8)
+  mythic = { hp = 2035, dmg = 1700, throw = 800, band = { 68, 80 } },  -- pass 4: typical raid, was 1950
 }
 
 -- Ragnaroast (design doc 6.1). Numbers are TUNING ASSUMPTIONS unless noted.
@@ -126,17 +126,18 @@ D.BOSSES = {
   magmadad = {                 -- favours Burn: kill all three pups inside the window
     name = "Magmadad", hp = 8000, fire_immune = true, melee = 600,
     pups = 3, add_hp = 450, add_hit = 80, add_aoe = true, pup_window = 1, add_name = "a magma pup",
+    normal_hp = 1100, normal_dmg = 1400,   -- Normal is the classroom (gate review): right card about 75% for a fresh guild
   },
   baron = {                    -- favours Spread: the bomb only hits its carrier when the raid is spread
-    name = "Baron Get-Down", hp = 11500, fire_immune = true, melee = 600, bomb = 620,
+    name = "Baron Get-Down", hp = 11500, fire_immune = true, melee = 600, bomb = 620, bomb_others = 600, normal_hp = 1000, normal_dmg = 1600,
   },
   lucifrown = {                -- favours Play Safe: constant magic damage on a curse-starved mana bar
-    name = "Lucifrown", hp = 8500, melee = 550, volley = 120, frown = 500,
-    curse_every = 3, curse_rounds = 3, decursed_rounds = 1,
+    name = "Lucifrown", hp = 8800, melee = 550, volley = 120, frown = 500,
+    curse_every = 3, curse_rounds = 3, decursed_rounds = 1, frown_stack = 300, normal_hp = 1150, normal_dmg = 1300,
   },
   majordomo = {                -- favours Stack: eight interns spread damage over everyone
     name = "Majordomo Exhaustus", hp = 7000, melee = 650,
-    interns = 8, add_hp = 800, add_hit = 180, add_fire = false, add_name = "an intern", stack_splash = 450,
+    interns = 8, add_hp = 800, add_hit = 180, add_fire = false, add_name = "an intern", stack_splash = 450, normal_hp = 1080, normal_dmg = 1300,
     defeat = "Majordomo Exhaustus gives up, files a complaint and leaves a bonus chest.",
   },
 }

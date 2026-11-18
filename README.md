@@ -2,7 +2,7 @@
 
 A World of Warcraft: Forever addon that turns flight paths into raid nights. Recruit a 10-player raid, gear up in dungeons, and clear parody bosses one flight at a time. Weekly lockouts, Normal, Heroic and Mythic modes, and a guild leaderboard synced entirely in-game.
 
-> Status: **Phase 2, pre-production.** Nothing is playable yet.
+> Status: **Phase 3, vertical slice, is next.** A playable browser build of the raid runs on the real engine (see STATUS.md).
 
 **Current status and next steps:** see [STATUS.md](STATUS.md). Tasks live in [Issues](https://github.com/europalle/flight-path-raiders/issues).
 
@@ -48,13 +48,13 @@ At milestone gates, reviews run as separate agents that start fresh and read onl
 | Phase | Name | Status |
 | --- | --- | --- |
 | 1 | Concept | Done (2026-11-17) |
-| 2 | Pre-production | In progress |
-| 3 | Vertical slice | Not started |
-| 4 | Production | Not started |
-| 5 | Alpha | Not started |
-| 6 | Beta | Not started |
-| 7 | Launch | Not started |
-| 8 | Live ops | Not started |
+| 2 | Pre-production | Done (2026-11-18), gate passed with conditions |
+| 3 | Vertical slice | Next |
+| 4 | Production (alpha) | Not started |
+| 5 | Beta | Not started |
+| 6 | Launch and live | Not started |
+
+Phases and gates are defined in the [milestone plan](https://claude.ai/artifact/MiJAJ6iKh2Dkcn8aYSeBU9).
 
 ## Target client
 

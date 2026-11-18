@@ -180,7 +180,7 @@
     const look = rngNext(st) % 2;
     const c = { id: st.nextId++, name: freshName(st), cls, spec, look, race: RACES[cls][look], rarity,
       gear: {}, fire: 0, benched: false, joined: st.week,
-      skill10: ({ common: 20, rare: 40, epic: 55 })[rarity] * 10, fam10: {}, pulls: {} };
+      skill10: ({ common: 20, rare: 40, epic: 55, legendary: 70 })[rarity] * 10, fam10: {}, pulls: {} };
     const [a, b] = lvlRange || ECON.startGear;
     c.gear.weapon = { name: "Starter " + (role(cls, spec) === "healer" ? "Staff" : "Weapon"), slot: "weapon", lvl: rrange(st, a, b), q: "common" };
     c.gear.armor = { name: "Hand-me-down " + ARMOR[cls][0].toUpperCase() + ARMOR[cls].slice(1), slot: "armor", type: ARMOR[cls], lvl: rrange(st, a, b), q: "common" };
@@ -191,13 +191,13 @@
   function newGame(seed) {
     const st = { v: 1, seed: seed, rng: (seed % 2147483646) + 1, week: 1, gold: ECON.startGold, dkp: 0, nextId: 1,
       roster: [], bonds: {}, buffs: {}, journal: {}, lessons: {}, progress: {}, history: [], loot: [], dungeonsLeft: ECON.dungeon.perWeek,
-      rerolls: 0, replays: {}, pulls: 0, news: [] };
+      rerolls: 0, replays: {}, pulls: 0, news: [], score: { kills: 0, wipes: 0, rounds: 0 }, bestScore: 0 };
     // A sensible but uneven starting guild: 2 tanks, 3 healers, 7 damage dealers, mostly common.
     const start = [["warrior", "protection", "rare"], ["paladin", "protection", "common"], ["priest", "holy", "rare"], ["shaman", "restoration", "common"],
       ["druid", "restoration", "common"], ["rogue", "combat", "common"], ["warrior", "fury", "common"], ["hunter", "marksmanship", "rare"],
       ["warlock", "affliction", "common"], ["priest", "shadow", "common"], ["hunter", "beastmastery", "common"], ["paladin", "retribution", "common"]];
     for (const [c, s, r] of start) st.roster.push(makeChar(st, c, s, r));
-    for (const b of BOSSES) st.progress[b.id] = { normalKills: 0, heroicKills: 0, normalWeek: false, heroicTried: false, pulls: 0, wipes: 0 };
+    for (const b of BOSSES) st.progress[b.id] = { normalKills: 0, heroicKills: 0, normalWeek: false, heroicWeek: false, heroicWipes: 0, pulls: 0, wipes: 0 };
     rollTavern(st);
     st.news.push("Week 1. Your guild has 12 raiders, 300 gold and a raid to clear. Start with Magmadad on Normal.");
     return st;
@@ -242,13 +242,19 @@
   function famAvg(st, ids, boss) { if (!ids.length) return 0; return ids.reduce((s, id) => s + ((byId(st, id) || { fam10: {} }).fam10[boss] || 0), 0) / ids.length / 10; }
   function cohesion(st, ids) { let s = 0, n = 0; for (let i = 0; i < ids.length; i++) for (let j = i + 1; j < ids.length; j++) { s += bond(st, ids[i], ids[j]); n++; } return n ? s / n / 10 : 0; }
 
+  // Heroic score this week (design doc 11): +1,000 a kill, -150 a wipe, -50 per benched raider, +5 per round under 20 at each kill.
+  function heroicScore(st) {
+    const sc = st.score || { kills: 0, wipes: 0, rounds: 0 };
+    return sc.kills * 1000 - sc.wipes * 150 - st.roster.filter(c => c.benched).length * 50 + sc.rounds * 5;
+  }
   // ---- Availability ----
   function unlocked(st, boss, mode) {
     const i = BOSSES.findIndex(b => b.id === boss);
     if (mode === "normal") return i === 0 || st.progress[BOSSES[i - 1].id].normalKills > 0;
     // Heroic: attuned by a Normal Ragnaroast kill (design 10.7, shortened for the playtest), then in order.
     if (st.progress.ragnaroast.normalKills === 0) return false;
-    return i === 0 || st.progress[BOSSES[i - 1].id].heroicKills > 0;
+    // Director, 2026-11-18: the lockout runs in order; each Heroic boss opens once the one before is down this week.
+    return i === 0 || st.progress[BOSSES[i - 1].id].heroicWeek;
   }
   function heroicOpen(st) { return st.progress.ragnaroast.normalKills > 0; }
 
@@ -284,7 +290,7 @@
     const out = [];
     const p = st.progress[prep.boss];
     if (!unlocked(st, prep.boss, prep.mode)) out.push("Locked: kill the boss before it first" + (prep.mode === "heroic" ? " (and Ragnaroast on Normal for Heroic)" : "") + ".");
-    if (prep.mode === "heroic" && p.heroicTried) out.push("You've used this week's Heroic attempt on " + BOSS[prep.boss].name + ". It resets next week.");
+    if (prep.mode === "heroic" && p.heroicWeek) out.push(BOSS[prep.boss].name + " is already dead on Heroic this week. The lockout resets next week.");
     if (prep.ids.length < 1) out.push("Pick at least one raider.");
     if (prep.ids.length > 10) out.push("Raids take 10.");
     if (prep.mode === "heroic" && prep.ids.some(id => byId(st, id).benched)) out.push("A benched raider can't come to Heroic this week.");
@@ -404,10 +410,10 @@
         else { out.gold += ECON.normalReclear; out.reclear = true; }
         p.normalKills++;
       } else {
-        out.gold += ECON.heroicKill.gold; out.dkp += ECON.heroicKill.dkp; out.loot = [makeItem(st, prep.boss, "heroic"), makeItem(st, prep.boss, "heroic")]; p.heroicKills++;
+        out.gold += ECON.heroicKill.gold; out.dkp += ECON.heroicKill.dkp; out.loot = [makeItem(st, prep.boss, "heroic"), makeItem(st, prep.boss, "heroic")]; p.heroicKills++; p.heroicWeek = true;
+        st.score.kills++; st.score.rounds += Math.max(0, 20 - r.rounds);
       }
-    } else p.wipes++;
-    if (prep.mode === "heroic") p.heroicTried = true;
+    } else { p.wipes++; if (prep.mode === "heroic") { p.heroicWipes++; st.score.wipes++; } }
     // Repairs: 1 gold per 5 gear levels per death, x1.5 on a wipe. The first wipe per boss each week is free (learning path).
     const dead = r.raid.map((x, i) => x.alive ? null : prep.ids[i]).filter(x => x !== null);
     let rep = dead.reduce((s, id) => s + Math.round(gearLevel(byId(st, id)) / 5), 0);
@@ -442,7 +448,7 @@
   function replayInfo(st) {
     const lp = st.lastPull; if (!lp || lp.result === "kill") return { ok: false };
     const ids = lp.prep.ids; const fam = famAvg(st, ids, lp.prep.boss); const used = st.replays[lp.prep.boss + ":" + st.week];
-    return { ok: fam >= 1 && !used, fam, used: !!used, need: 1 };
+    return { ok: !used, fam, used: !!used };  // gate review: replay is open from the first wipe
   }
   function replay(st, card, engine) {
     const info = replayInfo(st); if (!info.ok) return { error: "Replay isn't available." };
@@ -512,12 +518,14 @@
     st.week++; st.gold += ECON.weeklyQuests; st.dungeonsLeft = ECON.dungeon.perWeek; st.rerolls = 0; st.buffs = {}; st.freeWipe = {};
     for (const c of st.roster) { c.benched = false; c.pulls = {}; }
     for (const k in st.bonds) st.bonds[k].week = 0;
-    for (const b of BOSSES) { st.progress[b.id].normalWeek = false; st.progress[b.id].heroicTried = false; }
+    for (const b of BOSSES) { st.progress[b.id].normalWeek = false; st.progress[b.id].heroicWeek = false; st.progress[b.id].heroicWipes = 0; }
+    if (st.score.kills || st.score.wipes) st.bestScore = Math.max(st.bestScore || 0, heroicScore(st));
+    st.score = { kills: 0, wipes: 0, rounds: 0 };
     rollTavern(st);
     return "Week " + st.week + ". Lockouts reset, benched raiders are back, +" + ECON.weeklyQuests + " gold from the week's quests.";
   }
 
   root.FPR_GAME = { SPECS, CLASS_NAMES, ARMOR, BOSSES, BOSS, CARDS, CARD_TEXT, MODES, ECON, RARITY, WB, CAUSE, LESSONS,
-    newGame, setRules, role, specName, defaultZone, gearLevel, canWear, unlocked, heroicOpen, defaultPrep, prepCost, problems, warnings,
+    newGame, setRules, heroicScore, role, specName, defaultZone, gearLevel, canWear, unlocked, heroicOpen, defaultPrep, prepCost, problems, warnings,
     pull, replayInfo, replay, assign, assignPending, suggestFor, dungeon, hire, reroll, dismiss, buyFire, respec, endWeek, famAvg, cohesion, bond, byId, sellValue };
 })(typeof window !== "undefined" ? window : globalThis);

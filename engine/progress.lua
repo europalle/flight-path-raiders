@@ -8,7 +8,7 @@ FPR_ENGINE = ns
 local P = {}
 ns.Progress = P
 
-P.START_SKILL = { common = 20, uncommon = 30, rare = 40, epic = 55 }
+P.START_SKILL = { common = 20, rare = 40, epic = 55, legendary = 70 }  -- rarities as in design doc 4.5
 P.RULES = {
   counted_pulls = 3,    -- only the first 3 pulls per boss per week teach anything
   skill_wipe = 6,       -- tenths of a skill point per counted pull

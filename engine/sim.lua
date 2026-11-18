@@ -6,7 +6,7 @@ local _, ns = ...
 ns = ns or FPR_ENGINE or {}
 FPR_ENGINE = ns
 
-ns.ENGINE_VERSION = 7  -- 7: per-character gear level, playback frames (6: Molten Bore bosses; 5: skill, chemistry, moments)
+ns.ENGINE_VERSION = 9  -- 9: Normal per boss, softer card checks; 8: input checks, gear band in the engine, stronger checksum, moments only in Normal (7: per-character gear, frames)
 
 local floor = math.floor
 local function idiv(a, b) return floor(a / b) end
@@ -28,11 +28,14 @@ end
 -- { {a = slot, b = slot, v = 0-20}, ... } chemistry between two characters in this raid.
 function ns.Simulate(inputs)
   local D = ns.Data
+  local valid, why = ns.Validate(inputs, false)
+  if not valid then error("FPR: bad fight input: " .. why, 2) end
   local rng = ns.NewRNG(inputs.seed)
   local boss_def = D.BOSSES[inputs.boss]
   local mode = D.MODES[inputs.mode]
   local tac = D.TACTICS[inputs.tactic]
   local gl = inputs.gl or 60
+  if gl < 1 then gl = 1 elseif gl > 100 then gl = 100 end
   local glmul = 1000 + D.GL_STEP * (gl - 60)
   local cons = inputs.consumables or {}
   local buffs = inputs.buffs or {}
@@ -73,7 +76,13 @@ function ns.Simulate(inputs)
     local role = D.SPECS[c.class][c.spec]
     local base = D.ROLE_BASE[role]
     local cgl = glmul  -- optional per-character gear level (the playtest's real gear)
-    if c.gl then cgl = 1000 + D.GL_STEP * (c.gl - 60) end
+    if c.gl then
+      local g = c.gl
+      if mode.band then  -- ranked modes hold gear inside the band (design doc 2), in the engine so verifiers agree
+        if g < mode.band[1] then g = mode.band[1] elseif g > mode.band[2] then g = mode.band[2] end
+      end
+      cgl = 1000 + D.GL_STEP * (g - 60)
+    end
     local hp = pm(pm(base.hp, cgl), hp_mul)
     local power = pm(pm(base.power, cgl), pow_mul)
     local spec_power = D.SPEC_POWER[c.class .. ":" .. c.spec]
@@ -144,7 +153,9 @@ function ns.Simulate(inputs)
     if p.role ~= "tank" then p.threatmul = pm(p.threatmul, 1000 - idiv(p.skill * D.SKILL.threat, 100)) end
   end
 
-  local boss = { name = boss_def.name, maxhp = pm(boss_def.hp, mode.hp), submerged = false }
+  local boss_hp = pm(boss_def.hp, mode.hp)
+  if inputs.mode == "normal" and boss_def.normal_hp then boss_hp = pm(boss_hp, boss_def.normal_hp) end  -- per-boss Normal tuning
+  local boss = { name = boss_def.name, maxhp = boss_hp, submerged = false }
   boss.hp = boss.maxhp
   local adds = {}
   local target = nil  -- the boss's current target
@@ -152,7 +163,9 @@ function ns.Simulate(inputs)
   local add_name = boss_def.add_name or "a fire add"
   local function spawn_adds(n, hp)
     for a = 1, n do
-      adds[#adds + 1] = { hp = pm(hp, mode.hp), maxhp = pm(hp, mode.hp), alive = true, frozen = 0, held = 0, died = 0 }
+      local ahp = pm(hp, mode.hp)
+      if inputs.mode == "normal" and boss_def.normal_hp then ahp = pm(ahp, boss_def.normal_hp) end
+      adds[#adds + 1] = { hp = ahp, maxhp = ahp, alive = true, frozen = 0, held = 0, died = 0 }
     end
     local first = #adds - n + 1
     if has["hunter:survival"] then adds[first].frozen = 3 end
@@ -211,6 +224,7 @@ function ns.Simulate(inputs)
     if p.class == "warrior" and p.spec == "fury" then dmg = pm(dmg, 1100) end
     if p.shield_wall > 0 then dmg = pm(dmg, 250) end
     if dmg < 1 then dmg = 1 end
+    h = mix(h, dmg)  -- damage taken is part of the checksum
     p.hp = p.hp - dmg
     if p.class == "warrior" and p.spec == "fury" and p.stacks < 3 then p.stacks = p.stacks + 1 end
     if p.hp <= 0 then kill(p, cause)
@@ -225,6 +239,7 @@ function ns.Simulate(inputs)
     local before = p.hp
     p.hp = p.hp + amount
     if p.hp > p.maxhp then p.hp = p.maxhp end
+    h = mix(h, p.hp - before)  -- healing done is part of the checksum
     return p.hp - before
   end
 
@@ -284,7 +299,8 @@ function ns.Simulate(inputs)
 
   -- Raid moments: at most one random event per pull, rolled from the seed. Good moments are more
   -- likely in a raid with chemistry, bad ones in a raid with low skill.
-  if #raid > 0 and inputs.moments ~= false and rng:chance(D.MOMENTS.chance) then
+  -- Director, 2026-11-18: no raid moments in ranked modes (Heroic and Mythic); Normal and practice only.
+  if #raid > 0 and inputs.moments ~= false and not mode.band and rng:chance(D.MOMENTS.chance) then
     local M = D.MOMENTS
     local good = M.good_base + idiv(cohesion10, 10)
     local bad = M.bad_base + idiv(100 - avg_skill, 10)
@@ -341,6 +357,7 @@ function ns.Simulate(inputs)
       result = "enrage"; break
     end
     local mode_dmg = mode.dmg
+    if inputs.mode == "normal" and boss_def.normal_dmg then mode_dmg = pm(mode_dmg, boss_def.normal_dmg) end
 
     -- 1. The boss acts.
     if round == boss_def.submerge_at then
@@ -472,7 +489,7 @@ function ns.Simulate(inputs)
           else
             local list = alive_in(bomb.zone)
             log(62, bomb.slot, #list, bomb.name .. " explodes in the " .. bomb.zone .. " zone.")
-            for i = 1, #list do damage(list[i], amt, 62, true) end
+            for i = 1, #list do damage(list[i], list[i] == bomb and amt or pm(amt, boss_def.bomb_others or 1000), 62, true) end
           end
         end
         bomb = nil
@@ -494,6 +511,7 @@ function ns.Simulate(inputs)
         local list = stacked and alive_in(nil) or alive_in(zone)
         log(68, #list, 0, stacked and (boss.name .. " frowns at the whole stacked raid.") or (boss.name .. " frowns at the " .. zone .. " zone."))
         local amt = boss_hit(pm(boss_def.frown, mode_dmg))
+        if stacked then amt = pm(amt, boss_def.frown_stack or 1000) end
         for i = 1, #list do damage(list[i], amt, 68, false, true) end
       end
     end
@@ -703,6 +721,10 @@ function ns.Simulate(inputs)
   local survivors = 0
   for i = 1, #raid do if raid[i].alive then survivors = survivors + 1 end end
   h = mix(h, survivors); h = mix(h, boss.hp < 0 and 0 or boss.hp)
+  for i = 1, #raid do  -- every character's end state
+    local p = raid[i]
+    h = mix(h, p.hp); h = mix(h, p.mana); h = mix(h, p.dealt); h = mix(h, p.healed)
+  end
   return {
     result = result, rounds = round > D.MAX_ROUNDS and D.MAX_ROUNDS or round,
     events = events, checksum = floor(h), boss_hp = boss.hp < 0 and 0 or boss.hp,

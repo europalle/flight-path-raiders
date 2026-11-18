@@ -173,7 +173,7 @@ const PORTRAITS = /*__PORTRAITS__*/{};
 const G = window.FPR_GAME;
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-const SAVE_KEY = "fpr-playtest-v1";
+const SAVE_KEY = "fpr-playtest-v2";
 let S = null;          // game state
 let view = "hub";
 let prep = null;       // prep being edited
@@ -229,14 +229,14 @@ function vHub() {
     const p = S.progress[b.id];
     const nOpen = G.unlocked(S, b.id, "normal"), hOpen = G.unlocked(S, b.id, "heroic");
     const nState = !nOpen ? `<span class="st lock">locked</span>` : p.normalWeek ? `<span class="st done">Normal: killed this week</span>` : p.normalKills ? `<span class="st">Normal: loot available</span>` : `<span class="st">Normal: not yet killed</span>`;
-    const hState = !G.heroicOpen(S) ? "" : !hOpen ? `<span class="st lock">Heroic locked</span>` : p.heroicTried ? `<span class="st ${p.heroicKills && S.history.find(h => h.week === S.week && h.boss === b.id && h.mode === "heroic" && h.result === "kill") ? "done" : ""}">Heroic: used this week</span>` : `<span class="st">Heroic: 1 attempt</span>`;
+    const hState = !G.heroicOpen(S) ? "" : !hOpen ? `<span class="st lock">Heroic locked</span>` : p.heroicWeek ? `<span class="st done">Heroic: killed this week</span>` : `<span class="st">Heroic${p.heroicWipes ? ": " + p.heroicWipes + " wipe" + (p.heroicWipes > 1 ? "s" : "") : ": open"}</span>`;
     return `<div class="boss"><div class="sigil">${bossSigil(b.id)}</div><div><b>${i + 1}. ${esc(b.name)}</b><div class="row" style="gap:6px;margin-top:4px">${nState}${hState}</div></div>
-      <div class="acts"><button type="button" class="small" data-prep="${b.id}:normal" ${nOpen ? "" : "disabled"}>Normal</button>${G.heroicOpen(S) ? `<button type="button" class="small" data-prep="${b.id}:heroic" ${hOpen && !p.heroicTried ? "" : "disabled"}>Heroic</button>` : ""}</div></div>`;
+      <div class="acts"><button type="button" class="small" data-prep="${b.id}:normal" ${nOpen ? "" : "disabled"}>Normal</button>${G.heroicOpen(S) ? `<button type="button" class="small" data-prep="${b.id}:heroic" ${hOpen && !p.heroicWeek ? "" : "disabled"}>Heroic</button>` : ""}</div></div>`;
   }).join("");
   const pend = (S.pending || []).length;
   const ids = S.roster.map(c => c.id);
   return `${news}<div class="grid2"><div class="panel"><h2>The Molten Bore</h2>
-      <p class="muted small">Normal is free practice: pull as often as you like, loot on the first kill of each boss each week. Heroic opens once Ragnaroast is down on Normal: one attempt per boss per week, and anyone who dies sits out until reset.</p>
+      <p class="muted small">Normal is free practice: pull as often as you like, loot on the first kill of each boss each week. Heroic opens once Ragnaroast is down on Normal. Bosses go in order each week; pull as often as you like with whoever is left, but anyone who dies sits out until reset, and every wipe costs score.</p>${G.heroicOpen(S) ? `<p class="small"><b>Heroic score this week: ${G.heroicScore(S).toLocaleString()}</b>${S.bestScore ? ` · best week ${S.bestScore.toLocaleString()}` : ""} <span class="muted">(+1,000 a kill, -150 a wipe, -50 a benched raider, +5 a round under 20)</span></p>` : ""}
       <div class="bosses" style="margin-top:10px">${rows}</div></div>
     <div><div class="panel"><h2>This week</h2>
       ${pend ? `<p><b>${pend} item${pend > 1 ? "s" : ""} waiting to be handed out.</b> <button type="button" class="small" id="goLoot">Hand out loot</button></p>` : ""}
@@ -357,7 +357,7 @@ function vPrep() {
   const cost = G.prepCost(S, prep); const probs = G.problems(S, prep); const warns = G.warnings(S, prep);
   const known = Object.keys(S.journal[prep.boss] || {}).length;
   return `<div class="row" style="justify-content:space-between;margin-bottom:12px"><div class="row"><div class="sigil">${bossSigil(prep.boss)}</div><div><h2 style="margin:0">${esc(b.name)} <span class="muted" style="font-size:1rem">${G.MODES[prep.mode].label}</span></h2>
-      <div class="small muted">${known ? `Journal: ${known} of ${b.abilities.length} abilities seen.` : "You haven't seen this boss yet. Pull and find out."} ${heroic ? "One attempt this week. Whoever dies is benched until reset." : "Normal: free to retry."}</div></div></div>
+      <div class="small muted">${known ? `Journal: ${known} of ${b.abilities.length} abilities seen.` : "You haven't seen this boss yet. Pull and find out."} ${heroic ? "Ranked: whoever dies is benched until reset, each wipe costs 150 score, and there are no raid moments." : "Normal: free to retry."}</div></div></div>
       <button type="button" class="link" id="back">Back to the hub</button></div>
     <div class="grid2"><div>
       <div class="panel"><h2>Who comes (${prep.ids.length}/10)</h2><div class="cards">${pickCards}</div></div>
@@ -453,8 +453,8 @@ function results() {
   const ri = G.replayInfo(S);
   const replayBox = !kill ? (ri.ok ? `<h3>Replay that pull</h3><p class="small muted">The exact same pull with a different card. Nothing is won or lost: it's for learning. Once per boss per week.</p>
       <div class="row">${Object.entries(G.CARDS).filter(([k]) => k !== o.input.tactic).map(([k, n]) => `<button type="button" class="small" data-whatif="${k}">${n}</button>`).join("")}</div><div id="whatif"></div>`
-    : `<p class="small muted">${ri.used ? "You've used this week's replay on this boss." : `Replay unlocks when your raid knows ${b.name} a little (familiarity 1, now ${ri.fam.toFixed(1)}).`}</p>`) : "";
-  const again = o.mode === "normal" ? `<button type="button" class="primary" id="again">Pull again</button>` : "";
+    : `<p class="small muted">You've used this week's replay on this boss.</p>`) : "";
+  const again = (o.mode === "normal" || !kill) ? `<button type="button" class="primary" id="again">Pull again</button>` : "";
   $("results").innerHTML = `<div class="panel" style="margin-top:16px"><div class="banner ${kill ? "kill" : "fail"}"><span class="big">${head}</span><span>${why}</span></div>
     ${kill ? `<p><i>${esc(b.kill)}</i></p>` : `<p><i>${esc(o.joke || "")}</i></p>`}
     ${recap}
@@ -463,8 +463,11 @@ function results() {
     <div class="grid2" style="margin-top:8px"><div><h3>Gold</h3>${money.map(m => `<p class="small">${esc(m)}</p>`).join("") || `<p class="small muted">Nothing changed hands.</p>`}<h3>Getting better</h3><p class="small">${esc(grow)}</p></div>
       <div>${o.loot.length ? `<h3>Loot</h3><p class="small">${o.loot.map(it => esc(it.name) + " (GL " + it.lvl + ")").join(", ")}. Hand it out below.</p>` : ""}${replayBox}</div></div>
     <div class="row" style="margin-top:14px">${again}<button type="button" id="toPrep">Change the plan</button><button type="button" id="toHub">Hub</button></div></div>${lootPanel()}`;
-  if ($("again")) $("again").onclick = () => { prep = JSON.parse(JSON.stringify(prep)); const out = G.pull(S, prep, engine); if (out.error) return toast(out.error); lastOut = out; go("pull"); };
-  $("toPrep").onclick = () => { if (o.mode === "heroic") prep = G.defaultPrep(S, o.boss, o.mode); go(o.mode === "heroic" ? "hub" : "prep"); };
+  if ($("again")) $("again").onclick = () => {
+    prep = JSON.parse(JSON.stringify(prep));
+    if (prep.mode === "heroic") prep.ids = prep.ids.filter(id => !G.byId(S, id).benched);  // whoever is left
+    const out = G.pull(S, prep, engine); if (out.error) return toast(out.error); lastOut = out; go("pull"); };
+  $("toPrep").onclick = () => { if (o.mode === "heroic") prep = G.defaultPrep(S, o.boss, o.mode); go("prep"); };
   $("toHub").onclick = () => go("hub");
   document.querySelectorAll("[data-whatif]").forEach(bt => bt.onclick = () => {
     const w = G.replay(S, bt.dataset.whatif, engine); if (w.error) return toast(w.error);

@@ -220,7 +220,7 @@ f, pl = P.RaidFields(g, T(ids), "ragnaroast")
 check("raid fields read the guild", f[1]["skill"] == 100 and f[1]["fam"] == 10 and len(pl) == 45 and pl[1]["v"] == 20)
 P.Quit(g, ids[0])
 check("quitting removes the character and their bonds", g.by_id[ids[0]] is None and P.Bond(g, ids[0], ids[1]) == 0 and P.Bond(g, ids[1], ids[2]) == 200)
-check("start skill by rarity", [P.Recruit(guild(0), r)["skill10"] for r in ("common", "uncommon", "rare", "epic")] == [200, 300, 400, 550])
+check("start skill by rarity", [P.Recruit(guild(0), r)["skill10"] for r in ("common", "rare", "epic", "legendary")] == [200, 400, 550, 700])
 # Kills teach twice as fast as wipes; above skill 70 gains halve.
 g = guild(10, "epic"); ids = [g.members[i]["id"] for i in range(1, 11)]
 P.AfterPull(g, T(ids), "b", True); a1 = g.members[1]["skill10"]
@@ -280,6 +280,37 @@ def luci(dec, n=300):
     return k
 k_dec, k_none = luci(True), luci(False)
 check("Lucifrown: a decurser helps", k_dec > k_none, f"{k_dec} vs {k_none}")
+# 8. Input checks (engine/validate.lua): bad records never crash, strict checks catch forgeries.
+V = L.eval("FPR_ENGINE.Verify"); VAL = L.eval("FPR_ENGINE.Validate")
+good = {"boss": "ragnaroast", "mode": "heroic", "seed": 5, "tactic": "burn", "gl": 65,
+        "raid": [dict(c, gl=65, skill=50, fam=5, firegear=1) for c in base]}
+def tl(d):
+    return L.table_from({k: (L.table_from([L.table_from(x) for x in v]) if isinstance(v, list) else v) for k, v in d.items()})
+def verified(rec):
+    r = V(tl(rec)); return r is not None and not isinstance(r, tuple)
+check("a good ranked record verifies", verified(good), "good")
+bad_cases = {
+    "unknown boss": dict(good, boss="nefarian"), "unknown tactic": dict(good, tactic="yolo"), "unknown mode": dict(good, mode="lfr"),
+    "eleven raiders": dict(good, raid=good["raid"] + good["raid"][:1]), "no raiders": dict(good, raid=[]),
+    "unknown spec": dict(good, raid=[dict(good["raid"][0], spec="tank")] + good["raid"][1:]),
+    "forged gear": dict(good, raid=[dict(good["raid"][0], gl=90)] + good["raid"][1:]),
+    "negative fire gear": dict(good, raid=[dict(good["raid"][0], firegear=-3)] + good["raid"][1:]),
+    "skill 150": dict(good, raid=[dict(good["raid"][0], skill=150)] + good["raid"][1:]),
+    "seed 0": dict(good, seed=0), "pair to itself": dict(good, pairs=[{"a": 1, "b": 1, "v": 5}]),
+    "duplicate pair": dict(good, pairs=[{"a": 1, "b": 2, "v": 5}, {"a": 2, "b": 1, "v": 5}]),
+}
+for name, rec in bad_cases.items():
+    check("verify rejects bad records without crashing", not verified(rec), name)
+try:
+    run(base, seed=3); SIM(tl(dict(good, boss="nefarian"))); check("Simulate refuses an unknown boss with a clear error", False, "no error")
+except Exception as e:
+    check("Simulate refuses an unknown boss with a clear error", "bad fight input" in str(e), str(e))
+# The gear band is enforced in the engine: gear 90 on Heroic fights like gear 70.
+hi = SIM(tl(dict(good, raid=[dict(c, gl=90) for c in good["raid"]])))["checksum"]; cap = SIM(tl(dict(good, raid=[dict(c, gl=70) for c in good["raid"]])))["checksum"]
+check("Heroic gear above the band fights like the cap", hi == cap, (hi, cap))
+# No raid moments in ranked modes.
+mom = sum(1 for s_ in range(1, 200) for e in events(SIM(tl(dict(good, seed=s_)))) if e[1] in (40, 41, 42, 43, 44, 45, 46) and e[0] == 0)
+check("no raid moments on Heroic", mom == 0, mom)
 print(f"QA: {n_boss} fights across five bosses; Lucifrown kills with a decurser {k_dec}/300, without {k_none}/300")
 print(f"QA: {n_mom} v5 fights (skill, chemistry, moments), progression module checks")
 print(f"QA: {n_inv} random fights, {len(edges)} edge raids x 12 runs, determinism x199")

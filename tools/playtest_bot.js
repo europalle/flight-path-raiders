@@ -9,7 +9,7 @@ function exec(src, name, nres) {
   if (lauxlib.luaL_loadbuffer(L, to_luastring(src), null, to_luastring('@' + name)) !== lua.LUA_OK || lua.lua_pcall(L, 0, nres, 0) !== lua.LUA_OK)
     throw new Error(lua.lua_tojsstring(L, -1));
 }
-for (const f of ['engine/rng.lua', 'engine/data.lua', 'engine/sim.lua', 'engine/progress.lua', 'prototype/api.lua']) exec(fs.readFileSync(path.join(root, f), 'utf8'), f, 0);
+for (const f of ['engine/rng.lua', 'engine/data.lua', 'engine/sim.lua', 'engine/validate.lua', 'engine/progress.lua', 'prototype/api.lua']) exec(fs.readFileSync(path.join(root, f), 'utf8'), f, 0);
 function toLua(v) {
   if (Array.isArray(v)) return "{" + v.map(toLua).join(",") + "}";
   if (v && typeof v === "object") return "{" + Object.entries(v).map(([k, x]) => `[${JSON.stringify(k)}]=${toLua(x)}`).join(",") + "}";
@@ -38,9 +38,10 @@ for (let g = 0; g < guilds; g++) {
         if (!G.unlocked(st, b.id, mode)) break;
         const p = st.progress[b.id];
         if (mode === 'normal' && p.normalWeek) continue;
-        if (mode === 'heroic' && p.heroicTried) continue;
-        let done = false;
-        while (!done && (mode === 'heroic' || budget > 0)) {
+        if (mode === 'heroic' && p.heroicWeek) continue;
+        let done = false, tries = 0;
+        while (!done && (mode === 'heroic' ? tries < 4 && st.roster.filter(c => !c.benched).length >= 8 : budget > 0)) {
+          tries++;
           const prep = G.defaultPrep(st, b.id, mode);
           prep.tactic = style === 'smart' ? b.card : style === 'stubborn' ? 'spread' : (known[b.id] || ['spread', 'stack', 'burn', 'playsafe'][(st.pulls + g) % 4]);
           const rich = st.gold > (mode === 'heroic' ? 150 : 250);
@@ -69,10 +70,9 @@ for (let g = 0; g < guilds; g++) {
           } else {
             wipes++; tierSeen[out.lesson.tier]++;
             if (out.lesson.tier === 2) { if (out.lesson.id === 'card') known[b.id] = b.card; if (out.lesson.id === 'fire') knowFire.v = true; if (out.lesson.id === 'decurse') known.decurse = true; }
-            if (mode === 'heroic') done = true;
           }
         }
-        if (!done && mode === 'normal') break;  // stuck: stop this week's normal run
+        if (!done) break;  // stuck: stop this week's run in this mode
       }
     }
     if (w === weeks) { totalGold.push(st.gold); totalGL.push(st.roster.reduce((s, c) => s + G.gearLevel(c), 0) / st.roster.length); }
