@@ -13,6 +13,7 @@ Last updated: 2026-11-18. Read this first at the start of every session.
 | Technical design | Done, signed off |
 | Browser prototype | Engine 10 published: https://claude.ai/artifact/YHGsBUgA2y1DGDVTaisGpy (all five Molten Bore bosses, preparation, raid experience, raid moments, 10-week season). QA suite passes; boss tuning done |
 | Addon | `addon/src` (Core, SelfTest, Board); build with `python3 tools/build_addon.py` into `addon/dist/FlightPathRaiders`; `tests/addon_test.py` runs it headless |
+| Board preview | https://claude.ai/artifact/9QSA6W3cuxP2tgejH3FU6P (`ux/preview/`): the board on the Director's 1440p screen, clickable, scale and theme |
 | Playtest build | Published: https://claude.ai/artifact/NfN3hjmbfZ7Hvhf7pncJxM (`playtest/`, built by `playtest/build.py`). Script: `qa/playtest-1.md`. Rules QA `tools/playtest_qa.js`, bot `tools/playtest_bot.js` |
 | Milestone plan | Done: https://claude.ai/artifact/MiJAJ6iKh2Dkcn8aYSeBU9 |
 | Gate review (separate agents) | Passed with conditions; conditions fixed or filed as Phase 3 issues (#26-#35) |
