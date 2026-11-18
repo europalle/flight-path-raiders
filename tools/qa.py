@@ -148,6 +148,84 @@ for s in range(1, 300):
     if r["result"] == "kill" and r["rounds"] in (10, 11, 12): sub_kill += 1
 check("design: no kill while Ragnaroast is submerged", sub_kill == 0, f"{sub_kill} kills in rounds 10-12")
 
+# 5. Skill, familiarity, chemistry and raid moments (engine v5).
+def run5(raid, pairs=(), moments=True, **kw):
+    t = L.table_from({"boss": "ragnaroast", "mode": kw.get("mode", "heroic"), "seed": kw.get("seed", 1), "tactic": "spread",
+                      "gl": kw.get("gl", 65), "consumables": L.table_from({"food": True, "elixirs": True, "flasks": True}),
+                      "buffs": L.table_from({}), "moments": moments,
+                      "pairs": L.table_from([L.table_from(p) for p in pairs]), "raid": L.table_from([L.table_from(c) for c in raid])})
+    return SIM(t)
+START = (40, 41, 42, 43, 44, 45, 46)
+rr = random.Random(21); n_mom = 0; mom_seen = collections.Counter()
+for i in range(3000):
+    raid = sensible(rr)
+    for c in raid:
+        c["skill"] = rr.randint(-20, 130); c["fam"] = rr.randint(-3, 14); c["potion"] = rr.random() < .5; c["firegear"] = rr.randint(0, 2)
+    pairs = [{"a": rr.randint(0, 11), "b": rr.randint(0, 11), "v": rr.randint(-5, 30)} for _ in range(rr.randint(0, 50))]
+    r = run5(raid, pairs, rr.random() < .8, mode=rr.choice(["normal", "heroic", "mythic"]), seed=rr.randrange(1, 2**31 - 2))
+    invariants(r, raid, f"v5#{i}")
+    ev = events(r)
+    starts = [e for e in ev if e[1] in START and e[0] == 0]
+    check("at most one raid moment per pull", len(starts) <= 1, f"v5#{i} {starts}")
+    for e in starts: mom_seen[e[1]] += 1
+    check("moments only appear when a moment was rolled", all(e[0] == 0 for e in ev if e[1] in (40, 42, 43, 45, 46)), f"v5#{i}")
+    check("lucky saves at most once", sum(1 for e in ev if e[1] == 41 and e[0] > 0) <= 1, f"v5#{i}")
+    check("early pull only in rounds 0-1", all(e[0] <= 1 for e in ev if e[1] == 44), f"v5#{i}")
+    rd = r["raid"]
+    for j in range(1, len(rd) + 1):
+        check("skill clamped to 0-100", 0 <= rd[j]["skill"] <= 100, f"v5#{i} {rd[j]['skill']}")
+        check("familiarity clamped to 0-10", 0 <= rd[j]["fam"] <= 10, f"v5#{i} {rd[j]['fam']}")
+    n_mom += 1
+check("every moment type shows up", all(mom_seen[c] > 0 for c in START), str(dict(mom_seen)))
+off = sum(1 for s_ in range(1, 300) for e in events(run5(sensible(random.Random(s_)), moments=False, seed=s_)) if e[1] in START)
+check("moments switched off means none", off == 0, f"{off} moment events")
+# Direction checks: more skill, familiarity or chemistry never makes the average raid worse.
+def kills(sk=0, fam=0, chem=0, n=400):
+    rr = random.Random(5); k = 0
+    for i in range(n):
+        raid = sensible(rr)
+        for c in raid: c["skill"] = sk; c["fam"] = fam; c["potion"] = c["zone"] in ("melee", "front"); c["firegear"] = 1
+        pairs = [{"a": a, "b": b, "v": chem} for a in range(1, 11) for b in range(a + 1, 11)] if chem else []
+        k += run5(raid, pairs, False, seed=rr.randrange(1, 2**31 - 2))["result"] == "kill"
+    return k
+k0 = kills()
+check("skill 100 beats skill 0", kills(sk=100) > k0)
+check("familiarity 10 beats 0", kills(fam=10) > k0)
+check("chemistry 20 beats 0", kills(chem=20) > k0)
+
+# 6. Progression module (engine/progress.lua).
+P = L.eval("FPR_ENGINE.Progress")
+def guild(n=12, rarity="common"):
+    g = P.NewGuild()
+    for i in range(n): P.Recruit(g, rarity)
+    return g
+T = L.table_from
+g = guild(); ids = [g.members[i]["id"] for i in range(1, 11)]
+for p_ in range(10): P.AfterPull(g, T(ids), "ragnaroast", False)
+check("only 3 pulls per boss per week count for skill", g.members[1]["skill10"] == 200 + 3 * 6, str(g.members[1]["skill10"]))
+check("chemistry gain capped at 1.5 per week", P.Bond(g, ids[0], ids[1]) == 15, str(P.Bond(g, ids[0], ids[1])))
+check("bench gains nothing", g.members[11]["skill10"] == 200 and P.Bond(g, ids[0], g.members[11]["id"]) == 0)
+for w in range(200):
+    P.NewWeek(g)
+    for p_ in range(5): P.AfterPull(g, T(ids), "ragnaroast", True)
+check("skill caps at 100", max(g.members[i]["skill10"] for i in range(1, 11)) == 1000)
+check("familiarity caps at 10", g.members[1]["fam10"]["ragnaroast"] == 100)
+check("chemistry caps at 20", P.Bond(g, ids[0], ids[1]) == 200)
+check("familiarity is per boss", g.members[1]["fam10"]["other"] is None)
+f, pl = P.RaidFields(g, T(ids), "ragnaroast")
+check("raid fields read the guild", f[1]["skill"] == 100 and f[1]["fam"] == 10 and len(pl) == 45 and pl[1]["v"] == 20)
+P.Quit(g, ids[0])
+check("quitting removes the character and their bonds", g.by_id[ids[0]] is None and P.Bond(g, ids[0], ids[1]) == 0 and P.Bond(g, ids[1], ids[2]) == 200)
+check("start skill by rarity", [P.Recruit(guild(0), r)["skill10"] for r in ("common", "uncommon", "rare", "epic")] == [200, 300, 400, 550])
+# Kills teach twice as fast as wipes; above skill 70 gains halve.
+g = guild(10, "epic"); ids = [g.members[i]["id"] for i in range(1, 11)]
+P.AfterPull(g, T(ids), "b", True); a1 = g.members[1]["skill10"]
+g2 = guild(10, "epic"); P.AfterPull(g2, T(ids), "b", False)
+check("a kill teaches more than a wipe", a1 - 550 == 2 * (g2.members[1]["skill10"] - 550))
+g3 = guild(10); g3.members[1]["skill10"] = 750; P.AfterPull(g3, T(ids), "b", True)
+check("gains halve above skill 70", g3.members[1]["skill10"] == 756, str(g3.members[1]["skill10"]))
+
+print(f"QA: {n_mom} v5 fights (skill, chemistry, moments), progression module checks")
 print(f"QA: {n_inv} random fights, {len(edges)} edge raids x 12 runs, determinism x199")
 if not fails:
     print("All checks passed")

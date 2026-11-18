@@ -6,7 +6,7 @@ local _, ns = ...
 ns = ns or FPR_ENGINE or {}
 FPR_ENGINE = ns
 
-ns.ENGINE_VERSION = 4  -- 4: fire resistance, boss crits, tank-first healing (Tuning pass 3)
+ns.ENGINE_VERSION = 5  -- 5: player skill, boss familiarity, chemistry, raid moments
 
 local floor = math.floor
 local function idiv(a, b) return floor(a / b) end
@@ -24,6 +24,8 @@ end
 -- inputs = { boss, mode, seed, tactic, gl, consumables = {food,elixirs,flasks}, buffs = {...},
 --            raid = { {name, class, spec, zone, potion, firegear}, ... } }
 -- potion (or the older name fireres) = one Fire Protection Potion; firegear = 0, 1 or 2 fire resistance pieces.
+-- Optional per character: skill (0-100), fam (boss familiarity, 0-10). Optional inputs.pairs =
+-- { {a = slot, b = slot, v = 0-20}, ... } chemistry between two characters in this raid.
 function ns.Simulate(inputs)
   local D = ns.Data
   local rng = ns.NewRNG(inputs.seed)
@@ -92,7 +94,11 @@ function ns.Simulate(inputs)
       threatmul = (role == "tank") and D.TANK_THREAT or D.OTHER_THREAT,
       fireres = (c.potion or c.fireres) and 1 or 0, crit = crit, fr = fr, firered = firered,
       used = {}, stacks = 0, shield_wall = 0, dealt = 0, healed = 0, alive_rounds = 0,
+      skill = c.skill or 0, fam = c.fam or 0, skip_from = 0, skip_to = -1, zone_bonus = 0,
     }
+    local q = raid[i]
+    if q.skill > 100 then q.skill = 100 elseif q.skill < 0 then q.skill = 0 end
+    if q.fam > D.FAMILIARITY.cap then q.fam = D.FAMILIARITY.cap elseif q.fam < 0 then q.fam = 0 end
     local p = raid[i]
     if (p.zone == "ranged" and has["druid:balance"]) then p.crit = p.crit + 30 end
     if (p.zone == "melee" and (has["druid:feral"] or has["druid:feralcat"])) then p.crit = p.crit + 30 end
@@ -109,10 +115,38 @@ function ns.Simulate(inputs)
     order[j + 1] = v
   end
 
+  -- Chemistry: bonds between pairs, and the raid's cohesion (average over every pair).
+  local bond = {}
+  for i = 1, #raid do bond[i] = {} end
+  local chem_sum = 0
+  local plist = inputs.pairs or {}
+  for k = 1, #plist do
+    local e = plist[k]
+    local v = e.v or 0
+    if v > D.CHEMISTRY.cap then v = D.CHEMISTRY.cap elseif v < 0 then v = 0 end
+    if e.a ~= e.b and bond[e.a] and bond[e.b] and bond[e.a][e.b] == nil then
+      bond[e.a][e.b] = v; bond[e.b][e.a] = v; chem_sum = chem_sum + v
+    end
+  end
+  local npairs = idiv(#raid * (#raid - 1), 2)
+  local cohesion10 = 0  -- cohesion x10 (0-200), whole numbers only
+  if npairs > 0 then cohesion10 = idiv(chem_sum * 10, npairs) end
+  local skill_sum = 0
+  for i = 1, #raid do skill_sum = skill_sum + raid[i].skill end
+  local avg_skill = (#raid > 0) and idiv(skill_sum, #raid) or 0
+  -- Skill, cohesion and familiarity with this boss raise power (up to +3% each at the defaults).
+  for i = 1, #raid do
+    local p = raid[i]
+    p.power = pm(p.power, 1000 + idiv(p.skill * D.SKILL.power, 100) + idiv(cohesion10 * D.CHEMISTRY.power, 200)
+      + p.fam * D.FAMILIARITY.power)
+    if p.role ~= "tank" then p.threatmul = pm(p.threatmul, 1000 - idiv(p.skill * D.SKILL.threat, 100)) end
+  end
+
   local boss = { name = boss_def.name, maxhp = pm(boss_def.hp, mode.hp), submerged = false }
   boss.hp = boss.maxhp
   local adds = {}
   local target = nil  -- the boss's current target
+  local moments = { clutch = 0, early = false, early_target = nil }
   local kick_ready_round = 1
 
   local function alive_in(zone)
@@ -140,6 +174,10 @@ function ns.Simulate(inputs)
       p.used.bubble = true; p.hp = 1
       log(30, p.slot, 2, p.name .. " bubbles and survives."); return
     end
+    if moments.clutch > 0 then
+      moments.clutch = moments.clutch - 1; p.hp = pm(p.maxhp, D.MOMENTS.clutch_hp)
+      log(41, p.slot, 0, p.name .. " somehow survives. Somebody screams on voice chat."); return
+    end
     p.alive = false; p.hp = 0
     log(31, p.slot, cause, p.name .. " dies.")
   end
@@ -149,6 +187,7 @@ function ns.Simulate(inputs)
     -- Fire ignores armour; fire resistance reduces it instead (pass 3).
     local dmg = fire and pm(amount, 1000 - p.firered) or pm(amount, 1000 - p.armor)
     dmg = pm(dmg, tac.taken)
+    if cause ~= 24 then dmg = pm(dmg, 1000 - D.FAMILIARITY.per_point * p.fam) end -- knows the mechanics
     if p.class == "warrior" and p.spec == "fury" then dmg = pm(dmg, 1100) end
     if p.shield_wall > 0 then dmg = pm(dmg, 250) end
     if dmg < 1 then dmg = 1 end
@@ -223,6 +262,57 @@ function ns.Simulate(inputs)
 
   log(1, boss.maxhp, #raid, boss.name .. " is pulled (" .. inputs.mode .. ").")
 
+  -- Raid moments: at most one random event per pull, rolled from the seed. Good moments are more
+  -- likely in a raid with chemistry, bad ones in a raid with low skill.
+  if #raid > 0 and inputs.moments ~= false and rng:chance(D.MOMENTS.chance) then
+    local M = D.MOMENTS
+    local good = M.good_base + idiv(cohesion10, 10)
+    local bad = M.bad_base + idiv(100 - avg_skill, 10)
+    local list = { {"pep", good}, {"clutch", good}, {"zone", good}, {"dc", bad}, {"early", bad}, {"repair", bad}, {"coffee", bad} }
+    local total = 0
+    for i = 1, #list do total = total + list[i][2] end
+    local r = rng:int(total)
+    local pick = list[1][1]
+    for i = 1, #list do
+      if r <= list[i][2] then pick = list[i][1]; break end
+      r = r - list[i][2]
+    end
+    local function anyone(filter)
+      local c = {}
+      for i = 1, #raid do if filter(raid[i]) then c[#c + 1] = raid[i] end end
+      if #c == 0 then return nil end
+      return c[rng:int(#c)]
+    end
+    if pick == "pep" then
+      for i = 1, #raid do raid[i].power = pm(raid[i].power, 1000 + M.pep_power) end
+      log(40, 0, 0, "The raid leader gives a speech nobody will forget. Everyone hits a little harder.")
+    elseif pick == "clutch" then
+      moments.clutch = M.clutch_saves
+      for i = 1, #raid do raid[i].crit = raid[i].crit + M.lucky_crit end
+      log(41, 0, 1, "Everyone feels lucky tonight. Crits everywhere.")
+    elseif pick == "zone" then
+      local p = anyone(function(x) return x.role == "damage" end)
+      if p then p.zone_bonus = M.zone_rounds; log(42, p.slot, 0, p.name .. " is in the zone.") end
+    elseif pick == "dc" then
+      local p = anyone(function(x) return true end)
+      p.skip_from, p.skip_to = 3, 5
+      log(43, p.slot, 0, p.name .. " disconnects. Back in round 6, hopefully.")
+    elseif pick == "early" then
+      moments.early = true
+      for i = 1, #raid do if raid[i].role == "damage" then raid[i].skip_from, raid[i].skip_to = 1, 1 end end
+      log(44, 0, 1, "Someone pulls before the tanks are ready. Round 1 is chaos.")
+    elseif pick == "repair" then
+      local p = anyone(function(x) return x.role == "damage" end)
+      if p then
+        p.power = pm(p.power, 1000 - M.repair_power)
+        log(45, p.slot, 0, p.name .. " forgot to repair. Red gear, sad numbers.")
+      end
+    elseif pick == "coffee" then
+      local p = anyone(function(x) return x.role == "healer" end)
+      if p then p.skip_from, p.skip_to = 1, M.coffee_rounds; log(46, p.slot, 0, p.name .. " is still getting coffee.") end
+    end
+  end
+
   local result = "enrage"
   while true do
     round = round + 1
@@ -273,6 +363,7 @@ function ns.Simulate(inputs)
             else
               log(23, v.slot, 0, boss.name .. " throws " .. v.name .. " into the lava.")
               local burn = pm(pm(pm(v.maxhp, mode.throw), tac.taken), 1000 - v.firered)
+              burn = pm(burn, 1000 - D.FAMILIARITY.per_point * v.fam)
               v.hp = v.hp - burn
               if v.hp <= 0 then kill(v, 23) end
             end
@@ -281,10 +372,24 @@ function ns.Simulate(inputs)
       end
       -- Melee on the current target.
       target = pick_tank(target)
+      local early_hit = false
+      if moments.early and round <= D.MOMENTS.early_rounds then
+        if round == 1 then
+          local nt = {}
+          for i = 1, #raid do if raid[i].alive and raid[i].role ~= "tank" then nt[#nt + 1] = raid[i] end end
+          if #nt > 0 then
+            moments.early_target = nt[rng:int(#nt)]
+            log(44, moments.early_target.slot, 0, boss.name .. " turns on " .. moments.early_target.name .. " before the tanks are ready.")
+          end
+        end
+        local et = moments.early_target
+        if et and et.alive then target = et; early_hit = true end
+      end
       if inputs.trace and target then inputs.trace[#inputs.trace + 1] = target.slot end
       if target then
         local hit = pm(boss_def.melee, mode_dmg)
         if target.class == "paladin" and target.spec == "protection" then hit = pm(hit, 1050) end
+        if early_hit then hit = pm(hit, D.MOMENTS.early_hit) end
         damage(target, boss_hit(hit), 24, false)
       end
       -- Magma Splash every 2nd round on a zone picked by the seed.
@@ -294,12 +399,22 @@ function ns.Simulate(inputs)
         if #list > 0 then
           if tac.area_single then
             local v = list[rng:int(#list)]
-            log(25, v.slot, 1, "Magma Splash hits " .. v.name .. ".")
-            damage(v, boss_hit(pm(boss_def.splash, mode_dmg)), 25, true)
+            if rng:chance(idiv(v.skill * D.SKILL.dodge, 100)) then
+              log(35, v.slot, 0, v.name .. " sidesteps the Magma Splash.")
+            else
+              log(25, v.slot, 1, "Magma Splash hits " .. v.name .. ".")
+              damage(v, boss_hit(pm(boss_def.splash, mode_dmg)), 25, true)
+            end
           else
             log(25, #list, 0, "Magma Splash hits the " .. zone .. " zone.")
             local splash = boss_hit(pm(boss_def.splash, mode_dmg))
-            for i = 1, #list do damage(list[i], splash, 25, true) end
+            for i = 1, #list do
+              if rng:chance(idiv(list[i].skill * D.SKILL.dodge, 100)) then
+                log(35, list[i].slot, 0, list[i].name .. " sidesteps the Magma Splash.")
+              else
+                damage(list[i], splash, 25, true)
+              end
+            end
           end
         end
       end
@@ -329,7 +444,7 @@ function ns.Simulate(inputs)
     if tac.area_single then healmul = tac.heal end
     for k = 1, #order do
       local p = order[k]
-      if p.alive then
+      if p.alive and (round < p.skip_from or round > p.skip_to) then
         if p.role == "healer" then
           local cost = pm(D.HEAL_COST, tac.mana)
           local list = alive_in(nil)
@@ -343,6 +458,9 @@ function ns.Simulate(inputs)
               if big then amount = pm(amount, D.BIG_HEAL_MULT) end
               local crit_amt, did = roll(p, amount)
               if did and p.class == "paladin" then p.mana = p.mana + 6 end -- Illumination
+              if t.role == "tank" and bond[p.slot][t.slot] then
+                crit_amt = pm(crit_amt, 1000 + D.CHEMISTRY.tank_heal * bond[p.slot][t.slot])
+              end
               p.healed = p.healed + heal(t, crit_amt)
               -- Spec extras.
               if p.class == "priest" and p.spec == "holy" then
@@ -374,6 +492,7 @@ function ns.Simulate(inputs)
             if p.mana >= cost then p.mana = p.mana - cost else amount = idiv(amount, 2) end
           end
           amount = pm(amount, tac.dmg)
+          if p.zone_bonus >= round then amount = pm(amount, 1000 + D.MOMENTS.zone_power) end
           -- Meeting 2026-11-18: melee specs outside the Melee zone, and tanks outside Front, hit at half.
           if (D.MELEE_SPECS[p.class .. ":" .. p.spec] and p.zone ~= "melee") or (p.role == "tank" and p.zone ~= "front") then
             amount = idiv(amount, 2)
@@ -417,7 +536,9 @@ function ns.Simulate(inputs)
             if p.class == "warrior" and p.spec == "arms" and boss.hp * 1000 < boss.maxhp * 200 then dealt = pm(dealt, 1300) end
             if p.class == "warlock" and p.spec == "destruction" and boss.hp * 1000 < boss.maxhp * 100 then dealt = pm(dealt, 2000) end
             boss.hp = boss.hp - dealt; p.dealt = p.dealt + dealt
-            p.threat = p.threat + pm(pm(dealt, p.threatmul), tac.threat)
+            local th = pm(pm(dealt, p.threatmul), tac.threat)
+            if p.zone_bonus >= round then th = pm(th, 1000 - D.MOMENTS.zone_threat) end  -- in the zone: watching threat too
+            p.threat = p.threat + th
             if p.class == "priest" and p.spec == "shadow" then
               local zl = alive_in(p.zone)
               for i = 1, #zl do heal(zl[i], pm(dealt, 150)) end

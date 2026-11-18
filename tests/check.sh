@@ -12,7 +12,7 @@ b=$(node tests/run_fengari.js)
 c=$(python3 -c "
 import lupa.luajit21 as lj
 L=lj.LuaRuntime()
-for f in ['engine/rng.lua','engine/data.lua','engine/sim.lua']: L.execute(open(f).read())
+for f in ['engine/rng.lua','engine/data.lua','engine/sim.lua','engine/progress.lua']: L.execute(open(f).read())
 print(L.execute(open('tests/fuzz.lua').read()))")
 d=$(node tests/fuzz_fengari.js)
 [ "$a" == "$b" ] || { echo "MISMATCH golden: Lua 5.1 vs Fengari"; exit 1; }

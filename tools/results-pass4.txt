@@ -1,0 +1,41 @@
+Tuning pass 4 (2026-11-18): skill, familiarity, chemistry, raid moments. Engine v5.
+1. Kill % by experience profile (Spread/Burn)
+  normal  baseline  unprepared:  74/ 69  partial:  95/ 98  full:  99/100  min-maxed: 100/100
+  normal  fresh     unprepared:  76/ 73  partial:  95/ 98  full:  99/100  min-maxed: 100/100
+  normal  typical   unprepared:  85/ 83  partial:  98/ 99  full:  99/100  min-maxed: 100/100
+  normal  veteran   unprepared:  89/ 91  partial:  99/ 99  full:  99/100  min-maxed: 100/100
+  heroic  baseline  unprepared:   1/  0  partial:  11/ 13  full:  36/ 52  min-maxed:  88/ 97
+  heroic  fresh     unprepared:   0/  0  partial:  12/ 15  full:  37/ 54  min-maxed:  88/ 97
+  heroic  typical   unprepared:   2/  1  partial:  20/ 22  full:  45/ 66  min-maxed:  93/ 98
+  heroic  veteran   unprepared:   4/  3  partial:  28/ 31  full:  51/ 78  min-maxed:  95/ 99
+  mythic  baseline  unprepared:   0/  0  partial:   0/  0  full:   0/  0  min-maxed:   8/ 25
+  mythic  fresh     unprepared:   0/  0  partial:   0/  0  full:   0/  0  min-maxed:   9/ 27
+  mythic  typical   unprepared:   0/  0  partial:   0/  0  full:   0/  1  min-maxed:  15/ 38
+  mythic  veteran   unprepared:   0/  0  partial:   0/  0  full:   0/  4  min-maxed:  24/ 48
+2. Raid moments on vs off (fresh and veteran, Spread)
+  normal  unprepared fresh    on  75.8  off  76.2  net  -0.3
+  normal  unprepared veteran  on  88.7  off  88.7  net  +0.0
+  heroic  full       fresh    on  37.2  off  40.0  net  -2.8
+  heroic  full       veteran  on  51.3  off  51.2  net  +0.2
+  mythic  min-maxed  fresh    on   9.0  off   8.5  net  +0.5
+  mythic  min-maxed  veteran  on  24.0  off  24.3  net  -0.3
+5. Which moments fire (veteran vs fresh, heroic full)
+  fresh    none 64%  pep talk 5%  lucky 4%  in the zone 4%  disconnect 6%  early pull 5%  no repair 7%  coffee 5%
+  veteran  none 64%  pep talk 10%  lucky 8%  in the zone 8%  disconnect 2%  early pull 3%  no repair 3%  coffee 2%
+3. Ten-week campaign, heroic full prep, Spread, 5 pulls a week (200 guilds)
+  week    1    2    3    4    5    6    7    8    9   10
+  kill   44   45   46   48   49   51   52   53   54   55
+  after week 10: average skill 61, familiarity 9.6
+4. Week 8-10 kill %: same ten vs bench two vs two quit at week 7 (heroic full, Spread)
+  same ten    54.1
+  bench two   52.1
+  two quit    52.2
+6. Kill % when each moment fires vs no moment (typical raid, heroic full, Spread)
+  none          42.5%  (2598 pulls)
+  pep talk      47.1%  (274 pulls)
+  lucky         45.6%  (274 pulls)
+  in the zone   47.4%  (266 pulls)
+  disconnect    38.7%  (150 pulls)
+  early pull    30.6%  (147 pulls)
+  no repair     40.2%  (164 pulls)
+  coffee        40.2%  (127 pulls)

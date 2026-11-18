@@ -105,8 +105,8 @@ D.WORLD_BUFFS = {
 D.MODES = {
   -- throw = lava throw damage as per-mille of max health (meeting 2026-11-18)
   normal = { hp = 1000, dmg = 750,  throw = 700 },  -- pass 3: Normal fire is softer (dmg was 1000)
-  heroic = { hp = 1345, dmg = 1300, throw = 750 },  -- Tuning pass 3 (2026-11-18): prep-first targets
-  mythic = { hp = 1950, dmg = 1700, throw = 800 },  -- Tuning pass 2 (2026-11-18)
+  heroic = { hp = 1400, dmg = 1300, throw = 750 },  -- pass 4: targets now for a "typical" raid (skill 50, fam 5, chem 8)
+  mythic = { hp = 2035, dmg = 1700, throw = 800 },  -- pass 4: typical raid, was 1950
 }
 
 -- Ragnaroast (design doc 6.1). Numbers are TUNING ASSUMPTIONS unless noted.
@@ -130,5 +130,13 @@ D.BOSSES = {
 D.FIRE = { piece = 60, piece_power = 30, aura = 40, per_point = 35, cap = 600 }
 D.BOSS_CRIT, D.BOSS_CRIT_MULT = 100, 1500   -- boss hits crit 10% for 1.5x (pass 3)
 D.TANK_HEAL_PRIORITY = 150                   -- healers treat tanks as 15% lower (pass 3)
+
+-- Player skill, boss familiarity, chemistry and raid moments (2026-11-18). Per-mille values.
+D.SKILL = { power = 20, dodge = 80, threat = 100 }          -- at skill 100: +2% power, 8% dodge, -10% threat
+D.FAMILIARITY = { cap = 10, per_point = 6, power = 2 }      -- at 10: 6% less mechanic damage and +2% power on that boss
+D.CHEMISTRY = { cap = 20, power = 20, tank_heal = 3 }       -- full cohesion: +2% power; bond 20: +6% heals on that tank
+D.MOMENTS = { chance = 350, good_base = 10, bad_base = 5,   -- 35% of pulls get one moment
+  pep_power = 15, zone_power = 400, zone_rounds = 6, zone_threat = 500, clutch_saves = 1, clutch_hp = 300, lucky_crit = 40,
+  repair_power = 300, coffee_rounds = 3, early_rounds = 2, early_hit = 1500 }
 
 D.MAX_ROUNDS = 20  -- round 21 is the enrage (design doc 5)

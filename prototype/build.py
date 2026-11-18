@@ -1,7 +1,7 @@
 """Builds prototype/index.html: the page template with the engine's Lua files embedded."""
 import json, os
 root = os.path.join(os.path.dirname(__file__), "..")
-files = ["engine/rng.lua", "engine/data.lua", "engine/sim.lua", "prototype/api.lua"]
+files = ["engine/rng.lua", "engine/data.lua", "engine/sim.lua", "engine/progress.lua", "prototype/api.lua"]
 srcs = [open(os.path.join(root, f)).read() for f in files]
 page = open(os.path.join(root, "prototype/page.html")).read()
 blob = json.dumps(srcs).replace("</", "<\\/")

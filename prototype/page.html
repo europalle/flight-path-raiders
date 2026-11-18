@@ -82,6 +82,8 @@ ol.log li.death { color: var(--bad); font-weight: 600; }
 ol.log li.save { color: var(--good); }
 ol.log li.throw { color: var(--lava); }
 ol.log li.aggro { color: var(--warn); font-weight: 600; }
+ol.log li.good, ol.log li.bad { font-weight: 600; border-left: 3px solid var(--good); padding-left: 6px; }
+ol.log li.bad { border-left-color: var(--bad); }
 .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
 @media (max-width: 560px) { .stats { grid-template-columns: minmax(0, 1fr); } }
 .stat { border: 1px solid var(--rule); border-radius: 8px; padding: 10px 12px; }
@@ -98,6 +100,7 @@ ol.log li.aggro { color: var(--warn); font-weight: 600; }
 .note { color: var(--muted); font-size: .85rem; margin-top: 24px; max-width: 80ch; }
 .note b { color: var(--ink); }
 button.prep { font: 600 .85rem/1 var(--body); padding: 8px 12px; }
+button.exp[aria-pressed="true"] { outline: 2px solid var(--accent, currentColor); outline-offset: 1px; }
 .hint { color: var(--muted); font-size: .82rem; margin: 6px 0 0; }
 .status { font-size: .85rem; color: var(--muted); min-height: 1.4em; }
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
@@ -156,6 +159,14 @@ button.prep { font: 600 .85rem/1 var(--body); padding: 8px 12px; }
           <button type="button" class="prep" data-prep="minmax">Min-maxed</button>
         </div>
         <p class="hint">Sets cauldrons, world buffs, fire gear and potions in one click. Fire gear and Fire Protection Potions are the answer to Ragnaroast.</p>
+        <h3>Raid experience</h3>
+        <div class="chips" id="expButtons">
+          <button type="button" class="prep exp" data-exp="fresh">Fresh guild</button>
+          <button type="button" class="prep exp" data-exp="typical" aria-pressed="true">A few weeks in</button>
+          <button type="button" class="prep exp" data-exp="veteran">Veterans</button>
+          <label class="chip"><input type="checkbox" id="moments" checked> Raid moments <small>random events, about 1 pull in 3</small></label>
+        </div>
+        <p class="hint" id="expHint"></p>
         <h3>Tactic card</h3>
         <div class="cards" role="radiogroup" aria-label="Tactic card">
           <label class="card"><input type="radio" name="tactic" value="spread" id="t-spread" checked><b>Spread</b><span>Splash hits one character; healing -10%</span></label>
@@ -179,6 +190,7 @@ button.prep { font: 600 .85rem/1 var(--body); padding: 8px 12px; }
           <button type="button" class="primary" id="pull" disabled>Pull</button>
           <button type="button" id="sim" disabled>Simulate 1,000 pulls</button>
           <button type="button" id="cmp" disabled>Compare tactic cards</button>
+          <button type="button" id="season" disabled>Play a 10-week season</button>
         </div>
         <div class="status" id="status" aria-live="polite"></div>
       </div>
@@ -190,14 +202,14 @@ button.prep { font: 600 .85rem/1 var(--body); padding: 8px 12px; }
         <div id="fightBody"><p class="empty">Press Pull to run the fight. The report shows here: the result, Ragnaroast's health, your raid and what happened each round.</p></div>
       </div>
       <div class="panel" id="simPanel">
-        <h2>1,000 pulls</h2>
-        <div id="simBody"><p class="empty">Simulate 1,000 pulls runs this exact raid against 1,000 different seeds. Compare tactic cards runs 250 pulls per card.</p></div>
-        <p class="target">Heroic targets: unprepared under 10%, partly prepared 20-40%, fully prepared 40-60%, min-maxed 70%+. Normal: about 70% unprepared. Mythic: 30-40% min-maxed. Ragnaroast&#39;s right card is Burn.</p>
+        <h2>Simulations</h2>
+        <div id="simBody"><p class="empty">Simulate 1,000 pulls runs this exact raid against 1,000 different seeds. Compare tactic cards runs 250 pulls per card. Play a 10-week season starts these ten as a brand-new guild and raids 5 pulls a week, 20 times over, so you can watch them get better together.</p></div>
+        <p class="target">Targets are for a raid a few weeks in. Heroic: unprepared under 10%, partly prepared 20-40%, fully prepared 40-60%, min-maxed 70%+. Normal (fresh guild): about 70% unprepared. Mythic: 30-40% min-maxed. Veterans add about 15 points on fully prepared Heroic. Ragnaroast&#39;s right card is Burn.</p>
       </div>
     </section>
   </div>
 
-  <p class="note"><b>Prototype, engine version <span id="ev">1</span>.</b> Traits, morale, loot and the other bosses are not in yet. Melee specs outside the Melee zone, and tanks outside Front, hit at half damage. Ragnaroast's throw, splash and adds are fire: fire resistance from gear and a paladin aura or shaman totem cuts it, up to 60%. Values for food, elixirs, flasks, crit and Ragnaroast's damage are Tuning's first guesses, set in the engine's balance data. Each fight's checksum is identical in this browser and in Lua 5.1, the version WoW runs.</p>
+  <p class="note"><b>Prototype, engine version <span id="ev">1</span>.</b> Traits, morale, loot and the other bosses are not in yet. Skill (0-100), boss familiarity (0-10) and chemistry between pairs (0-20) each add up to about +2% power; skill also dodges Magma Splash, familiarity cuts mechanic damage and a tank's bond with a healer boosts that healer's heals on them. Melee specs outside the Melee zone, and tanks outside Front, hit at half damage. Ragnaroast's throw, splash and adds are fire: fire resistance from gear and a paladin aura or shaman totem cuts it, up to 60%. Values for food, elixirs, flasks, crit and Ragnaroast's damage are Tuning's first guesses, set in the engine's balance data. Each fight's checksum is identical in this browser and in Lua 5.1, the version WoW runs.</p>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/fengari-web@0.1.4/dist/fengari-web.js"></script>
@@ -269,7 +281,11 @@ function readInput() {
   const tactic = document.querySelector('input[name="tactic"]:checked').value;
   const gl = Math.max(50, Math.min(90, Math.round(Number($("gl").value) || 60)));
   const seed = Math.min(2147483646, Math.max(1, Math.round(Math.abs(Number($("seed").value))) || 1));
-  return { boss: "ragnaroast", mode: $("mode").value, seed, tactic, gl,
+  const x = EXP[expLevel];
+  raid.forEach(c => { c.skill = x.skill; c.fam = x.fam; });
+  const pairs = [];
+  if (x.chem) for (let a = 1; a <= 10; a++) for (let b = a + 1; b <= 10; b++) pairs.push({ a, b, v: x.chem });
+  return { boss: "ragnaroast", mode: $("mode").value, seed, tactic, gl, pairs, moments: $("moments").checked,
     consumables: { food: $("c-food").checked, elixirs: $("c-elixirs").checked, flasks: $("c-flasks").checked },
     buffs: { dragonslayer: $("b-dragonslayer").checked, songbloom: $("b-songbloom").checked, warchief: $("b-warchief").checked }, raid };
 }
@@ -287,7 +303,8 @@ function renderFight(r, inp) {
   const head = kill ? `KILL in round ${r.rounds}` : (r.result === "wipe" ? `WIPE in round ${r.rounds}` : "ENRAGE in round 21");
   const why = kill ? `${r.survivors} of 10 standing` : (r.result === "wipe" ? "Every tank and healer died" : "The raid ran out of time");
   const pct = Math.round(100 * r.bossHp / r.bossMax);
-  const cls = { 31: "death", 30: "save", 34: "save", 32: "save", 23: "throw", 28: "aggro", 22: "save" };
+  const cls = { 31: "death", 30: "save", 34: "save", 32: "save", 23: "throw", 28: "aggro", 22: "save", 35: "save",
+    40: "good", 41: "good", 42: "good", 43: "bad", 44: "bad", 45: "bad", 46: "bad" };
   $("fightBody").innerHTML = `
     <div class="banner ${kill ? "kill" : "fail"}"><span class="big">${head}</span><span>${why}</span></div>
     <div class="bosshp"><b>Ragnaroast</b><div class="bar" role="img" aria-label="Boss health ${pct}%"><i style="width:${pct}%"></i></div><span class="mono">${r.bossHp.toLocaleString()} / ${r.bossMax.toLocaleString()}</span></div>
@@ -296,7 +313,7 @@ function renderFight(r, inp) {
     <ol class="log">${r.events.map(e => `<li class="${cls[e.c] || ""}"><span class="r">${e.r ? "R" + e.r : "Pull"}</span><span>${esc(e.t)}</span></li>`).join("")}</ol>`;
 }
 
-function busy(on, msg) { ["pull", "sim", "cmp"].forEach(id => $(id).disabled = on); $("status").textContent = msg || ""; }
+function busy(on, msg) { ["pull", "sim", "cmp", "season"].forEach(id => $(id).disabled = on); $("status").textContent = msg || ""; }
 
 async function batch(inp, total, onProgress) {
   const chunk = 50; const sum = { n: 0, kills: 0, wipes: 0, enrages: 0, killRounds: 0, deaths: 0, survivors: 0, throw: 0, melee: 0, splash: 0, adds: 0 };
@@ -317,6 +334,35 @@ const PREPS = {
   full: { cons: ["food", "elixirs", "flasks"], buffs: [], gear: { front: 2, melee: 2, ranged: 1, back: 1 }, potion: ["melee", "front"] },
   minmax: { cons: ["food", "elixirs", "flasks"], buffs: ["dragonslayer", "songbloom", "warchief"], gear: { front: 2, melee: 2, ranged: 2, back: 2 }, potion: ["melee", "front", "ranged", "back"] },
 };
+const EXP = {
+  fresh: { skill: 30, fam: 0, chem: 0, hint: "Fresh guild: skill 30, never seen Ragnaroast, no chemistry yet. Bad moments are more likely." },
+  typical: { skill: 50, fam: 5, chem: 8, hint: "A few weeks in: skill 50, familiarity 5, chemistry 8 between every pair. Tuning's targets are set for this raid." },
+  veteran: { skill: 75, fam: 10, chem: 16, hint: "Veterans: skill 75, familiarity 10 (max), chemistry 16. Good moments are more likely." },
+};
+let expLevel = "typical";
+function applyExp(name) {
+  expLevel = name;
+  document.querySelectorAll("button.exp").forEach(b => b.setAttribute("aria-pressed", b.dataset.exp === name ? "true" : "false"));
+  $("expHint").textContent = EXP[name].hint;
+}
+async function season() {
+  const inp = readInput(); delete inp.pairs;
+  inp.raid.forEach(c => { delete c.skill; delete c.fam; });
+  busy(true, "Playing seasons...");
+  const N = 20, W = 10, PULLS = 5, wk = Array.from({ length: W }, () => ({ kills: 0, good: 0, bad: 0, skill: 0, fam: 0, chem: 0 }));
+  for (let s = 0; s < N; s++) {
+    const r = JSON.parse(lua(`return FPR_API.Season(${toLua({ ...inp, seed: ((inp.seed + s * 7919) % 2147483646) + 1 })}, ${W}, ${PULLS})`));
+    r.forEach((w, i) => { for (const k in wk[i]) wk[i][k] += w[k]; });
+    $("status").textContent = `Season ${s + 1} of ${N}`;
+    await new Promise(res => setTimeout(res, 0));
+  }
+  const rows = wk.map((w, i) => ({ w: i + 1, rate: w.kills / (N * PULLS), good: w.good / N, bad: w.bad / N, skill: w.skill / N / 10, fam: w.fam / N / 10, chem: w.chem / N / 10 }));
+  $("simBody").innerHTML = `<p class="hint" style="margin-top:0">These ten as a brand-new guild, 5 pulls a week, averaged over ${N} seasons. Only the first 3 pulls on a boss each week teach anything.</p>
+    <table class="cmp"><thead><tr><th>Week</th><th>Kill rate</th><th style="width:34%"></th><th>Skill</th><th>Familiarity</th><th>Chemistry</th></tr></thead><tbody>${rows.map(r =>
+    `<tr><td>${r.w}</td><td class="num">${(100 * r.rate).toFixed(0)}%</td><td><div class="bar"><i style="width:${100 * r.rate}%"></i></div></td><td class="num">${r.skill.toFixed(0)}</td><td class="num">${r.fam.toFixed(1)}</td><td class="num">${r.chem.toFixed(1)}</td></tr>`).join("")}</tbody></table>
+    <p class="hint" style="margin:8px 0 0">Raid moments: ${rows[0].good.toFixed(1)} good and ${rows[0].bad.toFixed(1)} bad a week in week 1; ${rows[W - 1].good.toFixed(1)} good and ${rows[W - 1].bad.toFixed(1)} bad by week ${W}. Chemistry grows at most 1.5 a week per pair.</p>`;
+  busy(false, "");
+}
 function applyPrep(name) {
   const p = PREPS[name];
   for (const c of ["food", "elixirs", "flasks"]) $("c-" + c).checked = p.cons.includes(c);
@@ -326,7 +372,10 @@ function applyPrep(name) {
 }
 function wire() {
   loadPreset("balanced");
-  document.querySelectorAll("button.prep").forEach(b => b.addEventListener("click", () => applyPrep(b.dataset.prep)));
+  document.querySelectorAll("button.prep:not(.exp)").forEach(b => b.addEventListener("click", () => applyPrep(b.dataset.prep)));
+  document.querySelectorAll("button.exp").forEach(b => b.addEventListener("click", () => applyExp(b.dataset.exp)));
+  applyExp("typical");
+  $("season").addEventListener("click", season);
   $("preset").addEventListener("change", e => loadPreset(e.target.value));
   $("mode").addEventListener("change", e => { $("gl").value = GL_FOR[e.target.value]; });
   $("reroll").addEventListener("click", () => { $("seed").value = 1 + Math.floor(Math.random() * 2147483000); });

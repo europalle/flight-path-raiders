@@ -55,3 +55,48 @@ function API.Batch(input, n, from)
     ',"killRounds":' .. num(krounds) .. ',"deaths":' .. num(deaths) .. ',"survivors":' .. num(survivors) ..
     ',"throw":' .. num(cause[23]) .. ',"melee":' .. num(cause[24]) .. ',"splash":' .. num(cause[25]) .. ',"adds":' .. num(cause[26]) .. '}'
 end
+
+-- Plays a season with this raid as a brand-new guild (everyone starts at skill 30, no history):
+-- `pulls` pulls a week for `weeks` weeks through engine/progress.lua. Returns a JSON list per week:
+-- kills, and the raid's average skill, familiarity and chemistry after the week (in tenths).
+function API.Season(input, weeks, pulls)
+  local P = ns.Progress
+  local g = P.NewGuild()
+  local ids = {}
+  for i = 1, #input.raid do ids[i] = P.Recruit(g, "uncommon").id end
+  local base = input.seed
+  local out = {}
+  for w = 1, weeks do
+    local k, good, bad = 0, 0, 0
+    for p = 1, pulls do
+      local f, pl = P.RaidFields(g, ids, input.boss)
+      for i = 1, #input.raid do input.raid[i].skill = f[i].skill; input.raid[i].fam = f[i].fam end
+      input.pairs = pl
+      input.seed = ns.Seed(base, w * 100 + p)
+      local r = ns.Simulate(input)
+      if r.result == "kill" then k = k + 1 end
+      for e = 1, #r.events do
+        local c = r.events[e].code
+        if r.events[e].round == 0 then
+          if c == 40 or c == 41 or c == 42 then good = good + 1 elseif c >= 43 and c <= 46 then bad = bad + 1 end
+        end
+      end
+      P.AfterPull(g, ids, input.boss, r.result == "kill")
+    end
+    local sk, fam, chem, np = 0, 0, 0, 0
+    for i = 1, #ids do
+      local m = g.by_id[ids[i]]
+      sk = sk + m.skill10; fam = fam + (m.fam10[input.boss] or 0)
+      for j = i + 1, #ids do chem = chem + P.Bond(g, ids[i], ids[j]); np = np + 1 end
+    end
+    local n = #ids
+    out[#out + 1] = '{"w":' .. num(w) .. ',"kills":' .. num(k) .. ',"good":' .. num(good) .. ',"bad":' .. num(bad) ..
+      ',"skill":' .. num((sk - sk % n) / n) .. ',"fam":' .. num((fam - fam % n) / n) ..
+      ',"chem":' .. num(np > 0 and (chem - chem % np) / np or 0) .. '}'
+    P.NewWeek(g)
+  end
+  input.seed = base
+  input.pairs = nil
+  for i = 1, #input.raid do input.raid[i].skill = nil; input.raid[i].fam = nil end
+  return "[" .. table.concat(out, ",") .. "]"
+end
