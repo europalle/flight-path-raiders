@@ -70,6 +70,8 @@ if killed:
     pend = L.eval("#FlightPathRaidersDB.guild.pending")
     press("Hand out")
     check("Hand out empties the loot pile", L.eval("#FlightPathRaidersDB.guild.pending") == 0 and L.eval("FPR_NS.Board.modal == nil"), pend)
+check("saved pulls keep a replay record that rebuilds the fight", L.eval("""(function() local h = FlightPathRaidersDB.guild.history[1]
+  local rb = FPR_NS.Game.Rebuild(h.record); return rb.run ~= nil and rb.run.result == h.result and rb.run.rounds == h.rounds end)()"""))
 press("Hub")
 press("Journal")
 check("the journal records what the raid saw", "Magma pups" in text())

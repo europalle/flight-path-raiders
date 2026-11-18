@@ -691,7 +691,10 @@ function G.Pull(st, prep)
   end
   st.lastPrep[prep.boss .. ":" .. prep.mode] = { tactic = prep.tactic, cons = copy(prep.cons) }
   st.lastPull = { input = input, prep = copy(prep), result = s.result, bossPct = round(100 * s.bossHp / s.bossMax) }
-  table.insert(st.history, 1, { week = st.week, boss = prep.boss, mode = prep.mode, result = s.result, rounds = s.rounds, tactic = prep.tactic })
+  -- History keeps the replay record (inputs plus result), never the log: playback rebuilds it (engine/replay.lua).
+  local rec = ns.Replay and ns.Replay.Encode(input, { result = s.result, rounds = s.rounds, checksum = s.checksum, engine = s.engine }) or nil
+  out.record = rec
+  table.insert(st.history, 1, { week = st.week, boss = prep.boss, mode = prep.mode, result = s.result, rounds = s.rounds, tactic = prep.tactic, record = rec })
   while #st.history > 40 do table.remove(st.history) end
   return out
 end
@@ -713,6 +716,14 @@ function G.Replay(st, card)
   local s = G.Summary(ns.Simulate(input), frames)
   input.frames = nil
   return { run = s, input = input, card = card }
+end
+
+-- Watch an old pull again from its record: the fight is run again and checked against its checksum.
+function G.Rebuild(rec)
+  local r, input = ns.Replay.Verify(rec, true)
+  if not r then return { error = input } end
+  local frames = input.frames
+  return { run = G.Summary(r, frames), input = input }
 end
 
 -- ---------------------------------------------------------------- loot, dungeons, roster

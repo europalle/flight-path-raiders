@@ -6,12 +6,12 @@
 # Needs: pip install lupa; npm install fengari@0.1.5 (set FENGARI to its path if not global).
 set -e
 cd "$(dirname "$0")/.."
-ENGINE='["engine/rng.lua","engine/data.lua","engine/sim.lua", "engine/bosses.lua","engine/validate.lua","engine/progress.lua","tests/selftest.lua"]'
+ENGINE='["engine/rng.lua","engine/data.lua","engine/sim.lua", "engine/bosses.lua","engine/validate.lua","engine/progress.lua", "engine/replay.lua","tests/selftest.lua"]'
 run_lupa() {  # $1 = lupa module, $2 = test file
 python3 - "$1" "$2" <<PY
 import importlib, sys, json
 L = importlib.import_module("lupa." + sys.argv[1]).LuaRuntime()
-for f in json.loads('$ENGINE') + (["tests/fixtures.lua"] if sys.argv[2] == "tests/run.lua" else []) + (["engine/game.lua"] if sys.argv[2] == "tests/game_run.lua" else []): L.execute(open(f).read())
+for f in json.loads('$ENGINE') + (["tests/fixtures.lua"] if sys.argv[2] in ("tests/run.lua", "tests/replay_test.lua") else []) + (["engine/game.lua"] if sys.argv[2] == "tests/game_run.lua" else []): L.execute(open(f).read())
 print(L.execute(open(sys.argv[2]).read()))
 PY
 }
@@ -23,6 +23,10 @@ f51=$(run_lupa lua51 tests/fuzz.lua);  fjit=$(run_lupa luajit21 tests/fuzz.lua);
 # The game rules (engine/game.lua): three scripted seasons must agree across runtimes and match tests/golden_game.txt.
 s51=$(run_lupa lua51 tests/game_run.lua); sjit=$(run_lupa luajit21 tests/game_run.lua); sfen=$(node tests/game_fengari.js)
 [ "$s51" == "$sjit" ] && [ "$s51" == "$sfen" ] || { echo "MISMATCH game rules between Lua 5.1, LuaJIT and Fengari"; exit 1; }
+# Replay records (engine/replay.lua): same lines in every runtime, and nothing failing.
+r51=$(run_lupa lua51 tests/replay_test.lua); rjit=$(run_lupa luajit21 tests/replay_test.lua); rfen=$(node tests/replay_fengari.js)
+[ "$r51" == "$rjit" ] && [ "$r51" == "$rfen" ] || { echo "MISMATCH replay records between Lua 5.1, LuaJIT and Fengari"; exit 1; }
+echo "$r51" | grep -q "^FAIL" && { echo "$r51"; echo "FAIL: replay records"; exit 1; }
 golden="engine $version
 $g51
 $f51"
@@ -39,4 +43,4 @@ elif [ "$golden" != "$(cat tests/golden.txt)" ]; then
   fi
   echo "FAIL: engine $version gives new results (saved: engine $saved_version). If intended, run tests/check.sh --update."; exit 1
 fi
-echo "OK: engine $version, Lua 5.1, LuaJIT and Fengari agree on $(echo "$g51" | wc -l) golden fights, the fuzz run and $(echo "$s51" | wc -l) weeks of scripted seasons, and match the saved results"
+echo "OK: engine $version, Lua 5.1, LuaJIT and Fengari agree on $(echo "$g51" | wc -l) golden fights, the fuzz run and $(echo "$s51" | wc -l) weeks of scripted seasons and the replay record tests, and match the saved results"

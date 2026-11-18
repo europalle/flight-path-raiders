@@ -3,7 +3,7 @@
 const path = require('path'), fs = require('fs');
 const root = path.join(__dirname, '..');
 require(path.join(root, 'playtest/game_lua.js'));
-const SRC = ['engine/rng.lua', 'engine/data.lua', 'engine/sim.lua', 'engine/bosses.lua', 'engine/validate.lua', 'engine/progress.lua', 'engine/game.lua'].map(f => [f, fs.readFileSync(path.join(root, f), 'utf8')]);
+const SRC = ['engine/rng.lua', 'engine/data.lua', 'engine/sim.lua', 'engine/bosses.lua', 'engine/validate.lua', 'engine/progress.lua', 'engine/replay.lua', 'engine/game.lua'].map(f => [f, fs.readFileSync(path.join(root, f), 'utf8')]);
 const G = globalThis.FPR_GAME_LUA(require(process.env.FENGARI || 'fengari'), SRC);
 const ENGINE = Number(/ENGINE_VERSION = (\d+)/.exec(fs.readFileSync(path.join(root, 'engine/sim.lua'), 'utf8'))[1]);
 const sorted = v => Array.isArray(v) ? v.map(sorted) : v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort().map(k => [k, sorted(v[k])])) : v;
@@ -64,6 +64,9 @@ for (let g = 0; g < 25; g++) {
 const script = seed => { const st = G.newGame(seed); for (let w = 0; w < 3; w++) { while (st.dungeonsLeft > 0) G.dungeon(st);
   for (const b of G.BOSSES.slice(0, 3)) { const pr = G.defaultPrep(st, b.id, 'normal'); pr.tactic = b.card; G.pull(st, pr); }
   while (st.pending.length) G.assignPending(st, 0, G.suggestFor(st, st.pending[0]).to); G.endWeek(st); } return JSON.parse(JSON.stringify(st)); };
+{ const st = G.newGame(31); const pr = G.defaultPrep(st, 'magmadad', 'normal'); const o = G.pull(st, pr); const rb = G.rebuild(st.history[0].record);
+  check('a saved pull rebuilds from its record, log and all', rb.run && rb.run.checksum === o.run.checksum && rb.run.events.length === o.run.events.length && rb.run.frames.length === o.run.rounds, rb.error);
+  check('records are small enough to keep 40 in a save', st.history[0].record.length < 700, st.history[0].record.length); }
 check('the rules are deterministic', same(script(77), script(77)), 'determinism');
 console.log(`Playtest QA: 25 guilds x 8 weeks, ${pulls} pulls`);
 const keys = Object.keys(fails); if (!keys.length) console.log('All checks passed');

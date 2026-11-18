@@ -2,7 +2,7 @@
 import json, os
 root = os.path.join(os.path.dirname(__file__), "..")
 rd = lambda f: open(os.path.join(root, f)).read()
-LUA = ["engine/rng.lua", "engine/data.lua", "engine/sim.lua", "engine/bosses.lua", "engine/validate.lua", "engine/progress.lua", "engine/game.lua"]
+LUA = ["engine/rng.lua", "engine/data.lua", "engine/sim.lua", "engine/bosses.lua", "engine/validate.lua", "engine/progress.lua", "engine/replay.lua", "engine/game.lua"]
 lua = [[f, rd(f)] for f in LUA]
 page = rd("playtest/page.html")
 page = page.replace("/*__LUA__*/[]", json.dumps(lua).replace("</", "<\\/"))

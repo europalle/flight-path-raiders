@@ -112,6 +112,7 @@
       buyFire: (st, id) => call("BuyFire", id),
       respec: (st, id, spec) => call("Respec", id, spec),
       endWeek: st => call("EndWeek"),
+      rebuild: rec => ret(`FPR_ENGINE.Game.Rebuild(${toLua(rec)})`),
     };
     return G;
   }
