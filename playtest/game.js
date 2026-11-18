@@ -40,6 +40,56 @@
   const CARD_TEXT = { spread: "Splash hits one character; healing -10%", stack: "Healing +15%; area hits land on everyone nearby",
     burn: "Damage +10%, threat +25%; heals cost 20% more mana", playsafe: "Damage -5%; everyone takes 15% less" };
 
+  // Traits (design doc 4.4). Fight effects run in the engine; the guild effects (loot, morale, quitting) run here.
+  const TRAITS = {
+    pulls_on_cooldown: { name: "Pulls on Cooldown", text: "+20% damage and threat, but starts the pull before the healers finish drinking (healers at 60% mana)." },
+    needs_on_everything: { name: "Needs on Everything", text: "15% chance to grab loot you gave someone else." },
+    stands_in_fire: { name: "Stands in Fire", text: "Takes 25% more damage from boss mechanics." },
+    never_stands_in_fire: { name: "Never Stands in Fire", text: "Immune to ground effects: Magma Splash, the Frown, someone else's bomb. Rare." },
+    afk_on_trash: { name: "AFK on Trash", text: "Skips the trash gauntlet. (Trash arrives later; no effect in this build.)" },
+    main_spec_loot_only: { name: "Main-Spec Loot Only", text: "Loses 3 morale whenever someone else gets gear." },
+    raid_leaders_favourite: { name: "Raid Leader's Favourite", text: "+10 morale for everyone in the raid while present." },
+    parse_goblin: { name: "Parse Goblin", text: "+15% damage, but ignores mechanics: 20% more mechanic damage." },
+    alt_tabbed: { name: "Alt-Tabbed", text: "10% chance each round to do nothing at all." },
+    partner_aggro: { name: "Partner Aggro", text: "20% chance per pull to log off after round 10. \"Sorry guys, gotta go.\"" },
+    discord_lawyer: { name: "Discord Lawyer", text: "Loot drama happens twice as often." },
+    rage_quitter: { name: "Rage Quitter", text: "On a wipe, 10% chance to quit the guild on the spot." },
+    hardcore_andy: { name: "Hardcore Andy", text: "+10% health and power. Refuses Battle Res on principle." },
+    backseat_raid_leader: { name: "Backseat Raid Leader", text: "Makes the tactic card 5% stronger; costs the raid 2 morale per pull." },
+    keyboard_turner: { name: "Keyboard Turner", text: "-2 speed, but never pulls aggro." },
+    main_character: { name: "Main Character Syndrome", text: "+10% power for the week after getting loot; others who wanted it lose 2 morale." },
+    gear_score_elitist: { name: "Gear Score Elitist", text: "Loses 1 morale per pull for each raider below their gear level." },
+    pug_hero: { name: "Pug Hero", text: "+10% power with at least two new recruits (joined in the last 2 weeks) in the raid." },
+    pet_on_aggressive: { name: "Pet on Aggressive", text: "15% chance per pull to bring an extra pack for the first 3 rounds." },
+  };
+  const MORALE = { start: 70, kill: 3, loot: 6, wipe: 3, wipesCounted: 3, benched: 15, drift: 10, vibe: 80, low: 20 };  // Tuning pass 5: smaller steps so a winning raid hovers near 80 instead of living above it
+  function rollTraits(st, cls, rarity, r0) {
+    // Weighted by class and rarity (design doc 4.4): tanks pull, rogues need, hunters' pets wander; rage quitters are never epic.
+    const isTank = r0 === "tank";
+    const pool = [];
+    for (const id of Object.keys(TRAITS)) {
+      let w = 10;
+      if (id === "pulls_on_cooldown") w = isTank ? 40 : 0;
+      if (id === "needs_on_everything") w = cls === "rogue" ? 40 : 8;
+      if (id === "pet_on_aggressive") w = cls === "hunter" ? 40 : 0;
+      if (id === "never_stands_in_fire") w = rarity === "common" ? 0 : rarity === "rare" ? 4 : 12;
+      if (id === "rage_quitter") w = rarity === "epic" || rarity === "legendary" ? 0 : 8;
+      if (id === "keyboard_turner" && isTank) w = 0;
+      pool.push([id, w]);
+    }
+    const out = []; const n = rint(st, 100) <= 35 ? 2 : 1;
+    for (let k = 0; k < n; k++) {
+      const total = pool.reduce((a, [id, w]) => a + (out.includes(id) ? 0 : w), 0);
+      let x = rint(st, total);
+      for (const [id, w] of pool) { if (out.includes(id)) continue; if (x <= w) { out.push(id); break; } x -= w; }
+    }
+    return out;
+  }
+  function moraleAdd(st, c, d, why, log) {
+    const before = c.morale; c.morale = Math.max(0, Math.min(100, c.morale + d));
+    if (log && c.morale !== before) log.push({ id: c.id, name: c.name, d: c.morale - before, why });
+  }
+
   // Bosses: journal entries (found by seeing them), lines and lessons for the wipe recap.
   const BOSSES = [
     { id: "magmadad", name: "Magmadad", card: "burn",
@@ -180,7 +230,8 @@
     const look = rngNext(st) % 2;
     const c = { id: st.nextId++, name: freshName(st), cls, spec, look, race: RACES[cls][look], rarity,
       gear: {}, fire: 0, benched: false, joined: st.week,
-      skill10: ({ common: 20, rare: 40, epic: 55, legendary: 70 })[rarity] * 10, fam10: {}, pulls: {} };
+      skill10: ({ common: 20, rare: 40, epic: 55, legendary: 70 })[rarity] * 10, fam10: {}, pulls: {},
+      traits: rollTraits(st, cls, rarity, role(cls, spec)), morale: MORALE.start, looted: false };
     const [a, b] = lvlRange || ECON.startGear;
     c.gear.weapon = { name: "Starter " + (role(cls, spec) === "healer" ? "Staff" : "Weapon"), slot: "weapon", lvl: rrange(st, a, b), q: "common" };
     c.gear.armor = { name: "Hand-me-down " + ARMOR[cls][0].toUpperCase() + ARMOR[cls].slice(1), slot: "armor", type: ARMOR[cls], lvl: rrange(st, a, b), q: "common" };
@@ -189,9 +240,9 @@
   }
 
   function newGame(seed) {
-    const st = { v: 1, seed: seed, rng: (seed % 2147483646) + 1, week: 1, gold: ECON.startGold, dkp: 0, nextId: 1,
+    const st = { seed: seed, rng: (seed % 2147483646) + 1, week: 1, gold: ECON.startGold, dkp: 0, nextId: 1,
       roster: [], bonds: {}, buffs: {}, journal: {}, lessons: {}, progress: {}, history: [], loot: [], dungeonsLeft: ECON.dungeon.perWeek,
-      rerolls: 0, replays: {}, pulls: 0, news: [], score: { kills: 0, wipes: 0, rounds: 0 }, bestScore: 0 };
+      rerolls: 0, replays: {}, pulls: 0, news: [], score: { kills: 0, wipes: 0, rounds: 0 }, bestScore: 0, v: 2 };
     // A sensible but uneven starting guild: 2 tanks, 3 healers, 7 damage dealers, mostly common.
     const start = [["warrior", "protection", "rare"], ["paladin", "protection", "common"], ["priest", "holy", "rare"], ["shaman", "restoration", "common"],
       ["druid", "restoration", "common"], ["rogue", "combat", "common"], ["warrior", "fury", "common"], ["hunter", "marksmanship", "rare"],
@@ -322,7 +373,8 @@
       const c = byId(st, id); let gl = gearLevel(c);
       if (prep.mode === "heroic") gl = Math.min(ECON.heroicBand[1], Math.max(ECON.heroicBand[0], gl));
       return { name: c.name, class: c.cls, spec: c.spec, zone: prep.zones[id], potion: !!prep.potions[id], firegear: Math.min(c.fire, prep.fireOn[id] || 0),
-        skill: Math.floor(c.skill10 / 10), fam: Math.floor((c.fam10[prep.boss] || 0) / 10), gl };
+        skill: Math.floor(c.skill10 / 10), fam: Math.floor((c.fam10[prep.boss] || 0) / 10), gl,
+        traits: c.traits.slice(0, 2), morale: c.morale, new: st.week - c.joined < 2, looted: !!c.looted };
     });
     const pairs = [];
     for (let i = 0; i < prep.ids.length; i++) for (let j = i + 1; j < prep.ids.length; j++) {
@@ -393,6 +445,7 @@
 
   // Runs the pull through the engine and applies everything that follows. engine(input) returns the parsed result.
   function pull(st, prep, engine) {
+    prep.ids = prep.ids.filter(id => byId(st, id));  // someone may have quit since this plan was made
     const bad = problems(st, prep); if (bad.length) return { error: bad[0] };
     const cost = prepCost(st, prep);
     st.gold -= cost.gold;
@@ -431,6 +484,24 @@
     out.growth = { skill: before.reduce((s, b) => s + byId(st, b.id).skill10 - b.skill, 0) / before.length / 10,
       fam: before.reduce((s, b) => s + (byId(st, b.id).fam10[prep.boss] || 0) - b.fam, 0) / before.length / 10,
       chem: cohesion(st, prep.ids) - cohBefore, counted: before.some(b => (byId(st, b.id).pulls[prep.boss] || 0) <= RULES.counted_pulls) };
+    // Morale and guild traits (design doc 4.4).
+    const ml = []; out.morale = ml; out.quit = [];
+    const inRaid = prep.ids.map(id => byId(st, id));
+    // Only the first few wipes on a boss each week sting: after that everyone knew it would be a long night.
+    for (const c of inRaid) {
+      if (killed) moraleAdd(st, c, MORALE.kill, "kill", ml);
+      else if ((c.pulls[prep.boss] || 0) <= MORALE.wipesCounted) moraleAdd(st, c, -MORALE.wipe, "wipe", ml);
+    }
+    if (prep.mode === "heroic") for (const id of dead) moraleAdd(st, byId(st, id), -MORALE.benched, "benched", ml);
+    if (inRaid.some(c => c.traits.includes("backseat_raid_leader"))) for (const c of inRaid) if (!c.traits.includes("backseat_raid_leader")) moraleAdd(st, c, -2, "backseat raid leading", ml);
+    for (const c of inRaid) if (c.traits.includes("gear_score_elitist")) {
+      const below = inRaid.filter(x => x !== c && gearLevel(x) < gearLevel(c)).length; if (below) moraleAdd(st, c, -below, "carrying " + below + " undergeared raiders", ml);
+    }
+    if (!killed) for (const c of inRaid) {
+      if (c.traits.includes("rage_quitter") && rint(st, 100) <= 10) {
+        out.quit.push(c.name); dismissFree(st, c.id);
+      }
+    }
     out.found = journalFind(st, prep.boss, r);
     out.facts = facts(st, prep, input, r);
     if (!killed) { out.lesson = lessonFor(st, prep, out.facts, false); out.joke = pick(st, BOSS[prep.boss].jokes); }
@@ -459,9 +530,26 @@
 
   function assign(st, item, to) {
     if (to === "sell") { st.gold += sellValue(item); return item.name + " sold for " + sellValue(item) + " gold."; }
-    const c = byId(st, Number(to)); if (!c || !canWear(c, item)) return "Can't equip that.";
+    let c = byId(st, Number(to)); if (!c || !canWear(c, item)) return "Can't equip that.";
+    let note = "";
+    const group = (item.eligible || []).map(id => byId(st, id)).filter(Boolean);
+    // Needs on Everything: someone else in the pull grabs it first.
+    const needer = group.find(x => x !== c && x.traits.includes("needs_on_everything") && canWear(x, item) && rint(st, 1000) <= 150);
+    if (needer) { note = " " + needer.name + " rolled Need on it first. Of course they did."; c = needer; }
+    // Loot drama: 10% per item, twice as often with a Discord Lawyer around.
+    const lawyer = group.some(x => x.traits.includes("discord_lawyer"));
+    if (rint(st, 100) <= (lawyer ? 20 : 10)) {
+      const others = group.filter(x => x !== c && canWear(x, item));
+      if (others.length) { const o = others[rint(st, others.length) - 1]; moraleAdd(st, o, -5, "loot drama"); note += " Loot drama in Discord: " + o.name + " is upset (-5 morale)."; }
+    }
+    moraleAdd(st, c, MORALE.loot, "loot");
+    for (const x of group) if (x !== c && x.traits.includes("main_spec_loot_only")) moraleAdd(st, x, -3, "someone else got gear");
+    if (c.traits.includes("main_character")) {
+      c.looted = true;
+      for (const x of group) if (x !== c && canWear(x, item) && item.lvl > x.gear[item.slot].lvl) moraleAdd(st, x, -2, "wanted it");
+    }
     const old = c.gear[item.slot]; c.gear[item.slot] = { name: item.name, slot: item.slot, type: item.type, lvl: item.lvl, q: item.q };
-    return c.name + " equips " + item.name + " (" + old.lvl + " to " + item.lvl + ").";
+    return c.name + " equips " + item.name + " (" + old.lvl + " to " + item.lvl + ")." + note;
   }
 
   // Loot waiting for a decision. Boss loot goes to someone who was in the pull (Bind on Pickup).
@@ -498,6 +586,10 @@
     if (st.gold < cost) return "Not enough gold.";
     st.gold -= cost; st.rerolls++; rollTavern(st); return "New faces at the Tavern.";
   }
+  function dismissFree(st, id) {  // quitting: no gold back, bonds gone
+    st.roster = st.roster.filter(x => x.id !== id);
+    for (const k of Object.keys(st.bonds)) if (k.split("|").includes(String(id))) delete st.bonds[k];
+  }
   function dismiss(st, id) {
     const c = byId(st, id); if (!c) return "";
     st.gold += Math.round(RARITY[c.rarity].cost * ECON.dismissBack / 100);
@@ -516,16 +608,22 @@
 
   function endWeek(st) {
     st.week++; st.gold += ECON.weeklyQuests; st.dungeonsLeft = ECON.dungeon.perWeek; st.rerolls = 0; st.buffs = {}; st.freeWipe = {};
-    for (const c of st.roster) { c.benched = false; c.pulls = {}; }
+    const quits = [];
+    for (const c of st.roster.slice()) {
+      if (c.morale < MORALE.low && rint(st, 100) <= 50) { quits.push(c.name); dismissFree(st, c.id); continue; }
+      c.morale += c.morale > MORALE.start ? -Math.min(MORALE.drift, c.morale - MORALE.start) : Math.min(MORALE.drift, MORALE.start - c.morale);
+    }
+    for (const c of st.roster) { c.benched = false; c.pulls = {}; c.looted = false; }
     for (const k in st.bonds) st.bonds[k].week = 0;
     for (const b of BOSSES) { st.progress[b.id].normalWeek = false; st.progress[b.id].heroicWeek = false; st.progress[b.id].heroicWipes = 0; }
     if (st.score.kills || st.score.wipes) st.bestScore = Math.max(st.bestScore || 0, heroicScore(st));
     st.score = { kills: 0, wipes: 0, rounds: 0 };
     rollTavern(st);
-    return "Week " + st.week + ". Lockouts reset, benched raiders are back, +" + ECON.weeklyQuests + " gold from the week's quests.";
+    return "Week " + st.week + ". Lockouts reset, benched raiders are back, +" + ECON.weeklyQuests + " gold from the week's quests." +
+      (quits.length ? " Morale got too low: " + quits.join(" and ") + " left the guild." : "");
   }
 
-  root.FPR_GAME = { SPECS, CLASS_NAMES, ARMOR, BOSSES, BOSS, CARDS, CARD_TEXT, MODES, ECON, RARITY, WB, CAUSE, LESSONS,
+  root.FPR_GAME = { TRAITS, MORALE, SPECS, CLASS_NAMES, ARMOR, BOSSES, BOSS, CARDS, CARD_TEXT, MODES, ECON, RARITY, WB, CAUSE, LESSONS,
     newGame, setRules, heroicScore, role, specName, defaultZone, gearLevel, canWear, unlocked, heroicOpen, defaultPrep, prepCost, problems, warnings,
     pull, replayInfo, replay, assign, assignPending, suggestFor, dungeon, hire, reroll, dismiss, buyFire, respec, endWeek, famAvg, cohesion, bond, byId, sellValue };
 })(typeof window !== "undefined" ? window : globalThis);

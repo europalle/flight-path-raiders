@@ -22,6 +22,14 @@ for i = 1, #standard do
   veteran[i] = { name = c.name, class = c.class, spec = c.spec, zone = c.zone, fireres = c.fireres,
     skill = 40 + i * 5, fam = i - 1, gl = 55 + i * 2, firegear = (c.zone == "melee") and 2 or 0 }
 end
+local TRAIT_SETS = { {"pulls_on_cooldown"}, {"hardcore_andy"}, {"needs_on_everything","alt_tabbed"}, {"parse_goblin"}, {"stands_in_fire","main_character"},
+  {"never_stands_in_fire"}, {"pet_on_aggressive","keyboard_turner"}, {"partner_aggro","pug_hero"}, {"raid_leaders_favourite"}, {"backseat_raid_leader","rage_quitter"} }
+local quirky = {}
+for i = 1, #standard do
+  local c = standard[i]
+  quirky[i] = { name = c.name, class = c.class, spec = c.spec, zone = c.zone, fireres = c.fireres, skill = 50, fam = 4,
+    traits = TRAIT_SETS[i], morale = 50 + i * 4, new = i > 8, looted = i == 5 }
+end
 local bonds = {}
 for a = 1, 10 do for b = a + 1, 10 do bonds[#bonds + 1] = { a = a, b = b, v = (a * 7 + b * 3) % 21 } end end
 ns.Fixtures = {
@@ -40,5 +48,9 @@ ns.Fixtures = {
   -- With progression inputs (gate review): skill, familiarity, chemistry, per-character gear, fire gear, moments.
   { boss="ragnaroast", mode="normal", seed=503, tactic="burn", gl=60, raid=veteran, consumables={food=true,elixirs=true}, buffs={}, pairs=bonds },
   { boss="baron", mode="heroic", seed=504, tactic="spread", gl=65, raid=veteran, consumables={food=true,elixirs=true,flasks=true}, buffs={songbloom=true}, pairs=bonds },
+  -- With traits and morale (engine 10).
+  { boss="magmadad", mode="normal", seed=601, tactic="burn", gl=60, raid=quirky, consumables={food=true}, buffs={}, pairs=bonds },
+  { boss="ragnaroast", mode="heroic", seed=602, tactic="burn", gl=65, raid=quirky, consumables={food=true,elixirs=true,flasks=true}, buffs={}, pairs=bonds },
+  { boss="majordomo", mode="normal", seed=603, tactic="stack", gl=60, raid=quirky, consumables={}, buffs={} },
   { boss="lucifrown", mode="mythic", seed=505, tactic="playsafe", gl=74, raid=veteran, consumables={food=true,elixirs=true,flasks=true}, buffs={dragonslayer=true,warchief=true}, pairs=bonds },
 }

@@ -16,6 +16,10 @@ function T.golden()
 end
 
 -- N random fights built from the engine's own RNG, plus a 12-week guild campaign, folded into one number.
+local TRAIT_IDS = { "pulls_on_cooldown", "needs_on_everything", "stands_in_fire", "never_stands_in_fire", "afk_on_trash",
+  "main_spec_loot_only", "raid_leaders_favourite", "parse_goblin", "alt_tabbed", "partner_aggro", "discord_lawyer", "rage_quitter",
+  "hardcore_andy", "backseat_raid_leader", "keyboard_turner", "main_character", "gear_score_elitist", "pug_hero", "pet_on_aggressive" }
+
 function T.fuzz(N)
   N = N or 2000
   local D = ns.Data
@@ -46,7 +50,10 @@ function T.fuzz(N)
       local s = specs[c][gen:int(#specs[c])]
       local role = D.SPECS[c][s]
       local z = zone_for[role] or ((gen:int(2) == 1) and "melee" or "ranged")
+      local tr = {}
+      for k = 1, gen:int(3) - 1 do tr[#tr + 1] = TRAIT_IDS[gen:int(#TRAIT_IDS)] end
       raid[i] = { name = "C" .. i, class = c, spec = s, zone = z, fireres = gen:int(3) == 1, firegear = gen:int(3) - 1,
+      traits = tr, morale = gen:int(101) - 1, new = gen:int(4) == 1, looted = gen:int(5) == 1,
         skill = gen:int(121) - 11, fam = gen:int(14) - 2 }  -- out-of-range values check the clamps
     end
     local pl = {}

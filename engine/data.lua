@@ -156,4 +156,29 @@ D.MOMENTS = { chance = 350, good_base = 10, bad_base = 5,   -- 35% of pulls get 
   pep_power = 15, zone_power = 400, zone_rounds = 6, zone_threat = 500, clutch_saves = 1, clutch_hp = 300, lucky_crit = 40,
   repair_power = 300, coffee_rounds = 3, early_rounds = 2, early_hit = 1500 }
 
+-- Traits (design doc 4.4) and morale. Per-mille unless noted. Tuning pass 5 (2026-11-18).
+-- In-fight traits live here; guild traits (loot, quitting, morale changes) live in the game layer.
+D.TRAITS = {
+  pulls_on_cooldown      = { power = 200, healer_mana = 600 },        -- +20% damage and threat; healers start at 60% mana
+  needs_on_everything    = { steal = 150 },                           -- game: 15% chance to take an item meant for someone else
+  stands_in_fire         = { taken = 250 },                           -- +25% damage from boss mechanics
+  never_stands_in_fire   = {},                                        -- immune to ground effects (Magma Splash, the Frown, someone else's bomb)
+  afk_on_trash           = {},                                        -- skips the trash gauntlet (arrives with trash in production)
+  main_spec_loot_only    = { morale = 3 },                            -- game: -3 morale when anyone else gets gear
+  raid_leaders_favourite = { morale = 10 },                           -- +10 morale for everyone while present
+  parse_goblin           = { power = 150, taken = 200 },              -- +15% damage, +20% mechanic damage
+  alt_tabbed             = { chance = 100 },                          -- 10% chance per round to do nothing
+  partner_aggro          = { chance = 200, after = 10 },              -- 20% per fight: leaves after round 10
+  discord_lawyer         = { drama = 2 },                             -- game: loot drama twice as often
+  rage_quitter           = { chance = 100 },                          -- game: 10% chance to quit on a wipe (common and rare only)
+  hardcore_andy          = { stats = 100 },                           -- +10% health and power; refuses Battle Res
+  backseat_raid_leader   = { card = 50, morale = 2 },                 -- tactic card 5% stronger; game: -2 morale to the raid per pull
+  keyboard_turner        = { speed = 2 },                             -- -2 speed, never pulls aggro
+  main_character         = { power = 100, morale = 2 },               -- +10% power after getting loot this week; game: others who wanted it -2 morale
+  gear_score_elitist     = { morale = 1 },                            -- game: -1 morale per pull for each raider below their gear level
+  pug_hero               = { power = 100, new = 2 },                  -- +10% power with 2+ new recruits in the raid
+  pet_on_aggressive      = { chance = 150, rounds = 3, hit = 200 },   -- hunters: 15% per pull, an extra pack hits for 3 rounds
+}
+D.MORALE = { start = 70, vibe_at = 80, vibe_power = 50, kill = 5, loot = 10, wipe = 5, benched = 15, drift = 10, quit_below = 20, quit_chance = 500 }
+
 D.MAX_ROUNDS = 20  -- round 21 is the enrage (design doc 5)

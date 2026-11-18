@@ -24,7 +24,7 @@ const guilds = Number(process.argv[2] || 20), weeks = Number(process.argv[3] || 
 const NIGHT = 10;  // pulls per week the bot is willing to spend on Normal progress
 const stats = []; const firstNormal = {}, firstHeroic = {};
 for (const b of G.BOSSES) { firstNormal[b.id] = []; firstHeroic[b.id] = []; }
-let totalGold = [], totalGL = [], wipes = 0, pullsAll = 0, tierSeen = [0, 0, 0];
+let scores = [], totalGold = [], totalGL = [], moraleEnd = [], quits = 0, rosterEnd = [], wipes = 0, pullsAll = 0, tierSeen = [0, 0, 0];
 for (let g = 0; g < guilds; g++) {
   const st = G.newGame(1000 + g * 7919);
   const known = {};  // boss -> card the bot believes is right
@@ -32,6 +32,11 @@ for (let g = 0; g < guilds; g++) {
   for (let w = 1; w <= weeks; w++) {
     const clear = () => { while ((st.pending || []).length) G.assignPending(st, 0, G.suggestFor(st, st.pending[0]).to); };
     while (st.dungeonsLeft > 0) { G.dungeon(st); clear(); }
+    // Keep the roster topped up like a real player would: hire the cheapest useful recruit when below 12.
+    while (st.roster.length < 12 && st.tavern.length) {
+      const i = st.tavern.reduce((b, o, k) => (o.price < st.tavern[b].price ? k : b), 0);
+      if (st.gold < st.tavern[i].price) break; G.hire(st, i);
+    }
     let budget = NIGHT;
     for (const mode of ['normal', 'heroic']) {
       for (const b of G.BOSSES) {
@@ -75,7 +80,8 @@ for (let g = 0; g < guilds; g++) {
         if (!done) break;  // stuck: stop this week's run in this mode
       }
     }
-    if (w === weeks) { totalGold.push(st.gold); totalGL.push(st.roster.reduce((s, c) => s + G.gearLevel(c), 0) / st.roster.length); }
+    if (w === weeks) { moraleEnd.push(st.roster.reduce((a, c) => a + c.morale, 0) / st.roster.length); rosterEnd.push(st.roster.length); totalGold.push(st.gold); totalGL.push(st.roster.reduce((s, c) => s + G.gearLevel(c), 0) / st.roster.length); }
+    if (w > weeks - 3) scores.push(G.heroicScore(st));
     G.endWeek(st);
   }
 }
@@ -83,4 +89,6 @@ const fmt = arr => arr.length ? `week ${(arr.reduce((a, b) => a + b, 0) / arr.le
 console.log(`${guilds} guilds, ${weeks} weeks, bot: ${style}`);
 for (const b of G.BOSSES) console.log(`  ${b.name.padEnd(20)} first Normal kill ${fmt(firstNormal[b.id]).padEnd(28)} first Heroic kill ${fmt(firstHeroic[b.id])}`);
 console.log(`  pulls ${pullsAll}, wipes ${wipes}; recap tiers shown: what ${tierSeen[0]}, clue ${tierSeen[1]}, answer ${tierSeen[2]}`);
+console.log(`  Heroic score per week, last 3 weeks: ${Math.round(scores.reduce((a, b) => a + b, 0) / scores.length)}`);
+console.log(`  end: average morale ${(moraleEnd.reduce((a, b) => a + b, 0) / guilds).toFixed(0)}, roster ${(rosterEnd.reduce((a, b) => a + b, 0) / guilds).toFixed(1)} raiders`);
 console.log(`  end: gold ${Math.round(totalGold.reduce((a, b) => a + b, 0) / guilds)}, roster gear level ${(totalGL.reduce((a, b) => a + b, 0) / guilds).toFixed(1)}`);

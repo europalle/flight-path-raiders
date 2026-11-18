@@ -4,14 +4,15 @@ Last updated: 2026-11-18. Read this first at the start of every session.
 
 ## Where we are
 
-**Phase 2 done (gate passed with conditions, 2026-11-18). Phase 3, vertical slice, is next.**
+**Phase 3, vertical slice, in progress.** Addon skeleton built; traits and morale in the engine and the playtest build.
 
 | Deliverable | Status |
 | --- | --- |
 | Design document | Done, signed off |
 | UX wireframes and art direction | Done: mid-fi wireframes (12 screens), art direction doc https://claude.ai/artifact/QmgH2PCEzUQ7htB5fSzQpZ, hi-fi hub in light and dark (`ux/hifi/`), kit cut into `art/kit/ui/` |
 | Technical design | Done, signed off |
-| Browser prototype | Engine v9 published: https://claude.ai/artifact/YHGsBUgA2y1DGDVTaisGpy (all five Molten Bore bosses, preparation, raid experience, raid moments, 10-week season). QA suite passes; boss tuning done |
+| Browser prototype | Engine 10 published: https://claude.ai/artifact/YHGsBUgA2y1DGDVTaisGpy (all five Molten Bore bosses, preparation, raid experience, raid moments, 10-week season). QA suite passes; boss tuning done |
+| Addon | `addon/src` (Core, SelfTest, Board); build with `python3 tools/build_addon.py` into `addon/dist/FlightPathRaiders`; `tests/addon_test.py` runs it headless |
 | Playtest build | Published: https://claude.ai/artifact/NfN3hjmbfZ7Hvhf7pncJxM (`playtest/`, built by `playtest/build.py`). Script: `qa/playtest-1.md`. Rules QA `tools/playtest_qa.js`, bot `tools/playtest_bot.js` |
 | Milestone plan | Done: https://claude.ai/artifact/MiJAJ6iKh2Dkcn8aYSeBU9 |
 | Gate review (separate agents) | Passed with conditions; conditions fixed or filed as Phase 3 issues (#26-#35) |
@@ -45,12 +46,13 @@ Last updated: 2026-11-18. Read this first at the start of every session.
 - 2026-11-18: Skill, familiarity, chemistry and raid moments (engine v5, Tuning pass 4); design doc 4.6.
 - 2026-11-18: The other four Molten Bore bosses in the engine and prototype (engine v6); design doc 6.1.
 - 2026-11-18: Learning path approved (design doc 3.1); playtest build published (engine v7).
+- 2026-11-18: Phase 3 started: addon skeleton (`addon/`, `tools/build_addon.py`, `/fpr selftest`), every trait and morale (engine 10).
 - 2026-11-18: Art direction, hi-fi hub and milestone plan. Phase 2 gate review: pass with conditions; engine v9 with input checks, CI, Normal retuned, softer card checks, Heroic keep-pulling rule.
 
 ## Next
 
-1. Director plays the playtest build with `qa/playtest-1.md` (#24) and reruns two Gemini prompts (#33).
-2. Phase 3 starts: addon skeleton (#26), traits and morale (#30), Journal and loot window wireframes (#31), Legal checklist (#14).
+1. Director: copy `addon/dist/FlightPathRaiders` into the game and run `/fpr selftest` (first in-game check).
+2. Journal and loot window wireframes (#31), then hi-fi for the slice screens (#32); replay records (#28); Legal checklist (#14).
 3. Then the Phase 3 list in the milestone plan.
 
 ## Working rules

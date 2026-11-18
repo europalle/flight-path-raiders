@@ -24,7 +24,9 @@ $g51
 $f51"
 if [ "$1" == "--update" ]; then echo "$golden" > tests/golden.txt; echo "Saved golden results for engine $version"; exit 0; fi
 saved_version=$(head -1 tests/golden.txt | grep -o '[0-9]*$' || echo 0)
-if [ "$golden" != "$(cat tests/golden.txt)" ]; then
+if [ "$golden" != "$(cat tests/golden.txt)" ] && [ "$(echo "$golden" | tail -n +2)" == "$(tail -n +2 tests/golden.txt)" ]; then
+  echo "NOTE: engine $version gives the same results as engine $saved_version; run tests/check.sh --update to record the new version"
+elif [ "$golden" != "$(cat tests/golden.txt)" ]; then
   if [ "$saved_version" == "$version" ]; then
     echo "FAIL: fight results changed but ENGINE_VERSION is still $version. Bump it in engine/sim.lua, then run tests/check.sh --update."; exit 1
   fi

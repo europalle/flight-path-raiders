@@ -311,6 +311,38 @@ check("Heroic gear above the band fights like the cap", hi == cap, (hi, cap))
 # No raid moments in ranked modes.
 mom = sum(1 for s_ in range(1, 200) for e in events(SIM(tl(dict(good, seed=s_)))) if e[1] in (40, 41, 42, 43, 44, 45, 46) and e[0] == 0)
 check("no raid moments on Heroic", mom == 0, mom)
+# 9. Traits and morale (engine 10).
+TRAIT_IDS = list(L.eval("(function() local t = {} for k in pairs(FPR_ENGINE.Data.TRAITS) do t[#t + 1] = k end table.sort(t) return t end)()").values())
+rr = random.Random(41); n_tr = 0; partner = 0; partner_fights = 0
+for i in range(3000):
+    raid = sensible(rr); boss = BOSSES[i % 5]
+    for c in raid:
+        c["traits"] = L.table_from(rr.sample(TRAIT_IDS, rr.randint(0, 2))); c["morale"] = rr.randint(0, 100); c["new"] = rr.random() < .3; c["looted"] = rr.random() < .2
+    mode = rr.choice(["normal", "heroic", "mythic"])
+    r = runb(raid, boss, mode=mode, seed=rr.randrange(1, 2**31 - 2), tactic=rr.choice(["spread", "stack", "burn", "playsafe"]))
+    lab = f"trait#{i} {boss}"; invariants(r, raid, lab); ev = events(r); n_tr += 1
+    tr = [set(c["traits"].values()) for c in raid]
+    for (_, c, a, b, _t) in ev:
+        if c == 28: check("a Keyboard Turner never pulls aggro", "keyboard_turner" not in tr[a - 1], lab)
+        if c == 34: check("Hardcore Andy refuses Battle Res", "hardcore_andy" not in tr[a - 1], lab)
+        if c == 31 and b in (25, 68): check("Never Stands in Fire never dies to ground effects", "never_stands_in_fire" not in tr[a - 1], lab)
+        if c == 51: check("only hunters bring pets", raid[a - 1]["class"] == "hunter", lab)
+    for k, t in enumerate(tr):
+        if "partner_aggro" in t:
+            partner_fights += 1; partner += any(e[1] == 50 and e[2] == k + 1 for e in ev)
+check("Partner Aggro leaves in about 20% of fights", 0.14 < partner / max(1, partner_fights) < 0.26, partner / max(1, partner_fights))
+# Morale gives power on Normal only.
+def with_morale(m, mode):
+    rec = dict(good, mode=mode, raid=[dict(c, morale=m) for c in good["raid"]])
+    if mode == "normal": rec["gl"] = 60
+    return SIM(tl(rec))["checksum"]
+check("morale changes nothing on Heroic", with_morale(95, "heroic") == with_morale(70, "heroic"))
+check("morale above 80 matters on Normal", with_morale(95, "normal") != with_morale(70, "normal"))
+for name, rec in {"unknown trait": dict(good, raid=[dict(good["raid"][0], traits=["sleepy"])] + good["raid"][1:]),
+                  "three traits": dict(good, raid=[dict(good["raid"][0], traits=["parse_goblin", "alt_tabbed", "pug_hero"])] + good["raid"][1:]),
+                  "morale 150": dict(good, raid=[dict(good["raid"][0], morale=150)] + good["raid"][1:])}.items():
+    check("verify rejects bad trait data", not verified(rec), name)
+print(f"QA: {n_tr} fights with random traits and morale")
 print(f"QA: {n_boss} fights across five bosses; Lucifrown kills with a decurser {k_dec}/300, without {k_none}/300")
 print(f"QA: {n_mom} v5 fights (skill, chemistry, moments), progression module checks")
 print(f"QA: {n_inv} random fights, {len(edges)} edge raids x 12 runs, determinism x199")

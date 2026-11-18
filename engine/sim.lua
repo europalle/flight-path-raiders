@@ -5,7 +5,7 @@
 local _, ns = ...
 if not ns then ns = FPR_ENGINE or {}; FPR_ENGINE = ns end  -- in WoW the addon's private table; in tests a global
 
-ns.ENGINE_VERSION = 9  -- 9: Normal per boss, softer card checks; 8: input checks, gear band in the engine, stronger checksum, moments only in Normal (7: per-character gear, frames)
+ns.ENGINE_VERSION = 10  -- 10: traits and morale; 9: Normal per boss, softer card checks; 8: input checks, gear band in the engine, stronger checksum, moments only in Normal (7: per-character gear, frames)
 
 local floor = math.floor
 local function idiv(a, b) return floor(a / b) end
@@ -33,6 +33,7 @@ function ns.Simulate(inputs)
   local boss_def = D.BOSSES[inputs.boss]
   local mode = D.MODES[inputs.mode]
   local tac = D.TACTICS[inputs.tactic]
+  local TR = D.TRAITS
   local gl = inputs.gl or 60
   if gl < 1 then gl = 1 elseif gl > 100 then gl = 100 end
   local glmul = 1000 + D.GL_STEP * (gl - 60)
@@ -112,6 +113,45 @@ function ns.Simulate(inputs)
     local p = raid[i]
     if (p.zone == "ranged" and has["druid:balance"]) then p.crit = p.crit + 30 end
     if (p.zone == "melee" and (has["druid:feral"] or has["druid:feralcat"])) then p.crit = p.crit + 30 end
+    -- Traits (design doc 4.4): one or two per character, as a set.
+    p.tr = {}
+    local tl = c.traits or {}
+    for k = 1, #tl do if TR[tl[k]] then p.tr[tl[k]] = true end end
+    p.morale = c.morale or D.MORALE.start
+    p.new, p.looted = c.new and true or false, c.looted and true or false
+  end
+  -- Trait effects that set up the fight.
+  local n_new, favourite, backseat, pulls_early = 0, false, false, false
+  for i = 1, #raid do
+    local p = raid[i]
+    if p.new then n_new = n_new + 1 end
+    if p.tr.raid_leaders_favourite then favourite = true end
+    if p.tr.backseat_raid_leader then backseat = true end
+    if p.tr.pulls_on_cooldown then pulls_early = true end
+  end
+  for i = 1, #raid do
+    local p = raid[i]
+    local t = p.tr
+    if t.hardcore_andy then p.maxhp = pm(p.maxhp, 1000 + TR.hardcore_andy.stats); p.hp = p.maxhp; p.power = pm(p.power, 1000 + TR.hardcore_andy.stats) end
+    if t.parse_goblin then p.power = pm(p.power, 1000 + TR.parse_goblin.power) end
+    if t.pulls_on_cooldown then p.power = pm(p.power, 1000 + TR.pulls_on_cooldown.power); p.threatmul = pm(p.threatmul, 1000 + TR.pulls_on_cooldown.power) end
+    if t.keyboard_turner then p.speed = p.speed - TR.keyboard_turner.speed; if p.role ~= "tank" then p.threatmul = 0 end end
+    if t.pug_hero and n_new >= TR.pug_hero.new then p.power = pm(p.power, 1000 + TR.pug_hero.power) end
+    if t.main_character and p.looted then p.power = pm(p.power, 1000 + TR.main_character.power) end
+    -- Morale above 80: +5% power, Normal only (ranked scores can't be inflated). The raid leader's favourite lifts everyone 10.
+    local m = p.morale + (favourite and TR.raid_leaders_favourite.morale or 0)
+    if m > 100 then m = 100 end
+    p.morale_eff = m
+    if not mode.band and m > D.MORALE.vibe_at then p.power = pm(p.power, 1000 + D.MORALE.vibe_power) end
+    if pulls_early and p.role == "healer" then p.mana = pm(p.mana, TR.pulls_on_cooldown.healer_mana) end
+  end
+  -- A backseat raid leader makes the tactic card 5% stronger (each modifier moves 5% further from 100%).
+  if backseat then
+    local t2 = {}
+    for k, v in pairs(tac) do
+      if type(v) == "number" then t2[k] = 1000 + pm(v - 1000, 1000 + TR.backseat_raid_leader.card) else t2[k] = v end
+    end
+    tac = t2
   end
 
   -- Action order: speed high to low, then roster slot (stable, explicit insertion sort).
@@ -215,11 +255,16 @@ function ns.Simulate(inputs)
 
   local function damage(p, amount, cause, fire, magic)
     if not p.alive then return end
+    if p.tr.never_stands_in_fire and (cause == 25 or cause == 68) then return end  -- ground effects
     -- Fire ignores armour; fire resistance reduces it instead (pass 3). Other magic ignores both.
     local dmg
     if fire then dmg = pm(amount, 1000 - p.firered) elseif magic then dmg = amount else dmg = pm(amount, 1000 - p.armor) end
     dmg = pm(dmg, tac.taken)
     if cause ~= 24 then dmg = pm(dmg, 1000 - D.FAMILIARITY.per_point * p.fam) end -- knows the mechanics
+    if cause ~= 24 and cause ~= 26 then  -- boss mechanics, not melee or adds
+      if p.tr.stands_in_fire then dmg = pm(dmg, 1000 + TR.stands_in_fire.taken) end
+      if p.tr.parse_goblin then dmg = pm(dmg, 1000 + TR.parse_goblin.taken) end
+    end
     if p.class == "warrior" and p.spec == "fury" then dmg = pm(dmg, 1100) end
     if p.shield_wall > 0 then dmg = pm(dmg, 250) end
     if dmg < 1 then dmg = 1 end
@@ -348,6 +393,21 @@ function ns.Simulate(inputs)
     end
   end
 
+  -- Traits that roll at the pull, in roster order (deterministic).
+  local pack_until = 0
+  for i = 1, #raid do
+    local p = raid[i]
+    if p.tr.partner_aggro and rng:chance(TR.partner_aggro.chance) then
+      p.skip_from, p.skip_to = TR.partner_aggro.after + 1, 999
+      log(50, p.slot, 0, p.name .. " will have to leave after round " .. TR.partner_aggro.after .. ". \"Sorry guys, gotta go.\"")
+    end
+    if p.tr.pet_on_aggressive and p.class == "hunter" and pack_until == 0 and rng:chance(TR.pet_on_aggressive.chance) then
+      pack_until = TR.pet_on_aggressive.rounds
+      log(51, p.slot, 0, p.name .. "'s pet was on aggressive. An extra pack joins the fight.")
+    end
+  end
+  if pulls_early then log(52, 0, 0, "Someone pulled before the healers finished drinking.") end
+
   local result = "enrage"
   while true do
     round = round + 1
@@ -424,6 +484,8 @@ function ns.Simulate(inputs)
               log(23, v.slot, 0, boss.name .. " throws " .. v.name .. " into the lava.")
               local burn = pm(pm(pm(v.maxhp, mode.throw), tac.taken), 1000 - v.firered)
               burn = pm(burn, 1000 - D.FAMILIARITY.per_point * v.fam)
+              if v.tr.stands_in_fire then burn = pm(burn, 1000 + TR.stands_in_fire.taken) end
+              if v.tr.parse_goblin then burn = pm(burn, 1000 + TR.parse_goblin.taken) end
               v.hp = v.hp - burn
               if v.hp <= 0 then kill(v, 23) end
             end
@@ -488,7 +550,11 @@ function ns.Simulate(inputs)
           else
             local list = alive_in(bomb.zone)
             log(62, bomb.slot, #list, bomb.name .. " explodes in the " .. bomb.zone .. " zone.")
-            for i = 1, #list do damage(list[i], list[i] == bomb and amt or pm(amt, boss_def.bomb_others or 1000), 62, true) end
+            for i = 1, #list do
+              local q = list[i]
+              if q == bomb then damage(q, amt, 62, true)
+              elseif not q.tr.never_stands_in_fire then damage(q, pm(amt, boss_def.bomb_others or 1000), 62, true) end
+            end
           end
         end
         bomb = nil
@@ -513,6 +579,12 @@ function ns.Simulate(inputs)
         if stacked then amt = pm(amt, boss_def.frown_stack or 1000) end
         for i = 1, #list do damage(list[i], amt, 68, false, true) end
       end
+    end
+    -- Pet on aggressive: the extra pack hits a random non-tank for a few rounds.
+    if round <= pack_until then
+      local nt = {}
+      for i = 1, #raid do if raid[i].alive and raid[i].role ~= "tank" then nt[#nt + 1] = raid[i] end end
+      if #nt > 0 then damage(nt[rng:int(#nt)], pm(TR.pet_on_aggressive.hit, mode_dmg), 26, false) end
     end
     -- Adds attack (fire adds, pups, interns).
     local frost_slow = has["mage:frost"]
@@ -544,7 +616,11 @@ function ns.Simulate(inputs)
     if tac.area_single then healmul = tac.heal end
     for k = 1, #order do
       local p = order[k]
-      if p.alive and (round < p.skip_from or round > p.skip_to) then
+      local tabbed = false
+      if p.alive and p.tr.alt_tabbed and rng:chance(TR.alt_tabbed.chance) then
+        tabbed = true; log(53, p.slot, 0, p.name .. " is alt-tabbed.")
+      end
+      if p.alive and not tabbed and (round < p.skip_from or round > p.skip_to) then
         if p.role == "healer" then
           local curse = (round <= cursed_until) and 2 or 1
           local cost = pm(D.HEAL_COST, tac.mana) * curse
@@ -672,7 +748,7 @@ function ns.Simulate(inputs)
       if d.alive and d.class == "druid" and not d.used.bres then
         for j = 1, #raid do
           local x = raid[j]
-          if not x.alive and (x.role == "healer" or x.role == "tank") and not d.used.bres then
+          if not x.alive and (x.role == "healer" or x.role == "tank") and not d.used.bres and not x.tr.hardcore_andy then
             d.used.bres = true; x.alive = true; x.hp = pm(x.maxhp, 300)
             log(34, x.slot, d.slot, d.name .. " battle-resses " .. x.name .. ".")
           end

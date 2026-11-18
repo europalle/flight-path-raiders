@@ -1,0 +1,31 @@
+Tuning pass 5 (2026-11-18, engine 10): one trait on one raider, averaged over the five bosses on their right card.
+normal (unprepared, fresh), average over the five bosses on their right card: baseline 78.6%
+  pulls_on_cooldown         77.7%   -0.9
+  stands_in_fire            74.6%   -4.0
+  never_stands_in_fire      82.0%   +3.4
+  parse_goblin              79.5%   +0.9
+  alt_tabbed                76.3%   -2.3
+  partner_aggro             73.3%   -5.3
+  hardcore_andy             81.9%   +3.3
+  backseat_raid_leader      78.9%   +0.3
+  keyboard_turner           79.5%   +0.9
+  main_character            81.3%   +2.7
+  pug_hero                  81.3%   +2.7
+  pet_on_aggressive         76.7%   -1.9
+  raid_leaders_favourite    78.6%   +0.0
+  morale 90 (everyone)      88.3%   +9.7
+  morale 30 (everyone)      78.6%   +0.0
+heroic (full, typical), average over the five bosses on their right card: baseline 74.1%
+  pulls_on_cooldown         74.3%   +0.2
+  stands_in_fire            72.0%   -2.1
+  never_stands_in_fire      76.8%   +2.7
+  parse_goblin              78.3%   +4.2
+  alt_tabbed                70.3%   -3.8
+  partner_aggro             69.9%   -4.1
+  hardcore_andy             79.2%   +5.1
+  backseat_raid_leader      74.9%   +0.8
+  keyboard_turner           75.0%   +0.9
+  main_character            78.4%   +4.3
+  pug_hero                  78.4%   +4.3
+  pet_on_aggressive         73.9%   -0.2
+  raid_leaders_favourite    74.1%   +0.0

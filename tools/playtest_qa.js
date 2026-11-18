@@ -48,6 +48,11 @@ for (let g = 0; g < 25; g++) {
         if (out.result === 'kill' || mode === 'heroic') break;
       }
     }
+    check('morale stays within 0-100', st.roster.every(c => c.morale >= 0 && c.morale <= 100), st.roster.map(c => c.morale));
+    check('every raider has 1-2 known traits', st.roster.every(c => c.traits.length >= 1 && c.traits.length <= 2 && c.traits.every(t => G.TRAITS[t])), 'traits');
+    check('epic raiders never rage quit', st.roster.every(c => !(c.rarity === 'epic' && c.traits.includes('rage_quitter'))), 'rage');
+    check('only tanks pull on cooldown and only hunters have pets', st.roster.every(c => (!c.traits.includes('pulls_on_cooldown') || G.role(c.cls, c.spec) === 'tank') && (!c.traits.includes('pet_on_aggressive') || c.cls === 'hunter')), 'class traits');
+    while (st.roster.length < 12 && st.tavern.length && st.gold >= st.tavern[0].price) G.hire(st, 0);
     const before = st.gold; G.endWeek(st);
     check('end week pays quests and resets lockouts', st.gold === before + G.ECON.weeklyQuests && G.BOSSES.every(b => !st.progress[b.id].normalWeek && !st.progress[b.id].heroicWeek) && st.roster.every(c => !c.benched), w);
     check('bond weekly counters reset', Object.values(st.bonds).every(e => e.week === 0), w);

@@ -28,6 +28,11 @@ function ns.Validate(inputs, strict)
     if not D.SPECS[c.class][c.spec] then return false, "character " .. i .. ": unknown spec" end
     if not zones[c.zone] then return false, "character " .. i .. ": unknown zone" end
     if c.gl ~= nil and not in_range(c.gl, 1, 100) then return false, "character " .. i .. ": gear level must be 1-100" end
+    if c.traits ~= nil then
+      if type(c.traits) ~= "table" or #c.traits > 2 then return false, "character " .. i .. ": at most 2 traits" end
+      for k = 1, #c.traits do if not D.TRAITS[c.traits[k]] then return false, "character " .. i .. ": unknown trait" end end
+    end
+    if c.morale ~= nil and not in_range(c.morale, 0, 100) then return false, "character " .. i .. ": morale must be 0-100" end
     for _, k in ipairs({ "skill", "fam", "firegear" }) do
       if c[k] ~= nil and type(c[k]) ~= "number" then return false, "character " .. i .. ": " .. k .. " must be a number" end
     end
