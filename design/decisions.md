@@ -4,6 +4,10 @@ Decisions made by the Game Director. Newest first.
 
 | Date | Area | Decision |
 | --- | --- | --- |
+| 2026-11-18 | Design / Art | Shamans stay: dwarves can be shamans in WoW: Forever (Director). Two dwarf shaman looks, R11 and R12 |
+| 2026-11-18 | Design / Art | Alliance only: human, dwarf, night elf, gnome with Classic class rules (replaces the all-races entry). Two looks per class; 10 R prompts. Shaman open: Classic Alliance had none |
+| 2026-11-18 | Design / Art | Races with Classic's class restrictions, no factions, cosmetic for now; minotaur and undead as parody-safe names. Art covers 21 race and class looks (6 human + 15 new R prompts, men and women mixed). E3, E6, E9 retired (not Classic-legal) |
+| 2026-11-18 | Art | Director likes Gemini's polished-but-janky WoW look (better than doodles); it is the character style. A2 slate and E7 mage rerun with v2 prompts; warlock flipped to face right |
 | 2026-11-18 | Art / Design | Gear on characters: quality shimmer only (trim glow tinted by average quality, in code). Equipped weapon props later; no tier set looks for now |
 | 2026-11-18 | Art | Reusable kit: neutral pieces tinted in code (SetVertexColor), 9-slice frames, frame plus glyph icons, state overlays, shared character template with separate props, generic tinted effects, layered stages. Prompt pack v2 replaces v1 |
 | 2026-11-18 | Art | Style: A Field Journal is light mode, C Midnight Grimoire is dark mode. Direction: a hand-drawn parody of the WoW Classic UI (parchment quest log, dark slate frames), never copying Blizzard art. Assets come from Gemini via art/gemini-prompt-pack.md, on a magenta background; Art cleans, slices, recolours and edits every piece |
