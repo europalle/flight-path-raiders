@@ -2,8 +2,7 @@
 -- Owned by Game Tuning & Balancing. Every percentage is per-mille (150 = 15.0%).
 -- Values marked "TUNING ASSUMPTION" are not in the design doc yet and are first guesses.
 local _, ns = ...
-ns = ns or FPR_ENGINE or {}
-FPR_ENGINE = ns
+if not ns then ns = FPR_ENGINE or {}; FPR_ENGINE = ns end  -- in WoW the addon's private table; in tests a global
 
 local D = {}
 ns.Data = D

@@ -4,8 +4,7 @@
 -- range checks a ranked verifier needs (skill, familiarity, fire gear, chemistry pairs, gear band).
 -- Verifiers call ns.Verify(record), which never throws.
 local _, ns = ...
-ns = ns or FPR_ENGINE or {}
-FPR_ENGINE = ns
+if not ns then ns = FPR_ENGINE or {}; FPR_ENGINE = ns end  -- in WoW the addon's private table; in tests a global
 
 local function int(v) return type(v) == "number" and v == math.floor(v) end
 local function in_range(v, lo, hi) return int(v) and v >= lo and v <= hi end

@@ -17,3 +17,5 @@ jobs:
         run: python3 tools/qa.py
       - name: Playtest rules
         run: FENGARI=/tmp/fen/node_modules/fengari node tools/playtest_qa.js
+      - name: Addon loads and runs its self-test in Lua 5.1 with a WoW API stand-in
+        run: python3 tools/build_addon.py && python3 tests/addon_test.py

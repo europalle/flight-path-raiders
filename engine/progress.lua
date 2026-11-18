@@ -2,8 +2,7 @@
 -- Owned by Game Design and Tuning. Deterministic: whole numbers only, arrays only.
 -- Values are stored in tenths (skill10 = 0-1000) so small gains add up without floats.
 local _, ns = ...
-ns = ns or FPR_ENGINE or {}
-FPR_ENGINE = ns
+if not ns then ns = FPR_ENGINE or {}; FPR_ENGINE = ns end  -- in WoW the addon's private table; in tests a global
 
 local P = {}
 ns.Progress = P

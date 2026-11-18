@@ -321,7 +321,7 @@ The look is our own original fantasy style: a chunky, hand-painted high-fantasy 
 
 ## Rerolls after the gate review (2026-11-18)
 
-Two looks read too close to Blizzard's own characters and are retired: R10 (night elf druid with antlers and green hair) and the winged white-and-gold priest look (E5). Run these two instead. Attach the character study and your E0 result.
+The gate reviewer flagged R10 (night elf druid with antlers and green hair) and the winged white-and-gold priest (E5) as close to Blizzard's characters. The Director kept both (2026-11-18); these two prompts are optional alternates if Legal asks for a change before beta. Attach the character study and your E0 result.
 
 ### R10b. Night elf druid (replaces R10)
 

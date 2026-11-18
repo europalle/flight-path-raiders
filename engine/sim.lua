@@ -3,8 +3,7 @@
 -- are 32-bit; products that can exceed that are done in floating point and floored), every division
 -- floored through idiv, arrays walked with numeric for loops, the seeded RNG as the only randomness.
 local _, ns = ...
-ns = ns or FPR_ENGINE or {}
-FPR_ENGINE = ns
+if not ns then ns = FPR_ENGINE or {}; FPR_ENGINE = ns end  -- in WoW the addon's private table; in tests a global
 
 ns.ENGINE_VERSION = 9  -- 9: Normal per boss, softer card checks; 8: input checks, gear band in the engine, stronger checksum, moments only in Normal (7: per-character gear, frames)
 

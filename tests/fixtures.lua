@@ -1,7 +1,6 @@
 -- Golden fight inputs, shared by every runtime.
 local _, ns = ...
-ns = ns or FPR_ENGINE or {}
-FPR_ENGINE = ns
+if not ns then ns = FPR_ENGINE or {}; FPR_ENGINE = ns end  -- in WoW the addon's private table; in tests a global
 local function raid(list)
   local r = {}
   for i = 1, #list do

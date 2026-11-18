@@ -5,7 +5,7 @@
 # Needs: pip install lupa; npm install fengari@0.1.5 (set FENGARI to its path if not global).
 set -e
 cd "$(dirname "$0")/.."
-ENGINE='["engine/rng.lua","engine/data.lua","engine/sim.lua","engine/validate.lua","engine/progress.lua"]'
+ENGINE='["engine/rng.lua","engine/data.lua","engine/sim.lua","engine/validate.lua","engine/progress.lua","tests/selftest.lua"]'
 run_lupa() {  # $1 = lupa module, $2 = test file
 python3 - "$1" "$2" <<PY
 import importlib, sys, json

@@ -1,8 +1,7 @@
 -- Flight Path Raiders: seeded random number generator (Park-Miller).
 -- Plain arithmetic only, so Lua 5.1 (WoW), newer Luas and JavaScript give identical numbers.
 local _, ns = ...
-ns = ns or FPR_ENGINE or {}
-FPR_ENGINE = ns
+if not ns then ns = FPR_ENGINE or {}; FPR_ENGINE = ns end  -- in WoW the addon's private table; in tests a global
 
 local M = 2147483647
 -- The product 16807 * x needs up to 46 bits. Fengari (the browser's Lua) stores whole numbers
