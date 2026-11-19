@@ -233,7 +233,7 @@ function vHub() {
       <div class="bosses" style="margin-top:10px">${rows}</div></div>
     <div><div class="panel"><h2>This week</h2>
       ${pend ? `<p><b>${pend} item${pend > 1 ? "s" : ""} waiting to be handed out.</b> <button type="button" class="small" id="goLoot">Hand out loot</button></p>` : ""}
-      <div class="row"><button type="button" id="dungeon" ${S.dungeonsLeft ? "" : "disabled"}>Run a dungeon</button><span class="muted small">${S.dungeonsLeft} left this week: 35-45 gold, sometimes gear (GL 50-56)</span></div>
+      <div class="row"><button type="button" id="dungeon">Run a dungeon</button><span class="muted small">35-45 gold and 3 items (GL 47-56) for the five lowest-geared raiders</span></div>
       <h3>Your guild</h3>
       <div class="statgrid"><div class="sg"><div class="k">Raiders</div><div class="v">${S.roster.length}/15</div></div>
         <div class="sg"><div class="k">Gear level</div><div class="v">${Math.round(S.roster.reduce((s, c) => s + G.gearLevel(c), 0) / S.roster.length)}</div></div>
@@ -246,7 +246,7 @@ function vHub() {
 }
 wire.hub = () => {
   document.querySelectorAll("[data-prep]").forEach(b => b.onclick = () => { const [boss, mode] = b.dataset.prep.split(":"); prep = G.defaultPrep(S, boss, mode); go("prep"); });
-  $("dungeon").onclick = () => { const d = G.dungeon(S); if (d.error) return toast(d.error); toast(`Dungeon cleared: +${d.gold} gold` + (d.item ? `, and ${d.item.name} (GL ${d.item.lvl}) dropped.` : ".")); render(); };
+  $("dungeon").onclick = () => { const d = G.dungeon(S); if (d.error) return toast(d.error); toast(`Dungeon cleared: +${d.gold} gold, ${(d.items || []).length} items to hand out` + (d.tome ? ", and a Tome of Respec." : ".")); render(); };
   $("endWeek").onclick = () => {
     $("endConfirm").innerHTML = `<button type="button" class="small" id="endYes">Yes, end week ${S.week}</button> <button type="button" class="small link" id="endNo">Not yet</button>`;
     $("endYes").onclick = () => { G.endWeek(S); render(); }; $("endNo").onclick = () => $("endConfirm").innerHTML = "";
@@ -284,7 +284,7 @@ function vRoster() {
 }
 wire.roster = () => {
   document.querySelectorAll("[data-fire]").forEach(b => b.onclick = () => { toast(G.buyFire(S, Number(b.dataset.fire))); render(); });
-  document.querySelectorAll("[data-respec]").forEach(s => s.onchange = () => { toast(G.respec(S, Number(s.dataset.respec), s.value) + " (60 gold)"); render(); });
+  document.querySelectorAll("[data-respec]").forEach(s => s.onchange = () => { toast(G.respec(S, Number(s.dataset.respec), s.value)); render(); });
   document.querySelectorAll("[data-dismiss]").forEach(b => b.onclick = () => {
     const id = Number(b.dataset.dismiss); const slot = document.querySelector(`[data-dc="${id}"]`);
     slot.innerHTML = `<button type="button" class="small" data-dyes="${id}">Yes, dismiss</button>`;
@@ -330,7 +330,7 @@ wire.guild = () => {
     navigator.clipboard.writeText(t).then(() => toast("Save copied."), () => { $("saveText").select(); toast("Select the text and copy it."); }); };
   $("loadSave").onclick = () => { try { const s = JSON.parse(decodeURIComponent(escape(atob($("saveText").value.trim())))); if (!s.roster || s.v !== 3) throw 0; S = G.load(s); toast("Save loaded."); go("hub"); } catch (e) { toast("That doesn't look like a save."); } };
   $("reset").onclick = () => { $("resetC").innerHTML = `<button type="button" class="small" id="resetYes">Yes, delete this guild</button>`;
-    $("resetYes").onclick = () => { S = G.newGame(1 + Math.floor(Math.random() * 2147000000)); go("hub"); }; };
+    $("resetYes").onclick = () => { S = G.newGame(1 + Math.floor(Math.random() * 2147000000), 60); go("hub"); }; };
 };
 
 // ---------- prep ----------
@@ -487,7 +487,7 @@ function boot() {
   } catch (e) { $("view").innerHTML = `<p class="err">The Lua engine could not start: ${esc(e.message)}</p>`; return; }
   const saved = load();
   try { S = saved && saved.v === 3 ? G.load(saved) : null; } catch (e) { S = null; }
-  if (!S) S = G.newGame(1 + Math.floor(Math.random() * 2147000000));
+  if (!S) S = G.newGame(1 + Math.floor(Math.random() * 2147000000), 60);  // the raid playtest starts at level 60
   go("hub");
 }
 if (window.fengari) boot(); else window.addEventListener("load", () => window.fengari ? boot() : ($("view").innerHTML = `<p class="err">The Lua runtime could not be loaded. Check your connection and reload.</p>`));

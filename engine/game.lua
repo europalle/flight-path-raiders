@@ -40,11 +40,22 @@ G.RARITY = { common = { cost = 50, label = "Common" }, rare = { cost = 300, labe
 G.ECON = {
   startGold = 300, weeklyQuests = 300,                     -- PLAYTEST: daily quests compressed into one weekly payout
   normalFirst = { gold = 40, dkp = 5 }, normalReclear = 5, heroicKill = { gold = 60, dkp = 15 },
-  dungeon = { gold = { 35, 45 }, perWeek = 8, itemChance = 35, itemLvl = { 50, 56 } },  -- PLAYTEST
+  dungeon = { gold = { 35, 45 }, itemLvl = { 50, 56 } },  -- unlimited runs (design doc 2)
   cauldron = { food = 10, elixirs = 30, flasks = 75 }, potion = 15, worldBuff = 250, fireGear = 120,
-  reroll = 25, rosterMax = 15, dismissBack = 25, respec = 60,
+  reroll = 25, rosterMax = 15, dismissBack = 25,
+  -- Respec price per character, rising each time (design doc 4.3.1): about 10 and 30 minutes, then 1, 2 and 4 hours
+  -- of play at level 60. One step back for each week without a respec. A Tome of Respec makes one free.
+  respecSteps = { 100, 300, 600, 1200, 2400 }, tomeChance = 2,
   normalLoot = { 56, 62 }, heroicLoot = { 64, 70 }, heroicBand = { 60, 70 }, startGear = { 52, 56 },
 }
+-- Levels (design doc 10.1, Phase 4 decision 2026-11-19): a new guild starts at level 10. A character who is always
+-- active reaches 60 in about 25 activities; whoever sits out an activity gets half (Bench Training). Raids need an
+-- average level of 58 among the raiders pulled. Power still comes from gear: levelling gates content, and the
+-- gear a character can find rises with level.
+G.LEVEL = { start = 10, cap = 60, raidGate = 58, gearGate = 50, bench = 50, xp = { dungeon = 190, kill = 190, wipe = 60 } }
+function G.xpNeed(L) return 20 + 2 * L end
+function G.level(c) return c.level or G.LEVEL.cap end           -- saves from before levelling are all level 60
+local function gearFor(L, lo, hi) return math.max(1, round(lo * L / 60)), math.max(1, round(hi * L / 60)) end
 G.MODES = { normal = { label = "Normal" }, heroic = { label = "Heroic" } }
 G.CARD_ORDER = { "spread", "stack", "burn", "playsafe" }
 G.CARDS = { spread = "Spread", stack = "Stack", burn = "Burn", playsafe = "Play Safe" }
@@ -310,14 +321,14 @@ local function freshName(st)
   for _ = 1, 60 do local n = pick(st, NAMES) if not used[n] then return n end end
   return "Raider " .. st.nextId
 end
-local function makeChar(st, cls, spec, rarity, lo, hi)
+local function makeChar(st, cls, spec, rarity, lo, hi, level)
   local look = rngNext(st) % 2
   local name = freshName(st)                               -- order matters: the same rolls as the JS build
   local traits = rollTraits(st, cls, rarity, G.role(cls, spec))
   local c = { id = st.nextId, name = name, cls = cls, spec = spec, look = look, race = G.RACES[cls][look + 1], rarity = rarity,
     gear = {}, fire = 0, benched = false, joined = st.week,
     skill10 = ({ common = 20, rare = 40, epic = 55, legendary = 70 })[rarity] * 10, fam10 = {}, pulls = {},
-    traits = traits, morale = G.MORALE.start, looted = false }
+    traits = traits, morale = G.MORALE.start, looted = false, level = level or G.LEVEL.cap, xp = 0, respecs = 0 }
   st.nextId = st.nextId + 1
   lo, hi = lo or G.ECON.startGear[1], hi or G.ECON.startGear[2]
   local armor = G.ARMOR[cls]
@@ -327,8 +338,42 @@ local function makeChar(st, cls, spec, rarity, lo, hi)
   return c
 end
 
+local function avgLevel(st, ids)
+  local list = ids or {}
+  if not ids then for i = 1, #st.roster do list[i] = st.roster[i].id end end
+  if #list == 0 then return G.LEVEL.start end
+  local s = 0
+  for i = 1, #list do local c = byId(st, list[i]) s = s + (c and G.level(c) or 0) end
+  return floor(s / #list)
+end
+G.avgLevel = avgLevel
+function G.avgGear(st, ids)
+  if #ids == 0 then return 0 end
+  local s = 0
+  for i = 1, #ids do local c = byId(st, ids[i]) s = s + (c and G.gearLevel(c) or 0) end
+  return floor(s / #ids)
+end
+-- XP for one character; returns the levels gained. Level 60 is the cap.
+local function giveXP(c, amount, ups)
+  local L = G.level(c)
+  if L >= G.LEVEL.cap then return end
+  c.xp = (c.xp or 0) + amount
+  local from = L
+  while L < G.LEVEL.cap and c.xp >= G.xpNeed(L) do c.xp = c.xp - G.xpNeed(L); L = L + 1 end
+  if L >= G.LEVEL.cap then c.xp = 0 end
+  c.level = L
+  if L > from and ups then ups[#ups + 1] = { id = c.id, name = c.name, from = from, to = L } end
+end
+-- Everyone in the activity gets full XP, the rest of the roster half.
+local function awardXP(st, ids, amount)
+  local ups = {}
+  for _, c in ipairs(st.roster) do giveXP(c, contains(ids, c.id) and amount or floor(amount * G.LEVEL.bench / 100), ups) end
+  return ups
+end
 local function rollTavern(st)
   st.tavern = {}
+  local L = avgLevel(st)
+  local lo, hi = gearFor(L, G.ECON.startGear[1] - 2, G.ECON.startGear[2] - 2)
   for _ = 1, 5 do
     local cls = pick(st, G.CLASS_ORDER)
     if cls == "warlock" and rint(st, 100) > 25 then  -- warlocks are rare (design doc 4.5)
@@ -337,24 +382,31 @@ local function rollTavern(st)
     local spec = pick(st, G.SPECS[cls])[1]
     local r = rint(st, 100)
     local rarity = (r <= 70) and "common" or ((r <= 95) and "rare" or "epic")
-    local c = makeChar(st, cls, spec, rarity, G.ECON.startGear[1] - 2, G.ECON.startGear[2] - 2)
+    -- Recruits arrive up to 5 levels below the roster's average (design doc 10.1), never at level 1.
+    local c = makeChar(st, cls, spec, rarity, lo, hi, math.max(1, L - (st.nextId % 6)))
     c.price = G.RARITY[rarity].cost
     st.tavern[#st.tavern + 1] = c
   end
 end
 
-function G.NewGame(seed)
+function G.NewGame(seed, opts)
+  local L = (opts and opts.level) or G.LEVEL.start
   local st = { v = 3, seed = seed, rng = (seed % 2147483646) + 1, week = 1, gold = G.ECON.startGold, dkp = 0, nextId = 1,
-    roster = {}, bonds = {}, buffs = {}, journal = {}, lessons = {}, lessonWipes = {}, lessonTier = {}, progress = {}, history = {}, pending = {}, dungeonsLeft = G.ECON.dungeon.perWeek,
+    roster = {}, bonds = {}, buffs = {}, journal = {}, lessons = {}, lessonWipes = {}, lessonTier = {}, progress = {}, history = {}, pending = {}, tomes = 0, dungeonRuns = 0,
     rerolls = 0, replays = {}, pulls = 0, news = {}, score = { kills = 0, wipes = 0, rounds = 0 }, bestScore = 0, freeWipe = {}, lastPrep = {} }
   -- A sensible but uneven starting guild: 2 tanks, 3 healers, 7 damage dealers, mostly common.
   local start = { { "warrior", "protection", "rare" }, { "paladin", "protection", "common" }, { "priest", "holy", "rare" }, { "shaman", "restoration", "common" },
     { "druid", "restoration", "common" }, { "rogue", "combat", "common" }, { "warrior", "fury", "common" }, { "hunter", "marksmanship", "rare" },
     { "warlock", "affliction", "common" }, { "priest", "shadow", "common" }, { "hunter", "beastmastery", "common" }, { "paladin", "retribution", "common" } }
-  for i = 1, #start do st.roster[#st.roster + 1] = makeChar(st, start[i][1], start[i][2], start[i][3]) end
+  local lo, hi = gearFor(L, G.ECON.startGear[1], G.ECON.startGear[2])
+  for i = 1, #start do st.roster[#st.roster + 1] = makeChar(st, start[i][1], start[i][2], start[i][3], lo, hi, L) end
   for i = 1, #G.BOSSES do st.progress[G.BOSSES[i].id] = { normalKills = 0, heroicKills = 0, normalWeek = false, heroicWeek = false, heroicWipes = 0, pulls = 0, wipes = 0 } end
   rollTavern(st)
-  st.news[#st.news + 1] = "Week 1. Your guild has 12 raiders, 300 gold and a raid to clear. Start with Magmadad on Normal."
+  if L < G.LEVEL.raidGate then
+    st.news[#st.news + 1] = "Week 1. Your guild has 12 raiders at level " .. L .. " and 300 gold. Dungeons first: raids need an average level of " .. G.LEVEL.raidGate .. "."
+  else
+    st.news[#st.news + 1] = "Week 1. Your guild has 12 raiders, 300 gold and a raid to clear. Start with Magmadad on Normal."
+  end
   return st
 end
 
@@ -475,6 +527,12 @@ function G.Problems(st, prep)
   if prep.mode == "heroic" and p.heroicWeek then out[#out + 1] = G.BOSS[prep.boss].name .. " is already dead on Heroic this week. The lockout resets next week." end
   if #prep.ids < 1 then out[#out + 1] = "Pick at least one raider." end
   if #prep.ids > 10 then out[#out + 1] = "Raids take 10." end
+  if #prep.ids > 0 and avgLevel(st, prep.ids) < G.LEVEL.raidGate then
+    out[#out + 1] = "Average level " .. avgLevel(st, prep.ids) .. ": raids need " .. G.LEVEL.raidGate .. ". Level up in dungeons first."
+  end
+  if #prep.ids > 0 and G.avgGear(st, prep.ids) < G.LEVEL.gearGate then
+    out[#out + 1] = "Average gear level " .. G.avgGear(st, prep.ids) .. ": raids need " .. G.LEVEL.gearGate .. ". Dungeons at level 60 drop gear level 46-56."
+  end
   if prep.mode == "heroic" then
     for i = 1, #prep.ids do local c = byId(st, prep.ids[i]) if c and c.benched then out[#out + 1] = "A benched raider can't come to Heroic this week."; break end end
   end
@@ -748,6 +806,7 @@ function G.Pull(st, prep)
       if contains(c.traits, "rage_quitter") and rint(st, 100) <= 10 then out.quit[#out.quit + 1] = c.name; dismissFree(st, c.id) end
     end
   end
+  out.levels = awardXP(st, prep.ids, killed and G.LEVEL.xp.kill or G.LEVEL.xp.wipe)
   out.found = journalFind(st, prep.boss, s)
   out.facts = facts(prep, input, s)
   if not killed then out.lesson = lessonFor(st, prep, out.facts, false); out.joke = pick(st, G.BOSS[prep.boss].jokes)
@@ -838,25 +897,52 @@ function G.AssignPending(st, i, to)
   if msg ~= "Can't equip that." then table.remove(st.pending, i) end
   return msg
 end
-function G.Dungeon(st)
-  if st.dungeonsLeft <= 0 then return { error = "No dungeon runs left this week." } end
-  st.dungeonsLeft = st.dungeonsLeft - 1
+-- The party for a quick dungeon: the five lowest-level raiders (then the lowest geared), so the whole roster levels and gears.
+function G.DungeonParty(st)
+  local l = {}
+  for i = 1, #st.roster do l[i] = st.roster[i] end
+  table.sort(l, function(a, b)
+    if G.level(a) ~= G.level(b) then return G.level(a) < G.level(b) end
+    if G.gearLevel(a) ~= G.gearLevel(b) then return G.gearLevel(a) < G.gearLevel(b) end
+    return a.id < b.id
+  end)
+  local ids = {}
+  for i = 1, math.min(5, #l) do ids[i] = l[i].id end
+  return ids
+end
+-- A small hash for rolls that must not move the game's RNG (so older saved results stay the same).
+local function sideRoll(st, salt, n) return ((st.seed % 1000003) * 31 + salt * 7919) % n end
+-- Dungeons are unlimited (design doc 2). Gold and gear scale with the party's level: about 5 gold at level 15.
+function G.Dungeon(st, ids)
+  ids = ids or G.DungeonParty(st)
+  if #ids < 1 then return { error = "Pick a party." } end
   local D = G.ECON.dungeon
+  local L = avgLevel(st, ids)
   local gold = rrange(st, D.gold[1], D.gold[2])
+  if L < G.LEVEL.cap then gold = math.max(1, round(gold * math.max(10, (L - 10) * 2) / 100)) end
   st.gold = st.gold + gold
-  local out = { gold = gold }
-  if rint(st, 100) <= D.itemChance then
+  st.dungeonRuns = (st.dungeonRuns or 0) + 1
+  local out = { gold = gold, party = ids }
+  out.levels = awardXP(st, ids, G.LEVEL.xp.dungeon)
+  if sideRoll(st, st.dungeonRuns, 100) < G.ECON.tomeChance then st.tomes = (st.tomes or 0) + 1; out.tome = true end
+  -- Three bosses, one item each (design doc 8): two green, the last boss blue. Party only, sized to its level.
+  local names = { weapon = { "Scarlet Monotony Mace", "Deadlines Pickaxe", "Ratchet's Wrench" }, armor = { "Robes of the Monotonous", "Gnomeregret Hand-me-downs", "Smoky Jerkin" },
+    trinket = { "Lucky Coin", "Murloc Fin Charm", "Bent Spoon of Insight" } }
+  local lo, hi = gearFor(L, D.itemLvl[1], D.itemLvl[2])
+  out.items = {}
+  for boss = 1, 3 do
     local slot = pick(st, { "weapon", "armor", "trinket" })
-    local names = { weapon = { "Scarlet Monotony Mace", "Deadlines Pickaxe", "Ratchet's Wrench" }, armor = { "Robes of the Monotonous", "Gnomeregret Hand-me-downs", "Smoky Jerkin" },
-      trinket = { "Lucky Coin", "Murloc Fin Charm", "Bent Spoon of Insight" } }
-    local it = { name = pick(st, names[slot]), slot = slot, lvl = rrange(st, D.itemLvl[1], D.itemLvl[2]), q = "rare", from = "Dungeon" }
+    local rare = boss == 3
+    local it = { name = pick(st, names[slot]), slot = slot, lvl = rrange(st, rare and lo or math.max(1, lo - 3), rare and hi or math.max(1, hi - 3)),
+      q = rare and "rare" or "uncommon", from = "Dungeon" }
     if slot == "armor" then it.type = pick(st, { "plate", "mail", "leather", "cloth" }) end
     it.eligible = {}
-    for i = 1, #st.roster do it.eligible[i] = st.roster[i].id end
+    for i = 1, #ids do it.eligible[i] = ids[i] end
     it.assign = suggest(st, it, it.eligible)
-    out.item = it
+    out.items[boss] = it
     st.pending[#st.pending + 1] = it
   end
+  out.item = out.items[3]
   return out
 end
 function G.Hire(st, i)
@@ -892,16 +978,36 @@ function G.BuyFire(st, id)
   st.gold = st.gold - G.ECON.fireGear; c.fire = c.fire + 1
   return c.name .. " gets a Fire Whelp piece (" .. c.fire .. " of 2)."
 end
-function G.Respec(st, id, spec)
+function G.RespecCost(st, id)
   local c = byId(st, id)
-  if st.gold < G.ECON.respec then return "Not enough gold." end
-  st.gold = st.gold - G.ECON.respec; c.spec = spec
-  return c.name .. " is now " .. G.specName(c.cls, spec) .. " (" .. G.ECON.respec .. " gold)."
+  local steps = G.ECON.respecSteps
+  if not c then return steps[1] end
+  return steps[math.min(#steps, (c.respecs or 0) + 1)]
+end
+-- useTome: spend a Tome of Respec instead of gold; the price doesn't rise.
+function G.Respec(st, id, spec, useTome)
+  local c = byId(st, id)
+  if not c then return "" end
+  if spec == c.spec then return c.name .. " is already " .. G.specName(c.cls, spec) .. "." end
+  local name = G.specName(c.cls, spec)
+  if useTome then
+    if (st.tomes or 0) < 1 then return "No Tome of Respec." end
+    st.tomes = st.tomes - 1; c.spec = spec; c.respecWeek = st.week
+    return c.name .. " is now " .. name .. " (Tome of Respec)."
+  end
+  local cost = G.RespecCost(st, id)
+  if st.gold < cost then return "Not enough gold." end
+  st.gold = st.gold - cost; c.spec = spec; c.respecWeek = st.week
+  c.respecs = math.min(#G.ECON.respecSteps - 1, (c.respecs or 0) + 1)  -- the 5th price is the cap
+  return c.name .. " is now " .. name .. " (" .. cost .. " gold)."
 end
 
 function G.EndWeek(st)
   if st.score.kills > 0 or st.score.wipes > 0 then st.bestScore = math.max(st.bestScore, G.heroicScore(st)) end
-  st.week = st.week + 1; st.gold = st.gold + G.ECON.weeklyQuests; st.dungeonsLeft = G.ECON.dungeon.perWeek; st.rerolls = 0
+  st.week = st.week + 1; st.gold = st.gold + G.ECON.weeklyQuests; st.rerolls = 0
+  for _, c in ipairs(st.roster) do
+    if (c.respecs or 0) > 0 and c.respecWeek ~= st.week - 1 then c.respecs = c.respecs - 1 end  -- a week without a respec
+  end
   st.buffs = {}; st.freeWipe = {}
   local quits = {}
   local snapshot = {}

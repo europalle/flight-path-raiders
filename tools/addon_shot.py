@@ -201,11 +201,11 @@ if __name__ == "__main__":
     L.execute("WOW_FIRE('ADDON_LOADED', 'FlightPathRaiders')")
     slash = L.eval("SlashCmdList.FLIGHTPATHRAIDERS")
     # A guild whose first pull on the wrong card wipes, so the recap screen is always shot (gate review M6).
-    probe = """(function(seed) local G = FPR_NS.Game local st = G.NewGame(seed)
+    probe = """(function(seed) local G = FPR_NS.Game local st = G.NewGame(seed, { level = 60 })
       local p = G.DefaultPrep(st, "magmadad", "normal") p.tactic = "spread" return G.Pull(st, p).result ~= "kill" end)"""
     seed = next(sd for sd in range(1, 500) if L.eval(probe)(sd * 104729))
     for theme in ("light", "dark"):
-        L.execute(f"FlightPathRaidersDB.guild = FPR_NS.Game.NewGame({seed * 104729})")
+        L.execute(f"FlightPathRaidersDB.guild = FPR_NS.Game.NewGame({seed * 104729}, {{ level = 60 }})")
         slash("theme " + theme)
         if not L.eval("FlightPathRaidersBoard and FlightPathRaidersBoard:IsShown()"): slash("")
         click("Hub"); shot_scales(f"hub-{theme}")

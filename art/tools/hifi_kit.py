@@ -28,7 +28,7 @@ THEMES = {
                 sel=["#3a1204", "#c44a1a", "#f2c9a8", "#fff4ea"], seltext="#2a2119",
                 primary=["#120c07", "#4a3a2a", "#2a2119", "#241a12"], ptext="#fbf6ea", slot=["#2b1c0c", "#7a5420", "#c99a45", "#f3ecdc"],
                 gem=["#2a0606", "#7a1414", "#d84a3a", "#ffd0c0"],
-                rarity={"common": "#5d564c", "rare": "#1f5fae", "epic": "#7b2fa8", "legendary": "#b05a00"}),
+                rarity={"common": "#5d564c", "uncommon": "#2b6e2b", "rare": "#1f5fae", "epic": "#7b2fa8", "legendary": "#b05a00"}),
   "dark": dict(name="Midnight Grimoire", tex="A2b.png", ink="#e6e1d3", muted="#b3ad9e", rule="#4a515e", panel="rgba(30,34,42,.86)", row="rgba(37,42,51,.92)",
                accent="#ff8a3d", good="#7ccf83", warn="#f0b44c", bad="#ff8a7e", badtext="#1c1f26", bar="#c9a05a", barbg="#2a2f38", hp="#5fbf68",
                scrim="rgba(8,10,14,.74)",
@@ -36,7 +36,7 @@ THEMES = {
                sel=["#1a0a04", "#ff8a3d", "#c45a1c", "#3a1a0c"], seltext="#ffe9d6",
                primary=["#1a0a04", "#ff8a3d", "#c45a1c", "#3a1206"], ptext="#ffe9d6", slot=["#0d0f13", "#3c424d", "#8b93a1", "#252a33"],
                gem=["#2a0606", "#7a1414", "#ff6a5a", "#ffd0c0"],
-               rarity={"common": "#c7c1b3", "rare": "#7fb2ff", "epic": "#d39bff", "legendary": "#ffb35c"}),
+               rarity={"common": "#c7c1b3", "uncommon": "#7fd184", "rare": "#7fb2ff", "epic": "#d39bff", "legendary": "#ffb35c"}),
 }
 CLASS_ICON = {"warrior": "C1-05.png", "paladin": "C1-03.png", "hunter": "C1-06.png", "rogue": "C1-07.png", "priest": "C1-09.png",
               "shaman": "C1-10.png", "mage": "C1-11.png", "warlock": "C1-08.png", "druid": "C1-12.png"}

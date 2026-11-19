@@ -15,7 +15,7 @@ slash = A.L.eval("SlashCmdList.FLIGHTPATHRAIDERS")
 slash("theme dark"); slash("")
 # A guild that has reached Ragnaroast on Normal (the boss with finished art), on a seed where the pull is
 # a kill, so the clip ends on the loot window.
-setup = """(function(seed) local G = FPR_NS.Game local st = G.NewGame(seed)
+setup = """(function(seed) local G = FPR_NS.Game local st = G.NewGame(seed, { level = 60 })
   for _, b in ipairs({ "magmadad", "baron", "lucifrown", "majordomo" }) do st.progress[b].normalKills = 1; st.progress[b].normalWeek = true end
   for _, c in ipairs(st.roster) do c.skill10 = 600; c.fam10.ragnaroast = 60 end
   st.gold = 2000 return st end)"""

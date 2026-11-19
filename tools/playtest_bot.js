@@ -12,14 +12,14 @@ for (const b of G.BOSSES) { firstNormal[b.id] = []; firstHeroic[b.id] = []; }
 const ragHeroic = {}; let early = 0, answers = 0;
 let scores = [], totalGold = [], totalGL = [], moraleEnd = [], quits = 0, rosterEnd = [], wipes = 0, pullsAll = 0, tierSeen = [0, 0, 0];
 for (let g = 0; g < guilds; g++) {
-  const st = G.newGame(1000 + g * 7919);
+  const st = G.newGame(1000 + g * 7919, 60);
   const known = {};  // boss -> card the bot believes is right
   const tried = {};  // boss -> cards the learner has tried in a replay
   const failed = {}; // boss:mode -> cards that wiped (a player remembers what didn't work: gate review 2)
   const knowFire = { v: false };
   for (let w = 1; w <= weeks; w++) {
     const clear = () => { while ((st.pending || []).length) G.assignPending(st, 0, G.suggestFor(st, st.pending[0]).to); };
-    while (st.dungeonsLeft > 0) { G.dungeon(st); clear(); }
+    for (let d = 0; d < 8; d++) { G.dungeon(st); clear(); }  // a player's week: 8 dungeon runs
     // Keep the roster topped up like a real player would: hire the cheapest useful recruit when below 12.
     while (st.roster.length < 12 && st.tavern.length) {
       const i = st.tavern.reduce((b, o, k) => (o.price < st.tavern[b].price ? k : b), 0);

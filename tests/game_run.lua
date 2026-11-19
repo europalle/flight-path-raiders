@@ -4,10 +4,10 @@
 local G = FPR_ENGINE.Game
 local lines = {}
 for season = 1, 3 do
-  local st = G.NewGame(season * 104729)
+  local st = G.NewGame(season * 104729, { level = 60 })
   for w = 1, 6 do
     local sum = 0
-    while st.dungeonsLeft > 0 do G.Dungeon(st) end
+    for _ = 1, 8 do G.Dungeon(st) end
     if #st.roster < 12 and #st.tavern > 0 then G.Hire(st, 1) end
     for _, mode in ipairs({ "normal", "heroic" }) do
       for _, b in ipairs(G.BOSSES) do

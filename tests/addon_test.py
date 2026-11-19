@@ -43,10 +43,19 @@ for page in ("Roster", "Tavern", "Journal", "Hub"):
 press("Roster"); names = [L.eval(f"FlightPathRaidersDB.guild.roster[{i}].name") for i in range(1, 13)]
 check("the roster lists every raider", all(n in text() for n in names))
 press("Hub")
-# Dungeons fill the purse a little; then a pull.
+# A new guild starts at level 10 (Phase 4): dungeons level it, and raids wait for the level gate.
+check("a new guild starts at level 10", L.eval("FlightPathRaidersDB.guild.roster[1].level == 10"))
+press("Prep pull")
+check("prep says raids wait for level 58", "raids need 58" in text())
+press("Hub")
 gold0 = L.eval("FlightPathRaidersDB.guild.gold")
-press("Quick dungeon (8 left)")
-check("a quick dungeon pays gold", L.eval("FlightPathRaidersDB.guild.gold") > gold0)
+press("Quick dungeon")
+check("a quick dungeon pays gold and levels the party", L.eval("FlightPathRaidersDB.guild.gold") > gold0 and L.eval("FlightPathRaidersDB.guild.roster[1].level") > 10)
+check("its three items open the loot window", L.eval("FPR_NS.Board.modal ~= nil") and L.eval("#FlightPathRaidersDB.guild.pending") == 3)
+press("Hand out")
+check("handing out clears the loot", L.eval("#FlightPathRaidersDB.guild.pending") == 0)
+# The raid flow, with a guild that has levelled.
+L.execute("FlightPathRaidersDB.guild = FPR_NS.Game.NewGame(77, { level = 60 }); FPR_NS.Board.Go('Hub')")
 check("Prep pull opens prep", press("Prep pull") and L.eval("FPR_NS.Board.page") == "Prep")
 check("prep shows the raid by zone and the four cards", all(s in text() for s in ("Front", "Melee", "Back", "This pull costs")))
 press("Burn")
@@ -118,7 +127,7 @@ L.execute("FlightPathRaidersDB.settings.keys = true")
 heroic = L.eval("""function()
   local G, B = FPR_NS.Game, FPR_NS.Board
   for seed = 1, 30 do
-    local st = G.NewGame(4242 + seed)
+    local st = G.NewGame(4242 + seed, { level = 60 })
     for _, b in ipairs(G.BOSSES) do st.progress[b.id].normalKills = 1 end
     FlightPathRaidersDB.guild = st
     B.Go("Prep", { boss = "magmadad", mode = "heroic" }); local prep = B.args.prep; prep.tactic = "spread"
@@ -142,7 +151,7 @@ check(f"Heroic: after a wipe the dead are benched and Pull again goes with whoev
 # Prep: a 5th raider in a zone is still shown (S1).
 five = L.eval("""function()
   local G, B = FPR_NS.Game, FPR_NS.Board
-  FlightPathRaidersDB.guild = G.NewGame(99)
+  FlightPathRaidersDB.guild = G.NewGame(99, { level = 60 })
   B.Go("Prep", { boss = "magmadad", mode = "normal" })
   local prep = B.args.prep
   for _, id in ipairs(prep.ids) do prep.zones[tostring(id)] = "melee" end
@@ -183,7 +192,7 @@ ten = L.eval("""function()
   local pulls, t0 = 0, os.clock()
   local slowest = 0
   for w = 1, 10 do
-    while st.dungeonsLeft > 0 do G.Dungeon(st) end
+    for _ = 1, 8 do G.Dungeon(st) end
     if #st.roster < 12 and st.tavern[1] and st.gold >= st.tavern[1].price then G.Hire(st, 1) end
     for _, mode in ipairs({ "normal", "heroic" }) do
       for _, b in ipairs(G.BOSSES) do

@@ -294,6 +294,11 @@ function P.Results(st, args)
   local alerts = {}
   if #out.quit > 0 then alerts[#alerts + 1] = table.concat(out.quit, " and ") .. " rage quit the guild" end
   if #out.benched > 0 then alerts[#alerts + 1] = "Benched until reset: " .. table.concat(out.benched, ", ") end
+  if out.levels and #out.levels > 0 then
+    local ups = {}
+    for i, u in ipairs(out.levels) do if i <= 3 then ups[i] = u.name .. " " .. u.to end end
+    UI.text(24, 512, "Level up: " .. table.concat(ups, ", ") .. ((#out.levels > 3) and (" and " .. (#out.levels - 3) .. " more") or ""), { size = 12, col = "good", w = 560 })
+  end
   if #alerts > 0 then UI.icon(24, 492, 16, "warn"); UI.text(46, 493, table.concat(alerts, ". ") .. ".", { size = 12, col = "bad", w = 540 }) end
   -- Replay with another card (wipes only, once per boss a week).
   local ri = g.ReplayInfo(st)

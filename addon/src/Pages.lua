@@ -75,11 +75,20 @@ function P.Hub(st)
   end
   -- This week.
   UI.text(484, 262, "This week", { head = true, size = 16 })
-  UI.button(484, 286, 220, 40, "Quick dungeon (" .. st.dungeonsLeft .. " left)", function()
+  local party = g.DungeonParty(st)
+  local names = {}
+  for i, id in ipairs(party) do names[i] = g.byId(st, id).name end
+  UI.button(484, 286, 220, 40, "Quick dungeon", function()
     local o = g.Dungeon(st)
-    if o.error then B().Toast(o.error) else B().Toast("Dungeon: +" .. o.gold .. " gold" .. (o.item and (", and " .. o.item.name .. " dropped") or "") .. ".") end
+    if o.error then B().Toast(o.error) else
+      local msg = "Dungeon: +" .. o.gold .. " gold, " .. #(o.items or {}) .. " items"
+      if o.levels and #o.levels > 0 then msg = msg .. ", " .. #o.levels .. " level-ups" end
+      if o.tome then msg = msg .. ", and a Tome of Respec!" end
+      B().Toast(msg .. ".")
+      if #st.pending > 0 then P.LootWindow() return end
+    end
     B().Render()
-  end, { disabled = st.dungeonsLeft <= 0, tip = "35-45 gold, sometimes a dungeon item" })
+  end, { tip = "The five lowest-level raiders go: " .. table.concat(names, ", ") .. ". Everyone else gets half the XP. Gold and gear rise with level." })
   local pend = #st.pending
   UI.button(712, 286, 224, 40, pend > 0 and ("Loot waiting: " .. pend) or "No loot waiting", function() P.LootWindow() end, { disabled = pend == 0 })
   UI.button(484, 334, 220, 40, "End the week", function()
@@ -119,7 +128,7 @@ function P.Roster(st, args)
   local list = {}
   for _, c in ipairs(st.roster) do if filter == "all" or g.role(c.cls, c.spec) == filter then list[#list + 1] = c end end
   local sel = args.sel and g.byId(st, args.sel) or list[1] or st.roster[1]
-  local cols = { { 70, "Name" }, { 178, "Class · spec" }, { 342, "GL" }, { 374, "Morale" }, { 456, "Status" } }
+  local cols = { { 70, "Name" }, { 178, "Class · spec" }, { 316, "Lv" }, { 342, "GL" }, { 374, "Morale" }, { 456, "Status" } }
   for _, c in ipairs(cols) do UI.text(c[1], 137, c[2], { size = 11, col = "muted" }) end
   for i, c in ipairs(list) do
     local y = 156 + (i - 1) * 24
@@ -128,7 +137,8 @@ function P.Roster(st, args)
     UI.portrait(28, y + 1, 20, c.cls, c.look, c.benched)
     UI.text(70, y + 4, c.name, { size = 12.5, col = c.benched and "muted" or "ink" })
     UI.icon(178, y + 4, 14, "class-" .. c.cls)
-    UI.text(196, y + 4, UI.title(c.cls) .. " · " .. g.specName(c.cls, c.spec), { size = 12, w = 142 })
+    UI.text(196, y + 4, UI.title(c.cls) .. " · " .. g.specName(c.cls, c.spec), { size = 12, w = 118 })
+    UI.text(316, y + 4, tostring(g.level(c)), { size = 12, col = g.level(c) < g.LEVEL.cap and "accent" or "ink" })
     UI.text(342, y + 4, tostring(g.gearLevel(c)), { size = 12 })
     UI.bar(374, y + 8, 36, 7, c.morale / 100, UI.moraleCol(c.morale))
     UI.text(416, y + 4, tostring(c.morale), { size = 11.5, col = UI.moraleCol(c.morale) })
@@ -144,7 +154,12 @@ function P.Roster(st, args)
   UI.portrait(578, 118, 72, c.cls, c.look, c.benched)
   UI.text(662, 120, c.name, { head = true, size = 22 })
   UI.text(662, 150, c.race .. " " .. UI.title(c.cls) .. " · " .. g.specName(c.cls, c.spec) .. " · " .. g.RARITY[c.rarity].label, { size = 12, col = "muted", w = 260 })
-  UI.text(704, 170, "GL " .. g.gearLevel(c) .. " · skill " .. math.floor(c.skill10 / 10), { size = 12 })
+  local lv = g.level(c)
+  UI.text(704, 170, "Level " .. lv .. " · GL " .. g.gearLevel(c) .. " · skill " .. math.floor(c.skill10 / 10), { size = 12 })
+  if lv < g.LEVEL.cap then
+    UI.bar(704, 188, 150, 5, (c.xp or 0) / g.xpNeed(lv), "accent")
+    UI.button(704, 184, 150, 12, nil, nil, { kind = "row", tip = (c.xp or 0) .. " / " .. g.xpNeed(lv) .. " XP to level " .. (lv + 1) })
+  end
   local pips = ({ common = 1, rare = 2, epic = 3, legendary = 4 })[c.rarity] or 1
   for i = 1, 4 do UI.rect(663 + (i - 1) * 9, 174, 6, 6, i <= pips and UI.T().rarity[c.rarity] or "barbg") end
   UI.text(578, 202, "Traits", { size = 12, col = "muted" })
@@ -172,20 +187,25 @@ function P.Roster(st, args)
     if g.FLAVOUR[it.name] then UI.button(578, ry, 340, 26, nil, nil, { kind = "row", tip = it.name .. "\n" .. g.FLAVOUR[it.name] }) end
   end
   UI.text(578, math.min(434, gy + 20 + 3 * step + 4), "Fire Whelp gear " .. c.fire .. " of 2", { size = 12 })
-  UI.button(578, 460, 112, 40, "Respec " .. g.ECON.respec .. " g", function()
+  local rcost = g.RespecCost(st, c.id)
+  local tomes = st.tomes or 0
+  local canRespec = st.gold >= rcost or tomes > 0
+  UI.button(578, 460, 112, 40, "Respec " .. rcost .. " g", function()
     B().OpenModal(function()
-      UI.panel(280, 180, 400, 180, "panel", "rule", true)
-      UI.text(300, 198, "Respec " .. c.name .. " for " .. g.ECON.respec .. " gold", { head = true, size = 16 })
+      UI.panel(280, 170, 400, 210, "panel", "rule", true)
+      UI.text(300, 188, "Respec " .. c.name, { head = true, size = 16 })
+      UI.text(300, 212, "Costs " .. rcost .. " gold; the next one costs more. The price drops a step each week without one." ..
+        (tomes > 0 and (" You have " .. tomes .. " Tome" .. (tomes > 1 and "s" or "") .. " of Respec: free, and the price stays.") or ""), { size = 11.5, col = "muted", w = 360 })
       local specs = g.SPECS[c.cls]
       for i, sp in ipairs(specs) do
         local cur = sp[1] == c.spec
-        UI.button(300 + (i - 1) * (360 / #specs), 240, 360 / #specs - 6, 40, sp[2], function()
-          B().Toast(g.Respec(st, c.id, sp[1])); B().CloseModal()
-        end, { kind = cur and "selected" or "normal", size = 12, disabled = cur, tip = cur and "Current spec" or nil })
+        UI.button(300 + (i - 1) * (360 / #specs), 256, 360 / #specs - 6, 40, sp[2], function()
+          B().Toast(g.Respec(st, c.id, sp[1], tomes > 0)); B().CloseModal()
+        end, { kind = cur and "selected" or "normal", size = 12, disabled = cur or not canRespec, tip = cur and "Current spec" or (tomes > 0 and "Uses a Tome of Respec" or (rcost .. " gold")) })
       end
-      UI.button(560, 300, 100, 36, "Cancel", function() B().CloseModal() end)
+      UI.button(560, 320, 100, 36, "Cancel", function() B().CloseModal() end)
     end)
-  end, { size = 12.5, disabled = st.gold < g.ECON.respec, tip = st.gold < g.ECON.respec and "Not enough gold." or "Change spec" })
+  end, { size = 12.5, disabled = not canRespec, tip = not canRespec and "Not enough gold." or "Change spec" })
   UI.button(698, 460, 132, 40, "Fire gear " .. g.ECON.fireGear .. " g", function() B().Toast(g.BuyFire(st, c.id)); B().Render() end,
     { size = 12.5, disabled = c.fire >= 2 or st.gold < g.ECON.fireGear, tip = "Fire resistance for Ragnaroast. Two pieces at most." })
   local back = math.floor(g.RARITY[c.rarity].cost * g.ECON.dismissBack / 100 + 0.5)
@@ -217,7 +237,7 @@ function P.Tavern(st)
     local pips = ({ common = 1, rare = 2, epic = 3, legendary = 4 })[c.rarity] or 1
     for k = 1, 4 do UI.rect(x + 11 + (k - 1) * 9, y + 219, 6, 6, k <= pips and UI.T().rarity[c.rarity] or "barbg") end
     UI.text(x + 54, y + 214, g.RARITY[c.rarity].label, { size = 12, col = UI.T().rarity[c.rarity] })
-    UI.text(x + 96, y + 214, "GL " .. g.gearLevel(c), { size = 12, w = 70, justify = "RIGHT" })
+    UI.text(x + 96, y + 214, "Lv " .. g.level(c) .. " · GL " .. g.gearLevel(c), { size = 12, w = 70, justify = "RIGHT" })
     UI.text(x + 10, y + 237, "Traits", { size = 11, col = "muted" })
     for k, t in ipairs(c.traits) do
       local ty = y + 254 + (k - 1) * 18

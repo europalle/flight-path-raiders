@@ -11,12 +11,11 @@ const same = (a, b) => JSON.stringify(sorted(a)) === JSON.stringify(sorted(b));
 const fails = {}; const check = (name, ok, d) => { if (!ok) (fails[name] = fails[name] || []).push(d); };
 let pulls = 0;
 for (let g = 0; g < 25; g++) {
-  const st = G.newGame(4242 + g * 31337);
+  const st = G.newGame(4242 + g * 31337, 60);
   check('new guild has 12 raiders and 300 gold', st.roster.length === 12 && st.gold === 300, g);
   check('new guild clears the Normal gate (average GL 50+)', st.roster.reduce((s, c) => s + G.gearLevel(c), 0) / 12 >= 50, g);
   for (let w = 1; w <= 8; w++) {
-    while (st.dungeonsLeft > 0) G.dungeon(st);
-    check('dungeons capped per week', G.dungeon(st).error, g);
+    for (let d = 0; d < 8; d++) G.dungeon(st);
     for (const mode of ['normal', 'heroic']) for (const b of G.BOSSES) {
       if (!G.unlocked(st, b.id, mode)) { const pr = G.defaultPrep(st, b.id, mode); check('locked bosses refuse a pull', G.pull(st, pr).error, b.id); break; }
       for (let k = 0; k < (mode === 'normal' ? 6 : 4); k++) {
@@ -62,13 +61,49 @@ for (let g = 0; g < 25; g++) {
   const snap = JSON.parse(JSON.stringify(st)); check('a save loads back into the Lua rules unchanged', same(G.load(JSON.parse(JSON.stringify(snap))), snap), 'save');
 }
 // Same seed, same choices, same game: two runs of a short script agree on every number.
-const script = seed => { const st = G.newGame(seed); for (let w = 0; w < 3; w++) { while (st.dungeonsLeft > 0) G.dungeon(st);
+const script = seed => { const st = G.newGame(seed, 60); for (let w = 0; w < 3; w++) { for (let d = 0; d < 8; d++) G.dungeon(st);
   for (const b of G.BOSSES.slice(0, 3)) { const pr = G.defaultPrep(st, b.id, 'normal'); pr.tactic = b.card; G.pull(st, pr); }
   while (st.pending.length) G.assignPending(st, 0, G.suggestFor(st, st.pending[0]).to); G.endWeek(st); } return JSON.parse(JSON.stringify(st)); };
-{ const st = G.newGame(31); const pr = G.defaultPrep(st, 'magmadad', 'normal'); const o = G.pull(st, pr); const rb = G.rebuild(st.history[0].record);
+{ const st = G.newGame(31, 60); const pr = G.defaultPrep(st, 'magmadad', 'normal'); const o = G.pull(st, pr); const rb = G.rebuild(st.history[0].record);
   check('a saved pull rebuilds from its record, log and all', rb.run && rb.run.checksum === o.run.checksum && rb.run.events.length === o.run.events.length && rb.run.frames.length === o.run.rounds, rb.error);
   check('records are small enough to keep 40 in a save', st.history[0].record.length < 700, st.history[0].record.length); }
 check('the rules are deterministic', same(script(77), script(77)), 'determinism');
+// Levelling (Phase 4, #39): a new guild starts at level 10 and can't raid; dungeons level the whole roster.
+const lv = { runs: [], gear: [] };
+for (let g = 0; g < 10; g++) {
+  const st = G.newGame(900 + g * 7);
+  check('new guild: 12 raiders at level 10', st.roster.length === 12 && st.roster.every(c => c.level === 10), g);
+  check('level 10 guild cannot raid', /level/.test(G.pull(st, G.defaultPrep(st, 'magmadad', 'normal')).error || ''), g);
+  const party = G.dungeonParty(st);
+  const before = st.roster.map(c => [c.id, c.xp, c.level]);
+  G.dungeon(st, party);
+  check('dungeon party gets full XP, the rest half', st.roster.every(c => { const b = before.find(x => x[0] === c.id);
+    const gained = (c.level - b[2]) > 0 || c.xp > b[1]; return gained; }), g);
+  let n = 1, lvlRuns = 0;
+  while (G.problems(st, G.defaultPrep(st, 'magmadad', 'normal')).length && n < 200) {
+    G.dungeon(st); n++;
+    while (st.pending.length) G.assignPending(st, 0, G.suggestFor(st, st.pending[0]).to);
+    if (!lvlRuns && G.avgLevel(st) >= 58) lvlRuns = n;
+    check('levels stay within 1-60', st.roster.every(c => c.level >= 1 && c.level <= 60 && (c.level < 60 || c.xp === 0)), g);
+  }
+  lv.runs.push(lvlRuns); lv.gear.push(n);
+  check('the roster reaches the level gate in 25-40 dungeon runs', lvlRuns >= 25 && lvlRuns <= 40, lvlRuns);
+  check('the roster reaches the raid gates in under 60 dungeon runs', n < 60, n);
+  G.endWeek(st); const avg = G.avgLevel(st);
+  check('tavern recruits arrive up to 5 levels below the roster', st.tavern.every(c => c.level <= avg && c.level >= avg - 5), [avg, st.tavern.map(c => c.level)]);
+}
+{ // Respec: the price rises per character and drops a step for each week without a respec; a tome is free.
+  const st = G.newGame(5, 60); G.lua('(function() FPR_STATE.gold = 100000; return 0 end)()'); const id = st.roster[0].id;
+  const costs = [];
+  for (const sp of ['arms', 'fury', 'protection', 'arms', 'fury', 'protection']) { costs.push(G.respecCost(st, id)); G.respec(st, id, sp); }
+  check('respec prices 100, 300, 600, 1200, 2400, then capped', costs.join() === '100,300,600,1200,2400,2400', costs.join());
+  G.endWeek(st); const w1 = G.respecCost(st, id); G.endWeek(st); const w2 = G.respecCost(st, id);
+  check('a week without a respec takes the price down one step', w1 === 2400 && w2 === 1200, [w1, w2]);
+  G.lua('(function() FPR_STATE.tomes = 1; return 0 end)()'); const gold = G.lua('FPR_STATE.gold'); G.respec(st, id, 'arms', true);
+  const after = G.lua('{ FPR_STATE.gold, FPR_STATE.tomes }');
+  check('a Tome of Respec is free and keeps the price', after[0] === gold && after[1] === 0 && G.respecCost(st, id) === 1200, after);
+}
+console.log(`Levelling: level gate after ${Math.min(...lv.runs)}-${Math.max(...lv.runs)} dungeon runs, raid gates after ${Math.min(...lv.gear)}-${Math.max(...lv.gear)}`);
 console.log(`Playtest QA: 25 guilds x 8 weeks, ${pulls} pulls`);
 const keys = Object.keys(fails); if (!keys.length) console.log('All checks passed');
 for (const k of keys) console.log(`FAIL ${k}: ${fails[k].length}, e.g. ${JSON.stringify(fails[k].slice(0, 2))}`);

@@ -48,6 +48,7 @@ First gate review (separate agent, 2026-11-19): **fail**, six must-fix items, al
 
 ## Recent
 
+- 2026-11-19: Phase 4 #39 levelling: new guilds start at level 10; XP, Bench Training, level and gear gates for raids, unlimited dungeons with three party drops, per-character respec prices and the Tome of Respec. Slice tests run a level-60 guild.
 - 2026-11-19: Phase 3 closed (gate 6a accepted by the Director); Phase 4 board set up.
 - 2026-11-19: Director: no install until production, so finish the slice without it.
 - 2026-11-19: Rules in Lua; boss hooks; replay records; every slice screen in hi-fi and in the addon; keyboard reach; sound cues; art in the addon (3-slice buttons, stage, rim light); Legal, Marketing and QA deliverables; Phase 3 gate checks measured.
