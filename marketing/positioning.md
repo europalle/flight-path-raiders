@@ -30,7 +30,7 @@ Issue #13, 2026-11-19. The 30-second clip is `marketing/clip-pull.mp4`. For now 
 | Screenshots | Hub, prep, playback, the recap after a wipe, the loot window, tavern, journal (both themes, one each) |
 | How to start | Type /fpr. Settings: /fpr scale, /fpr theme, /fpr reset |
 | What's in it | The Molten Bore, five bosses, Normal and Heroic, traits, morale, the journal |
-| AI note | Plain disclosure (Legal, checklist section 4) |
+| AI note | "The art in Flight Path Raiders was made with AI image tools (Google Gemini) from our own sketches and prompts, then cut, recoloured and edited by hand." (Director, 2026-11-19) |
 | Not affiliated | "Fan-made parody. Not made or endorsed by Blizzard Entertainment." |
 
 ## Screenshot and GIF list

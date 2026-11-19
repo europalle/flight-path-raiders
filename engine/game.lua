@@ -160,10 +160,10 @@ G.FLAVOUR = {
   ["Eye of Ragnaroast (Medium Rare)"] = "It's watching you. It thinks you need more salt.",
   ["Marinade of Fury"] = "Apply to weapon. Let rest overnight. Hit things.",
   ["Scarlet Monotony Mace"] = "You have run this dungeon so many times.",
-  ["Deadmines Pickaxe"] = "Still has a bit of the mine on it.",
+  ["Deadlines Pickaxe"] = "Still has a bit of the mine on it.",
   ["Ratchet's Wrench"] = "Fixes boats. Breaks goblins.",
   ["Robes of the Monotonous"] = "Smells faintly of the same boss, again.",
-  ["Gnomeregan Hand-me-downs"] = "Slightly radioactive. Very fashionable.",
+  ["Gnomeregret Hand-me-downs"] = "Slightly radioactive. Very fashionable.",
   ["Smoky Jerkin"] = "Everyone knows where you've been.",
   ["Lucky Coin"] = "Lands on its edge when it matters.",
   ["Murloc Fin Charm"] = "Mrglglgl. That's all it says.",
@@ -847,7 +847,7 @@ function G.Dungeon(st)
   local out = { gold = gold }
   if rint(st, 100) <= D.itemChance then
     local slot = pick(st, { "weapon", "armor", "trinket" })
-    local names = { weapon = { "Scarlet Monotony Mace", "Deadmines Pickaxe", "Ratchet's Wrench" }, armor = { "Robes of the Monotonous", "Gnomeregan Hand-me-downs", "Smoky Jerkin" },
+    local names = { weapon = { "Scarlet Monotony Mace", "Deadlines Pickaxe", "Ratchet's Wrench" }, armor = { "Robes of the Monotonous", "Gnomeregret Hand-me-downs", "Smoky Jerkin" },
       trinket = { "Lucky Coin", "Murloc Fin Charm", "Bent Spoon of Insight" } }
     local it = { name = pick(st, names[slot]), slot = slot, lvl = rrange(st, D.itemLvl[1], D.itemLvl[2]), q = "rare", from = "Dungeon" }
     if slot == "armor" then it.type = pick(st, { "plate", "mail", "leather", "cloth" }) end

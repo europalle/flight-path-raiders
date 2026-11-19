@@ -73,3 +73,7 @@ Not yet available. When it is, the addon installs as a single folder with its li
 - **Art** (`art/`): [CC BY-NC-SA 4.0](art/LICENSE). Credit us, no commercial use, share alike.
 - Bundled third-party libraries keep their own licences, included next to them.
 - World of Warcraft is a trademark of Blizzard Entertainment. This is an unofficial fan project; it contains no Blizzard art or assets.
+
+## Art
+
+The art in Flight Path Raiders was made with AI image tools (Google Gemini) from our own sketches and prompts, then cut, recoloured and edited by hand. Art is licensed CC BY-NC-SA 4.0, code GPL-3.0.

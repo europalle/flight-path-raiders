@@ -24,7 +24,7 @@ Status key: **Done** (checked in the repo), **Before beta**, **Before launch**, 
 | Boss names are our own puns, not real boss names | Magmadad, Baron Get-Down, Lucifrown, Majordomo Exhaustus, Ragnaroast, Onyxiety | Done |
 | No real character, logo or crest in the art | Art's look-alike rule (prompt pack v4): anything two of us read as a real character gets redrawn | Done for current art |
 | Item names are our own | All loot names and flavour text are ours (engine/game.lua) | Done |
-| Dungeon item names that echo real dungeons ("Deadmines Pickaxe", "Gnomeregan Hand-me-downs") | Place names are used as in-game references, which is common in fan works, but they are Blizzard's names | **Before launch: decide.** Safest is renaming them to our own places |
+| Dungeon item names that echoed real dungeons | Renamed to our own dungeons: "Deadlines Pickaxe", "Gnomeregret Hand-me-downs" (Director, 2026-11-19) | Done |
 | Class and race names (warrior, night elf...) | Generic fantasy words, needed to describe the player's own game | Done |
 | Use of the game's sound kit | We play the client's own sounds through its API; we ship no audio files | Done |
 | Use of the client's fonts | We use the fonts already in the client; we ship none | Done |
@@ -59,5 +59,4 @@ Status key: **Done** (checked in the repo), **Before beta**, **Before launch**, 
 
 ## Open decisions for the Director
 
-1. Rename the two dungeon items that use real place names (Deadmines, Gnomeregan)? Legal's advice: yes, before launch.
-2. AI disclosure wording on the addon page: Marketing drafts it, Legal checks it.
+None. Both decided by the Director on 2026-11-19: the two items are renamed, and the AI disclosure reads: "The art in Flight Path Raiders was made with AI image tools (Google Gemini) from our own sketches and prompts, then cut, recoloured and edited by hand." It goes on the CurseForge and Wago pages and in the README.
