@@ -350,7 +350,7 @@ function P.LootWindow()
       local it = st.pending[i]
       local y = 168 + (i - P.lootFirst) * 134
       UI.panel(168, y, 624, 122, "row")
-      UI.icon(184, y + 16, 48, it.slot == "armor" and it.type or it.slot)
+      UI.icon(184, y + 16, 48, UI.itemIcon(it))
       UI.text(248, y + 17, it.name, { size = 15, col = UI.T().rarity[it.q] or "ink", w = 530 })
       if g.FLAVOUR[it.name] then UI.button(244, y + 13, 300, 22, nil, nil, { kind = "row", tip = it.name .. "\n" .. g.FLAVOUR[it.name] }) end
       UI.text(248, y + 38, UI.title(it.q) .. " · " .. (it.slot == "armor" and (UI.title(it.type) .. " armor") or UI.title(it.slot)) .. " · gear level " .. it.lvl .. " · " .. (it.from or ""), { size = 12, col = "muted", w = 530 })

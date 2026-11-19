@@ -166,7 +166,7 @@ function P.Roster(st, args)
   for k, slot in ipairs({ "weapon", "armor", "trinket" }) do
     local it = c.gear[slot]
     local ry = gy + 20 + (k - 1) * step
-    UI.panel(578, ry, 340, 26, "row"); UI.icon(586, ry + 5, 16, slot == "armor" and (it.type or g.ARMOR[c.cls]) or slot)
+    UI.panel(578, ry, 340, 26, "row"); UI.icon(586, ry + 5, 16, slot == "armor" and UI.itemIcon(it, g.ARMOR[c.cls]) or slot)
     UI.text(608, ry + 6, it.name, { size = 12, col = it.q == "epic" and UI.T().rarity.epic or it.q == "rare" and UI.T().rarity.rare or "ink", w = 240 })
     UI.text(858, ry + 6, "GL " .. it.lvl, { size = 12, w = 52, justify = "RIGHT" })
     if g.FLAVOUR[it.name] then UI.button(578, ry, 340, 26, nil, nil, { kind = "row", tip = it.name .. "\n" .. g.FLAVOUR[it.name] }) end

@@ -37,4 +37,5 @@ def cut(code):
     man = [{"file": f"{code}-{k:02d}.png", "x": x, "y": y, "w": p.size[0], "h": p.size[1]} for k, (y, x, p) in enumerate(pieces)]
     json.dump(man, open(os.path.join(ROOT, "kit/ui", f"_manifest-{code}.json"), "w"), indent=0)
     for m in man: print(code, m)
-for c in sys.argv[1:]: cut(c)
+if __name__ == "__main__":
+    for c in sys.argv[1:]: cut(c)

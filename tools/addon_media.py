@@ -12,7 +12,10 @@ from hifi_kit import THEMES, piece, trimmed, gradmap, portrait_img, rim, ROOT, C
 ICONS = {"coin": "C3-05.png", "gem": "B2-07.png", "warn": "C2-11.png", "check": "C2-16.png", "book": "C3-04.png", "chest": "C3-08.png",
          "firepot": "C3-03.png", "food": "C3-00.png", "elixir": "C3-02.png", "flask": "C3-01.png", "lock": "C2-15.png", "gear": "C2-23.png",
          "weapon": "C2-06.png", "plate": "C3-10.png", "mail": "C3-13.png", "leather": "C3-14.png", "cloth": "C3-15.png", "trinket": "C3-16.png",
-         "lava": "C2-04.png", "scroll": "C3-09.png"}
+         "lava": "C2-04.png", "scroll": "C3-09.png",
+         # armour by slot (C3b, issue #36): picked by item name in UI.itemIcon
+         "sandals": "C3b-00.png", "boots": "C3b-01.png", "trousers": "C3b-02.png", "legplates": "C3b-04.png", "helm": "C3b-06.png",
+         "hood": "C3b-07.png", "cardigan": "C3b-09.png", "lanyard": "C3b-10.png", "mitts": "C3b-mitts.png", "gauntlets": "C3b-gauntlets.png"}
 for c, f in CLASS_ICON.items(): ICONS["class-" + c] = f
 for r, f in ROLE_ICON.items(): ICONS["role-" + r] = f
 

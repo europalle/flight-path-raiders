@@ -90,6 +90,17 @@ function UI.tex(x, y, w, h, file, opts)
   return t
 end
 function UI.icon(x, y, size, name, opts) return UI.tex(x, y, size, size, "icon-" .. name, opts) end
+-- An item's icon: armour by what the name says it is (sandals, helm, mitts), else by armour type (issue #36).
+local ARMOUR_WORDS = { { "Sandals", "sandals" }, { "Shoes", "boots" }, { "Boots", "boots" }, { "Treads", "boots" },
+  { "Pantaloons", "trousers" }, { "Trousers", "trousers" }, { "Leggings", "legplates" }, { "Legplates", "legplates" },
+  { "Helm", "helm" }, { "Hood", "hood" }, { "Cowl", "hood" }, { "Mitts", "mitts" }, { "Gloves", "mitts" },
+  { "Gauntlets", "gauntlets" }, { "Cardigan", "cardigan" }, { "Lanyard", "lanyard" } }
+function UI.itemIcon(it, fallbackType)
+  if it and it.slot ~= "armor" then return it.slot or "chest" end
+  local name = it and it.name or ""
+  for _, w in ipairs(ARMOUR_WORDS) do if string.find(name, w[1], 1, true) then return w[2] end end
+  return (it and it.type) or fallbackType or "plate"
+end
 function UI.portrait(x, y, size, cls, look, dim) return UI.tex(x, y, size, size, "portrait-" .. cls .. "-" .. (look or 0) .. "-" .. UI.theme, { dim = dim }) end
 -- A panel: a fill with a 1-unit rule around it. The default panel is a page-level box; other fills are rows inside one.
 function UI.panel(x, y, w, h, fill, rule, corners)
