@@ -233,5 +233,16 @@ L.execute("WOW_CHAT = {}")
 ok = L.eval("FPR_NS.SelfTestRun")(True)
 chat = " ".join(L.eval("WOW_CHAT")[i] for i in range(1, len(L.eval("WOW_CHAT")) + 1))
 check("/fpr selftest passes inside the addon: " + chat[:120], ok is True and "passed" in chat)
+# First open in combat (gate review 2): a fresh load, opened during lockdown, must not touch keyboard input
+# until combat ends.
+L2 = l51.LuaRuntime(unpack_returned_tuples=True)
+L2.execute(open(os.path.join(ROOT, "tests/wow_stub.lua")).read()); L2.execute("FPR_NS = {}")
+load2 = L2.eval("function(src, name) local f, err = loadstring(src, '@' .. name); if not f then error(err) end; return f('FlightPathRaiders', FPR_NS) end")
+for f in toc: load2(open(os.path.join(DIST, f.replace("\\", "/"))).read(), f)
+L2.execute("WOW_FIRE('ADDON_LOADED', 'FlightPathRaiders'); WOW_FIRE('PLAYER_REGEN_DISABLED'); WOW_COMBAT = true; FPR_NS.Board.Toggle()")
+check("opened for the first time in combat, the board leaves keyboard input alone",
+      L2.eval("FlightPathRaidersBoard:IsShown() and rawget(FlightPathRaidersBoard, '_keyboard') == nil"))
+L2.execute("WOW_COMBAT = false; WOW_FIRE('PLAYER_REGEN_ENABLED')")
+check("and turns it on when combat ends", L2.eval("rawget(FlightPathRaidersBoard, '_keyboard') == true"))
 print("Addon test:", "all passed" if not fails else f"{len(fails)} failed")
 sys.exit(1 if fails else 0)

@@ -141,7 +141,7 @@ combat:SetScript("OnEvent", function(_, event)
     focusIndex = 0; Board.focused = nil
     frame:SetPropagateKeyboardInput(true); frame:EnableKeyboard(false)
   else
-    frame:EnableKeyboard(true)
+    frame:EnableKeyboard(true); frame:SetPropagateKeyboardInput(true)
   end
 end)
 
@@ -195,9 +195,10 @@ local function build()
   end)
   frame:SetScript("OnHide", function() Board.StopPlayback() end)
   tinsert(UISpecialFrames, "FlightPathRaidersBoard")  -- Escape closes it, also when keyboard input is passed on
-  frame:EnableKeyboard(true)
-  frame:SetPropagateKeyboardInput(true)
   frame:SetScript("OnKeyDown", onKey)
+  -- Opened for the first time in combat: keyboard input may be protected, so it waits for
+  -- PLAYER_REGEN_ENABLED (gate review 2).
+  if not InCombatLockdown() then frame:EnableKeyboard(true); frame:SetPropagateKeyboardInput(true) end
   frame.bg = frame:CreateTexture(nil, "BACKGROUND"); frame.bg:SetAllPoints(frame)
   body = ns.UI.container(frame, frame:GetFrameLevel() + 1)
   chrome = ns.UI.container(frame, frame:GetFrameLevel() + 10)

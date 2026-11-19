@@ -23,5 +23,15 @@ jobs:
         run: python3 tools/addon_shot.py
       - name: Addon screens match the hi-fi layout (fixed labels within 2 units)
         run: python3 tools/layout_compare.py --strict
+  # The learning path gate is a tuning measure, not a regression check, so it runs in its own job and
+  # never turns the main checks red (gate review 2). Its result shows on the run page.
+  learning-gate:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "22" }
+      - run: npm install --prefix /tmp/fen fengari@0.1.5
       - name: Learning path gate (learner bot within 2 weeks of the smart bot in 70% of guilds)
         run: FENGARI=/tmp/fen/node_modules/fengari python3 tools/gate_learning.py

@@ -179,17 +179,17 @@ for i = 1, #G.BOSSES do G.BOSS[G.BOSSES[i].id] = G.BOSSES[i]; G.BOSSES[i].index 
 G.LESSONS = {
   magmadad = {
     { id = "card", test = function(f) return f.revives > 0 and f.tactic ~= "burn" end, t = {
-      "The pups got back up {revives} times. Magmadad himself barely took damage.",
+      "The pups got back up {revives|time}. Magmadad himself barely took damage.",
       "Raid leader: \"We keep killing pups one at a time and they just stand back up. We need to hit way harder, all at once.\"",
       "Use Burn: +10% damage gets all three pups down inside the window, and then they stay down." } },
     { id = "dps", test = function(f) return f.revives > 0 end, t = {
-      "The pups got back up {revives} times even on Burn.",
+      "The pups got back up {revives|time} even on Burn.",
       "Raid leader: \"Burn is right, we just don't have the damage. Food, elixirs, flasks?\"",
       "You're on the right card. More damage: elixirs and flasks, better gear from Normal kills, or more damage dealers." } },
   },
   baron = {
     { id = "card", test = function(f) return f.bombZone > 0 and f.tactic ~= "spread" end, t = {
-      "The bomb went off in a crowd {bombZone} times and took {bombDeaths} people with it.",
+      "The bomb went off in a crowd {bombZone|time} and took {bombDeaths|person} with it.",
       "Raid leader: \"If you're the bomb, GET DOWN. Out of the group. Not into the healers.\"",
       "Use Spread: the bomb carrier runs out and only they get hit." } },
   },
@@ -567,7 +567,16 @@ local function facts(prep, input, s)
     fireDeaths = (deathsBy[23] or 0) + (deathsBy[25] or 0) + (deathsBy[26] or 0), fireGear = fireGear,
     bossPct = round(100 * s.bossHp / s.bossMax) }
 end
-local function fill(t, f) return (string.gsub(t, "{(%w+)}", function(k) return tostring(f[k]) end)) end
+-- "{revives}" is the number; "{revives|time}" is the number with its noun, "1 time" or "2 times"
+-- ("person" becomes "people").
+local PLURAL = { person = "people" }
+local function fill(t, f)
+  return (string.gsub(t, "{(%w+)|?(%a*)}", function(k, noun)
+    local v = f[k]
+    if noun == "" then return tostring(v) end
+    return tostring(v) .. " " .. ((v == 1) and noun or (PLURAL[noun] or (noun .. "s")))
+  end))
+end
 local function lessonFor(st, prep, f, onKill)
   -- On a kill only the boss's own lessons count ("you won, but..."), so Normal teaches even when it goes well.
   local list = {}

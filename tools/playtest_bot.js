@@ -15,6 +15,7 @@ for (let g = 0; g < guilds; g++) {
   const st = G.newGame(1000 + g * 7919);
   const known = {};  // boss -> card the bot believes is right
   const tried = {};  // boss -> cards the learner has tried in a replay
+  const failed = {}; // boss:mode -> cards that wiped (a player remembers what didn't work: gate review 2)
   const knowFire = { v: false };
   for (let w = 1; w <= weeks; w++) {
     const clear = () => { while ((st.pending || []).length) G.assignPending(st, 0, G.suggestFor(st, st.pending[0]).to); };
@@ -35,7 +36,11 @@ for (let g = 0; g < guilds; g++) {
         while (!done && (mode === 'heroic' ? tries < 4 && st.roster.filter(c => !c.benched).length >= 8 : budget > 0)) {
           tries++;
           const prep = G.defaultPrep(st, b.id, mode);
-          prep.tactic = style === 'smart' ? b.card : style === 'stubborn' ? 'spread' : (known[b.id] || ['spread', 'stack', 'burn', 'playsafe'][(st.pulls + g) % 4]);
+          prep.tactic = style === 'smart' ? b.card : style === 'stubborn' ? 'spread' : (known[b.id] || (() => {
+            const all = ['spread', 'stack', 'burn', 'playsafe'], bad = failed[b.id + mode] || new Set();
+            const left = all.filter(c => !bad.has(c)); const pool = left.length ? left : all;
+            return pool[(st.pulls + g) % pool.length];
+          })());
           const rich = st.gold > (mode === 'heroic' ? 150 : 250);
           prep.cons = { food: true, elixirs: rich, flasks: rich && (mode === 'heroic' || st.gold > 500) };
           if (b.id === 'ragnaroast' && (style === 'smart' || knowFire.v)) {
@@ -63,6 +68,7 @@ for (let g = 0; g < guilds; g++) {
             if ((mode === 'normal' ? pp.normalKills : pp.heroicKills) === 1) { arr.push(w); if (mode === 'heroic' && b.id === 'ragnaroast') ragHeroic[g] = w; }
           } else {
             wipes++; tierSeen[out.lesson.tier]++;
+            if (style === 'learner') (failed[b.id + mode] = failed[b.id + mode] || new Set()).add(prep.tactic);
             if (out.lesson.tier === 2) { answers++; if (out.lesson.wipes < 2) early++; }  // gate 6: no answer before two wipes on that lesson
             if (out.lesson.tier === 2) { if (out.lesson.id === 'card') known[b.id] = b.card; if (out.lesson.id === 'fire') knowFire.v = true; if (out.lesson.id === 'decurse') known.decurse = true; }
             // The learner uses Replay like a player would (learning path, design doc 3.1): rerun the wipe with a
@@ -71,7 +77,7 @@ for (let g = 0; g < guilds; g++) {
             if (style === 'learner' && mode === 'heroic' && !known[b.id] && G.replayInfo(st).ok) {
               tried[b.id] = tried[b.id] || new Set([prep.tactic]);
               const card = ['spread', 'stack', 'burn', 'playsafe'].find(c => !tried[b.id].has(c));
-              if (card) { tried[b.id].add(card); const rp = G.replay(st, card); if (rp.run && rp.run.result === 'kill') known[b.id] = card; }
+              if (card) { tried[b.id].add(card); const rp = G.replay(st, card); if (rp.run && rp.run.result === 'kill') known[b.id] = card; else failed[b.id + mode].add(card); }
             }
           }
         }
