@@ -21,3 +21,6 @@ fights out, so they gear slower: the cost of learning, not a missing hint.
   None beats the plain learner (69%). The spread between runs is about 5 points, so 64-69% is
   where the learner sits. The memory is kept as an option (FPR_FAILED) and is off by default.
 Gate: 70%. Result: 61-69% across honest learners. Not met. A Director's call (STATUS.md, decisions.md).
+
+2026-11-19, after Phase 4 #39 (dungeons drop three party items): 68% on 100 guilds, inside the 61-69% band.
+The Director accepted 6a at that level; this keeps it on record as the economy changes.
