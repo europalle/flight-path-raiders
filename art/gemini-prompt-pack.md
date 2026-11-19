@@ -97,6 +97,14 @@ Attach: the character study.
 The look is our own original fantasy style: a chunky, hand-painted high-fantasy style with warm saturated colours, exaggerated proportions (huge shoulder pads, big hands, big boots, oversized weapons), and interface frames made of gold-trimmed parchment and dark carved stone with rivets and knotwork ornaments. Draw it as a lovingly clumsy parody of that style, as if a raid leader sketched it in a paper notebook with a dip pen and watercolour. Wobbly confident ink outlines, light crosshatching on shadow sides. Charming and a bit clumsy, never sloppy. Original designs only: no Blizzard logos, no real WoW icons, no text. Flat solid magenta (#FF00FF) background with nothing else on it. Each piece separate, with clear magenta space between pieces. Match the drawing style of the attached reference image. Small item icons in ink and watercolour, with no frames around them: a plate of food, a round elixir bottle, a tall flask, a red potion with a flame mark, a thick book with a swirl on the cover, a stack of coins, a small chest, a scroll, a plate chestpiece, a mail chestpiece, a leather vest, a cloth robe, a ring, a trinket charm.
 ```
 
+## C3b. Armour by slot (issue #36)
+
+Attach: the character study and your C3 result. Save the result as `art/source/gemini/C3b.png`.
+
+```
+The look is our own original fantasy style: a chunky, hand-painted high-fantasy style with warm saturated colours and exaggerated proportions. Draw it as a lovingly clumsy parody of that style, as if a raid leader sketched it in a paper notebook with a dip pen and watercolour: wobbly confident ink outlines, light crosshatching on shadow sides. Original designs only: no Blizzard logos, no real WoW icons, no text. Match the drawing style and size of the item icons in the attached item sheet. Small item icons in ink and watercolour, with no frames around them, each piece separate with clear magenta space between pieces: a pair of sandals, a pair of heavy boots, a pair of baggy trousers, a pair of armoured leg plates, a plain round helmet without horns, a soft cloth hood, a pair of thick oven-mitt style gloves, a pair of armoured gauntlets, a knitted cardigan, a lanyard with a little name badge. The background must be one flat solid magenta (#FF00FF) colour edge to edge: no gradient, no shadow, no text, nothing else in the image.
+```
+
 ## D1. Spell effects
 
 Attach: the character study.

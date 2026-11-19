@@ -4,7 +4,7 @@ Last updated: 2026-11-19. Read this first at the start of every session.
 
 ## Where we are
 
-**Phase 3, vertical slice: built.** The addon plays the Molten Bore end to end (hub, prep, playback, results, loot window, roster, tavern, journal, settings), tested headless on every push. The Director installs it when the game is in production; everything that needs the real client is marked **verify at install** (`qa/test-plan-addon.md`).
+**Phase 3, vertical slice: closed (2026-11-19).** Phase 4 (production) starts. The addon plays the Molten Bore end to end (hub, prep, playback, results, loot window, roster, tavern, journal, settings), tested headless on every push. The Director installs it when the game is in production; everything that needs the real client is marked **verify at install** (`qa/test-plan-addon.md`).
 
 | Deliverable | Status |
 | --- | --- |
@@ -27,7 +27,7 @@ First gate review (separate agent, 2026-11-19): **fail**, six must-fix items, al
 | 3. Stable and fast | Pass headless: 10 weeks through the addon with no Lua errors; slowest pull under 6 ms; hub redraw under 1 ms. Taint and first open: verify at install |
 | 4. Looks like the hi-fi | Pass headless: 204 of 204 fixed labels within 2 units of the hi-fi (`tools/layout_compare.py`); every screen, both themes, at 70% and 120% of a 2560 x 1440 screen, passes contrast (`tools/addon_shot.py`; smallest text 14.4 px at 70%). In-client screenshots: verify at install |
 | 5. Keyboard reach | Pass: a whole pull and every tab with the keyboard alone; combat hands every key back; can be turned off |
-| 6. Learning path | 6b pass: no recap answer before two wipes on that lesson (QA checks every pull). **6a not met:** learner within 2 weeks of the smart bot in 61-69% of 100 guilds, gate 70% (`tools/results-gate6.txt`). Director's call, see Next |
+| 6. Learning path | 6b pass: no recap answer before two wipes on that lesson (QA checks every pull). **6a accepted by the Director** at 61-69% of 100 guilds against 70% (`tools/results-gate6.txt`, decisions.md) |
 | 7. Separate-agent gate review | Done twice; second review passes everything except 6a |
 
 ## Where things live
@@ -48,6 +48,7 @@ First gate review (separate agent, 2026-11-19): **fail**, six must-fix items, al
 
 ## Recent
 
+- 2026-11-19: Phase 3 closed (gate 6a accepted by the Director); Phase 4 board set up.
 - 2026-11-19: Director: no install until production, so finish the slice without it.
 - 2026-11-19: Rules in Lua; boss hooks; replay records; every slice screen in hi-fi and in the addon; keyboard reach; sound cues; art in the addon (3-slice buttons, stage, rim light); Legal, Marketing and QA deliverables; Phase 3 gate checks measured.
 - 2026-11-18: Phase 3 started: addon skeleton, every trait and morale (engine 10).
@@ -56,13 +57,9 @@ First gate review (separate agent, 2026-11-19): **fail**, six must-fix items, al
 
 ## Next
 
-0. **Director: gate 6a.** Learners get the first Heroic Ragnaroast kill at about the same average week as the smart bot, but fewer get there by week 10 (about 79 of 100 against 96), because wiping while learning slows gearing. Options:
-   - A. Accept 6a as is and close Phase 3 (the gap is the cost of learning, not a hidden answer).
-   - B. A design change that helps guilds who wipe a lot catch up on gear (for example a small gear boost after repeated Heroic wipes), then rerun the gate. Needs your approval; changes the engine and the golden files.
-   - C. Measure by week 12 instead of 10. Not recommended: the reviewer counts this as lowering the bar.
 1. Director, at install: follow `qa/test-plan-addon.md` (self-test, taint, screenshots, a week of play, the survey).
-2. Director, when convenient: Gemini prompts F3-F6 (the four bosses without art) and F1b (Ragnaroast in parts); Legal's two open decisions.
-3. Then Phase 4 (production), per the milestone plan.
+2. Director, when convenient: the six Gemini prompts on https://claude.ai/artifact/8uH9F6h2DJ4XQG8jhHWtpx (F3-F6 bosses, F1b Ragnaroast in parts, C3b armour by slot); Legal's two open decisions.
+3. Phase 4 (production), milestone "Phase 4: Production (alpha)". Build order: plan and fixed gate (#37), design-doc open questions (#38), levelling and bench training (#39), economy (#40), activities (#41), guild layer (#42), ranked and sync (#43), season and economy bots (#44), with narrative, audio and art alongside (#45, #36, #9).
 
 ## Working rules
 
