@@ -7,7 +7,7 @@ for season = 1, 3 do
   local st = G.NewGame(season * 104729, { level = 60 })
   for w = 1, 6 do
     local sum = 0
-    for _ = 1, 8 do G.Dungeon(st) end
+    for d = 1, 8 do G.Dungeon(st); if d < 7 then G.NewDay(st) end end
     if #st.roster < 12 and #st.tavern > 0 then G.Hire(st, 1) end
     for _, mode in ipairs({ "normal", "heroic" }) do
       for _, b in ipairs(G.BOSSES) do

@@ -38,7 +38,9 @@ local NAMES = { "Brannoc", "Mira", "Kess", "Tor", "Ash", "Lumi", "Orrin", "Morti
 
 G.RARITY = { common = { cost = 50, label = "Common" }, rare = { cost = 300, label = "Rare" }, epic = { cost = 1500, label = "Epic" }, legendary = { cost = 8000, label = "Legendary" } }
 G.ECON = {
-  startGold = 300, weeklyQuests = 300,                     -- PLAYTEST: daily quests compressed into one weekly payout
+  startGold = 300,
+  quest = { gold = 30, dkp = 2, perDay = 3 },              -- daily quests (design doc 2, Phase 4 decision 2026-11-19)
+  tokens = { trinket = 40, armor = 80, weapon = 120 },     -- DKP store: a boss's item for the highest mode cleared
   normalFirst = { gold = 40, dkp = 5 }, normalReclear = 5, heroicKill = { gold = 60, dkp = 15 },
   dungeon = { gold = { 35, 45 }, itemLvl = { 50, 56 } },  -- unlimited runs (design doc 2)
   cauldron = { food = 10, elixirs = 30, flasks = 75 }, potion = 15, worldBuff = 250, fireGear = 120,
@@ -392,7 +394,7 @@ end
 function G.NewGame(seed, opts)
   local L = (opts and opts.level) or G.LEVEL.start
   local st = { v = 3, seed = seed, rng = (seed % 2147483646) + 1, week = 1, gold = G.ECON.startGold, dkp = 0, nextId = 1,
-    roster = {}, bonds = {}, buffs = {}, journal = {}, lessons = {}, lessonWipes = {}, lessonTier = {}, progress = {}, history = {}, pending = {}, tomes = 0, dungeonRuns = 0,
+    roster = {}, bonds = {}, buffs = {}, journal = {}, lessons = {}, lessonWipes = {}, lessonTier = {}, progress = {}, history = {}, pending = {}, tomes = 0, dungeonRuns = 0, days = 0, quests = {},
     rerolls = 0, replays = {}, pulls = 0, news = {}, score = { kills = 0, wipes = 0, rounds = 0 }, bestScore = 0, freeWipe = {}, lastPrep = {} }
   -- A sensible but uneven starting guild: 2 tanks, 3 healers, 7 damage dealers, mostly common.
   local start = { { "warrior", "protection", "rare" }, { "paladin", "protection", "common" }, { "priest", "holy", "rare" }, { "shaman", "restoration", "common" },
@@ -401,7 +403,7 @@ function G.NewGame(seed, opts)
   local lo, hi = gearFor(L, G.ECON.startGear[1], G.ECON.startGear[2])
   for i = 1, #start do st.roster[#st.roster + 1] = makeChar(st, start[i][1], start[i][2], start[i][3], lo, hi, L) end
   for i = 1, #G.BOSSES do st.progress[G.BOSSES[i].id] = { normalKills = 0, heroicKills = 0, normalWeek = false, heroicWeek = false, heroicWipes = 0, pulls = 0, wipes = 0 } end
-  rollTavern(st)
+  rollTavern(st); G.RollQuests(st)
   if L < G.LEVEL.raidGate then
     st.news[#st.news + 1] = "Week 1. Your guild has 12 raiders at level " .. L .. " and 300 gold. Dungeons first: raids need an average level of " .. G.LEVEL.raidGate .. "."
   else
@@ -412,6 +414,7 @@ end
 
 -- ---------------------------------------------------------------- progression (engine/progress.lua's rules)
 local function R() return ns.Progress.RULES end
+local questEvent  -- daily quests, defined with the day cycle below
 local function bondKey(a, b) if a < b then return a .. "|" .. b end return b .. "|" .. a end
 function G.bond(st, a, b) local e = st.bonds[bondKey(a, b)] return e and e.v10 or 0 end
 local function afterPull(st, ids, boss, killed)
@@ -807,6 +810,10 @@ function G.Pull(st, prep)
     end
   end
   out.levels = awardXP(st, prep.ids, killed and G.LEVEL.xp.kill or G.LEVEL.xp.wipe)
+  local deaths = 0
+  for i = 1, #s.raid do if not s.raid[i].alive then deaths = deaths + 1 end end
+  out.quests = questEvent(st, "pull", { ids = prep.ids, flasks = prep.cons.flasks })
+  if killed then for _, q in ipairs(questEvent(st, "kill", { ids = prep.ids, tactic = prep.tactic, deaths = deaths })) do out.quests[#out.quests + 1] = q end end
   out.found = journalFind(st, prep.boss, s)
   out.facts = facts(prep, input, s)
   if not killed then out.lesson = lessonFor(st, prep, out.facts, false); out.joke = pick(st, G.BOSS[prep.boss].jokes)
@@ -911,7 +918,11 @@ function G.DungeonParty(st)
   return ids
 end
 -- A small hash for rolls that must not move the game's RNG (so older saved results stay the same).
-local function sideRoll(st, salt, n) return ((st.seed % 1000003) * 31 + salt * 7919) % n end
+local function sideRoll(st, salt, n)
+  local h = ((st.seed % 1000003) + salt * 7919.0) % 2147483647
+  h = (h * 16807.0) % 2147483647; h = (h * 16807.0) % 2147483647   -- floats: Fengari integers are 32-bit
+  return floor(h) % n
+end
 -- Dungeons are unlimited (design doc 2). Gold and gear scale with the party's level: about 5 gold at level 15.
 function G.Dungeon(st, ids)
   ids = ids or G.DungeonParty(st)
@@ -943,8 +954,105 @@ function G.Dungeon(st, ids)
     st.pending[#st.pending + 1] = it
   end
   out.item = out.items[3]
+  out.quests = questEvent(st, "dungeon", { ids = ids })
   return out
 end
+-- ---------------------------------------------------------------- days and daily quests
+-- Daily quests (design doc 2, decided 2026-11-19): three small goals a day that complete on their own during
+-- normal play, picked from the pool by the day, each 30 gold (less at low level) and 2 DKP. They're a nudge to
+-- try something different, never extra steps. Raid goals only show up once the roster can raid.
+G.QUESTS = {
+  { id = "dungeon", text = "Clear a dungeon", ev = "dungeon" },
+  { id = "dungeon3", text = "Clear 3 dungeons", ev = "dungeon", need = 3 },
+  { id = "party", text = "Clear a dungeon with a %s in the party", ev = "dungeon", cls = true },
+  { id = "kill", text = "Kill a raid boss", ev = "kill", raid = true },
+  { id = "card", text = "Kill a raid boss on %s", ev = "kill", card = true, raid = true },
+  { id = "clean", text = "Kill a raid boss with nobody dead", ev = "kill", raid = true },
+  { id = "flasks", text = "Pull with the flask cauldron", ev = "pull", raid = true },
+}
+local function canRaid(st) return avgLevel(st) >= G.LEVEL.raidGate end
+function G.RollQuests(st)
+  st.quests = {}
+  local pool = {}
+  for _, q in ipairs(G.QUESTS) do if not q.raid or canRaid(st) then pool[#pool + 1] = q end end
+  local used = {}
+  for k = 1, math.min(G.ECON.quest.perDay, #pool) do
+    local i = 1 + sideRoll(st, (st.days or 0) * 13 + k * 101, #pool)
+    while used[i] do i = (i % #pool) + 1 end
+    used[i] = true
+    local q = pool[i]
+    local qq = { id = q.id, ev = q.ev, need = q.need or 1, got = 0, done = false, text = q.text }
+    if q.cls then
+      local present = {}
+      for _, c in ipairs(st.roster) do if not contains(present, c.cls) then present[#present + 1] = c.cls end end
+      table.sort(present)
+      qq.cls = present[1 + sideRoll(st, (st.days or 0) * 7 + k, #present)]
+      qq.text = string.format(q.text, G.CLASS_NAMES[qq.cls] or qq.cls)
+    end
+    if q.card then
+      qq.card = G.CARD_ORDER[1 + sideRoll(st, (st.days or 0) * 5 + k, #G.CARD_ORDER)]
+      qq.text = string.format(q.text, G.CARDS[qq.card])
+    end
+    st.quests[k] = qq
+  end
+end
+-- Called by the activities: ev is "dungeon", "pull" or "kill"; info carries what a quest may check.
+questEvent = function(st, ev, info)
+  local done = {}
+  local L = avgLevel(st)
+  for _, q in ipairs(st.quests or {}) do
+    if not q.done and q.ev == ev then
+      local ok = true
+      if q.cls then ok = false for _, id in ipairs(info.ids or {}) do local c = byId(st, id) if c and c.cls == q.cls then ok = true end end end
+      if q.card and info.tactic ~= q.card then ok = false end
+      if q.id == "clean" and (info.deaths or 1) > 0 then ok = false end
+      if q.id == "flasks" and not info.flasks then ok = false end
+      if ok then
+        q.got = q.got + 1
+        if q.got >= q.need then
+          q.done = true
+          local gold = G.ECON.quest.gold
+          if L < G.LEVEL.cap then gold = math.max(1, round(gold * math.max(10, (L - 10) * 2) / 100)) end
+          st.gold = st.gold + gold; st.dkp = st.dkp + G.ECON.quest.dkp
+          done[#done + 1] = { text = q.text, gold = gold, dkp = G.ECON.quest.dkp }
+        end
+      end
+    end
+  end
+  return done
+end
+-- A new day (the addon calls this at the daily reset): new quests, the tavern refreshes, rerolls go back to 25 gold.
+function G.NewDay(st)
+  st.days = (st.days or 0) + 1
+  st.rerolls = 0
+  rollTavern(st); G.RollQuests(st)
+end
+
+-- ---------------------------------------------------------------- DKP store (design doc 8, decided 2026-11-19)
+-- Pick a boss you have killed and a slot; you get that boss's item for the highest mode you have cleared on it.
+function G.TokenLevel(st, boss)
+  local p = st.progress[boss]
+  if not p then return nil end
+  if p.heroicKills > 0 then return round((G.ECON.heroicLoot[1] + G.ECON.heroicLoot[2]) / 2), "heroic" end
+  if p.normalKills > 0 then return round((G.ECON.normalLoot[1] + G.ECON.normalLoot[2]) / 2), "normal" end
+  return nil
+end
+function G.BuyToken(st, boss, slot, armorType)
+  local lvl, mode = G.TokenLevel(st, boss)
+  if not lvl then return { error = "Kill " .. G.BOSS[boss].name .. " first." } end
+  local cost = G.ECON.tokens[slot]
+  if not cost then return { error = "No such slot." } end
+  if st.dkp < cost then return { error = "Not enough DKP (" .. cost .. " needed)." } end
+  st.dkp = st.dkp - cost
+  local it = { name = G.BOSS[boss].loot[slot][1], slot = slot, lvl = lvl, q = "epic", from = "DKP store: " .. G.BOSS[boss].name .. " (" .. G.MODES[mode].label .. ")" }
+  if slot == "armor" then it.type = armorType or "plate" end
+  it.eligible = {}
+  for i = 1, #st.roster do it.eligible[i] = st.roster[i].id end
+  it.assign = suggest(st, it, it.eligible)
+  st.pending[#st.pending + 1] = it
+  return { item = it, cost = cost }
+end
+
 function G.Hire(st, i)
   local o = st.tavern[i]
   if not o then return "Gone." end
@@ -1004,7 +1112,7 @@ end
 
 function G.EndWeek(st)
   if st.score.kills > 0 or st.score.wipes > 0 then st.bestScore = math.max(st.bestScore, G.heroicScore(st)) end
-  st.week = st.week + 1; st.gold = st.gold + G.ECON.weeklyQuests; st.rerolls = 0
+  st.week = st.week + 1
   for _, c in ipairs(st.roster) do
     if (c.respecs or 0) > 0 and c.respecWeek ~= st.week - 1 then c.respecs = c.respecs - 1 end  -- a week without a respec
   end
@@ -1022,8 +1130,8 @@ function G.EndWeek(st)
   for _, e in pairs(st.bonds) do e.week = 0 end
   for _, b in ipairs(G.BOSSES) do local p = st.progress[b.id] p.normalWeek = false; p.heroicWeek = false; p.heroicWipes = 0 end
   st.score = { kills = 0, wipes = 0, rounds = 0 }
-  rollTavern(st)
-  local msg = "Week " .. st.week .. ". Lockouts reset, benched raiders are back, +" .. G.ECON.weeklyQuests .. " gold from the week's quests."
+  G.NewDay(st)
+  local msg = "Week " .. st.week .. ". Lockouts reset and benched raiders are back."
   if #quits > 0 then msg = msg .. " Morale got too low: " .. table.concat(quits, " and ") .. " left the guild." end
   st.news[#st.news + 1] = msg
   while #st.news > 20 do table.remove(st.news, 1) end
@@ -1074,7 +1182,7 @@ function G.Static()
   end
   return { SPECS = G.SPECS, CLASS_NAMES = G.CLASS_NAMES, ARMOR = G.ARMOR, RARITY = G.RARITY, ECON = G.ECON, MODES = G.MODES, CARDS = G.CARDS,
     CARD_ORDER = G.CARD_ORDER, CARD_TEXT = G.CARD_TEXT, WB = G.WB, WB_ORDER = G.WB_ORDER, TRAITS = G.TRAITS, MORALE = G.MORALE,
-    BOSSES = G.BOSSES, ANSWERS = journalAnswers, FLAVOUR = G.FLAVOUR }
+    BOSSES = G.BOSSES, ANSWERS = journalAnswers, FLAVOUR = G.FLAVOUR, LEVEL = G.LEVEL }
 end
 
 return G

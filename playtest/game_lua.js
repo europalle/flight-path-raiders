@@ -116,6 +116,9 @@
       buyFire: (st, id) => call("BuyFire", id),
       respec: (st, id, spec, tome) => call("Respec", id, spec, !!tome),
       endWeek: st => call("EndWeek"),
+      newDay: st => call("NewDay"),
+      buyToken: (st, boss, slot, type) => call("BuyToken", boss, slot, type || "plate"),
+      tokenLevel: (st, boss) => query("TokenLevel", boss),
       rebuild: rec => ret(`FPR_ENGINE.Game.Rebuild(${toLua(rec)})`),
     };
     return G;

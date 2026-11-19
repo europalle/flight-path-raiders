@@ -19,7 +19,7 @@ for (let g = 0; g < guilds; g++) {
   const knowFire = { v: false };
   for (let w = 1; w <= weeks; w++) {
     const clear = () => { while ((st.pending || []).length) G.assignPending(st, 0, G.suggestFor(st, st.pending[0]).to); };
-    for (let d = 0; d < 8; d++) { G.dungeon(st); clear(); }  // a player's week: 8 dungeon runs
+    for (let d = 0; d < 8; d++) { G.dungeon(st); clear(); if (d < 6) G.newDay(st); }  // a player's week: 8 dungeon runs over 7 days, raids on the last
     // Keep the roster topped up like a real player would: hire the cheapest useful recruit when below 12.
     while (st.roster.length < 12 && st.tavern.length) {
       const i = st.tavern.reduce((b, o, k) => (o.price < st.tavern[b].price ? k : b), 0);

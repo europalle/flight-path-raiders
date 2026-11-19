@@ -49,7 +49,7 @@ for (let g = 0; g < 25; g++) {
     check('only tanks pull on cooldown and only hunters have pets', st.roster.every(c => (!c.traits.includes('pulls_on_cooldown') || G.role(c.cls, c.spec) === 'tank') && (!c.traits.includes('pet_on_aggressive') || c.cls === 'hunter')), 'class traits');
     while (st.roster.length < 12 && st.tavern.length && st.gold >= st.tavern[0].price) G.hire(st, 0);
     const before = st.gold; G.endWeek(st);
-    check('end week pays quests and resets lockouts', st.gold === before + G.ECON.weeklyQuests && G.BOSSES.every(b => !st.progress[b.id].normalWeek && !st.progress[b.id].heroicWeek) && st.roster.every(c => !c.benched), w);
+    check('end week resets lockouts and rolls new quests', st.quests.length === 3 && st.quests.every(q => !q.done) && G.BOSSES.every(b => !st.progress[b.id].normalWeek && !st.progress[b.id].heroicWeek) && st.roster.every(c => !c.benched), w);
     check('bond weekly counters reset', Object.values(st.bonds).every(e => e.week === 0), w);
   }
   // Tavern and roster rules.
@@ -102,6 +102,31 @@ for (let g = 0; g < 10; g++) {
   G.lua('(function() FPR_STATE.tomes = 1; return 0 end)()'); const gold = G.lua('FPR_STATE.gold'); G.respec(st, id, 'arms', true);
   const after = G.lua('{ FPR_STATE.gold, FPR_STATE.tomes }');
   check('a Tome of Respec is free and keeps the price', after[0] === gold && after[1] === 0 && G.respecCost(st, id) === 1200, after);
+}
+{ // Daily quests (Phase 4, #40): three a day, they complete in normal play and pay 30 gold and 2 DKP at level 60.
+  const st = G.newGame(41, 60); let paid = 0, days = 0, kinds = new Set();
+  for (let d = 0; d < 14; d++) {
+    st.quests.forEach(q => kinds.add(q.id));
+    check('three quests a day, all different', st.quests.length === 3 && new Set(st.quests.map(q => q.id)).size === 3, st.quests.map(q => q.id));
+    const g0 = st.gold; G.dungeon(st); G.dungeon(st); G.dungeon(st);
+    const p = G.defaultPrep(st, 'magmadad', 'normal'); p.tactic = 'burn'; p.cons = { food: true, elixirs: true, flasks: true }; const o = G.pull(st, p);
+    paid += st.quests.filter(q => q.done).length; days++;
+    while (st.pending.length) G.assignPending(st, 0, G.suggestFor(st, st.pending[0]).to);
+    G.newDay(st);
+  }
+  check('quests pick from the whole pool over two weeks', kinds.size >= 6, [...kinds]);
+  check('most quests complete in normal play', paid >= days * 2, paid);
+  const fresh = G.newGame(42);
+  check('a level 10 guild gets no raid quests', fresh.quests.every(q => ['dungeon', 'dungeon3', 'party'].includes(q.id)), fresh.quests.map(q => q.id));
+}
+{ // DKP store: a killed boss's item at the highest mode cleared; costs DKP.
+  const st = G.newGame(43, 60);
+  check('the store needs a kill first', G.buyToken(st, 'magmadad', 'trinket').error, 'nokill');
+  for (let i = 0; i < 6 && !st.progress.magmadad.normalKills; i++) { const p = G.defaultPrep(st, 'magmadad', 'normal'); p.tactic = 'burn'; G.pull(st, p); while (st.pending.length) G.assignPending(st, 0, G.suggestFor(st, st.pending[0]).to); }
+  G.lua('(function() FPR_STATE.dkp = 200; return 0 end)()');
+  const o = G.buyToken(st, 'magmadad', 'weapon');
+  check('a Normal token is gear level 59 and costs 120 DKP', o.item && o.item.lvl === 59 && G.lua('FPR_STATE.dkp') === 80 && G.lua('#FPR_STATE.pending') === 1, o);
+  check('not enough DKP is refused', G.buyToken(st, 'magmadad', 'weapon').error, 'dkp');
 }
 console.log(`Levelling: level gate after ${Math.min(...lv.runs)}-${Math.max(...lv.runs)} dungeon runs, raid gates after ${Math.min(...lv.gear)}-${Math.max(...lv.gear)}`);
 console.log(`Playtest QA: 25 guilds x 8 weeks, ${pulls} pulls`);

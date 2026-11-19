@@ -92,23 +92,27 @@ function P.Hub(st)
   local pend = #st.pending
   UI.button(712, 286, 224, 40, pend > 0 and ("Loot waiting: " .. pend) or "No loot waiting", function() P.LootWindow() end, { disabled = pend == 0 })
   UI.button(484, 334, 220, 40, "End the week", function()
-    confirm("End week " .. st.week .. "? Lockouts reset, benched raiders come back, +300 gold from quests. Morale under 20 may quit.", function()
+    confirm("End week " .. st.week .. "? Lockouts reset and benched raiders come back. Morale under 20 may quit.", function()
       g.EndWeek(st); B().Render() end, "End the week")
   end)
-  UI.text(712, 346, "Heroic score: " .. UI.money(g.heroicScore(st)) .. " (best " .. UI.money(st.bestScore) .. ")", { size = 12, col = "muted", w = 224 })
-  -- Low morale warning and recent news.
+  UI.button(712, 334, 224, 40, "DKP store (" .. st.dkp .. ")", function() P.DKPStore() end, { tip = "Spend DKP on a boss's item for the highest mode you've cleared." })
+  UI.text(484, 382, "Heroic score: " .. UI.money(g.heroicScore(st)) .. " (best " .. UI.money(st.bestScore) .. ")", { size = 12, col = "muted", w = 452 })
+  -- Today's quests (Phase 4): they complete on their own during normal play.
+  UI.text(484, 404, "Today's quests", { head = true, size = 14 })
+  for i, q in ipairs(st.quests or {}) do
+    local y = 404 + i * 21
+    UI.icon(484, y, 14, q.done and "check" or "scroll")
+    UI.text(504, y + 1, q.text .. (q.need > 1 and not q.done and (" (" .. q.got .. "/" .. q.need .. ")") or ""), { size = 12, col = q.done and "good" or "ink", w = 330 })
+    UI.text(836, y + 1, q.done and "Done" or ("30 g · 2 DKP"), { size = 11.5, col = "muted", w = 100, justify = "RIGHT" })
+  end
+  -- One line under the quests: low morale first, else the latest news.
   local low = {}
   for _, c in ipairs(st.roster) do if c.morale < 40 then low[#low + 1] = c.name .. " " .. c.morale end end
-  local y = 388
   if #low > 0 then
-    UI.panel(484, y, 452, 40, "row", "warn"); UI.icon(494, y + 12, 16, "warn")
-    UI.text(516, y + 8, #low .. " low on morale: " .. table.concat(low, ", "), { size = 12.5, w = 410 })
-    UI.text(516, y + 24, "Under 20 they may quit at the end of the week.", { size = 11, col = "muted", w = 410 })
-    y = y + 50
-  end
-  for i = math.max(1, #st.news - 2), #st.news do
-    if y > 500 then break end
-    UI.text(484, y, st.news[i], { size = 11.5, col = "muted", w = 452, wrap = true, h = 28 }); y = y + 28
+    UI.icon(484, 494, 14, "warn")
+    UI.text(504, 494, #low .. " low on morale: " .. table.concat(low, ", ") .. ". Under 20 they may quit at the end of the week.", { size = 11.5, w = 432, wrap = true, h = 30 })
+  elseif #st.news > 0 then
+    UI.text(484, 494, st.news[#st.news], { size = 11.5, col = "muted", w = 452, wrap = true, h = 30 })
   end
 end
 
@@ -213,6 +217,46 @@ function P.Roster(st, args)
     confirm("Dismiss " .. c.name .. "? You get " .. back .. " gold back, and every friendship they had is gone.", function() B().Toast(g.Dismiss(st, c.id)); B().Go("Roster") end, "Dismiss")
   end, { size = 12.5, disabled = #st.roster <= 1 })
   UI.text(578, 503, "Dismiss gives back " .. back .. " gold and ends every friendship.", { size = 11, col = "muted" })
+end
+
+-- ------------------------------------------------------------------ DKP store (Phase 4, #40)
+function P.DKPStore()
+  local g = G()
+  local pick = { boss = nil, slot = "weapon", armor = "plate" }
+  B().OpenModal(function(st)
+    UI.panel(200, 110, 560, 330, "panel", "rule", true)
+    UI.icon(220, 128, 30, "gem")
+    UI.text(260, 126, "DKP store", { head = true, size = 20 })
+    UI.text(260, 152, "You have " .. st.dkp .. " DKP. Pick a boss you've killed and a slot: you get its item for the highest mode you've cleared.", { size = 12, col = "muted", w = 480 })
+    local x = 220
+    for _, b in ipairs(g.BOSSES) do
+      local lvl, mode = g.TokenLevel(st, b.id)
+      if lvl and not pick.boss then pick.boss = b.id end
+      UI.button(x, 190, 100, 34, b.name:match("^(%S+)"), function() pick.boss = b.id end,
+        { size = 12, kind = pick.boss == b.id and "selected" or "normal", disabled = not lvl, tip = lvl and (b.name .. ": " .. g.MODES[mode].label .. " items, gear level " .. lvl) or ("Kill " .. b.name .. " first.") })
+      x = x + 106
+    end
+    for i, slot in ipairs({ "weapon", "armor", "trinket" }) do
+      UI.button(220 + (i - 1) * 176, 238, 170, 34, UI.title(slot) .. " · " .. g.ECON.tokens[slot] .. " DKP", function() pick.slot = slot end,
+        { size = 12, kind = pick.slot == slot and "selected" or "normal" })
+    end
+    if pick.slot == "armor" then
+      for i, t in ipairs({ "plate", "mail", "leather", "cloth" }) do
+        UI.button(220 + (i - 1) * 132, 284, 126, 30, UI.title(t), function() pick.armor = t end, { size = 11.5, kind = pick.armor == t and "selected" or "normal" })
+      end
+    end
+    local cost = g.ECON.tokens[pick.slot]
+    local lvl = pick.boss and g.TokenLevel(st, pick.boss)
+    if pick.boss and lvl then
+      local name = g.BOSS[pick.boss].loot[pick.slot][1]
+      UI.text(220, 330, name .. ", gear level " .. lvl .. ".", { size = 13 })
+    end
+    UI.button(420, 380, 150, 40, "Buy " .. cost .. " DKP", function()
+      local o = g.BuyToken(st, pick.boss, pick.slot, pick.armor)
+      if o.error then B().Toast(o.error) else B().Toast("Bought " .. o.item.name .. ".") ; B().CloseModal(); P.LootWindow() end
+    end, { kind = "primary", size = 14, disabled = not lvl or st.dkp < cost, tip = not lvl and "Kill a boss first." or st.dkp < cost and "Not enough DKP." or nil })
+    UI.button(590, 380, 150, 40, "Close", function() B().CloseModal() end)
+  end)
 end
 
 -- ------------------------------------------------------------------ tavern

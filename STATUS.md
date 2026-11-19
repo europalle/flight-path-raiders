@@ -48,6 +48,7 @@ First gate review (separate agent, 2026-11-19): **fail**, six must-fix items, al
 
 ## Recent
 
+- 2026-11-19: Phase 4 #40 (part): the day cycle (the addon starts a new day at the daily quest reset), three daily quests a day that complete in normal play, and the DKP store. The weekly 300-gold lump is gone. The Guild Bank and mailbox move to the guild hall (#42), where the design doc puts them.
 - 2026-11-19: Phase 4 #39 levelling: new guilds start at level 10; XP, Bench Training, level and gear gates for raids, unlimited dungeons with three party drops, per-character respec prices and the Tome of Respec. Slice tests run a level-60 guild.
 - 2026-11-19: Phase 3 closed (gate 6a accepted by the Director); Phase 4 board set up.
 - 2026-11-19: Director: no install until production, so finish the slice without it.

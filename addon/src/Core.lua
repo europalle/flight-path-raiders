@@ -33,9 +33,22 @@ local MIGRATIONS = {
 
 -- The guild, created the first time anyone asks for it. A guild from an older rules version is kept as-is;
 -- engine/game.lua bumps st.v when a migration is needed.
+-- The daily reset (quests, tavern): the day number at the server's daily quest reset. Verify at install that
+-- GetQuestResetTime matches WoW: Forever's reset.
+local function dayKey()
+  local now = (time and time()) or 0
+  local untilReset = (GetQuestResetTime and GetQuestResetTime()) or 0
+  return math.floor((now + untilReset) / 86400)
+end
 function Core.Guild()
   if not ns.db.guild then
     ns.db.guild = ns.Game.NewGame(((time and time()) or 1) % 2147483646 + 1)
+    ns.db.dayKey = dayKey()
+  end
+  local k = dayKey()
+  if ns.db.dayKey ~= k then
+    if ns.db.dayKey then ns.Game.NewDay(ns.db.guild) end
+    ns.db.dayKey = k
   end
   return ns.db.guild
 end

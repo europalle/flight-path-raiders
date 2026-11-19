@@ -242,6 +242,15 @@ L.execute("WOW_CHAT = {}")
 ok = L.eval("FPR_NS.SelfTestRun")(True)
 chat = " ".join(L.eval("WOW_CHAT")[i] for i in range(1, len(L.eval("WOW_CHAT")) + 1))
 check("/fpr selftest passes inside the addon: " + chat[:120], ok is True and "passed" in chat)
+# Phase 4 economy: the daily reset rolls new quests; the DKP store opens and lists the bosses.
+slash("")
+L.execute("FPR_NS.Board.Go('Hub')")
+d0 = L.eval("FlightPathRaidersDB.guild.days")
+L.execute("FlightPathRaidersDB.dayKey = FlightPathRaidersDB.dayKey - 1; FPR_NS.Board.Render()")
+check("the daily reset starts a new day with three quests", L.eval("FlightPathRaidersDB.guild.days") == d0 + 1 and L.eval("#FlightPathRaidersDB.guild.quests") == 3 and "Today's quests" in text())
+press("DKP store (" + str(L.eval("FlightPathRaidersDB.guild.dkp")) + ")")
+check("the DKP store opens", L.eval("FPR_NS.Board.modal ~= nil") and "DKP store" in text() and "Magmadad" in text())
+press("Close")
 # First open in combat (gate review 2): a fresh load, opened during lockdown, must not touch keyboard input
 # until combat ends.
 L2 = l51.LuaRuntime(unpack_returned_tuples=True)
