@@ -12,4 +12,12 @@ Phase 3 gate check 6, learning path (tools/gate_learning.py, 100 guilds, 10 week
 Average first kill week is close (smart 6.3, learner 6.4); the gap is the share of guilds that
 get there by week 10 (smart about 90%, learner about 77%). Learners wipe more while working the
 fights out, so they gear slower: the cost of learning, not a missing hint.
-Gate: 70%. Result: 69%, one guild short. A Director's call (see STATUS.md).
+- gate review 2 asked for a fairer learner: remember cards that wiped and avoid them. Smart bot
+  reached the Heroic Ragnaroast kill in 96 of 100 guilds. Learner, 100 guilds:
+    every wipe marks the card wrong: 61% (76 guilds kill by week 10). Worse: a Burn wipe for lack
+      of damage makes the bot drop the right card.
+    Heroic wipes only: 67% (79 guilds).
+    only when the recap's lesson is the card: 64% (79 guilds).
+  None beats the plain learner (69%). The spread between runs is about 5 points, so 64-69% is
+  where the learner sits. The memory is kept as an option (FPR_FAILED) and is off by default.
+Gate: 70%. Result: 61-69% across honest learners. Not met. A Director's call (STATUS.md, decisions.md).

@@ -18,7 +18,7 @@ Last updated: 2026-11-19. Read this first at the start of every session.
 
 ## Phase 3 gate (milestone plan)
 
-First gate review (separate agent, 2026-11-19): **fail**, six must-fix items. All six fixed in the following commit; second review below.
+First gate review (separate agent, 2026-11-19): **fail**, six must-fix items, all fixed. Second review (separate agent, 2026-11-19): all six confirmed fixed; **fail on 6a only**. Its CI item is fixed (the learning gate runs in its own job and can't turn the checks red); its can-wait items are fixed except armour icons by slot (#36, Phase 4).
 
 | Check | Result |
 | --- | --- |
@@ -27,8 +27,8 @@ First gate review (separate agent, 2026-11-19): **fail**, six must-fix items. Al
 | 3. Stable and fast | Pass headless: 10 weeks through the addon with no Lua errors; slowest pull under 6 ms; hub redraw under 1 ms. Taint and first open: verify at install |
 | 4. Looks like the hi-fi | Pass headless: 204 of 204 fixed labels within 2 units of the hi-fi (`tools/layout_compare.py`); every screen, both themes, at 70% and 120% of a 2560 x 1440 screen, passes contrast (`tools/addon_shot.py`; smallest text 14.4 px at 70%). In-client screenshots: verify at install |
 | 5. Keyboard reach | Pass: a whole pull and every tab with the keyboard alone; combat hands every key back; can be turned off |
-| 6. Learning path | See `tools/gate_learning.py` (100 guilds) in the latest commit message; recap answers only after two wipes on that lesson, checked by QA on every pull |
-| 7. Separate-agent gate review | Second review after the fixes |
+| 6. Learning path | 6b pass: no recap answer before two wipes on that lesson (QA checks every pull). **6a not met:** learner within 2 weeks of the smart bot in 61-69% of 100 guilds, gate 70% (`tools/results-gate6.txt`). Director's call, see Next |
+| 7. Separate-agent gate review | Done twice; second review passes everything except 6a |
 
 ## Where things live
 
@@ -56,6 +56,10 @@ First gate review (separate agent, 2026-11-19): **fail**, six must-fix items. Al
 
 ## Next
 
+0. **Director: gate 6a.** Learners get the first Heroic Ragnaroast kill at about the same average week as the smart bot, but fewer get there by week 10 (about 79 of 100 against 96), because wiping while learning slows gearing. Options:
+   - A. Accept 6a as is and close Phase 3 (the gap is the cost of learning, not a hidden answer).
+   - B. A design change that helps guilds who wipe a lot catch up on gear (for example a small gear boost after repeated Heroic wipes), then rerun the gate. Needs your approval; changes the engine and the golden files.
+   - C. Measure by week 12 instead of 10. Not recommended: the reviewer counts this as lowering the bar.
 1. Director, at install: follow `qa/test-plan-addon.md` (self-test, taint, screenshots, a week of play, the survey).
 2. Director, when convenient: Gemini prompts F3-F6 (the four bosses without art) and F1b (Ragnaroast in parts); Legal's two open decisions.
 3. Then Phase 4 (production), per the milestone plan.

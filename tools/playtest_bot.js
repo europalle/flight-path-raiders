@@ -68,7 +68,12 @@ for (let g = 0; g < guilds; g++) {
             if ((mode === 'normal' ? pp.normalKills : pp.heroicKills) === 1) { arr.push(w); if (mode === 'heroic' && b.id === 'ragnaroast') ragHeroic[g] = w; }
           } else {
             wipes++; tierSeen[out.lesson.tier]++;
-            if (style === 'learner') (failed[b.id + mode] = failed[b.id + mode] || new Set()).add(prep.tactic);
+            // Optional: remember cards that wiped and avoid them (gate review 2). Off by default, because on
+            // 100 guilds it made the learner no better (results-gate6.txt): recap = only when the recap's
+            // lesson is the card, heroic = Heroic wipes only, all = every wipe.
+            const FM = process.env.FPR_FAILED || 'off';
+            if (style === 'learner' && (FM === 'recap' ? out.lesson.id === 'card' : FM === 'heroic' ? mode === 'heroic' : FM === 'all'))
+              (failed[b.id + mode] = failed[b.id + mode] || new Set()).add(prep.tactic);
             if (out.lesson.tier === 2) { answers++; if (out.lesson.wipes < 2) early++; }  // gate 6: no answer before two wipes on that lesson
             if (out.lesson.tier === 2) { if (out.lesson.id === 'card') known[b.id] = b.card; if (out.lesson.id === 'fire') knowFire.v = true; if (out.lesson.id === 'decurse') known.decurse = true; }
             // The learner uses Replay like a player would (learning path, design doc 3.1): rerun the wipe with a
@@ -77,7 +82,7 @@ for (let g = 0; g < guilds; g++) {
             if (style === 'learner' && mode === 'heroic' && !known[b.id] && G.replayInfo(st).ok) {
               tried[b.id] = tried[b.id] || new Set([prep.tactic]);
               const card = ['spread', 'stack', 'burn', 'playsafe'].find(c => !tried[b.id].has(c));
-              if (card) { tried[b.id].add(card); const rp = G.replay(st, card); if (rp.run && rp.run.result === 'kill') known[b.id] = card; else failed[b.id + mode].add(card); }
+              if (card) { tried[b.id].add(card); const rp = G.replay(st, card); if (rp.run && rp.run.result === 'kill') known[b.id] = card; else (failed[b.id + mode] = failed[b.id + mode] || new Set()).add(card); }
             }
           }
         }

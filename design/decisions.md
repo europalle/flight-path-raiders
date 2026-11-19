@@ -4,6 +4,7 @@ Decisions made by the Game Director. Newest first.
 
 | Date | Area | Decision |
 | --- | --- | --- |
+| 2026-11-19 | Gate 6a (open) | **Waiting on the Director.** The learner bot reaches the Heroic Ragnaroast kill within 2 weeks of the smart bot in 61-69% of guilds (gate: 70%). Gate review 2 allowed a fairer bot but not a lower bar; three fairer bots did no better (`tools/results-gate6.txt`). Options in STATUS.md |
 | 2026-11-19 | Director | No in-game install until the game is in production: finish the vertical slice without it. Everything that needs the real client is marked **verify at install** (self-test in the client, taint, real frame-open time, in-client screenshots, the fun survey) |
 | 2026-11-19 | Engineering, Design, Tuning, QA | The game rules moved from the browser's JavaScript to Lua (engine/game.lua): one source of truth for the addon, the playtest page (Fengari) and the bots, checked to give identical results to the old JS on 60 guild-seasons. Boss mechanics are data-driven hooks (engine/bosses.lua), results unchanged. Replay records (engine/replay.lua, format 1): input plus result in about 210 bytes, saves keep records and never logs, chunked for addon messages |
 | 2026-11-19 | Design, QA | The recap's answer now waits for two wipes on that lesson even when the raid knows the boss well (it showed early in 25 of 168 recaps). Learner bot within 2 weeks of the smart bot in 72% of guilds (gate: 70%) |
