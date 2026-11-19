@@ -14,6 +14,7 @@ let scores = [], totalGold = [], totalGL = [], moraleEnd = [], quits = 0, roster
 for (let g = 0; g < guilds; g++) {
   const st = G.newGame(1000 + g * 7919);
   const known = {};  // boss -> card the bot believes is right
+  const tried = {};  // boss -> cards the learner has tried in a replay
   const knowFire = { v: false };
   for (let w = 1; w <= weeks; w++) {
     const clear = () => { while ((st.pending || []).length) G.assignPending(st, 0, G.suggestFor(st, st.pending[0]).to); };
@@ -64,11 +65,20 @@ for (let g = 0; g < guilds; g++) {
             wipes++; tierSeen[out.lesson.tier]++;
             if (out.lesson.tier === 2) { answers++; if (out.lesson.wipes < 2) early++; }  // gate 6: no answer before two wipes on that lesson
             if (out.lesson.tier === 2) { if (out.lesson.id === 'card') known[b.id] = b.card; if (out.lesson.id === 'fire') knowFire.v = true; if (out.lesson.id === 'decurse') known.decurse = true; }
+            // The learner uses Replay like a player would (learning path, design doc 3.1): rerun the wipe with a
+            // card it hasn't tried on this boss, and keep that card if the replay kills. Heroic only: on Normal
+            // most cards kill, so a Normal replay proves nothing. Only what the game shows.
+            if (style === 'learner' && mode === 'heroic' && !known[b.id] && G.replayInfo(st).ok) {
+              tried[b.id] = tried[b.id] || new Set([prep.tactic]);
+              const card = ['spread', 'stack', 'burn', 'playsafe'].find(c => !tried[b.id].has(c));
+              if (card) { tried[b.id].add(card); const rp = G.replay(st, card); if (rp.run && rp.run.result === 'kill') known[b.id] = card; }
+            }
           }
         }
         if (!done) break;  // stuck: stop this week's run in this mode
       }
     }
+    if (w === weeks && process.env.FPR_DIAG) console.log('D', g, 'fire', knowFire.v, 'known', JSON.stringify(known), 'ragH', JSON.stringify(st.progress.ragnaroast), 'lessons', JSON.stringify(st.lessonWipes), 'roster', st.roster.length);
     if (w === weeks) { moraleEnd.push(st.roster.reduce((a, c) => a + c.morale, 0) / st.roster.length); rosterEnd.push(st.roster.length); totalGold.push(st.gold); totalGL.push(st.roster.reduce((s, c) => s + G.gearLevel(c), 0) / st.roster.length); }
     if (w > weeks - 3) scores.push(G.heroicScore(st));
     G.endWeek(st);

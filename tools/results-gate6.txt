@@ -1,0 +1,15 @@
+Phase 3 gate check 6, learning path (tools/gate_learning.py, 100 guilds, 10 weeks), 2026-11-19
+
+6b, no answer before two wipes on that lesson: pass. Kill notes no longer count toward the answer
+(gate review M2); tools/playtest_qa.js checks every pull.
+
+6a, learner within 2 weeks of the smart bot on its first Heroic Ragnaroast kill:
+- before M2 (kill notes counted toward the answer), 40 guilds: 72%. That leaned on the leak.
+- after M2, learner learns from recap answers only, 100 guilds: 64%.
+- after M2, learner also uses Replay on Heroic wipes (a learning-path feature: rerun the
+  wiped pull with an untried card, keep it if the replay kills), 100 guilds: 69%.
+- tried: answer after 3 sightings instead of 4 (with the two-wipe floor): no change (noise).
+Average first kill week is close (smart 6.3, learner 6.4); the gap is the share of guilds that
+get there by week 10 (smart about 90%, learner about 77%). Learners wipe more while working the
+fights out, so they gear slower: the cost of learning, not a missing hint.
+Gate: 70%. Result: 69%, one guild short. A Director's call (see STATUS.md).

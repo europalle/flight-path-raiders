@@ -18,15 +18,17 @@ Last updated: 2026-11-19. Read this first at the start of every session.
 
 ## Phase 3 gate (milestone plan)
 
+First gate review (separate agent, 2026-11-19): **fail**, six must-fix items. All six fixed in the following commit; second review below.
+
 | Check | Result |
 | --- | --- |
-| 1. Fun, scored | Verify at install: the Director's survey after a full in-game week (#34) |
-| 2. Same fights everywhere | Pass in Lua 5.1, LuaJIT and Fengari, and `/fpr selftest` passes inside the built addon headless; in the client: verify at install (#27) |
-| 3. Stable and fast | Pass headless: 10 weeks through the addon with no Lua errors; slowest pull 5.9 ms; hub redraw 0.4 ms. Taint and first open: verify at install |
-| 4. Looks like the hi-fi | Pass headless: every addon screen, both themes, passes contrast (`tools/addon_shot.py`); scale is uniform so 70% and 120% keep the layout. In-client screenshots: verify at install |
-| 5. Keyboard reach | Pass: a whole pull and every tab with the keyboard alone (tests/addon_test.py) |
-| 6. Learning path | Pass: learner bot within 2 weeks of the smart bot in 72% of guilds (`tools/gate_learning.py`); no recap answer before two wipes on that lesson (QA) |
-| 7. Separate-agent gate review | See the latest commit and the Director's report |
+| 1. Fun, scored | Survey written (`qa/survey-phase3.md`); the Director fills it in after a full in-game week at install (#34) |
+| 2. Same fights everywhere | Pass in Lua 5.1, LuaJIT and Fengari; `/fpr selftest` passes inside the built addon headless and now runs a few dozen fights per frame. In the client: verify at install (#27) |
+| 3. Stable and fast | Pass headless: 10 weeks through the addon with no Lua errors; slowest pull under 6 ms; hub redraw under 1 ms. Taint and first open: verify at install |
+| 4. Looks like the hi-fi | Pass headless: 204 of 204 fixed labels within 2 units of the hi-fi (`tools/layout_compare.py`); every screen, both themes, at 70% and 120% of a 2560 x 1440 screen, passes contrast (`tools/addon_shot.py`; smallest text 14.4 px at 70%). In-client screenshots: verify at install |
+| 5. Keyboard reach | Pass: a whole pull and every tab with the keyboard alone; combat hands every key back; can be turned off |
+| 6. Learning path | See `tools/gate_learning.py` (100 guilds) in the latest commit message; recap answers only after two wipes on that lesson, checked by QA on every pull |
+| 7. Separate-agent gate review | Second review after the fixes |
 
 ## Where things live
 
